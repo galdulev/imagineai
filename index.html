@@ -1,0 +1,1331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI Research Portal</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'display': ['Outfit', 'sans-serif'],
+                        'body': ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        charcoal: '#0a0a0a',
+                        'charcoal-light': '#141414',
+                        'charcoal-lighter': '#1a1a1a',
+                        cream: '#fafafa',
+                        amber: '#f59e0b',
+                        'amber-light': '#fbbf24',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #fafafa;
+        }
+        .font-display {
+            font-family: 'Outfit', sans-serif;
+        }
+        .glass {
+            background: rgba(10, 10, 10, 0.8);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #fafafa 0%, #a3a3a3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .gradient-amber {
+            background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .stagger-4 { animation-delay: 0.4s; }
+        .stagger-5 { animation-delay: 0.5s; }
+        .pulse-glow {
+            animation: pulseGlow 3s ease-in-out infinite;
+        }
+        @keyframes pulseGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.4); }
+        }
+        .section-divider {
+            background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.3), transparent);
+            height: 1px;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // Icons as SVG components
+        const Icons = {
+            Camera: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
+                    <circle cx="12" cy="13" r="3"/>
+                </svg>
+            ),
+            Sparkles: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/>
+                    <path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/>
+                </svg>
+            ),
+            TrendingUp: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>
+                </svg>
+            ),
+            Users: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                    <path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            ),
+            Cloud: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>
+                </svg>
+            ),
+            Video: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/>
+                </svg>
+            ),
+            Star: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                </svg>
+            ),
+            ChevronDown: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m6 9 6 6 6-6"/>
+                </svg>
+            ),
+            ChevronRight: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m9 18 6-6-6-6"/>
+                </svg>
+            ),
+            Check: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M20 6 9 17l-5-5"/>
+                </svg>
+            ),
+            X: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+            ),
+            Target: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>
+                </svg>
+            ),
+            BarChart: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" x2="12" y1="20" y2="10"/><line x1="18" x2="18" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="16"/>
+                </svg>
+            ),
+            MessageCircle: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+                </svg>
+            ),
+            FileText: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                    <polyline points="14 2 14 8 20 8"/><line x1="16" x2="8" y1="13" y2="13"/><line x1="16" x2="8" y1="17" y2="17"/><line x1="10" x2="8" y1="9" y2="9"/>
+                </svg>
+            ),
+            Zap: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+            ),
+            Clock: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+            ),
+            DollarSign: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                </svg>
+            ),
+            Menu: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
+            ),
+            Heart: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/>
+                </svg>
+            ),
+            AlertTriangle: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/>
+                </svg>
+            ),
+            Layers: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/>
+                    <path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/>
+                    <path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/>
+                </svg>
+            ),
+            Quote: () => (
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V21c0 1 0 1 1 1z"/>
+                    <path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/>
+                </svg>
+            ),
+        };
+
+        // Animated Counter Component
+        const AnimatedCounter = ({ end, duration = 2000, prefix = '', suffix = '' }) => {
+            const [count, setCount] = useState(0);
+            const countRef = useRef(null);
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(
+                    ([entry]) => {
+                        if (entry.isIntersecting) {
+                            setIsVisible(true);
+                        }
+                    },
+                    { threshold: 0.1 }
+                );
+
+                if (countRef.current) {
+                    observer.observe(countRef.current);
+                }
+
+                return () => observer.disconnect();
+            }, []);
+
+            useEffect(() => {
+                if (!isVisible) return;
+
+                let startTime;
+                const step = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    setCount(Math.floor(progress * end));
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    }
+                };
+                requestAnimationFrame(step);
+            }, [isVisible, end, duration]);
+
+            return (
+                <span ref={countRef} className="font-display font-bold">
+                    {prefix}{count.toLocaleString()}{suffix}
+                </span>
+            );
+        };
+
+        // Navigation Component
+        const Navigation = ({ activeSection }) => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    setIsScrolled(window.scrollY > 50);
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const navItems = [
+                { id: 'overview', label: 'Overview' },
+                { id: 'products', label: 'Products' },
+                { id: 'market', label: 'Market' },
+                { id: 'icp', label: 'ICP Analysis' },
+                { id: 'reviews', label: 'Reviews' },
+                { id: 'research', label: 'Research' },
+            ];
+
+            return (
+                <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'glass border-b border-white/5' : ''}`}>
+                    <div className="max-w-7xl mx-auto px-6 py-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-3">
+                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber to-amber-light flex items-center justify-center">
+                                    <Icons.Camera />
+                                </div>
+                                <span className="font-display font-semibold text-xl">Imagen AI</span>
+                            </div>
+                            
+                            {/* Desktop Navigation */}
+                            <div className="hidden md:flex items-center gap-8">
+                                {navItems.map((item) => (
+                                    <a
+                                        key={item.id}
+                                        href={`#${item.id}`}
+                                        className={`text-sm font-medium transition-colors duration-200 ${
+                                            activeSection === item.id 
+                                                ? 'text-amber' 
+                                                : 'text-gray-400 hover:text-cream'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </div>
+
+                            {/* Mobile Menu Button */}
+                            <button 
+                                className="md:hidden p-2"
+                                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                            >
+                                <Icons.Menu />
+                            </button>
+                        </div>
+
+                        {/* Mobile Navigation */}
+                        {mobileMenuOpen && (
+                            <div className="md:hidden mt-4 pb-4 border-t border-white/10 pt-4">
+                                {navItems.map((item) => (
+                                    <a
+                                        key={item.id}
+                                        href={`#${item.id}`}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className={`block py-2 text-sm font-medium transition-colors duration-200 ${
+                                            activeSection === item.id 
+                                                ? 'text-amber' 
+                                                : 'text-gray-400'
+                                        }`}
+                                    >
+                                        {item.label}
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </nav>
+            );
+        };
+
+        // Hero Section
+        const HeroSection = () => (
+            <section id="overview" className="min-h-screen flex items-center justify-center pt-20 pb-32 px-6">
+                <div className="max-w-6xl mx-auto text-center">
+                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber/10 border border-amber/20 mb-8 fade-in">
+                        <Icons.Sparkles />
+                        <span className="text-amber text-sm font-medium">AI-Powered Photo Editing</span>
+                    </div>
+                    
+                    <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 fade-in stagger-1">
+                        <span className="gradient-text">Imagen AI</span>
+                        <br />
+                        <span className="text-gray-500">Research Portal</span>
+                    </h1>
+                    
+                    <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-16 leading-relaxed fade-in stagger-2">
+                        Comprehensive analysis of the technology-first company transforming photography workflows through AI-powered editing solutions.
+                    </p>
+
+                    {/* Key Metrics */}
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 fade-in stagger-3">
+                        <div className="p-6 rounded-2xl bg-charcoal-light border border-white/5 card-hover">
+                            <div className="text-3xl md:text-4xl gradient-amber mb-2">
+                                <AnimatedCounter end={150} suffix="M+" />
+                            </div>
+                            <p className="text-gray-500 text-sm">Photos Processed</p>
+                        </div>
+                        <div className="p-6 rounded-2xl bg-charcoal-light border border-white/5 card-hover">
+                            <div className="text-3xl md:text-4xl gradient-amber mb-2">
+                                <AnimatedCounter end={34} prefix="$" suffix="M" />
+                            </div>
+                            <p className="text-gray-500 text-sm">Total Funding</p>
+                        </div>
+                        <div className="p-6 rounded-2xl bg-charcoal-light border border-white/5 card-hover">
+                            <div className="text-3xl md:text-4xl gradient-amber mb-2">
+                                <AnimatedCounter end={19} suffix="K+" />
+                            </div>
+                            <p className="text-gray-500 text-sm">Community Size</p>
+                        </div>
+                        <div className="p-6 rounded-2xl bg-charcoal-light border border-white/5 card-hover">
+                            <div className="text-3xl md:text-4xl gradient-amber mb-2">
+                                <AnimatedCounter end={96} suffix="%" />
+                            </div>
+                            <p className="text-gray-500 text-sm">Time Saved</p>
+                        </div>
+                    </div>
+
+                    {/* Company Info Cards */}
+                    <div className="mt-16 grid md:grid-cols-3 gap-6 text-left fade-in stagger-4">
+                        <div className="p-8 rounded-2xl bg-gradient-to-br from-charcoal-light to-charcoal border border-white/5">
+                            <h3 className="font-display font-semibold text-lg mb-3">Vision</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                "Imagen the future" — A world where photographers leverage streamlined AI-powered workflows.
+                            </p>
+                        </div>
+                        <div className="p-8 rounded-2xl bg-gradient-to-br from-charcoal-light to-charcoal border border-white/5">
+                            <h3 className="font-display font-semibold text-lg mb-3">Mission</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                Transforming photography workflows by automating repetitive tasks while preserving unique personal styles.
+                            </p>
+                        </div>
+                        <div className="p-8 rounded-2xl bg-gradient-to-br from-charcoal-light to-charcoal border border-white/5">
+                            <h3 className="font-display font-semibold text-lg mb-3">Promise</h3>
+                            <p className="text-gray-400 text-sm leading-relaxed">
+                                "Letting you focus on what you Love" — Beautiful photos without hours of tedious editing.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        // Products Section
+        const ProductsSection = () => {
+            const products = [
+                {
+                    icon: <Icons.Sparkles />,
+                    title: 'AI-Powered Editing',
+                    description: 'Consistent, personalized editing in under 0.5s per photo. Your Personal AI Profile learns and evolves with your style.',
+                    features: ['Exposure & Color', 'Tone Curve & HSL', 'Sharpening & Noise', 'Lens Corrections'],
+                    color: 'from-amber/20 to-orange-500/20'
+                },
+                {
+                    icon: <Icons.Layers />,
+                    title: 'AI Culling',
+                    description: 'AI-powered photo selection that mimics human decision-making. Reduce culling time from hours to minutes.',
+                    features: ['Sharpness Detection', 'Expression Analysis', 'Duplicate Grouping', 'Quality Scoring'],
+                    color: 'from-blue-500/20 to-cyan-500/20'
+                },
+                {
+                    icon: <Icons.Cloud />,
+                    title: 'Cloud Storage',
+                    description: 'Automatic cloud backup during your workflow. Access your projects from anywhere, anytime.',
+                    features: ['Auto-Backup', 'Multi-Device Access', 'Project Organization', 'Encrypted & Secure'],
+                    color: 'from-purple-500/20 to-pink-500/20'
+                },
+                {
+                    icon: <Icons.Video />,
+                    title: 'Imagen Video',
+                    description: 'AI-powered video color grading. Extend your photo editing style to video content seamlessly.',
+                    features: ['Style Learning', 'Batch Processing', 'Consistent Grading', 'Workflow Integration'],
+                    color: 'from-green-500/20 to-emerald-500/20'
+                },
+                {
+                    icon: <Icons.Star />,
+                    title: 'Talent AI Profiles',
+                    description: 'Pre-built profiles from renowned photographers. Learn from the best or find your starting point.',
+                    features: ['Natural Feels', 'Clean & Crisp', 'Tierra', 'Cinematic Luxury'],
+                    color: 'from-rose-500/20 to-red-500/20'
+                },
+            ];
+
+            return (
+                <section id="products" className="py-32 px-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                                Products & <span className="gradient-amber">Technology</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                A complete suite of AI-powered tools designed to transform your photography workflow.
+                            </p>
+                        </div>
+
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                            {products.map((product, index) => (
+                                <div 
+                                    key={index}
+                                    className={`p-8 rounded-3xl bg-gradient-to-br ${product.color} border border-white/5 card-hover`}
+                                >
+                                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center mb-6 text-amber">
+                                        {product.icon}
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl mb-3">{product.title}</h3>
+                                    <p className="text-gray-400 text-sm mb-6 leading-relaxed">{product.description}</p>
+                                    <div className="flex flex-wrap gap-2">
+                                        {product.features.map((feature, i) => (
+                                            <span key={i} className="px-3 py-1 rounded-full bg-white/5 text-xs text-gray-300">
+                                                {feature}
+                                            </span>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Workflow Diagram */}
+                        <div className="mt-20 p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                            <h3 className="font-display font-semibold text-2xl mb-8 text-center">Workflow Integration</h3>
+                            <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+                                {['Shoot', 'Import', 'Cull', 'Edit', 'Review', 'Export'].map((step, index) => (
+                                    <React.Fragment key={step}>
+                                        <div className="flex flex-col items-center">
+                                            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-2 ${
+                                                index === 2 || index === 3 ? 'bg-amber text-charcoal' : 'bg-white/5 text-gray-400'
+                                            }`}>
+                                                <span className="font-display font-bold">{index + 1}</span>
+                                            </div>
+                                            <span className={`text-sm ${index === 2 || index === 3 ? 'text-amber font-medium' : 'text-gray-500'}`}>
+                                                {step}
+                                            </span>
+                                            {(index === 2 || index === 3) && (
+                                                <span className="text-xs text-amber/60 mt-1">Imagen AI</span>
+                                            )}
+                                        </div>
+                                        {index < 5 && (
+                                            <div className="hidden md:block text-gray-600">
+                                                <Icons.ChevronRight />
+                                            </div>
+                                        )}
+                                    </React.Fragment>
+                                ))}
+                            </div>
+                            <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                                <div>
+                                    <p className="text-2xl font-display font-bold text-red-400">24 hrs</p>
+                                    <p className="text-xs text-gray-500">Before Imagen</p>
+                                </div>
+                                <div>
+                                    <p className="text-2xl font-display font-bold text-green-400">2 hrs</p>
+                                    <p className="text-xs text-gray-500">With Imagen</p>
+                                </div>
+                                <div>
+                                    <p className="text-2xl font-display font-bold gradient-amber">22 hrs</p>
+                                    <p className="text-xs text-gray-500">Time Saved</p>
+                                </div>
+                                <div>
+                                    <p className="text-2xl font-display font-bold gradient-amber">91%</p>
+                                    <p className="text-xs text-gray-500">Efficiency Gain</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Market Section
+        const MarketSection = () => {
+            const competitors = [
+                { name: 'Aftershoot', type: 'Direct', focus: 'Culling + Editing' },
+                { name: 'Impossible Things', type: 'Direct', focus: 'AI Editing' },
+                { name: 'Neurapix', type: 'Direct', focus: 'Personalized Profiles' },
+                { name: 'Adobe Lightroom', type: 'Indirect', focus: 'Industry Standard' },
+                { name: 'Luminar Neo', type: 'Indirect', focus: 'Desktop AI' },
+                { name: 'Topaz Photo AI', type: 'Indirect', focus: 'Enhancement' },
+            ];
+
+            const swotData = {
+                strengths: [
+                    'Personalized AI technology',
+                    'Complete workflow solution',
+                    'Profitable with strong funding',
+                    'Adobe Lightroom integration',
+                    'Talent AI Profiles marketplace'
+                ],
+                weaknesses: [
+                    'Cloud-dependent',
+                    'Subscription pricing',
+                    'Focused niche market',
+                    'Initial training investment'
+                ],
+                opportunities: [
+                    'Rapidly growing market ($66B by 2032)',
+                    'Vertical expansion (real estate, sports)',
+                    'Video editing expansion',
+                    'Enterprise offerings'
+                ],
+                threats: [
+                    'Adobe AI feature integration',
+                    'Local processing competitors',
+                    'Price competition',
+                    'AI commoditization'
+                ]
+            };
+
+            return (
+                <section id="market" className="py-32 px-6 bg-gradient-to-b from-charcoal to-charcoal-light">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                                Market <span className="gradient-amber">Intelligence</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                Comprehensive analysis of the AI image editing market landscape and competitive positioning.
+                            </p>
+                        </div>
+
+                        {/* Market Size */}
+                        <div className="grid md:grid-cols-2 gap-8 mb-16">
+                            <div className="p-8 rounded-3xl bg-charcoal border border-white/5 pulse-glow">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-amber/20 flex items-center justify-center text-amber">
+                                        <Icons.TrendingUp />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Market Size</h3>
+                                </div>
+                                <div className="space-y-6">
+                                    <div>
+                                        <p className="text-gray-500 text-sm mb-1">2024 Global Market</p>
+                                        <p className="text-4xl font-display font-bold">$7.77B</p>
+                                    </div>
+                                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div className="h-full w-[12%] bg-gradient-to-r from-amber to-amber-light rounded-full"></div>
+                                    </div>
+                                    <div>
+                                        <p className="text-gray-500 text-sm mb-1">2032 Projected</p>
+                                        <p className="text-4xl font-display font-bold gradient-amber">$66.65B</p>
+                                    </div>
+                                    <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                        <div className="h-full w-full bg-gradient-to-r from-amber to-amber-light rounded-full"></div>
+                                    </div>
+                                </div>
+                                <div className="mt-6 p-4 rounded-xl bg-amber/10 border border-amber/20">
+                                    <p className="text-amber font-display font-semibold text-2xl">30.92% CAGR</p>
+                                    <p className="text-amber/70 text-sm">Compound Annual Growth Rate</p>
+                                </div>
+                            </div>
+
+                            <div className="p-8 rounded-3xl bg-charcoal border border-white/5">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <Icons.DollarSign />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Company Financials</h3>
+                                </div>
+                                <div className="space-y-4">
+                                    <div className="flex justify-between items-center p-4 rounded-xl bg-white/5">
+                                        <span className="text-gray-400">Total Funding</span>
+                                        <span className="font-display font-semibold text-lg">$34M</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-xl bg-white/5">
+                                        <span className="text-gray-400">Latest Round</span>
+                                        <span className="font-display font-semibold text-lg">$30M (Dec 2022)</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-xl bg-white/5">
+                                        <span className="text-gray-400">Lead Investor</span>
+                                        <span className="font-display font-semibold text-lg">Summit Partners</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-xl bg-white/5">
+                                        <span className="text-gray-400">ARR</span>
+                                        <span className="font-display font-semibold text-lg">$10M+</span>
+                                    </div>
+                                    <div className="flex justify-between items-center p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+                                        <span className="text-green-400">Status</span>
+                                        <span className="font-display font-semibold text-lg text-green-400">Profitable</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Competitive Landscape */}
+                        <div className="mb-16">
+                            <h3 className="font-display font-semibold text-2xl mb-8 text-center">Competitive Landscape</h3>
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+                                {competitors.map((comp, index) => (
+                                    <div key={index} className="p-4 rounded-2xl bg-charcoal border border-white/5 text-center card-hover">
+                                        <p className="font-medium text-sm mb-1">{comp.name}</p>
+                                        <p className={`text-xs ${comp.type === 'Direct' ? 'text-amber' : 'text-gray-500'}`}>
+                                            {comp.type}
+                                        </p>
+                                        <p className="text-xs text-gray-600 mt-2">{comp.focus}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* SWOT Analysis */}
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                            <div className="p-6 rounded-2xl bg-green-500/10 border border-green-500/20">
+                                <h4 className="font-display font-semibold text-green-400 mb-4 flex items-center gap-2">
+                                    <Icons.Check />
+                                    Strengths
+                                </h4>
+                                <ul className="space-y-2">
+                                    {swotData.strengths.map((item, i) => (
+                                        <li key={i} className="text-sm text-gray-300 flex items-start gap-2">
+                                            <span className="text-green-500 mt-1">•</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-red-500/10 border border-red-500/20">
+                                <h4 className="font-display font-semibold text-red-400 mb-4 flex items-center gap-2">
+                                    <Icons.X />
+                                    Weaknesses
+                                </h4>
+                                <ul className="space-y-2">
+                                    {swotData.weaknesses.map((item, i) => (
+                                        <li key={i} className="text-sm text-gray-300 flex items-start gap-2">
+                                            <span className="text-red-500 mt-1">•</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-blue-500/10 border border-blue-500/20">
+                                <h4 className="font-display font-semibold text-blue-400 mb-4 flex items-center gap-2">
+                                    <Icons.TrendingUp />
+                                    Opportunities
+                                </h4>
+                                <ul className="space-y-2">
+                                    {swotData.opportunities.map((item, i) => (
+                                        <li key={i} className="text-sm text-gray-300 flex items-start gap-2">
+                                            <span className="text-blue-500 mt-1">•</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-amber/10 border border-amber/20">
+                                <h4 className="font-display font-semibold text-amber mb-4 flex items-center gap-2">
+                                    <Icons.AlertTriangle />
+                                    Threats
+                                </h4>
+                                <ul className="space-y-2">
+                                    {swotData.threats.map((item, i) => (
+                                        <li key={i} className="text-sm text-gray-300 flex items-start gap-2">
+                                            <span className="text-amber mt-1">•</span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // ICP Section
+        const ICPSection = () => {
+            const segments = [
+                { name: 'Wedding Photographers', confidence: 95, evidence: 'Strong', color: 'bg-green-500' },
+                { name: 'Event Photographers', confidence: 90, evidence: 'Strong', color: 'bg-green-500' },
+                { name: 'Portrait Photographers', confidence: 85, evidence: 'Good', color: 'bg-blue-500' },
+                { name: 'Real Estate Photographers', confidence: 70, evidence: 'Moderate', color: 'bg-amber' },
+                { name: 'Photography Studios', confidence: 50, evidence: 'Limited', color: 'bg-gray-500' },
+                { name: 'Enterprise Platforms', confidence: 5, evidence: 'None', color: 'bg-red-500' },
+            ];
+
+            const icpProfile = {
+                demographics: [
+                    'Professional photographers (not hobbyists)',
+                    'Running a photography business',
+                    'Age 25-44 (based on industry data)',
+                    'Already using Adobe Lightroom'
+                ],
+                psychographics: [
+                    'Time-constrained (editing is a bottleneck)',
+                    'Quality-conscious (won\'t sacrifice their style)',
+                    'Business-minded (want to scale)',
+                    'Tech-comfortable (willing to try AI)'
+                ],
+                behavioral: [
+                    'Process 500-5,000+ photos per event',
+                    'Need turnaround in days, not weeks',
+                    'Want consistent style across galleries',
+                    'Spend 3-10+ hours editing per event currently'
+                ],
+                business: [
+                    'Solo photographers or small studios (1-5 people)',
+                    'Revenue: $50K-$500K annually',
+                    'High season pressure (wedding season)',
+                    'Client-facing business'
+                ]
+            };
+
+            return (
+                <section id="icp" className="py-32 px-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                                ICP <span className="gradient-amber">Analysis</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                Evidence-based customer profile research revealing the true ideal customer for Imagen AI.
+                            </p>
+                        </div>
+
+                        {/* Key Finding */}
+                        <div className="p-8 rounded-3xl bg-gradient-to-r from-amber/10 to-amber/5 border border-amber/20 mb-16 text-center">
+                            <p className="text-amber font-display font-semibold text-lg mb-2">Key Finding</p>
+                            <p className="text-xl md:text-2xl text-cream max-w-3xl mx-auto">
+                                Imagen AI's primary ICP is <span className="gradient-amber font-semibold">individual professional photographers</span>, 
+                                NOT enterprise platforms. This is a B2C SaaS product.
+                            </p>
+                        </div>
+
+                        {/* Confidence Scores */}
+                        <div className="mb-16">
+                            <h3 className="font-display font-semibold text-2xl mb-8 text-center">Customer Segment Confidence</h3>
+                            <div className="space-y-4">
+                                {segments.map((segment, index) => (
+                                    <div key={index} className="p-4 rounded-xl bg-charcoal-light border border-white/5">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <span className="font-medium">{segment.name}</span>
+                                            <div className="flex items-center gap-4">
+                                                <span className={`text-xs px-2 py-1 rounded-full ${
+                                                    segment.evidence === 'Strong' ? 'bg-green-500/20 text-green-400' :
+                                                    segment.evidence === 'Good' ? 'bg-blue-500/20 text-blue-400' :
+                                                    segment.evidence === 'Moderate' ? 'bg-amber/20 text-amber' :
+                                                    segment.evidence === 'Limited' ? 'bg-gray-500/20 text-gray-400' :
+                                                    'bg-red-500/20 text-red-400'
+                                                }`}>
+                                                    {segment.evidence}
+                                                </span>
+                                                <span className="font-display font-bold text-lg w-12 text-right">{segment.confidence}%</span>
+                                            </div>
+                                        </div>
+                                        <div className="h-2 bg-white/5 rounded-full overflow-hidden">
+                                            <div 
+                                                className={`h-full ${segment.color} rounded-full transition-all duration-1000`}
+                                                style={{ width: `${segment.confidence}%` }}
+                                            ></div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* ICP Profile Details */}
+                        <div className="grid md:grid-cols-2 gap-6">
+                            <div className="p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                        <Icons.Users />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Demographics</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {icpProfile.demographics.map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
+                                            <span className="text-blue-400 mt-0.5"><Icons.Check /></span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center text-purple-400">
+                                        <Icons.Heart />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Psychographics</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {icpProfile.psychographics.map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
+                                            <span className="text-purple-400 mt-0.5"><Icons.Check /></span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-green-400">
+                                        <Icons.Zap />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Behavioral</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {icpProfile.behavioral.map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
+                                            <span className="text-green-400 mt-0.5"><Icons.Check /></span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                                <div className="flex items-center gap-3 mb-6">
+                                    <div className="w-10 h-10 rounded-xl bg-amber/20 flex items-center justify-center text-amber">
+                                        <Icons.BarChart />
+                                    </div>
+                                    <h3 className="font-display font-semibold text-xl">Business Characteristics</h3>
+                                </div>
+                                <ul className="space-y-3">
+                                    {icpProfile.business.map((item, i) => (
+                                        <li key={i} className="flex items-start gap-3 text-gray-300 text-sm">
+                                            <span className="text-amber mt-0.5"><Icons.Check /></span>
+                                            {item}
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Reviews Section
+        const ReviewsSection = () => {
+            const [activeQuote, setActiveQuote] = useState(0);
+            
+            const testimonials = [
+                {
+                    quote: "Imagen AI has elevated me to SuperHero status with my clients. Instead of taking 5-7 business days to get their images to them, I can get them back by the next day.",
+                    author: "Shellee Fisher",
+                    role: "Professional Photographer"
+                },
+                {
+                    quote: "After using Imagen AI on over 100,000 images over two years, nearly 90% of the images required no adjustment.",
+                    author: "Zach Nichols",
+                    role: "Wedding Photographer"
+                },
+                {
+                    quote: "Full wedding galleries, which typically took around 16 hours to edit, have been reduced to about 2 hours with Imagen AI.",
+                    author: "Formed From Light",
+                    role: "Wedding Photography Studio"
+                },
+                {
+                    quote: "The term 'game changer' gets thrown out a lot, but for any busy photographer, this software will change your life.",
+                    author: "Michael Antony",
+                    role: "Professional Photographer"
+                },
+                {
+                    quote: "Thanks to Imagen, I can actually enjoy editing… I have recovered hundreds of hours back.",
+                    author: "Daniel Alonso",
+                    role: "Portrait Photographer, Spain"
+                }
+            ];
+
+            const painPoints = [
+                { issue: 'Mixed Lighting Handling', frequency: 'Medium', severity: 'High', priority: 'P1' },
+                { issue: 'Pricing Transparency', frequency: 'Medium', severity: 'High', priority: 'P1' },
+                { issue: 'Initial Learning Curve', frequency: 'Medium', severity: 'Medium', priority: 'P2' },
+                { issue: 'Capture One Integration', frequency: 'Low', severity: 'High', priority: 'P2' },
+                { issue: '10% Inconsistency Rate', frequency: 'Medium', severity: 'Medium', priority: 'P3' },
+            ];
+
+            const delighters = [
+                { feature: 'Time Savings (96%)', impact: 'Amazement', frequency: 'High' },
+                { feature: '90% Perfect Rate', impact: 'Impressed', frequency: 'High' },
+                { feature: 'Same-Day Delivery', impact: 'Surprise', frequency: 'Medium' },
+                { feature: 'Style Accuracy', impact: 'Validation', frequency: 'High' },
+                { feature: 'Customer Support', impact: 'Gratitude', frequency: 'Medium' },
+            ];
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    setActiveQuote((prev) => (prev + 1) % testimonials.length);
+                }, 6000);
+                return () => clearInterval(interval);
+            }, []);
+
+            return (
+                <section id="reviews" className="py-32 px-6 bg-gradient-to-b from-charcoal-light to-charcoal">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                                Reviews & <span className="gradient-amber">Sentiment</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                Analysis of 1,500+ reviews from Trustpilot, SaaSworthy, Software Advice, and photographer communities.
+                            </p>
+                        </div>
+
+                        {/* Rating Overview */}
+                        <div className="grid md:grid-cols-4 gap-6 mb-16">
+                            <div className="p-6 rounded-2xl bg-charcoal border border-white/5 text-center">
+                                <p className="text-4xl font-display font-bold gradient-amber mb-2">4.7</p>
+                                <div className="flex justify-center gap-1 mb-2 text-amber">
+                                    {[...Array(5)].map((_, i) => <Icons.Star key={i} />)}
+                                </div>
+                                <p className="text-gray-500 text-sm">Average Rating</p>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-charcoal border border-white/5 text-center">
+                                <p className="text-4xl font-display font-bold text-green-400 mb-2">92%</p>
+                                <p className="text-gray-500 text-sm">Positive Reviews</p>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-charcoal border border-white/5 text-center">
+                                <p className="text-4xl font-display font-bold mb-2">1,500+</p>
+                                <p className="text-gray-500 text-sm">Total Reviews</p>
+                            </div>
+                            <div className="p-6 rounded-2xl bg-charcoal border border-white/5 text-center">
+                                <p className="text-4xl font-display font-bold text-blue-400 mb-2">91%</p>
+                                <p className="text-gray-500 text-sm">5-Star on Trustpilot</p>
+                            </div>
+                        </div>
+
+                        {/* Testimonial Carousel */}
+                        <div className="mb-16 p-8 md:p-12 rounded-3xl bg-gradient-to-br from-amber/10 to-transparent border border-amber/20 relative overflow-hidden">
+                            <div className="absolute top-8 left-8 text-amber/20 scale-150">
+                                <Icons.Quote />
+                            </div>
+                            <div className="relative z-10 max-w-4xl mx-auto text-center">
+                                <p className="text-xl md:text-2xl text-cream leading-relaxed mb-8 min-h-[120px]">
+                                    "{testimonials[activeQuote].quote}"
+                                </p>
+                                <div>
+                                    <p className="font-display font-semibold text-lg">{testimonials[activeQuote].author}</p>
+                                    <p className="text-gray-500 text-sm">{testimonials[activeQuote].role}</p>
+                                </div>
+                                <div className="flex justify-center gap-2 mt-8">
+                                    {testimonials.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => setActiveQuote(index)}
+                                            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                                                index === activeQuote ? 'w-8 bg-amber' : 'bg-white/20'
+                                            }`}
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Pain Points vs Delighters */}
+                        <div className="grid md:grid-cols-2 gap-8">
+                            <div className="p-8 rounded-3xl bg-charcoal border border-red-500/20">
+                                <h3 className="font-display font-semibold text-xl mb-6 flex items-center gap-3">
+                                    <span className="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center text-red-400">
+                                        <Icons.AlertTriangle />
+                                    </span>
+                                    Pain Points
+                                </h3>
+                                <div className="space-y-4">
+                                    {painPoints.map((point, index) => (
+                                        <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-white/5">
+                                            <div>
+                                                <p className="font-medium text-sm">{point.issue}</p>
+                                                <p className="text-xs text-gray-500">Frequency: {point.frequency}</p>
+                                            </div>
+                                            <span className={`text-xs px-2 py-1 rounded-full ${
+                                                point.priority === 'P1' ? 'bg-red-500/20 text-red-400' :
+                                                point.priority === 'P2' ? 'bg-amber/20 text-amber' :
+                                                'bg-gray-500/20 text-gray-400'
+                                            }`}>
+                                                {point.priority}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-charcoal border border-green-500/20">
+                                <h3 className="font-display font-semibold text-xl mb-6 flex items-center gap-3">
+                                    <span className="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center text-green-400">
+                                        <Icons.Heart />
+                                    </span>
+                                    Delighters
+                                </h3>
+                                <div className="space-y-4">
+                                    {delighters.map((item, index) => (
+                                        <div key={index} className="flex items-center justify-between p-4 rounded-xl bg-white/5">
+                                            <div>
+                                                <p className="font-medium text-sm">{item.feature}</p>
+                                                <p className="text-xs text-gray-500">Impact: {item.impact}</p>
+                                            </div>
+                                            <span className={`text-xs px-2 py-1 rounded-full ${
+                                                item.frequency === 'High' ? 'bg-green-500/20 text-green-400' :
+                                                'bg-blue-500/20 text-blue-400'
+                                            }`}>
+                                                {item.frequency}
+                                            </span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Sentiment Bar */}
+                        <div className="mt-16 p-8 rounded-3xl bg-charcoal-light border border-white/5">
+                            <h3 className="font-display font-semibold text-xl mb-6 text-center">Overall Sentiment Distribution</h3>
+                            <div className="max-w-2xl mx-auto">
+                                <div className="flex rounded-full overflow-hidden h-8 mb-4">
+                                    <div className="bg-green-500 w-[85%] flex items-center justify-center text-xs font-medium">85% Positive</div>
+                                    <div className="bg-gray-500 w-[8%]"></div>
+                                    <div className="bg-red-500 w-[7%]"></div>
+                                </div>
+                                <div className="flex justify-between text-sm text-gray-500">
+                                    <span>Positive: 85%</span>
+                                    <span>Neutral: 8%</span>
+                                    <span>Negative: 7%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Research Section
+        const ResearchSection = () => {
+            const [openSection, setOpenSection] = useState(null);
+
+            const researchPlans = [
+                {
+                    id: 'ai',
+                    title: 'AI-Powered Research Plan',
+                    icon: <Icons.Sparkles />,
+                    description: 'Leveraging AI for comprehensive market and user research',
+                    phases: [
+                        { name: 'Phase 1: Market & Competitive Intelligence', duration: 'Week 1', tasks: ['Market landscape mapping', 'Industry trend analysis', 'User review aggregation', 'Sentiment analysis'] },
+                        { name: 'Phase 2: User Behavior Analysis', duration: 'Week 2', tasks: ['Journey reconstruction', 'Friction point prediction', 'Feature analysis', 'Workflow optimization'] },
+                        { name: 'Phase 3: Deep Dive Analysis', duration: 'Week 3', tasks: ['Technology research', 'Persona synthesis', 'Pricing analysis', 'Business model assessment'] },
+                        { name: 'Phase 4: Synthesis & Strategy', duration: 'Week 4', tasks: ['Cross-analysis synthesis', 'Insight prioritization', 'Strategic recommendations', 'Report generation'] },
+                    ]
+                },
+                {
+                    id: 'icp',
+                    title: 'ICP Discovery Research',
+                    icon: <Icons.Target />,
+                    description: 'Systematic approach to identifying ideal customer profiles',
+                    phases: [
+                        { name: 'Phase 1: Public Intelligence', duration: 'Week 1', tasks: ['LinkedIn research', 'Press & media scraping', 'Website analysis', 'Review mining'] },
+                        { name: 'Phase 2: Technical Intelligence', duration: 'Week 2', tasks: ['API & integration research', 'Job posting analysis', 'Competitor customer analysis', 'Pricing page analysis'] },
+                        { name: 'Phase 3: Direct Intelligence', duration: 'Week 3', tasks: ['Case study extraction', 'Testimonial categorization', 'Funding research', 'Social media analysis'] },
+                        { name: 'Phase 4: Synthesis & Validation', duration: 'Week 4', tasks: ['ICP hypothesis matrix', 'Customer segmentation', 'Validation checklist', 'Final documentation'] },
+                    ]
+                },
+                {
+                    id: 'ux',
+                    title: 'UX Research Plan',
+                    icon: <Icons.Users />,
+                    description: 'Comprehensive user experience research methodology',
+                    phases: [
+                        { name: 'Phase 1: Discovery', duration: 'Weeks 1-4', tasks: ['User interviews (15-20)', 'Usability testing', 'Survey research', 'Competitive analysis'] },
+                        { name: 'Phase 2: Evaluation', duration: 'Weeks 5-8', tasks: ['Analytics review', 'Journey mapping', 'Feature prioritization', 'Workflow analysis'] },
+                        { name: 'Phase 3: Optimization', duration: 'Weeks 9-12', tasks: ['Contextual inquiry', 'Diary studies', 'Card sorting', 'A/B testing'] },
+                    ]
+                },
+            ];
+
+            return (
+                <section id="research" className="py-32 px-6">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center mb-16">
+                            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+                                Research <span className="gradient-amber">Plans</span>
+                            </h2>
+                            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+                                Comprehensive research methodologies for understanding users, market, and product opportunities.
+                            </p>
+                        </div>
+
+                        <div className="space-y-6">
+                            {researchPlans.map((plan) => (
+                                <div 
+                                    key={plan.id}
+                                    className="rounded-3xl bg-charcoal-light border border-white/5 overflow-hidden"
+                                >
+                                    <button
+                                        onClick={() => setOpenSection(openSection === plan.id ? null : plan.id)}
+                                        className="w-full p-8 flex items-center justify-between hover:bg-white/5 transition-colors"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className="w-12 h-12 rounded-xl bg-amber/20 flex items-center justify-center text-amber">
+                                                {plan.icon}
+                                            </div>
+                                            <div className="text-left">
+                                                <h3 className="font-display font-semibold text-xl">{plan.title}</h3>
+                                                <p className="text-gray-500 text-sm">{plan.description}</p>
+                                            </div>
+                                        </div>
+                                        <div className={`transition-transform duration-300 ${openSection === plan.id ? 'rotate-180' : ''}`}>
+                                            <Icons.ChevronDown />
+                                        </div>
+                                    </button>
+                                    
+                                    {openSection === plan.id && (
+                                        <div className="px-8 pb-8">
+                                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+                                                {plan.phases.map((phase, index) => (
+                                                    <div key={index} className="p-6 rounded-2xl bg-charcoal border border-white/5">
+                                                        <div className="flex items-center justify-between mb-4">
+                                                            <span className="text-xs text-amber bg-amber/10 px-2 py-1 rounded-full">{phase.duration}</span>
+                                                        </div>
+                                                        <h4 className="font-display font-medium text-sm mb-4">{phase.name}</h4>
+                                                        <ul className="space-y-2">
+                                                            {phase.tasks.map((task, i) => (
+                                                                <li key={i} className="text-xs text-gray-400 flex items-start gap-2">
+                                                                    <span className="text-amber mt-0.5">•</span>
+                                                                    {task}
+                                                                </li>
+                                                            ))}
+                                                        </ul>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        {/* Key Research Questions */}
+                        <div className="mt-16 p-8 rounded-3xl bg-gradient-to-br from-charcoal-light to-charcoal border border-white/5">
+                            <h3 className="font-display font-semibold text-2xl mb-8 text-center">Key Research Questions</h3>
+                            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-amber text-sm">Market & Competitive</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li>• What is Imagen's market position?</li>
+                                        <li>• Who are the main competitors?</li>
+                                        <li>• What are key market trends?</li>
+                                    </ul>
+                                </div>
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-blue-400 text-sm">User Experience</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li>• What are users' main pain points?</li>
+                                        <li>• What do users love about the product?</li>
+                                        <li>• How do users actually use it?</li>
+                                    </ul>
+                                </div>
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-green-400 text-sm">Product & Technology</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li>• How does the AI actually work?</li>
+                                        <li>• What are product strengths?</li>
+                                        <li>• What features are missing?</li>
+                                    </ul>
+                                </div>
+                                <div className="space-y-3">
+                                    <h4 className="font-medium text-purple-400 text-sm">Business & Strategy</h4>
+                                    <ul className="space-y-2 text-sm text-gray-400">
+                                        <li>• What is the business model?</li>
+                                        <li>• What are growth opportunities?</li>
+                                        <li>• What are the main risks?</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        // Footer
+        const Footer = () => (
+            <footer className="py-16 px-6 border-t border-white/5">
+                <div className="max-w-7xl mx-auto">
+                    <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <div className="flex items-center gap-3">
+                            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber to-amber-light flex items-center justify-center">
+                                <Icons.Camera />
+                            </div>
+                            <span className="font-display font-semibold text-xl">Imagen AI Research</span>
+                        </div>
+                        <div className="flex items-center gap-8 text-sm text-gray-500">
+                            <span>Founded: 2020</span>
+                            <span>HQ: Israel</span>
+                            <span>Research: December 2024</span>
+                        </div>
+                    </div>
+                    <div className="mt-8 pt-8 border-t border-white/5 text-center text-sm text-gray-600">
+                        <p>This research portal compiles publicly available information about Imagen AI for educational purposes.</p>
+                        <p className="mt-2">Data sources: TechCrunch, BusinessWire, Trustpilot, G2, SaaSworthy, and photographer communities.</p>
+                    </div>
+                </div>
+            </footer>
+        );
+
+        // Main App
+        const App = () => {
+            const [activeSection, setActiveSection] = useState('overview');
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const sections = ['overview', 'products', 'market', 'icp', 'reviews', 'research'];
+                    const scrollPosition = window.scrollY + 200;
+
+                    for (const section of sections) {
+                        const element = document.getElementById(section);
+                        if (element) {
+                            const { offsetTop, offsetHeight } = element;
+                            if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+                                setActiveSection(section);
+                                break;
+                            }
+                        }
+                    }
+                };
+
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return (
+                <div className="min-h-screen bg-charcoal text-cream">
+                    <Navigation activeSection={activeSection} />
+                    <HeroSection />
+                    <div className="section-divider"></div>
+                    <ProductsSection />
+                    <MarketSection />
+                    <div className="section-divider"></div>
+                    <ICPSection />
+                    <ReviewsSection />
+                    <div className="section-divider"></div>
+                    <ResearchSection />
+                    <Footer />
+                </div>
+            );
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
+
