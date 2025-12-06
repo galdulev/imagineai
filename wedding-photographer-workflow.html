@@ -4,34 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wedding Photographer Workflow | Imagen AI</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-primary: #000000;
-            --bg-secondary: #0a0a0a;
-            --bg-card: #141414;
-            --bg-card-hover: #1a1a1a;
-            --text-primary: #f5f5f7;
-            --text-secondary: #86868b;
-            --text-tertiary: #6e6e73;
-            --accent-blue: #2997ff;
-            --accent-purple: #bf5af2;
-            --accent-green: #30d158;
-            --accent-orange: #ff9f0a;
-            --accent-pink: #ff375f;
-            --accent-teal: #64d2ff;
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --gradient-hero: linear-gradient(180deg, #1a1a2e 0%, #000000 100%);
-            --gradient-card: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-            --shadow-glow: 0 0 60px rgba(41, 151, 255, 0.15);
-        }
-
+        /* ═══════════════════════════════════════════════════════════════
+           RESET & VARIABLES
+           ═══════════════════════════════════════════════════════════════ */
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        :root {
+            /* Colors */
+            --bg: #000000;
+            --surface: #0a0a0a;
+            --border: rgba(255, 255, 255, 0.1);
+            --text: #ffffff;
+            --text-dim: rgba(255, 255, 255, 0.6);
+            --text-dimmer: rgba(255, 255, 255, 0.4);
+            
+            /* Accent */
+            --accent: #0ea5e9;
+            --accent-dim: rgba(14, 165, 233, 0.1);
+            --green: #10b981;
+            
+            /* Spacing */
+            --gap: 24px;
         }
 
         html {
@@ -39,65 +38,87 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
         }
 
-        /* Navigation */
-        nav {
+        /* ═══════════════════════════════════════════════════════════════
+           NAVIGATION TABS
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .nav {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            background: rgba(0, 0, 0, 0.72);
-            backdrop-filter: saturate(180%) blur(20px);
-            -webkit-backdrop-filter: saturate(180%) blur(20px);
-            border-bottom: 1px solid var(--border-subtle);
+            z-index: 100;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
         }
 
-        .nav-content {
+        .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
-            height: 52px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .nav-logo {
-            font-size: 18px;
-            font-weight: 600;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .nav-links {
+            padding: 0 32px;
             display: flex;
             gap: 32px;
+            height: 60px;
+            align-items: center;
         }
 
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
+        .nav-tabs {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-tab {
+            padding: 8px 16px;
             font-size: 14px;
-            font-weight: 400;
-            transition: color 0.2s ease;
+            font-weight: 500;
+            color: var(--text-dim);
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
+        .nav-tab:hover {
+            color: var(--text);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Hero Section */
+        .nav-tab.active {
+            color: var(--text);
+            background: var(--accent-dim);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════════════════════════════ */
+        
         .hero {
             min-height: 100vh;
             display: flex;
@@ -105,67 +126,59 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 120px 24px 80px;
-            background: var(--gradient-hero);
+            padding: 180px 32px 80px;
             position: relative;
-            overflow: hidden;
         }
 
         .hero::before {
             content: '';
             position: absolute;
-            top: 50%;
+            top: 0;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translateX(-50%);
             width: 800px;
             height: 800px;
-            background: radial-gradient(circle, rgba(41, 151, 255, 0.08) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
             pointer-events: none;
         }
 
-        .hero-eyebrow {
-            font-size: 17px;
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-bottom: 32px;
             font-weight: 500;
-            color: var(--accent-blue);
-            margin-bottom: 16px;
-            letter-spacing: 0.02em;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease forwards;
         }
 
-        .hero-title {
-            font-size: clamp(48px, 8vw, 80px);
+        .hero h1 {
+            font-size: 72px;
             font-weight: 700;
-            letter-spacing: -0.03em;
-            line-height: 1.05;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
             margin-bottom: 24px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.1s forwards;
         }
 
-        .hero-title span {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+        .hero h1 .gradient {
+            background: linear-gradient(135deg, var(--accent), var(--green));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .hero-subtitle {
-            font-size: 21px;
-            font-weight: 400;
-            color: var(--text-secondary);
-            max-width: 600px;
+        .hero p {
+            font-size: 20px;
+            color: var(--text-dim);
             margin-bottom: 48px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.2s forwards;
+            max-width: 600px;
         }
 
         .hero-stats {
             display: flex;
             gap: 64px;
-            margin-top: 32px;
-            opacity: 0;
-            animation: fadeInUp 0.8s ease 0.3s forwards;
         }
 
         .stat {
@@ -176,25 +189,23 @@
             font-size: 56px;
             font-weight: 700;
             letter-spacing: -0.03em;
-            background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            line-height: 1;
         }
 
         .stat-label {
-            font-size: 14px;
-            color: var(--text-tertiary);
-            margin-top: 4px;
+            font-size: 12px;
+            color: var(--text-dimmer);
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            margin-top: 8px;
         }
 
-        /* Section Styles */
+        /* ═══════════════════════════════════════════════════════════════
+           SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        
         section {
-            padding: 120px 24px;
-            max-width: 1200px;
-            margin: 0 auto;
+            padding: 120px 0;
         }
 
         .section-header {
@@ -202,406 +213,418 @@
             margin-bottom: 80px;
         }
 
-        .section-eyebrow {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--accent-blue);
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 16px;
-        }
-
         .section-title {
-            font-size: clamp(32px, 5vw, 48px);
+            font-size: 48px;
             font-weight: 700;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.03em;
             margin-bottom: 16px;
         }
 
         .section-subtitle {
-            font-size: 19px;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
+            font-size: 18px;
+            color: var(--text-dim);
         }
 
-        /* Workflow Timeline */
-        .workflow-container {
+        /* ═══════════════════════════════════════════════════════════════
+           TIMELINE
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .timeline {
             position: relative;
         }
 
-        .workflow-phase {
-            margin-bottom: 80px;
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+            transform: translateX(-50%);
+        }
+
+        .phase {
+            position: relative;
+            margin-bottom: 120px;
+        }
+
+        .phase-dot {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            background: var(--accent);
+            border: 4px solid var(--bg);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
         }
 
         .phase-header {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 32px;
+            text-align: center;
+            margin-bottom: 48px;
         }
 
-        .phase-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
+        .phase-name {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
         }
 
-        .phase-icon.pre { background: linear-gradient(135deg, var(--accent-orange), #ff6b35); }
-        .phase-icon.day { background: linear-gradient(135deg, var(--accent-pink), #ff2d55); }
-        .phase-icon.post { background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); }
-        .phase-icon.delivery { background: linear-gradient(135deg, var(--accent-green), #00c853); }
-        .phase-icon.products { background: linear-gradient(135deg, var(--accent-teal), #5ac8fa); }
-        .phase-icon.archive { background: linear-gradient(135deg, #8e8e93, #636366); }
-
-        .phase-title {
-            font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -0.01em;
+        .phase-time {
+            font-size: 14px;
+            color: var(--text-dim);
         }
 
-        .phase-badge {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            padding: 6px 14px;
-            font-size: 13px;
-            color: var(--text-secondary);
-            margin-left: auto;
-        }
-
-        .workflow-steps {
+        /* ═══════════════════════════════════════════════════════════════
+           STEPS GRID
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .steps {
             display: grid;
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: var(--gap);
         }
 
-        .step-card {
-            background: var(--gradient-card);
-            border: 1px solid var(--border-subtle);
-            border-radius: 20px;
-            padding: 28px 32px;
-            display: grid;
-            grid-template-columns: 1fr auto auto auto;
-            align-items: center;
-            gap: 32px;
+        .step {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
             transition: all 0.3s ease;
         }
 
-        .step-card:hover {
-            background: var(--bg-card-hover);
-            border-color: rgba(255, 255, 255, 0.12);
-            transform: translateY(-2px);
+        .step:hover {
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px);
         }
 
-        .step-card.ai-powered {
-            background: linear-gradient(135deg, rgba(41, 151, 255, 0.08), rgba(191, 90, 242, 0.08));
-            border-color: rgba(41, 151, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .step-card.ai-powered::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--accent-blue), var(--accent-purple), transparent);
-        }
-
-        .step-info {
+        .step-header {
             display: flex;
-            flex-direction: column;
-            gap: 4px;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 16px;
         }
 
-        .step-name {
-            font-size: 18px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-badge {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 6px;
+        .step-number {
+            font-size: 11px;
+            color: var(--text-dimmer);
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .step-description {
-            font-size: 14px;
-            color: var(--text-secondary);
+            letter-spacing: 0.1em;
+            font-weight: 600;
         }
 
         .step-time {
-            text-align: right;
+            font-size: 13px;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-weight: 500;
         }
 
-        .time-label {
-            font-size: 11px;
-            color: var(--text-tertiary);
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            margin-bottom: 4px;
-        }
-
-        .time-value {
-            font-size: 17px;
+        .step-name {
+            font-size: 20px;
             font-weight: 600;
-            font-variant-numeric: tabular-nums;
+            margin-bottom: 12px;
         }
 
-        .time-value.old {
-            color: var(--text-tertiary);
-            text-decoration: line-through;
-        }
-
-        .time-value.new {
-            color: var(--accent-green);
-        }
-
-        .time-saved {
-            background: rgba(48, 209, 88, 0.15);
-            color: var(--accent-green);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 14px;
-            font-weight: 600;
-            white-space: nowrap;
+        .step-desc {
+            font-size: 15px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 20px;
         }
 
         .step-tools {
             display: flex;
+            flex-wrap: wrap;
             gap: 8px;
         }
 
         .tool-tag {
-            background: var(--bg-card);
-            border: 1px solid var(--border-subtle);
-            padding: 6px 12px;
-            border-radius: 8px;
             font-size: 12px;
-            color: var(--text-secondary);
+            color: var(--text-dimmer);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 10px;
+            border-radius: 4px;
         }
 
-        /* Comparison Section */
-        .comparison-section {
-            background: var(--bg-secondary);
-            border-radius: 32px;
-            padding: 80px;
-            margin: 80px 0;
-            border: 1px solid var(--border-subtle);
+        /* ═══════════════════════════════════════════════════════════════
+           AI SECTION
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .ai-section {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
         }
 
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 48px;
-            margin-top: 48px;
+        .ai-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, var(--accent-dim) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        .comparison-card {
-            background: var(--bg-card);
-            border-radius: 24px;
-            padding: 40px;
-            border: 1px solid var(--border-subtle);
-        }
-
-        .comparison-card.before {
-            opacity: 0.7;
-        }
-
-        .comparison-card.after {
-            background: linear-gradient(135deg, rgba(41, 151, 255, 0.1), rgba(191, 90, 242, 0.1));
-            border-color: rgba(41, 151, 255, 0.3);
-            box-shadow: var(--shadow-glow);
-        }
-
-        .comparison-label {
-            font-size: 13px;
-            font-weight: 600;
+        .ai-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--accent-dim);
+            border: 1px solid rgba(14, 165, 233, 0.3);
+            border-radius: 100px;
+            font-size: 11px;
+            color: var(--accent);
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            margin-bottom: 16px;
-        }
-
-        .comparison-card.before .comparison-label { color: var(--text-tertiary); }
-        .comparison-card.after .comparison-label { color: var(--accent-blue); }
-
-        .comparison-hours {
-            font-size: 72px;
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1;
-            margin-bottom: 8px;
-        }
-
-        .comparison-card.before .comparison-hours { color: var(--text-secondary); }
-        .comparison-card.after .comparison-hours {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .comparison-unit {
-            font-size: 17px;
-            color: var(--text-tertiary);
-        }
-
-        .comparison-breakdown {
-            margin-top: 32px;
-            padding-top: 24px;
-            border-top: 1px solid var(--border-subtle);
-        }
-
-        .breakdown-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 12px 0;
-            font-size: 15px;
-        }
-
-        .breakdown-item span:first-child {
-            color: var(--text-secondary);
-        }
-
-        .breakdown-item span:last-child {
             font-weight: 600;
-            font-variant-numeric: tabular-nums;
-        }
-
-        /* Big Number Highlight */
-        .highlight-section {
-            text-align: center;
-            padding: 120px 24px;
-            position: relative;
-        }
-
-        .highlight-number {
-            font-size: clamp(80px, 15vw, 180px);
-            font-weight: 700;
-            letter-spacing: -0.04em;
-            line-height: 1;
-            background: linear-gradient(135deg, var(--accent-green), var(--accent-teal));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
             margin-bottom: 24px;
         }
 
-        .highlight-label {
-            font-size: 24px;
-            color: var(--text-secondary);
-            font-weight: 400;
+        .ai-cards {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            gap: 32px;
         }
 
-        /* Footer */
-        footer {
+        .ai-card {
+            background: rgba(14, 165, 233, 0.05);
+            border: 1px solid rgba(14, 165, 233, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .ai-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .ai-card-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .ai-card-number {
+            font-size: 11px;
+            color: var(--text-dimmer);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .ai-card-desc {
+            font-size: 16px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .ai-comparison {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 24px;
+            align-items: center;
+        }
+
+        .ai-time {
             text-align: center;
-            padding: 48px 24px;
-            border-top: 1px solid var(--border-subtle);
-            color: var(--text-tertiary);
-            font-size: 13px;
+            padding: 24px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+        }
+
+        .ai-time-label {
+            font-size: 11px;
+            color: var(--text-dimmer);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+        }
+
+        .ai-time-value {
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .ai-time-old {
+            color: var(--text-dimmer);
+            text-decoration: line-through;
+        }
+
+        .ai-time-new {
+            color: var(--accent);
+        }
+
+        .ai-arrow {
+            font-size: 24px;
+            color: var(--text-dimmer);
+        }
+
+        .ai-savings {
+            display: inline-block;
+            margin-top: 24px;
+            padding: 8px 16px;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 100px;
+            font-size: 14px;
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SUMMARY
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .summary {
+            text-align: center;
+        }
+
+        .summary-number {
+            font-size: 120px;
+            font-weight: 700;
+            letter-spacing: -0.04em;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent), var(--green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .summary-label {
+            font-size: 24px;
+            color: var(--text-dim);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        
+        footer {
+            padding: 80px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-size: 14px;
+            color: var(--text-dimmer);
         }
 
         footer a {
-            color: var(--accent-blue);
+            color: var(--accent);
             text-decoration: none;
         }
 
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
             }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 32px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .timeline::before {
+                left: 0;
+            }
+
+            .phase-dot {
+                left: 0;
+                transform: translateX(-50%);
+            }
+
+            .ai-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .ai-arrow {
+                transform: rotate(90deg);
+            }
+
+            .summary-number {
+                font-size: 80px;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           ANIMATIONS
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
 
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s ease;
-        }
-
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .hero-stats {
-                flex-direction: column;
-                gap: 32px;
-            }
-
-            .comparison-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .comparison-section {
-                padding: 48px 24px;
-                border-radius: 24px;
-            }
-
-            .step-card {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .step-time {
-                text-align: left;
-                display: flex;
-                gap: 24px;
-            }
-
-            .nav-links {
-                display: none;
-            }
-
-            .phase-badge {
-                display: none;
-            }
-        }
+        .fade-in:nth-child(1) { animation-delay: 0s; }
+        .fade-in:nth-child(2) { animation-delay: 0.1s; }
+        .fade-in:nth-child(3) { animation-delay: 0.2s; }
+        .fade-in:nth-child(4) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-content">
-            <div class="nav-logo">Imagen AI</div>
-            <div class="nav-links">
-                <a href="#workflow">Workflow</a>
-                <a href="#comparison">Time Saved</a>
-                <a href="#tools">Tools</a>
+
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="wedding">Wedding</button>
+                <button class="nav-tab" data-tab="event">Event</button>
+                <button class="nav-tab" data-tab="portrait">Portrait</button>
+                <button class="nav-tab" data-tab="realestate">Real Estate</button>
             </div>
         </div>
     </nav>
 
+    <!-- Wedding Tab -->
+    <div class="tab-content active" id="wedding">
+
+    <!-- Hero -->
     <section class="hero">
-        <p class="hero-eyebrow">The Complete Guide</p>
-        <h1 class="hero-title">Wedding Photographer<br><span>Workflow</span></h1>
-        <p class="hero-subtitle">From booking to delivery. Every step, every tool, every minute—and how AI transforms your post-production.</p>
-        
+        <div class="hero-badge">Complete Workflow Guide</div>
+        <h1>
+            Wedding Photographer<br>
+            <span class="gradient">Workflow</span>
+        </h1>
+        <p>From first inquiry to final delivery. Every step, every tool, every minute—visualized.</p>
         <div class="hero-stats">
             <div class="stat">
                 <div class="stat-value">17</div>
-                <div class="stat-label">Workflow Steps</div>
+                <div class="stat-label">Steps</div>
             </div>
             <div class="stat">
                 <div class="stat-value">25h</div>
@@ -609,464 +632,1309 @@
             </div>
             <div class="stat">
                 <div class="stat-value">96%</div>
-                <div class="stat-label">Faster Editing</div>
+                <div class="stat-label">Faster</div>
             </div>
         </div>
     </section>
 
-    <section id="workflow" class="workflow-container">
-        <div class="section-header">
-            <p class="section-eyebrow">Step by Step</p>
-            <h2 class="section-title">The Complete Workflow</h2>
-            <p class="section-subtitle">Every phase of a wedding photographer's journey, from first inquiry to final archive.</p>
-        </div>
+    <!-- Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
 
-        <!-- Pre-Wedding Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon pre">📋</div>
-                <h3 class="phase-title">Pre-Wedding</h3>
-                <span class="phase-badge">1-2 hours total</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Booking & Contract</div>
-                        <div class="step-description">Client inquiry, quote, contract signing, and deposit collection</div>
+                <!-- Phase 1: Pre-Wedding -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Pre-Wedding</h2>
+                        <p class="phase-time">1-2 hours total</p>
                     </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">1-2 hrs</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">HoneyBook</span>
-                        <span class="tool-tag">Dubsado</span>
-                        <span class="tool-tag">Studio Ninja</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Wedding Day Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon day">📸</div>
-                <h3 class="phase-title">Wedding Day</h3>
-                <span class="phase-badge">8.5-13 hours total</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Shoot</div>
-                        <div class="step-description">Photograph the wedding — capture 2,000-5,000 images</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">8-12 hrs</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Camera</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Backup</div>
-                        <div class="step-description">Copy memory cards, create redundant backups</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30-60 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">External Drives</span>
-                        <span class="tool-tag">Cloud</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Post-Production Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon post">✨</div>
-                <h3 class="phase-title">Post-Production</h3>
-                <span class="phase-badge">Was 17-29 hrs → Now 2 hrs</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Import</div>
-                        <div class="step-description">Import RAW files into Adobe Lightroom</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">15-30 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Lightroom</span>
-                    </div>
-                </div>
-                <div class="step-card ai-powered">
-                    <div class="step-info">
-                        <div class="step-name">
-                            Cull
-                            <span class="ai-badge">AI Powered</span>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 1</span>
+                                <span class="step-time">1-2 hrs</span>
+                            </div>
+                            <h3 class="step-name">Booking & Contract</h3>
+                            <p class="step-desc">Client inquiry, quote, contract signing, and deposit collection</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">HoneyBook</span>
+                                <span class="tool-tag">Dubsado</span>
+                                <span class="tool-tag">Studio Ninja</span>
+                            </div>
                         </div>
-                        <div class="step-description">AI selects best photos based on sharpness, exposure, eyes, expression</div>
                     </div>
-                    <div class="step-time">
-                        <div class="time-label">Before</div>
-                        <div class="time-value old">2-4 hrs</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Now</div>
-                        <div class="time-value new">30 min</div>
-                    </div>
-                    <div class="time-saved">Save 3.5 hrs</div>
                 </div>
-                <div class="step-card ai-powered">
-                    <div class="step-info">
-                        <div class="step-name">
-                            Edit
-                            <span class="ai-badge">AI Powered</span>
+
+                <!-- Phase 2: Wedding Day -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Wedding Day</h2>
+                        <p class="phase-time">8.5-13 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 2</span>
+                                <span class="step-time">8-12 hrs</span>
+                            </div>
+                            <h3 class="step-name">Shoot</h3>
+                            <p class="step-desc">Photograph the wedding — capture 2,000-5,000 images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Camera</span>
+                                <span class="tool-tag">Lenses</span>
+                            </div>
                         </div>
-                        <div class="step-description">AI applies your personal editing style to every photo in under 0.5s each</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Before</div>
-                        <div class="time-value old">15-25 hrs</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Now</div>
-                        <div class="time-value new">5-10 min</div>
-                    </div>
-                    <div class="time-saved">Save 24 hrs</div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Fine-Tune</div>
-                        <div class="step-description">Manual adjustments on ~10% of images that need extra attention</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">1-2 hrs</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Lightroom</span>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 3</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Backup</h3>
+                            <p class="step-desc">Copy memory cards, create redundant backups</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Cloud</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Export</div>
-                        <div class="step-description">Export final JPEGs for client delivery</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30-60 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Lightroom</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Client Delivery Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon delivery">🔗</div>
-                <h3 class="phase-title">Client Delivery</h3>
-                <span class="phase-badge">1-2 hours total</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Upload to Gallery</div>
-                        <div class="step-description">Upload exported photos to online gallery platform</div>
+                <!-- Phase 3: Post-Production -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Post-Production</h2>
+                        <p class="phase-time">Was 17-29 hrs → Now 2 hrs</p>
                     </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30-60 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Pic-Time</span>
-                        <span class="tool-tag">Pixieset</span>
-                        <span class="tool-tag">ShootProof</span>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 4</span>
+                                <span class="step-time">15-30 min</span>
+                            </div>
+                            <h3 class="step-name">Import</h3>
+                            <p class="step-desc">Import RAW files into Adobe Lightroom</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Customize Gallery</div>
-                        <div class="step-description">Add branding, cover image, music, and gallery settings</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">15-30 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Gallery Platform</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Send Link to Client</div>
-                        <div class="step-description">Email the gallery link with viewing instructions</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">5-10 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Email</span>
-                        <span class="tool-tag">CRM</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Client Reviews</div>
-                        <div class="step-description">Client views gallery, marks favorites, leaves comments</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value" style="color: var(--text-tertiary);">Client's time</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Gallery Platform</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Products & Sales Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon products">📦</div>
-                <h3 class="phase-title">Products & Sales</h3>
-                <span class="phase-badge">4.5-9 hours total</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Print Orders</div>
-                        <div class="step-description">Process client print and product orders through lab</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30-60 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">WHCC</span>
-                        <span class="tool-tag">Miller's</span>
-                        <span class="tool-tag">Bay Photo</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Album Design</div>
-                        <div class="step-description">Design wedding album spreads with client's selected images</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">3-6 hrs</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">SmartAlbums</span>
-                        <span class="tool-tag">Fundy</span>
-                        <span class="tool-tag">Album Stomp</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Album Revisions</div>
-                        <div class="step-description">Client feedback, layout changes, and final approval</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">1-2 hrs</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Album Software</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Final Steps Phase -->
-        <div class="workflow-phase fade-in">
-            <div class="phase-header">
-                <div class="phase-icon archive">💾</div>
-                <h3 class="phase-title">Final Steps</h3>
-                <span class="phase-badge">1-2 hours total</span>
-            </div>
-            <div class="workflow-steps">
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Deliver Products</div>
-                        <div class="step-description">Ship album, USB drives, and print products to client</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">Shipping</span>
-                    </div>
-                </div>
-                <div class="step-card">
-                    <div class="step-info">
-                        <div class="step-name">Archive & Backup</div>
-                        <div class="step-description">Long-term storage of RAW files and edited images</div>
-                    </div>
-                    <div class="step-time">
-                        <div class="time-label">Duration</div>
-                        <div class="time-value">30-60 min</div>
-                    </div>
-                    <div class="step-tools">
-                        <span class="tool-tag">External Drives</span>
-                        <span class="tool-tag">Backblaze</span>
-                        <span class="tool-tag">Imagen Cloud</span>
-                    </div>
-                </div>
             </div>
         </div>
     </section>
 
-    <!-- Comparison Section -->
-    <section id="comparison">
-        <div class="comparison-section fade-in">
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="container">
             <div class="section-header">
-                <p class="section-eyebrow">The Difference</p>
-                <h2 class="section-title">Before & After Imagen AI</h2>
-                <p class="section-subtitle">See how AI transforms your post-production workflow</p>
+                <div class="ai-badge">AI-Powered</div>
+                <h2 class="section-title">This is where the magic happens</h2>
+                <p class="section-subtitle">Imagen AI transforms the most time-consuming steps into minutes</p>
             </div>
 
-            <div class="comparison-grid">
-                <div class="comparison-card before">
-                    <div class="comparison-label">Without AI</div>
-                    <div class="comparison-hours">35-55</div>
-                    <div class="comparison-unit">hours per wedding</div>
-                    <div class="comparison-breakdown">
-                        <div class="breakdown-item">
-                            <span>Culling</span>
-                            <span>2-4 hrs</span>
+            <div class="ai-cards">
+                <!-- Cull -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Cull</h3>
+                        <span class="ai-card-number">Step 5</span>
+                    </div>
+                    <p class="ai-card-desc">AI selects the best photos based on sharpness, exposure, eyes open, expressions, and composition — grouping duplicates automatically.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">2-4 hrs</div>
                         </div>
-                        <div class="breakdown-item">
-                            <span>Editing</span>
-                            <span>15-25 hrs</span>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">30 min</div>
                         </div>
-                        <div class="breakdown-item">
-                            <span>Other steps</span>
-                            <span>18-26 hrs</span>
+                    </div>
+                    <div class="ai-savings">Save 3.5 hours</div>
+                </div>
+
+                <!-- Edit -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Edit</h3>
+                        <span class="ai-card-number">Step 6</span>
+                    </div>
+                    <p class="ai-card-desc">AI applies your personal editing style to every photo in under 0.5 seconds each. Exposure, color, tone curves, HSL, sharpening — all learned from your previous work.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">15-25 hrs</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">5-10 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 24 hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Fine-tune & Export -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 7</span>
+                                <span class="step-time">1-2 hrs</span>
+                            </div>
+                            <h3 class="step-name">Fine-Tune</h3>
+                            <p class="step-desc">Manual adjustments on ~10% of images that need extra attention</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 8</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Export</h3>
+                            <p class="step-desc">Export final JPEGs for client delivery</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="comparison-card after">
-                    <div class="comparison-label">With Imagen AI</div>
-                    <div class="comparison-hours">20-30</div>
-                    <div class="comparison-unit">hours per wedding</div>
-                    <div class="comparison-breakdown">
-                        <div class="breakdown-item">
-                            <span>Culling</span>
-                            <span>30 min</span>
+
+                <!-- Phase 4: Client Delivery -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Client Delivery</h2>
+                        <p class="phase-time">1-2 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 9</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Upload to Gallery</h3>
+                            <p class="step-desc">Upload exported photos to online gallery platform</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Pic-Time</span>
+                                <span class="tool-tag">Pixieset</span>
+                                <span class="tool-tag">ShootProof</span>
+                            </div>
                         </div>
-                        <div class="breakdown-item">
-                            <span>Editing</span>
-                            <span>5-10 min</span>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 10</span>
+                                <span class="step-time">15-30 min</span>
+                            </div>
+                            <h3 class="step-name">Customize Gallery</h3>
+                            <p class="step-desc">Add branding, cover image, music, and settings</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Gallery Platform</span>
+                            </div>
                         </div>
-                        <div class="breakdown-item">
-                            <span>Fine-tuning</span>
-                            <span>1-2 hrs</span>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 11</span>
+                                <span class="step-time">5-10 min</span>
+                            </div>
+                            <h3 class="step-name">Send Link to Client</h3>
+                            <p class="step-desc">Email gallery link with viewing instructions</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Email</span>
+                                <span class="tool-tag">CRM</span>
+                            </div>
                         </div>
-                        <div class="breakdown-item">
-                            <span>Other steps</span>
-                            <span>18-26 hrs</span>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 12</span>
+                                <span class="step-time">Client's time</span>
+                            </div>
+                            <h3 class="step-name">Client Reviews</h3>
+                            <p class="step-desc">Client views gallery, marks favorites, shares with family</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Gallery Platform</span>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Phase 5: Products & Sales -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Products & Sales</h2>
+                        <p class="phase-time">4.5-9 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 13</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Print Orders</h3>
+                            <p class="step-desc">Process client print and product orders</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">WHCC</span>
+                                <span class="tool-tag">Miller's</span>
+                                <span class="tool-tag">Bay Photo</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 14</span>
+                                <span class="step-time">3-6 hrs</span>
+                            </div>
+                            <h3 class="step-name">Album Design</h3>
+                            <p class="step-desc">Design wedding album spreads with selected images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">SmartAlbums</span>
+                                <span class="tool-tag">Fundy</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 15</span>
+                                <span class="step-time">1-2 hrs</span>
+                            </div>
+                            <h3 class="step-name">Album Revisions</h3>
+                            <p class="step-desc">Client feedback, layout changes, final approval</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Album Software</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6: Final Steps -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Final Steps</h2>
+                        <p class="phase-time">1-2 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 16</span>
+                                <span class="step-time">30 min</span>
+                            </div>
+                            <h3 class="step-name">Deliver Products</h3>
+                            <p class="step-desc">Ship album, USB drives, and print products</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Shipping</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 17</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Archive & Backup</h3>
+                            <p class="step-desc">Long-term storage of RAW and edited images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Backblaze</span>
+                                <span class="tool-tag">Imagen Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </section>
 
-    <!-- Highlight Section -->
-    <section class="highlight-section fade-in">
-        <div class="highlight-number">25 hrs</div>
-        <div class="highlight-label">saved on every wedding</div>
+    <!-- Summary -->
+    <section class="summary">
+        <div class="summary-number">25 hrs</div>
+        <div class="summary-label">saved on every wedding</div>
     </section>
 
-    <!-- Tools Section -->
-    <section id="tools">
-        <div class="section-header">
-            <p class="section-eyebrow">Ecosystem</p>
-            <h2 class="section-title">Tools of the Trade</h2>
-            <p class="section-subtitle">The complete toolkit for modern wedding photographers</p>
-        </div>
-
-        <div class="comparison-section fade-in" style="margin-top: 0;">
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-blue); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">CRM & Booking</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">HoneyBook • Dubsado • Studio Ninja • 17hats</p>
-                </div>
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-purple); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Editing & Culling</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">Imagen AI • Adobe Lightroom • Aftershoot • Photo Mechanic</p>
-                </div>
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-green); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Gallery Delivery</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">Pic-Time • Pixieset • ShootProof • CloudSpot • PASS</p>
-                </div>
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-orange); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Album Design</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">SmartAlbums • Fundy Designer • Album Stomp • Pixellu</p>
-                </div>
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-pink); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Print Labs</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">WHCC • Miller's Lab • Bay Photo • Nations Photo Lab</p>
-                </div>
-                <div style="padding: 24px;">
-                    <h4 style="color: var(--accent-teal); font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 16px;">Backup & Storage</h4>
-                    <p style="color: var(--text-secondary); font-size: 15px; line-height: 1.8;">Imagen Cloud • Backblaze • Google Drive • External Drives</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- Footer -->
     <footer>
-        <p>Wedding Photographer Workflow Guide • Data compiled from <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
-        <p style="margin-top: 8px;">December 2024</p>
+        <div class="container">
+            <p>Wedding Photographer Workflow Guide • Data from <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
+            <p style="margin-top: 8px;">December 2024</p>
+        </div>
     </footer>
 
+    </div>
+    <!-- End Wedding Tab -->
+
+    <!-- Event Tab -->
+    <div class="tab-content" id="event">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Complete Workflow Guide</div>
+        <h1>
+            Event Photographer<br>
+            <span class="gradient">Workflow</span>
+        </h1>
+        <p>From booking to delivery. Every step optimized for high-volume event photography.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">14</div>
+                <div class="stat-label">Steps</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">20h</div>
+                <div class="stat-label">Time Saved</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">95%</div>
+                <div class="stat-label">Faster</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Phase 1: Pre-Event -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Pre-Event</h2>
+                        <p class="phase-time">1-2 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 1</span>
+                                <span class="step-time">1-2 hrs</span>
+                            </div>
+                            <h3 class="step-name">Booking & Planning</h3>
+                            <p class="step-desc">Client inquiry, quote, contract signing, event details discussion</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">HoneyBook</span>
+                                <span class="tool-tag">Dubsado</span>
+                                <span class="tool-tag">Google Calendar</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Event Day -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Event Day</h2>
+                        <p class="phase-time">4-8 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 2</span>
+                                <span class="step-time">3-6 hrs</span>
+                            </div>
+                            <h3 class="step-name">Shoot</h3>
+                            <p class="step-desc">Photograph the event — capture 1,000-3,000 images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Camera</span>
+                                <span class="tool-tag">Lenses</span>
+                                <span class="tool-tag">Flash</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 3</span>
+                                <span class="step-time">30-45 min</span>
+                            </div>
+                            <h3 class="step-name">Backup</h3>
+                            <p class="step-desc">Copy memory cards, create redundant backups</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Post-Production -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Post-Production</h2>
+                        <p class="phase-time">Was 12-18 hrs → Now 1.5 hrs</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 4</span>
+                                <span class="step-time">15-20 min</span>
+                            </div>
+                            <h3 class="step-name">Import</h3>
+                            <p class="step-desc">Import RAW files into Adobe Lightroom</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="ai-badge">AI-Powered</div>
+                <h2 class="section-title">Fast turnaround for event clients</h2>
+                <p class="section-subtitle">Imagen AI enables same-day or next-day delivery for event photography</p>
+            </div>
+
+            <div class="ai-cards">
+                <!-- Cull -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Cull</h3>
+                        <span class="ai-card-number">Step 5</span>
+                    </div>
+                    <p class="ai-card-desc">AI selects the best photos based on sharpness, exposure, expressions, and composition — perfect for high-volume event coverage.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">1.5-3 hrs</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">20 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 2.5 hours</div>
+                </div>
+
+                <!-- Edit -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Edit</h3>
+                        <span class="ai-card-number">Step 6</span>
+                    </div>
+                    <p class="ai-card-desc">AI applies consistent editing across all event photos — handles mixed lighting conditions and diverse shooting scenarios automatically.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">10-15 hrs</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-value ai-time-new">5-8 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 15 hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Fine-tune & Export -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 7</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Fine-Tune</h3>
+                            <p class="step-desc">Quick review and minor adjustments on key images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 8</span>
+                                <span class="step-time">20-30 min</span>
+                            </div>
+                            <h3 class="step-name">Export</h3>
+                            <p class="step-desc">Export final JPEGs for client delivery</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Client Delivery -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Client Delivery</h2>
+                        <p class="phase-time">1-1.5 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 9</span>
+                                <span class="step-time">30-45 min</span>
+                            </div>
+                            <h3 class="step-name">Upload to Gallery</h3>
+                            <p class="step-desc">Upload photos to online gallery or file transfer service</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Pic-Time</span>
+                                <span class="tool-tag">Pixieset</span>
+                                <span class="tool-tag">Dropbox</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 10</span>
+                                <span class="step-time">10-15 min</span>
+                            </div>
+                            <h3 class="step-name">Organize & Label</h3>
+                            <p class="step-desc">Add event details, organize by segments if needed</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Gallery Platform</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 11</span>
+                                <span class="step-time">5 min</span>
+                            </div>
+                            <h3 class="step-name">Send to Client</h3>
+                            <p class="step-desc">Email download link or gallery access to client</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Email</span>
+                                <span class="tool-tag">CRM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: Optional Products -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Optional Products</h2>
+                        <p class="phase-time">1-2 hours if requested</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 12</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Print Orders</h3>
+                            <p class="step-desc">Process any print or product orders from client</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Print Lab</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 13</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Highlight Reel</h3>
+                            <p class="step-desc">Create social media highlight reel if included</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Canva</span>
+                                <span class="tool-tag">Photoshop</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 6: Final Steps -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Final Steps</h2>
+                        <p class="phase-time">30-45 minutes total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 14</span>
+                                <span class="step-time">30-45 min</span>
+                            </div>
+                            <h3 class="step-name">Archive & Backup</h3>
+                            <p class="step-desc">Long-term storage of RAW and edited images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Backblaze</span>
+                                <span class="tool-tag">Imagen Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary">
+        <div class="summary-number">20 hrs</div>
+        <div class="summary-label">saved on every event</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Event Photographer Workflow Guide • Data from <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
+            <p style="margin-top: 8px;">December 2024</p>
+        </div>
+    </footer>
+
+    </div>
+    <!-- End Event Tab -->
+
+    <!-- Portrait Tab -->
+    <div class="tab-content" id="portrait">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Complete Workflow Guide</div>
+        <h1>
+            Portrait Photographer<br>
+            <span class="gradient">Workflow</span>
+        </h1>
+        <p>From booking to delivery. Streamlined workflow for portrait sessions and studio photography.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">13</div>
+                <div class="stat-label">Steps</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">12h</div>
+                <div class="stat-label">Time Saved</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">90%</div>
+                <div class="stat-label">Faster</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Phase 1: Pre-Session -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Pre-Session</h2>
+                        <p class="phase-time">1-2 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 1</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Booking & Consultation</h3>
+                            <p class="step-desc">Client inquiry, quote, contract signing, and session planning discussion</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">HoneyBook</span>
+                                <span class="tool-tag">Dubsado</span>
+                                <span class="tool-tag">Calendly</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 2</span>
+                                <span class="step-time">30-60 min</span>
+                            </div>
+                            <h3 class="step-name">Session Prep</h3>
+                            <p class="step-desc">Location scouting, outfit coordination, mood board creation</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Pinterest</span>
+                                <span class="tool-tag">Email</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: Session Day -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Session Day</h2>
+                        <p class="phase-time">2-3 hours total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 3</span>
+                                <span class="step-time">1-2 hrs</span>
+                            </div>
+                            <h3 class="step-name">Shoot</h3>
+                            <p class="step-desc">Portrait session — capture 150-500 images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Camera</span>
+                                <span class="tool-tag">Lenses</span>
+                                <span class="tool-tag">Lighting</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 4</span>
+                                <span class="step-time">15-30 min</span>
+                            </div>
+                            <h3 class="step-name">Backup</h3>
+                            <p class="step-desc">Copy memory cards, create redundant backups</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Post-Production -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Post-Production</h2>
+                        <p class="phase-time">Was 8-12 hrs → Now 1 hr</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 5</span>
+                                <span class="step-time">10-15 min</span>
+                            </div>
+                            <h3 class="step-name">Import</h3>
+                            <p class="step-desc">Import RAW files into Adobe Lightroom</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="ai-badge">AI-Powered</div>
+                <h2 class="section-title">Consistent style across all portraits</h2>
+                <p class="section-subtitle">Imagen AI ensures perfect skin tones and lighting consistency for your signature look</p>
+            </div>
+
+            <div class="ai-cards">
+                <!-- Cull -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Cull</h3>
+                        <span class="ai-card-number">Step 6</span>
+                    </div>
+                    <p class="ai-card-desc">AI selects the best portraits based on focus, expressions, eyes open, and pose quality — eliminating duplicates and unflattering shots.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">45-90 min</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">10 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 1 hour</div>
+                </div>
+
+                <!-- Edit -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Edit</h3>
+                        <span class="ai-card-number">Step 7</span>
+                    </div>
+                    <p class="ai-card-desc">AI applies your signature portrait style with perfect skin tones, consistent lighting, and your unique color grading — maintaining brand consistency.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">6-10 hrs</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">3-5 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 10 hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Fine-tune & Retouch -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 8</span>
+                                <span class="step-time">30-45 min</span>
+                            </div>
+                            <h3 class="step-name">Fine-Tune & Retouch</h3>
+                            <p class="step-desc">Detail retouching on final selects, skin smoothing, blemish removal</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                                <span class="tool-tag">Photoshop</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 9</span>
+                                <span class="step-time">15-20 min</span>
+                            </div>
+                            <h3 class="step-name">Export</h3>
+                            <p class="step-desc">Export final JPEGs for client delivery</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Client Delivery -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Client Delivery</h2>
+                        <p class="phase-time">1 hour total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 10</span>
+                                <span class="step-time">30 min</span>
+                            </div>
+                            <h3 class="step-name">Upload to Gallery</h3>
+                            <p class="step-desc">Upload photos to online gallery for client viewing</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Pixieset</span>
+                                <span class="tool-tag">Pic-Time</span>
+                                <span class="tool-tag">ShootProof</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 11</span>
+                                <span class="step-time">15 min</span>
+                            </div>
+                            <h3 class="step-name">Gallery Customization</h3>
+                            <p class="step-desc">Add branding, create collections, set up print store</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Gallery Platform</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 12</span>
+                                <span class="step-time">5 min</span>
+                            </div>
+                            <h3 class="step-name">Send to Client</h3>
+                            <p class="step-desc">Email gallery link and ordering instructions</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Email</span>
+                                <span class="tool-tag">CRM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 5: Final Steps -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Final Steps</h2>
+                        <p class="phase-time">30-45 minutes total</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 13</span>
+                                <span class="step-time">30-45 min</span>
+                            </div>
+                            <h3 class="step-name">Archive & Backup</h3>
+                            <p class="step-desc">Long-term storage of RAW and edited images</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drives</span>
+                                <span class="tool-tag">Backblaze</span>
+                                <span class="tool-tag">Imagen Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary">
+        <div class="summary-number">12 hrs</div>
+        <div class="summary-label">saved per portrait session</div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Portrait Photographer Workflow Guide • Data from <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
+            <p style="margin-top: 8px;">December 2024</p>
+        </div>
+    </footer>
+
+    </div>
+    <!-- End Portrait Tab -->
+
+    <!-- Real Estate Tab -->
+    <div class="tab-content" id="realestate">
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Complete Workflow Guide</div>
+        <h1>
+            Real Estate Photographer<br>
+            <span class="gradient">Workflow</span>
+        </h1>
+        <p>Speed is everything. Same-day delivery workflow for Airbnb, real estate agents, and property managers.</p>
+        <div class="hero-stats">
+            <div class="stat">
+                <div class="stat-value">10</div>
+                <div class="stat-label">Steps</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">4h</div>
+                <div class="stat-label">Time Saved</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">Same Day</div>
+                <div class="stat-label">Delivery</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Phase 1: Pre-Shoot -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Pre-Shoot</h2>
+                        <p class="phase-time">15-30 minutes</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 1</span>
+                                <span class="step-time">15-30 min</span>
+                            </div>
+                            <h3 class="step-name">Booking & Scheduling</h3>
+                            <p class="step-desc">Agent/host inquiry, quote, scheduling — often same-day or next-day turnaround</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Calendly</span>
+                                <span class="tool-tag">Email</span>
+                                <span class="tool-tag">Text</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2: On-Site -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">On-Site Shoot</h2>
+                        <p class="phase-time">1-2 hours per property</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 2</span>
+                                <span class="step-time">45-90 min</span>
+                            </div>
+                            <h3 class="step-name">Property Shoot</h3>
+                            <p class="step-desc">Capture 30-80 images per property — interiors, exteriors, amenities</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Wide-angle Lens</span>
+                                <span class="tool-tag">Tripod</span>
+                                <span class="tool-tag">Flash/HDR</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 3</span>
+                                <span class="step-time">5-10 min</span>
+                            </div>
+                            <h3 class="step-name">Quick Backup</h3>
+                            <p class="step-desc">Transfer to laptop on-site for immediate processing</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Laptop</span>
+                                <span class="tool-tag">Card Reader</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 3: Post-Production -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Post-Production</h2>
+                        <p class="phase-time">Was 3-4 hrs → Now 30 min</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 4</span>
+                                <span class="step-time">5 min</span>
+                            </div>
+                            <h3 class="step-name">Import</h3>
+                            <p class="step-desc">Import RAW files into Lightroom</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Section -->
+    <section class="ai-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="ai-badge">AI-Powered</div>
+                <h2 class="section-title">Same-day delivery is now possible</h2>
+                <p class="section-subtitle">Imagen AI enables real estate photographers to deliver listings the same day — a competitive advantage agents love</p>
+            </div>
+
+            <div class="ai-cards">
+                <!-- Cull -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Cull</h3>
+                        <span class="ai-card-number">Step 5</span>
+                    </div>
+                    <p class="ai-card-desc">AI quickly selects the best shots of each room — eliminating duplicates and choosing optimal angles automatically.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">20-30 min</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">3 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 25 minutes</div>
+                </div>
+
+                <!-- Edit -->
+                <div class="ai-card">
+                    <div class="ai-card-header">
+                        <h3 class="ai-card-title">Edit</h3>
+                        <span class="ai-card-number">Step 6</span>
+                    </div>
+                    <p class="ai-card-desc">AI applies consistent bright, clean real estate style — window pulls, exposure balancing, and color correction across all rooms.</p>
+                    <div class="ai-comparison">
+                        <div class="ai-time">
+                            <div class="ai-time-label">Before</div>
+                            <div class="ai-time-value ai-time-old">2-3 hrs</div>
+                        </div>
+                        <div class="ai-arrow">→</div>
+                        <div class="ai-time">
+                            <div class="ai-time-label">Now</div>
+                            <div class="ai-time-value ai-time-new">2 min</div>
+                        </div>
+                    </div>
+                    <div class="ai-savings">Save 3 hours</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Continue Timeline -->
+    <section>
+        <div class="container">
+            <div class="timeline">
+
+                <!-- Fine-tune & Export -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 7</span>
+                                <span class="step-time">10-15 min</span>
+                            </div>
+                            <h3 class="step-name">Quick Review</h3>
+                            <p class="step-desc">Fast check on key shots, minor adjustments if needed</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 8</span>
+                                <span class="step-time">5-10 min</span>
+                            </div>
+                            <h3 class="step-name">Export</h3>
+                            <p class="step-desc">Export web-ready and print-ready versions</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Lightroom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 4: Delivery -->
+                <div class="phase">
+                    <div class="phase-dot"></div>
+                    <div class="phase-header">
+                        <h2 class="phase-name">Delivery</h2>
+                        <p class="phase-time">15-30 minutes</p>
+                    </div>
+                    <div class="steps">
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 9</span>
+                                <span class="step-time">10-15 min</span>
+                            </div>
+                            <h3 class="step-name">Upload & Deliver</h3>
+                            <p class="step-desc">Upload to Dropbox/Google Drive and send download link to agent/host</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">Dropbox</span>
+                                <span class="tool-tag">Google Drive</span>
+                                <span class="tool-tag">WeTransfer</span>
+                            </div>
+                        </div>
+                        <div class="step fade-in">
+                            <div class="step-header">
+                                <span class="step-number">Step 10</span>
+                                <span class="step-time">5-10 min</span>
+                            </div>
+                            <h3 class="step-name">Archive</h3>
+                            <p class="step-desc">Quick backup for portfolio and future reference</p>
+                            <div class="step-tools">
+                                <span class="tool-tag">External Drive</span>
+                                <span class="tool-tag">Cloud</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary -->
+    <section class="summary">
+        <div class="summary-number">4 hrs</div>
+        <div class="summary-label">saved per property</div>
+    </section>
+
+    <!-- B2B Clients Section -->
+    <section style="padding: 80px 0; background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+        <div class="container">
+            <div class="section-header" style="margin-bottom: 48px;">
+                <h2 class="section-title" style="font-size: 32px;">Who Uses This Workflow</h2>
+                <p class="section-subtitle">B2B clients who need fast, consistent property photography</p>
+            </div>
+            <div class="steps">
+                <div class="step">
+                    <h3 class="step-name">Airbnb Hosts</h3>
+                    <p class="step-desc">Vacation rental owners who need professional listing photos to increase bookings and justify premium pricing</p>
+                </div>
+                <div class="step">
+                    <h3 class="step-name">Real Estate Agents</h3>
+                    <p class="step-desc">Agents who need same-day turnaround to get listings live fast and beat the competition</p>
+                </div>
+                <div class="step">
+                    <h3 class="step-name">Property Managers</h3>
+                    <p class="step-desc">Companies managing multiple properties who need consistent, scalable photography services</p>
+                </div>
+                <div class="step">
+                    <h3 class="step-name">VRBO / Booking.com Hosts</h3>
+                    <p class="step-desc">Short-term rental hosts across all platforms looking to stand out with professional imagery</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Real Estate Photographer Workflow Guide • Data from <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
+            <p style="margin-top: 8px;">December 2024</p>
+        </div>
+    </footer>
+
+    </div>
+    <!-- End Real Estate Tab -->
+
     <script>
-        // Intersection Observer for fade-in animations
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        });
+        // Tab switching
+        const tabs = document.querySelectorAll('.nav-tab');
+        const contents = document.querySelectorAll('.tab-content');
 
-        document.querySelectorAll('.fade-in').forEach(el => {
-            observer.observe(el);
-        });
-
-        // Smooth scroll for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const target = tab.dataset.tab;
+                
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Update active content
+                contents.forEach(c => c.classList.remove('active'));
+                document.getElementById(target).classList.add('active');
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
     </script>
+
 </body>
 </html>
-

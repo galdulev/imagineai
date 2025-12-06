@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>52 Photographer Problems | Wedding Photography Workflow</title>
+    <title>Photographer Problems Analysis | Wedding & Event Photography</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -29,6 +29,7 @@
             --accent-blue: #3b82f6;
             --accent-cyan: #06b6d4;
             --accent-pink: #ec4899;
+            --accent-orange: #f97316;
         }
 
         * {
@@ -54,6 +55,19 @@
             background: 
                 radial-gradient(ellipse 50% 40% at 30% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
                 radial-gradient(ellipse 40% 50% at 70% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%);
+            transition: background 0.5s ease;
+        }
+
+        .bg-gradient.event {
+            background: 
+                radial-gradient(ellipse 50% 40% at 30% 20%, rgba(249, 115, 22, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 50% at 70% 80%, rgba(234, 179, 8, 0.06) 0%, transparent 50%);
+        }
+
+        .bg-gradient.portrait {
+            background: 
+                radial-gradient(ellipse 50% 40% at 30% 20%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 50% at 70% 80%, rgba(168, 85, 247, 0.06) 0%, transparent 50%);
         }
 
         .grid-overlay {
@@ -72,7 +86,7 @@
         .header {
             position: relative;
             z-index: 10;
-            padding: 80px 48px 60px;
+            padding: 60px 48px 40px;
             border-bottom: 1px solid var(--border);
         }
 
@@ -96,13 +110,22 @@
             text-transform: uppercase;
             letter-spacing: 1.5px;
             margin-bottom: 24px;
+            transition: color 0.3s ease;
+        }
+
+        .badge.event {
+            color: var(--accent-orange);
+        }
+
+        .badge.portrait {
+            color: var(--accent-pink);
         }
 
         .badge::before {
             content: '';
             width: 8px;
             height: 8px;
-            background: var(--accent-purple);
+            background: currentColor;
             border-radius: 50%;
             animation: pulse 2s ease-in-out infinite;
         }
@@ -114,11 +137,11 @@
 
         h1 {
             font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(42px, 6vw, 72px);
+            font-size: clamp(36px, 5vw, 60px);
             font-weight: 700;
             line-height: 1.1;
             letter-spacing: -0.02em;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             background: linear-gradient(135deg, var(--text-white) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -126,10 +149,55 @@
         }
 
         .subtitle {
-            font-size: 20px;
+            font-size: 18px;
             color: var(--text-muted);
             max-width: 700px;
-            margin-bottom: 40px;
+            margin-bottom: 32px;
+        }
+
+        /* Segment Tabs */
+        .segment-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .segment-tab {
+            padding: 14px 28px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-muted);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .segment-tab:hover {
+            border-color: var(--border-bright);
+            color: var(--text-primary);
+        }
+
+        .segment-tab.active {
+            background: linear-gradient(135deg, var(--accent-purple) 0%, var(--accent-pink) 100%);
+            border-color: transparent;
+            color: var(--text-white);
+        }
+
+        .segment-tab.active.event {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--medium) 100%);
+        }
+
+        .segment-tab.active.portrait {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+        }
+
+        .segment-tab .icon {
+            font-size: 20px;
         }
 
         /* Stats Bar */
@@ -147,13 +215,22 @@
 
         .stat-value {
             font-family: 'JetBrains Mono', monospace;
-            font-size: 32px;
+            font-size: 28px;
             font-weight: 700;
             color: var(--accent-purple);
+            transition: color 0.3s ease;
+        }
+
+        .stat-value.event {
+            color: var(--accent-orange);
+        }
+
+        .stat-value.portrait {
+            color: var(--accent-pink);
         }
 
         .stat-label {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--text-dim);
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -164,7 +241,7 @@
             position: sticky;
             top: 0;
             z-index: 100;
-            background: rgba(10, 10, 15, 0.9);
+            background: rgba(10, 10, 15, 0.95);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
             padding: 16px 48px;
@@ -209,6 +286,21 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 60px 48px;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Summary Section */
@@ -324,6 +416,14 @@
             flex-shrink: 0;
         }
 
+        .phase-number.event {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--medium) 100%);
+        }
+
+        .phase-number.portrait {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
+        }
+
         .phase-info {
             flex: 1;
         }
@@ -373,6 +473,24 @@
             box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15);
         }
 
+        .problem-card.event:hover {
+            border-left-color: var(--accent-orange);
+            box-shadow: 0 12px 40px rgba(249, 115, 22, 0.15);
+        }
+
+        .problem-card.event {
+            border-left-color: var(--medium);
+        }
+
+        .problem-card.portrait {
+            border-left-color: var(--accent-pink);
+        }
+
+        .problem-card.portrait:hover {
+            border-left-color: var(--accent-pink);
+            box-shadow: 0 12px 40px rgba(236, 72, 153, 0.15);
+        }
+
         .problem-number {
             position: absolute;
             top: 16px;
@@ -415,6 +533,14 @@
             border-radius: 32px;
         }
 
+        .top-problems.event {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 179, 8, 0.05) 100%);
+        }
+
+        .top-problems.portrait {
+            background: linear-gradient(135deg, rgba(236, 72, 153, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
+        }
+
         .top-problems-title {
             font-size: 32px;
             font-weight: 700;
@@ -454,6 +580,14 @@
             transform: translateX(8px);
         }
 
+        .top-problem-item.event:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .top-problem-item.portrait:hover {
+            border-color: var(--accent-pink);
+        }
+
         .top-problem-rank {
             width: 56px;
             height: 56px;
@@ -467,6 +601,14 @@
             font-weight: 700;
             color: var(--text-white);
             flex-shrink: 0;
+        }
+
+        .top-problem-rank.event {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--medium) 100%);
+        }
+
+        .top-problem-rank.portrait {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
         }
 
         .top-problem-content {
@@ -491,18 +633,6 @@
         .top-problem-detail {
             font-size: 14px;
             color: var(--text-muted);
-        }
-
-        /* Footer */
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 40px 48px;
-            text-align: center;
-        }
-
-        .footer-text {
-            font-size: 14px;
-            color: var(--text-dim);
         }
 
         /* Unsolved Problems Section */
@@ -641,6 +771,10 @@
             border-left: 4px solid var(--accent-purple);
         }
 
+        .why-solve.event {
+            border-left-color: var(--accent-orange);
+        }
+
         .why-solve-title {
             font-size: 14px;
             font-weight: 700;
@@ -648,6 +782,18 @@
             margin-bottom: 12px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+
+        .why-solve.event .why-solve-title {
+            color: var(--accent-orange);
+        }
+
+        .why-solve.portrait {
+            border-left-color: var(--accent-pink);
+        }
+
+        .why-solve.portrait .why-solve-title {
+            color: var(--accent-pink);
         }
 
         .why-solve-list {
@@ -693,6 +839,10 @@
             border-radius: 20px;
         }
 
+        .strategic-rec.event {
+            border-color: var(--accent-orange);
+        }
+
         .strategic-rec-title {
             font-size: 24px;
             font-weight: 700;
@@ -733,6 +883,14 @@
             transform: translateX(8px);
         }
 
+        .priority-item.event:hover {
+            border-color: var(--accent-orange);
+        }
+
+        .priority-item.portrait:hover {
+            border-color: var(--accent-pink);
+        }
+
         .priority-number {
             width: 32px;
             height: 32px;
@@ -746,6 +904,14 @@
             font-weight: 700;
             color: var(--text-white);
             flex-shrink: 0;
+        }
+
+        .priority-number.event {
+            background: linear-gradient(135deg, var(--accent-orange) 0%, var(--medium) 100%);
+        }
+
+        .priority-number.portrait {
+            background: linear-gradient(135deg, var(--accent-pink) 0%, var(--accent-purple) 100%);
         }
 
         .priority-content {
@@ -779,6 +945,18 @@
             color: var(--low);
         }
 
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 48px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .header, main, .nav, footer {
@@ -787,7 +965,11 @@
             }
 
             h1 {
-                font-size: 36px;
+                font-size: 32px;
+            }
+
+            .segment-tabs {
+                flex-direction: column;
             }
 
             .problem-grid {
@@ -798,11 +980,7 @@
                 grid-template-columns: 1fr;
             }
 
-            .top-problems {
-                padding: 32px 24px;
-            }
-
-            .unsolved-section {
+            .top-problems, .unsolved-section {
                 padding: 32px 24px;
             }
 
@@ -813,814 +991,1470 @@
             .strategic-rec {
                 padding: 24px;
             }
+
+            .top-problem-item {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="bg-gradient"></div>
+    <div class="bg-gradient" id="bgGradient"></div>
     <div class="grid-overlay"></div>
 
     <header class="header">
         <div class="header-inner">
-            <div class="badge">Wedding Photography Research</div>
-            <h1>52 Photographer Problems</h1>
-            <p class="subtitle">A comprehensive breakdown of pain points across the entire wedding photography workflow, from booking to archival.</p>
+            <div class="badge" id="headerBadge">Photography Workflow Research</div>
+            <h1 id="mainTitle">Photographer Problems Analysis</h1>
+            <p class="subtitle" id="mainSubtitle">A comprehensive breakdown of pain points across photography workflows, from booking to archival.</p>
             
-            <div class="stats-bar">
-                <div class="stat-item">
-                    <div class="stat-value">52</div>
-                    <div class="stat-label">Total Problems</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">11</div>
-                    <div class="stat-label">Workflow Phases</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">30-40h</div>
-                    <div class="stat-label">Time Per Wedding</div>
-                </div>
-                <div class="stat-item">
-                    <div class="stat-value">96%</div>
-                    <div class="stat-label">AI Time Savings</div>
-                </div>
+            <!-- Segment Tabs -->
+            <div class="segment-tabs">
+                <button class="segment-tab active" id="weddingTab" onclick="switchTab('wedding')">
+                    <span class="icon">💒</span>
+                    Wedding Photographers
+                </button>
+                <button class="segment-tab" id="eventTab" onclick="switchTab('event')">
+                    <span class="icon">🎉</span>
+                    Event Photographers
+                </button>
+                <button class="segment-tab" id="portraitTab" onclick="switchTab('portrait')">
+                    <span class="icon">📸</span>
+                    Portrait Photographers
+                </button>
+            </div>
+
+            <div class="stats-bar" id="statsBar">
+                <!-- Stats will be updated by JS -->
             </div>
         </div>
     </header>
 
     <nav class="nav">
-        <div class="nav-inner">
-            <button class="nav-btn" onclick="scrollToSection('summary')">Summary</button>
-            <button class="nav-btn" onclick="scrollToSection('phase1')">Pre-Wedding</button>
-            <button class="nav-btn" onclick="scrollToSection('phase2')">Shoot Day</button>
-            <button class="nav-btn" onclick="scrollToSection('phase3')">Backup</button>
-            <button class="nav-btn" onclick="scrollToSection('phase4')">Import</button>
-            <button class="nav-btn" onclick="scrollToSection('phase5')">Culling</button>
-            <button class="nav-btn" onclick="scrollToSection('phase6')">Editing</button>
-            <button class="nav-btn" onclick="scrollToSection('phase7')">Fine-Tuning</button>
-            <button class="nav-btn" onclick="scrollToSection('phase8')">Export</button>
-            <button class="nav-btn" onclick="scrollToSection('phase9')">Delivery</button>
-            <button class="nav-btn" onclick="scrollToSection('phase10')">Albums</button>
-            <button class="nav-btn" onclick="scrollToSection('phase11')">Archive</button>
-            <button class="nav-btn" onclick="scrollToSection('business')">Business</button>
-            <button class="nav-btn" onclick="scrollToSection('unsolved')">Top 5 Unsolved</button>
+        <div class="nav-inner" id="navInner">
+            <!-- Nav will be updated by JS -->
         </div>
     </nav>
 
     <main>
-        <!-- Summary Section -->
-        <section id="summary" class="summary-section">
-            <h2 class="summary-title">Summary by Phase Impact</h2>
-            <div class="summary-grid">
-                <div class="summary-card">
-                    <div class="summary-card-header">
-                        <div class="summary-phase">Culling</div>
-                        <span class="severity-badge severity-critical">🔴 Critical</span>
-                    </div>
-                    <div class="summary-time">2-4 hrs → <span style="color: var(--low); font-weight: 600;">30 min with AI</span></div>
-                    <div class="summary-problems">Decision fatigue, bottleneck, duplicates</div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-card-header">
-                        <div class="summary-phase">Editing</div>
-                        <span class="severity-badge severity-critical">🔴 Critical</span>
-                    </div>
-                    <div class="summary-time">15-25 hrs → <span style="color: var(--low); font-weight: 600;">5-10 min with AI</span></div>
-                    <div class="summary-problems">Time sink, inconsistency, burnout</div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-card-header">
-                        <div class="summary-phase">Album Design</div>
-                        <span class="severity-badge severity-high">🟠 High</span>
-                    </div>
-                    <div class="summary-time">3-6 hrs</div>
-                    <div class="summary-problems">Creative drain, revision cycles</div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-card-header">
-                        <div class="summary-phase">Gallery/Delivery</div>
-                        <span class="severity-badge severity-medium">🟡 Medium</span>
-                    </div>
-                    <div class="summary-time">1-2 hrs</div>
-                    <div class="summary-problems">Platform fragmentation, uploads</div>
-                </div>
-
-                <div class="summary-card">
-                    <div class="summary-card-header">
-                        <div class="summary-phase">Backup/Archive</div>
-                        <span class="severity-badge severity-medium">🟡 Medium</span>
-                    </div>
-                    <div class="summary-time">1-2 hrs</div>
-                    <div class="summary-problems">Anxiety, costs, complexity</div>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 1: PRE-WEDDING / BOOKING -->
-        <section id="phase1" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">01</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Pre-Wedding / Booking</h2>
-                    <p class="phase-time">1-2 hours per client</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">01</div>
-                    <h3 class="problem-title">Administrative Overload</h3>
-                    <p class="problem-desc">Managing inquiries, quotes, contracts, and deposits takes away from creative work</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">02</div>
-                    <h3 class="problem-title">Scheduling Conflicts</h3>
-                    <p class="problem-desc">Coordinating availability across multiple clients and venues</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">03</div>
-                    <h3 class="problem-title">Contract Management Complexity</h3>
-                    <p class="problem-desc">Tracking signed contracts, terms, and payment schedules across different CRM tools</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">04</div>
-                    <h3 class="problem-title">Client Communication Fatigue</h3>
-                    <p class="problem-desc">Endless back-and-forth emails for details, expectations, and logistics</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 2: WEDDING DAY / SHOOT -->
-        <section id="phase2" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">02</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Wedding Day / Shoot</h2>
-                    <p class="phase-time">8-12 hours</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">05</div>
-                    <h3 class="problem-title">Physical Exhaustion</h3>
-                    <p class="problem-desc">8-12 hour shoots with heavy equipment cause burnout and fatigue</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">06</div>
-                    <h3 class="problem-title">Volume Overload</h3>
-                    <p class="problem-desc">Capturing 2,000-5,000 images creates a massive post-production backlog</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">07</div>
-                    <h3 class="problem-title">Mixed Lighting Challenges</h3>
-                    <p class="problem-desc">Constantly adapting to indoor/outdoor, flash, and ambient lighting conditions</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">08</div>
-                    <h3 class="problem-title">Missed Moments Anxiety</h3>
-                    <p class="problem-desc">Fear of missing critical shots (first kiss, reactions, speeches)</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">09</div>
-                    <h3 class="problem-title">Equipment Failures</h3>
-                    <p class="problem-desc">Memory card corruption, battery issues, or gear malfunctions during the event</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">10</div>
-                    <h3 class="problem-title">Coordination Stress</h3>
-                    <p class="problem-desc">Working with videographers, DJs, planners, and family members who don't understand photography needs</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 3: BACKUP -->
-        <section id="phase3" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">03</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Backup</h2>
-                    <p class="phase-time">30-60 minutes</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">11</div>
-                    <h3 class="problem-title">Data Loss Anxiety</h3>
-                    <p class="problem-desc">Fear of losing irreplaceable images before backup is complete</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">12</div>
-                    <h3 class="problem-title">Slow Transfer Speeds</h3>
-                    <p class="problem-desc">Copying thousands of RAW files to multiple drives is time-consuming</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">13</div>
-                    <h3 class="problem-title">Redundancy Management</h3>
-                    <p class="problem-desc">Maintaining multiple backup copies across drives and cloud services adds complexity</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">14</div>
-                    <h3 class="problem-title">Storage Costs</h3>
-                    <p class="problem-desc">Cloud backup and external drives are expensive, especially at scale</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 4: IMPORT & ORGANIZATION -->
-        <section id="phase4" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">04</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Import & Organization</h2>
-                    <p class="phase-time">15-30 minutes</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">15</div>
-                    <h3 class="problem-title">Catalog Management Chaos</h3>
-                    <p class="problem-desc">Organizing thousands of images into logical folders and collections</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">16</div>
-                    <h3 class="problem-title">Metadata Tagging Tedium</h3>
-                    <p class="problem-desc">Adding keywords, ratings, and labels manually is repetitive</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">17</div>
-                    <h3 class="problem-title">Software Performance Issues</h3>
-                    <p class="problem-desc">Lightroom slows down significantly with large catalogs</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">18</div>
-                    <h3 class="problem-title">Corrupt File Handling</h3>
-                    <p class="problem-desc">Dealing with occasional corrupt RAW files that won't import properly</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 5: CULLING -->
-        <section id="phase5" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">05</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Culling</h2>
-                    <p class="phase-time">2-4 hours → <span class="improved">30 min with AI</span></p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">19</div>
-                    <h3 class="problem-title">Decision Fatigue</h3>
-                    <p class="problem-desc">Reviewing 2,000-5,000 images to select 500-800 keepers is mentally exhausting</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">20</div>
-                    <h3 class="problem-title">Duplicate Identification</h3>
-                    <p class="problem-desc">Manually finding and eliminating near-identical shots</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">21</div>
-                    <h3 class="problem-title">Quality Assessment Overload</h3>
-                    <p class="problem-desc">Checking every image for sharpness, exposure, eyes open, and expressions</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">22</div>
-                    <h3 class="problem-title">Inconsistent Selection Criteria</h3>
-                    <p class="problem-desc">Maintaining consistent standards across hours of culling</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">23</div>
-                    <h3 class="problem-title">Time Bottleneck</h3>
-                    <p class="problem-desc">Culling is the #1 bottleneck for many photographers: "Culling has been a constant bottleneck for me"</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 6: EDITING -->
-        <section id="phase6" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">06</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Editing</h2>
-                    <p class="phase-time">15-25 hours → <span class="improved">5-10 min with AI</span></p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">24</div>
-                    <h3 class="problem-title">Massive Time Investment</h3>
-                    <p class="problem-desc">Manual editing of 500-800 images takes 15-25+ hours per wedding</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">25</div>
-                    <h3 class="problem-title">Style Inconsistency</h3>
-                    <p class="problem-desc">Maintaining the same look across hundreds of images over hours of editing</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">26</div>
-                    <h3 class="problem-title">Color Correction Complexity</h3>
-                    <p class="problem-desc">Handling mixed lighting, white balance issues, and skin tones</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">27</div>
-                    <h3 class="problem-title">Repetitive Adjustments</h3>
-                    <p class="problem-desc">Applying similar edits (exposure, contrast, HSL) to hundreds of similar shots</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">28</div>
-                    <h3 class="problem-title">Creative Burnout</h3>
-                    <p class="problem-desc">Endless editing leads to loss of creative passion and artistic vision</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">29</div>
-                    <h3 class="problem-title">Backlog Accumulation</h3>
-                    <p class="problem-desc">Multiple weddings stack up, creating overwhelming editing queues</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">30</div>
-                    <h3 class="problem-title">Outsourcing Frustrations</h3>
-                    <p class="problem-desc">Trying interns or outsourced editors who don't match your style: "I've tried interns, outsourcing and staying up late to get it done"</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 7: FINE-TUNING -->
-        <section id="phase7" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">07</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Fine-Tuning</h2>
-                    <p class="phase-time">1-2 hours</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">31</div>
-                    <h3 class="problem-title">Perfectionism Paralysis</h3>
-                    <p class="problem-desc">Spending too much time on minor adjustments that clients won't notice</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">32</div>
-                    <h3 class="problem-title">Retouching Demands</h3>
-                    <p class="problem-desc">Skin smoothing, blemish removal, and detail work on key images</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">33</div>
-                    <h3 class="problem-title">Special Requests</h3>
-                    <p class="problem-desc">Handling specific client requests for certain images (black & white, special crops)</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 8: EXPORT -->
-        <section id="phase8" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">08</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Export</h2>
-                    <p class="phase-time">30-60 minutes</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">34</div>
-                    <h3 class="problem-title">Export Settings Complexity</h3>
-                    <p class="problem-desc">Managing different export presets for web, print, and social media</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">35</div>
-                    <h3 class="problem-title">Processing Time</h3>
-                    <p class="problem-desc">Exporting 500-800 high-res JPEGs takes significant time</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">36</div>
-                    <h3 class="problem-title">File Naming Conventions</h3>
-                    <p class="problem-desc">Maintaining consistent naming for client organization</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 9: GALLERY UPLOAD & DELIVERY -->
-        <section id="phase9" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">09</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Gallery Upload & Delivery</h2>
-                    <p class="phase-time">1-2 hours</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">37</div>
-                    <h3 class="problem-title">Slow Upload Speeds</h3>
-                    <p class="problem-desc">Uploading hundreds of images to gallery platforms is time-consuming</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">38</div>
-                    <h3 class="problem-title">Gallery Customization</h3>
-                    <p class="problem-desc">Adding branding, cover images, music, and settings for each client</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">39</div>
-                    <h3 class="problem-title">Platform Fragmentation</h3>
-                    <p class="problem-desc">Managing multiple gallery platforms (Pic-Time, Pixieset, ShootProof)</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">40</div>
-                    <h3 class="problem-title">Client Communication</h3>
-                    <p class="problem-desc">Writing personalized delivery emails and viewing instructions</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 10: PRODUCTS & ALBUM DESIGN -->
-        <section id="phase10" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">10</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Products & Album Design</h2>
-                    <p class="phase-time">4.5-9 hours</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">41</div>
-                    <h3 class="problem-title">Album Design Time Sink</h3>
-                    <p class="problem-desc">Designing wedding album spreads takes 3-6 hours per album</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">42</div>
-                    <h3 class="problem-title">Revision Cycles</h3>
-                    <p class="problem-desc">Multiple rounds of client feedback and layout changes</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">43</div>
-                    <h3 class="problem-title">Print Order Processing</h3>
-                    <p class="problem-desc">Managing orders across multiple print labs (WHCC, Miller's, Bay Photo)</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">44</div>
-                    <h3 class="problem-title">Product Fulfillment</h3>
-                    <p class="problem-desc">Coordinating shipping of albums, USBs, and print products</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- PHASE 11: ARCHIVE & LONG-TERM STORAGE -->
-        <section id="phase11" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">11</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Archive & Long-Term Storage</h2>
-                    <p class="phase-time">30-60 minutes</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">45</div>
-                    <h3 class="problem-title">Storage Cost Scaling</h3>
-                    <p class="problem-desc">Long-term storage of RAW files becomes expensive over years</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">46</div>
-                    <h3 class="problem-title">Retrieval Complexity</h3>
-                    <p class="problem-desc">Finding specific images from old shoots when clients request them years later</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">47</div>
-                    <h3 class="problem-title">Backup Verification</h3>
-                    <p class="problem-desc">Ensuring archived files are actually accessible and not corrupted</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- CROSS-CUTTING / BUSINESS PROBLEMS -->
-        <section id="business" class="phase-section">
-            <div class="phase-header">
-                <div class="phase-number">∞</div>
-                <div class="phase-info">
-                    <h2 class="phase-title">Cross-Cutting / Business Problems</h2>
-                    <p class="phase-time">Ongoing challenges</p>
-                </div>
-            </div>
-            <div class="problem-grid">
-                <div class="problem-card">
-                    <div class="problem-number">48</div>
-                    <h3 class="problem-title">Work-Life Imbalance</h3>
-                    <p class="problem-desc">Editing nights and weekends destroys personal time</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">49</div>
-                    <h3 class="problem-title">Scalability Ceiling</h3>
-                    <p class="problem-desc">Can't take on more clients because post-production is the bottleneck</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">50</div>
-                    <h3 class="problem-title">Revenue Limitation</h3>
-                    <p class="problem-desc">Time spent editing is time not spent shooting (revenue-generating activity)</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">51</div>
-                    <h3 class="problem-title">Learning Curve for New Tools</h3>
-                    <p class="problem-desc">Constantly adapting to new software and workflows</p>
-                </div>
-                <div class="problem-card">
-                    <div class="problem-number">52</div>
-                    <h3 class="problem-title">Turnaround Pressure</h3>
-                    <p class="problem-desc">Clients expect faster delivery times than manual workflows allow</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Top 5 Unsolved Problems -->
-        <section id="unsolved" class="unsolved-section">
-            <h2 class="unsolved-title">🎯 Top 5 High-Value Unsolved Problems</h2>
-            <p class="unsolved-subtitle">Problems Imagen AI doesn't currently solve but would provide the highest value if they did</p>
-            
-            <div class="unsolved-list">
-                <!-- Problem 1: Album Design -->
-                <div class="unsolved-item">
-                    <div class="unsolved-header">
-                        <div class="unsolved-rank">1</div>
-                        <div class="unsolved-problem-name">Album Design Time Sink</div>
-                    </div>
-                    <div class="unsolved-body">
-                        <div class="unsolved-metrics">
-                            <div class="metric-card">
-                                <div class="metric-label">Reach</div>
-                                <div class="metric-value reach-high">🔴 95%</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Impact</div>
-                                <div class="metric-value impact-high">🔴 High</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Frequency</div>
-                                <div class="metric-value frequency">Every Wedding</div>
-                            </div>
+        <!-- WEDDING PHOTOGRAPHERS TAB -->
+        <div id="wedding-content" class="tab-content active">
+            <!-- Summary Section -->
+            <section id="wedding-summary" class="summary-section">
+                <h2 class="summary-title">Summary by Phase Impact</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Culling</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
                         </div>
-                        <p class="unsolved-description">
-                            <strong>Current State:</strong> 3-6 hours per album, manual layout, revision cycles. Nearly every wedding photographer offers albums, making this a universal pain point that affects 95% of the market.
-                        </p>
-                        <div class="why-solve">
-                            <div class="why-solve-title">Why Imagen AI Should Solve This</div>
-                            <ul class="why-solve-list">
-                                <li>Already has the edited photos in the workflow</li>
-                                <li>AI understands photographer's style preferences</li>
-                                <li>Could auto-generate album layouts based on image selection</li>
-                                <li>Natural extension of editing → delivery workflow</li>
-                                <li>AI could learn from approved album designs</li>
-                            </ul>
-                            <div class="time-savings">⚡ Estimated time savings: 80% (3-6 hrs → 30-60 min)</div>
+                        <div class="summary-time">2-4 hrs → <span style="color: var(--low); font-weight: 600;">30 min with AI</span></div>
+                        <div class="summary-problems">Decision fatigue, bottleneck, duplicates</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Editing</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
                         </div>
+                        <div class="summary-time">15-25 hrs → <span style="color: var(--low); font-weight: 600;">5-10 min with AI</span></div>
+                        <div class="summary-problems">Time sink, inconsistency, burnout</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Album Design</div>
+                            <span class="severity-badge severity-high">🟠 High</span>
+                        </div>
+                        <div class="summary-time">3-6 hrs</div>
+                        <div class="summary-problems">Creative drain, revision cycles</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Gallery/Delivery</div>
+                            <span class="severity-badge severity-medium">🟡 Medium</span>
+                        </div>
+                        <div class="summary-time">1-2 hrs</div>
+                        <div class="summary-problems">Platform fragmentation, uploads</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Backup/Archive</div>
+                            <span class="severity-badge severity-medium">🟡 Medium</span>
+                        </div>
+                        <div class="summary-time">1-2 hrs</div>
+                        <div class="summary-problems">Anxiety, costs, complexity</div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Problem 2: Client Communication -->
-                <div class="unsolved-item">
-                    <div class="unsolved-header">
-                        <div class="unsolved-rank">2</div>
-                        <div class="unsolved-problem-name">Client Communication Fatigue</div>
-                    </div>
-                    <div class="unsolved-body">
-                        <div class="unsolved-metrics">
-                            <div class="metric-card">
-                                <div class="metric-label">Reach</div>
-                                <div class="metric-value reach-high">🔴 100%</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Impact</div>
-                                <div class="metric-value impact-high">🟠 High</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Frequency</div>
-                                <div class="metric-value frequency">Daily</div>
-                            </div>
-                        </div>
-                        <p class="unsolved-description">
-                            <strong>Current State:</strong> Endless back-and-forth emails, scattered across platforms. Every photographer spends 1-2 hours per client managing communication, leading to constant stress and context-switching.
-                        </p>
-                        <div class="why-solve">
-                            <div class="why-solve-title">Why Imagen AI Should Solve This</div>
-                            <ul class="why-solve-list">
-                                <li>Already has client context from editing workflow</li>
-                                <li>Could provide templates and automated sequences</li>
-                                <li>Unified inbox for all client interactions</li>
-                                <li>Reduces context-switching between tools</li>
-                                <li>AI-powered response suggestions based on common queries</li>
-                            </ul>
-                            <div class="time-savings">⚡ Estimated productivity gain: 50% less time on emails</div>
-                        </div>
+            <!-- WEDDING PHASES -->
+            <section id="wedding-phase1" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number">01</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Pre-Wedding / Booking</h2>
+                        <p class="phase-time">1-2 hours per client</p>
                     </div>
                 </div>
-
-                <!-- Problem 3: Gallery Platform Fragmentation -->
-                <div class="unsolved-item">
-                    <div class="unsolved-header">
-                        <div class="unsolved-rank">3</div>
-                        <div class="unsolved-problem-name">Gallery Platform Fragmentation</div>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-number">01</div>
+                        <h3 class="problem-title">Administrative Overload</h3>
+                        <p class="problem-desc">Managing inquiries, quotes, contracts, and deposits takes away from creative work</p>
                     </div>
-                    <div class="unsolved-body">
-                        <div class="unsolved-metrics">
-                            <div class="metric-card">
-                                <div class="metric-label">Reach</div>
-                                <div class="metric-value reach-high">🔴 100%</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Impact</div>
-                                <div class="metric-value impact-high">🟠 High</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Frequency</div>
-                                <div class="metric-value frequency">Every Delivery</div>
-                            </div>
-                        </div>
-                        <p class="unsolved-description">
-                            <strong>Current State:</strong> Managing Pic-Time, Pixieset, ShootProof separately. Every photographer must use an additional tool, pay extra costs, and deal with the friction of re-uploading photos.
-                        </p>
-                        <div class="why-solve">
-                            <div class="why-solve-title">Why Imagen AI Should Solve This</div>
-                            <ul class="why-solve-list">
-                                <li>Photos already in Imagen cloud after editing</li>
-                                <li>Natural to deliver directly from same platform</li>
-                                <li>Eliminates re-upload to separate gallery service</li>
-                                <li>Could track client engagement (views, downloads)</li>
-                                <li>Unique leverage: seamless editing → delivery workflow</li>
-                            </ul>
-                            <div class="time-savings">⚡ Estimated time savings: 30-60 min per wedding</div>
-                        </div>
+                    <div class="problem-card">
+                        <div class="problem-number">02</div>
+                        <h3 class="problem-title">Scheduling Conflicts</h3>
+                        <p class="problem-desc">Coordinating availability across multiple clients and venues</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">03</div>
+                        <h3 class="problem-title">Contract Management Complexity</h3>
+                        <p class="problem-desc">Tracking signed contracts, terms, and payment schedules across different CRM tools</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">04</div>
+                        <h3 class="problem-title">Client Communication Fatigue</h3>
+                        <p class="problem-desc">Endless back-and-forth emails for details, expectations, and logistics</p>
                     </div>
                 </div>
+            </section>
 
-                <!-- Problem 4: Payment Chasing -->
-                <div class="unsolved-item">
-                    <div class="unsolved-header">
-                        <div class="unsolved-rank">4</div>
-                        <div class="unsolved-problem-name">Payment Chasing</div>
-                    </div>
-                    <div class="unsolved-body">
-                        <div class="unsolved-metrics">
-                            <div class="metric-card">
-                                <div class="metric-label">Reach</div>
-                                <div class="metric-value reach-high">🔴 100%</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Impact</div>
-                                <div class="metric-value impact-high">🔴 High</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Frequency</div>
-                                <div class="metric-value frequency">Every Job</div>
-                            </div>
-                        </div>
-                        <p class="unsolved-description">
-                            <strong>Current State:</strong> Awkward follow-ups, manual invoicing, delayed payments. Every photographer faces cash flow stress and the uncomfortable task of chasing payments from clients.
-                        </p>
-                        <div class="why-solve">
-                            <div class="why-solve-title">Why Imagen AI Should Solve This</div>
-                            <ul class="why-solve-list">
-                                <li>Could integrate payment with gallery delivery</li>
-                                <li>Require payment before full gallery access</li>
-                                <li>Automated reminders without awkward emails</li>
-                                <li>Unique leverage: "Pay to unlock high-res downloads"</li>
-                                <li>Improves photographer cash flow and reduces stress</li>
-                            </ul>
-                            <div class="time-savings">⚡ Estimated reduction in collection time: 75%</div>
-                        </div>
+            <section id="wedding-phase2" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number">02</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Wedding Day / Shoot</h2>
+                        <p class="phase-time">8-12 hours</p>
                     </div>
                 </div>
-
-                <!-- Problem 5: Booking & Contract Management -->
-                <div class="unsolved-item">
-                    <div class="unsolved-header">
-                        <div class="unsolved-rank">5</div>
-                        <div class="unsolved-problem-name">Booking & Contract Management</div>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-number">05</div>
+                        <h3 class="problem-title">Physical Exhaustion</h3>
+                        <p class="problem-desc">8-12 hour shoots with heavy equipment cause burnout and fatigue</p>
                     </div>
-                    <div class="unsolved-body">
-                        <div class="unsolved-metrics">
-                            <div class="metric-card">
-                                <div class="metric-label">Reach</div>
-                                <div class="metric-value reach-high">🔴 100%</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Impact</div>
-                                <div class="metric-value impact-high">🟠 High</div>
-                            </div>
-                            <div class="metric-card">
-                                <div class="metric-label">Frequency</div>
-                                <div class="metric-value frequency">Every Lead</div>
-                            </div>
-                        </div>
-                        <p class="unsolved-description">
-                            <strong>Current State:</strong> Multiple CRMs, lost leads, manual contract tracking. Photographers lose potential clients to competitors due to slow response times and fragmented booking systems.
-                        </p>
-                        <div class="why-solve">
-                            <div class="why-solve-title">Why Imagen AI Should Solve This</div>
-                            <ul class="why-solve-list">
-                                <li>Completes the "lead → delivery" workflow</li>
-                                <li>Client data flows seamlessly through editing</li>
-                                <li>Creates maximum switching cost (entire business on platform)</li>
-                                <li>Positions Imagen as "photography business OS"</li>
-                                <li>Automated follow-ups increase booking conversion</li>
-                            </ul>
-                            <div class="time-savings">⚡ Estimated booking conversion increase: 20-30%</div>
-                        </div>
+                    <div class="problem-card">
+                        <div class="problem-number">06</div>
+                        <h3 class="problem-title">Volume Overload</h3>
+                        <p class="problem-desc">Capturing 2,000-5,000 images creates a massive post-production backlog</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">07</div>
+                        <h3 class="problem-title">Mixed Lighting Challenges</h3>
+                        <p class="problem-desc">Constantly adapting to indoor/outdoor, flash, and ambient lighting conditions</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">08</div>
+                        <h3 class="problem-title">Missed Moments Anxiety</h3>
+                        <p class="problem-desc">Fear of missing critical shots (first kiss, reactions, speeches)</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">09</div>
+                        <h3 class="problem-title">Equipment Failures</h3>
+                        <p class="problem-desc">Memory card corruption, battery issues, or gear malfunctions during the event</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">10</div>
+                        <h3 class="problem-title">Coordination Stress</h3>
+                        <p class="problem-desc">Working with videographers, DJs, planners, and family members</p>
                     </div>
                 </div>
-            </div>
+            </section>
 
-            <!-- Strategic Recommendation -->
-            <div class="strategic-rec">
-                <h3 class="strategic-rec-title">Strategic Recommendation</h3>
-                <p style="color: var(--text-secondary); margin-bottom: 24px;">Priority order for Imagen AI to maximize value and leverage existing moat:</p>
+            <section id="wedding-phase3" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number">03</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Culling</h2>
+                        <p class="phase-time">2-4 hours → <span class="improved">30 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-number">11</div>
+                        <h3 class="problem-title">Decision Fatigue</h3>
+                        <p class="problem-desc">Reviewing 2,000-5,000 images to select 500-800 keepers is mentally exhausting</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">12</div>
+                        <h3 class="problem-title">Duplicate Identification</h3>
+                        <p class="problem-desc">Manually finding and eliminating near-identical shots</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">13</div>
+                        <h3 class="problem-title">Quality Assessment Overload</h3>
+                        <p class="problem-desc">Checking every image for sharpness, exposure, eyes open, and expressions</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">14</div>
+                        <h3 class="problem-title">Time Bottleneck</h3>
+                        <p class="problem-desc">Culling is the #1 bottleneck for many photographers</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="wedding-phase4" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number">04</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Editing</h2>
+                        <p class="phase-time">15-25 hours → <span class="improved">5-10 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card">
+                        <div class="problem-number">15</div>
+                        <h3 class="problem-title">Massive Time Investment</h3>
+                        <p class="problem-desc">Manual editing of 500-800 images takes 15-25+ hours per wedding</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">16</div>
+                        <h3 class="problem-title">Style Inconsistency</h3>
+                        <p class="problem-desc">Maintaining the same look across hundreds of images over hours of editing</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">17</div>
+                        <h3 class="problem-title">Color Correction Complexity</h3>
+                        <p class="problem-desc">Handling mixed lighting, white balance issues, and skin tones</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">18</div>
+                        <h3 class="problem-title">Creative Burnout</h3>
+                        <p class="problem-desc">Endless editing leads to loss of creative passion and artistic vision</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">19</div>
+                        <h3 class="problem-title">Backlog Accumulation</h3>
+                        <p class="problem-desc">Multiple weddings stack up, creating overwhelming editing queues</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">20</div>
+                        <h3 class="problem-title">Outsourcing Frustrations</h3>
+                        <p class="problem-desc">Interns or outsourced editors don't match your style</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 5 Unsolved for Wedding -->
+            <section id="wedding-unsolved" class="unsolved-section">
+                <h2 class="unsolved-title">🎯 Top 5 Unsolved Opportunities</h2>
+                <p class="unsolved-subtitle">Problems Imagen AI doesn't currently solve but would provide the highest value for Wedding Photographers</p>
                 
-                <ol class="priority-list">
-                    <li class="priority-item">
-                        <div class="priority-number">1</div>
-                        <div class="priority-content">
-                            <div class="priority-name">Gallery Delivery Hub</div>
-                            <div class="priority-reason">Easiest win, already have the photos in cloud storage</div>
+                <div class="unsolved-list">
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">1</div>
+                            <div class="unsolved-problem-name">Album Design Time Sink</div>
                         </div>
-                    </li>
-                    <li class="priority-item">
-                        <div class="priority-number">2</div>
-                        <div class="priority-content">
-                            <div class="priority-name">Payment Integration</div>
-                            <div class="priority-reason">High revenue impact, ties naturally to gallery access</div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 95%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Frequency</div>
+                                    <div class="metric-value frequency">Every Wedding</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">3-6 hours per album, manual layout, revision cycles. Nearly every wedding photographer offers albums.</p>
+                            <div class="why-solve">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Already has the edited photos in the workflow</li>
+                                    <li>AI understands photographer's style preferences</li>
+                                    <li>Could auto-generate album layouts based on image selection</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 80% (3-6 hrs → 30-60 min)</div>
+                            </div>
                         </div>
-                    </li>
-                    <li class="priority-item">
-                        <div class="priority-number">3</div>
-                        <div class="priority-content">
-                            <div class="priority-name">Album Design AI</div>
-                            <div class="priority-reason">Leverages core AI moat, huge time savings (3-6 hours)</div>
-                        </div>
-                    </li>
-                    <li class="priority-item">
-                        <div class="priority-number">4</div>
-                        <div class="priority-content">
-                            <div class="priority-name">Communication Hub</div>
-                            <div class="priority-reason">Increases stickiness, reduces churn, daily value</div>
-                        </div>
-                    </li>
-                    <li class="priority-item">
-                        <div class="priority-number">5</div>
-                        <div class="priority-content">
-                            <div class="priority-name">Booking/CRM</div>
-                            <div class="priority-reason">Long-term play, maximum switching cost, complete business OS</div>
-                        </div>
-                    </li>
-                </ol>
+                    </div>
 
-                <div class="value-statement">
-                    <div class="value-statement-text">These 5 problems represent $500+ monthly value per photographer if solved, directly supporting the 40% LTV increase goal.</div>
-                </div>
-            </div>
-        </section>
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">2</div>
+                            <div class="unsolved-problem-name">Gallery Platform Fragmentation</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Frequency</div>
+                                    <div class="metric-value frequency">Every Delivery</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Managing Pic-Time, Pixieset, ShootProof separately. Photos already in Imagen cloud after editing.</p>
+                            <div class="why-solve">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Natural to deliver directly from same platform</li>
+                                    <li>Eliminates re-upload to separate gallery service</li>
+                                    <li>Could track client engagement (views, downloads)</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 30-60 min per wedding</div>
+                            </div>
+                        </div>
+                    </div>
 
-        <!-- Top 3 Problems -->
-        <section class="top-problems">
-            <h2 class="top-problems-title">Top 3 Problems Imagen AI Solves</h2>
-            <p class="top-problems-subtitle">The most critical pain points with the highest impact on photographer workflows</p>
-            
-            <div class="top-problem-list">
-                <div class="top-problem-item">
-                    <div class="top-problem-rank">1</div>
-                    <div class="top-problem-content">
-                        <div class="top-problem-name">Editing Time Investment</div>
-                        <div class="top-problem-impact">96% time reduction: 15-25 hours → 5-10 minutes</div>
-                        <p class="top-problem-detail">Manual editing of 500-800 images per wedding is the single largest time sink in the entire workflow. AI-powered editing learns your unique style and applies it consistently across all images.</p>
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">3</div>
+                            <div class="unsolved-problem-name">Payment Chasing</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Frequency</div>
+                                    <div class="metric-value frequency">Every Job</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Awkward follow-ups, manual invoicing, delayed payments. Cash flow stress and uncomfortable chasing.</p>
+                            <div class="why-solve">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Integrate payment with gallery delivery</li>
+                                    <li>Require payment before full gallery access</li>
+                                    <li>Automated reminders without awkward emails</li>
+                                </ul>
+                                <div class="time-savings">⚡ Collection time reduction: 75%</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">4</div>
+                            <div class="unsolved-problem-name">Client Communication Fatigue</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Frequency</div>
+                                    <div class="metric-value frequency">Daily</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Endless back-and-forth emails, scattered across platforms. 1-2 hours per client managing communication.</p>
+                            <div class="why-solve">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Already has client context from editing workflow</li>
+                                    <li>Unified inbox for all client interactions</li>
+                                    <li>AI-powered response suggestions</li>
+                                </ul>
+                                <div class="time-savings">⚡ Productivity gain: 50% less time on emails</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">5</div>
+                            <div class="unsolved-problem-name">Booking & Contract Management</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Frequency</div>
+                                    <div class="metric-value frequency">Every Lead</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Multiple CRMs, lost leads, manual contract tracking. Photographers lose clients to competitors.</p>
+                            <div class="why-solve">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Completes the "lead → delivery" workflow</li>
+                                    <li>Creates maximum switching cost</li>
+                                    <li>Positions Imagen as "photography business OS"</li>
+                                </ul>
+                                <div class="time-savings">⚡ Booking conversion increase: 20-30%</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div class="top-problem-item">
-                    <div class="top-problem-rank">2</div>
-                    <div class="top-problem-content">
-                        <div class="top-problem-name">Culling Bottleneck</div>
-                        <div class="top-problem-impact">87% time reduction: 2-4 hours → 30 minutes</div>
-                        <p class="top-problem-detail">Reviewing thousands of images to select keepers causes decision fatigue and is cited as the #1 bottleneck. AI culling identifies the best shots based on technical quality and learned preferences.</p>
+            <!-- Top 3 Solved -->
+            <section class="top-problems">
+                <h2 class="top-problems-title">✅ Top 3 Problems Imagen AI Solves</h2>
+                <p class="top-problems-subtitle">The most critical pain points already addressed</p>
+                
+                <div class="top-problem-list">
+                    <div class="top-problem-item">
+                        <div class="top-problem-rank">1</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Editing Time Investment</div>
+                            <div class="top-problem-impact">96% time reduction: 15-25 hours → 5-10 minutes</div>
+                            <p class="top-problem-detail">AI-powered editing learns your unique style and applies it consistently across all images.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item">
+                        <div class="top-problem-rank">2</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Culling Bottleneck</div>
+                            <div class="top-problem-impact">87% time reduction: 2-4 hours → 30 minutes</div>
+                            <p class="top-problem-detail">AI culling identifies the best shots based on technical quality and learned preferences.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item">
+                        <div class="top-problem-rank">3</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Style Consistency</div>
+                            <div class="top-problem-impact">Perfect consistency across all images</div>
+                            <p class="top-problem-detail">AI learns and replicates your exact editing style with perfect consistency.</p>
+                        </div>
                     </div>
                 </div>
+            </section>
+        </div>
 
-                <div class="top-problem-item">
-                    <div class="top-problem-rank">3</div>
-                    <div class="top-problem-content">
-                        <div class="top-problem-name">Style Consistency</div>
-                        <div class="top-problem-impact">Perfect consistency across all images</div>
-                        <p class="top-problem-detail">Maintaining the same look across hundreds of images over hours of editing is nearly impossible manually. AI learns and replicates your exact editing style with perfect consistency.</p>
+        <!-- EVENT PHOTOGRAPHERS TAB -->
+        <div id="event-content" class="tab-content">
+            <!-- Summary Section -->
+            <section id="event-summary" class="summary-section">
+                <h2 class="summary-title">Summary by Phase Impact</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Same-Day Delivery</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
+                        </div>
+                        <div class="summary-time">24-48 hour expectation</div>
+                        <div class="summary-problems">Speed pressure, real-time demands</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Culling</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
+                        </div>
+                        <div class="summary-time">1-3 hrs → <span style="color: var(--low); font-weight: 600;">20 min with AI</span></div>
+                        <div class="summary-problems">Volume, speed, identification</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Editing</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
+                        </div>
+                        <div class="summary-time">4-8 hrs → <span style="color: var(--low); font-weight: 600;">5 min with AI</span></div>
+                        <div class="summary-problems">Brand consistency, batch speed</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Multi-Stakeholder Delivery</div>
+                            <span class="severity-badge severity-high">🟠 High</span>
+                        </div>
+                        <div class="summary-time">1-2 hrs</div>
+                        <div class="summary-problems">Multiple clients, different needs</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Tagging & Organization</div>
+                            <span class="severity-badge severity-high">🟠 High</span>
+                        </div>
+                        <div class="summary-time">2-4 hrs</div>
+                        <div class="summary-problems">VIP identification, categorization</div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <!-- EVENT PHASES -->
+            <section id="event-phase1" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number event">01</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Pre-Event / Booking</h2>
+                        <p class="phase-time">1-3 hours per client</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card event">
+                        <div class="problem-number">01</div>
+                        <h3 class="problem-title">Multi-Stakeholder Coordination</h3>
+                        <p class="problem-desc">Event organizer, marketing team, sponsors, and venue all have different requirements and contacts</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">02</div>
+                        <h3 class="problem-title">Shot List Complexity</h3>
+                        <p class="problem-desc">Coordinating must-have shots: keynotes, breakouts, sponsors, VIPs, networking moments</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">03</div>
+                        <h3 class="problem-title">Corporate Branding Requirements</h3>
+                        <p class="problem-desc">Understanding client brand guidelines, color preferences, and style expectations</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">04</div>
+                        <h3 class="problem-title">Recurring Client Expectations</h3>
+                        <p class="problem-desc">Quarterly events require consistent look across different dates and venues</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="event-phase2" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number event">02</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Event Day / Shoot</h2>
+                        <p class="phase-time">4-10 hours</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card event">
+                        <div class="problem-number">05</div>
+                        <h3 class="problem-title">Same-Day Delivery Pressure</h3>
+                        <p class="problem-desc">Corporate clients expect photos within 24-48 hours while event is fresh in minds</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">06</div>
+                        <h3 class="problem-title">Real-Time Social Media Demands</h3>
+                        <p class="problem-desc">Marketing teams want photos posted during the event—requires on-site editing</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">07</div>
+                        <h3 class="problem-title">VIP Identification</h3>
+                        <p class="problem-desc">Recognizing and prioritizing speakers, sponsors, and key attendees in crowds</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">08</div>
+                        <h3 class="problem-title">Coverage Completeness Anxiety</h3>
+                        <p class="problem-desc">Fear of missing sponsor booths, breakout sessions, or key networking moments</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">09</div>
+                        <h3 class="problem-title">Multi-Photographer Coordination</h3>
+                        <p class="problem-desc">Large events require multiple photographers—coordinating coverage and style</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">10</div>
+                        <h3 class="problem-title">Challenging Venue Lighting</h3>
+                        <p class="problem-desc">Convention centers, ballrooms, and outdoor venues with mixed lighting conditions</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="event-phase3" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number event">03</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Culling</h2>
+                        <p class="phase-time">1-3 hours → <span class="improved">20 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card event">
+                        <div class="problem-number">11</div>
+                        <h3 class="problem-title">Speed vs Quality Tradeoff</h3>
+                        <p class="problem-desc">Tight deadlines force rushed culling decisions, risking missing great shots</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">12</div>
+                        <h3 class="problem-title">Attendee Identification</h3>
+                        <p class="problem-desc">Manually identifying who is in each photo for tagging and delivery</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">13</div>
+                        <h3 class="problem-title">Category Organization</h3>
+                        <p class="problem-desc">Sorting photos by session, speaker, sponsor, venue area, and moment type</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">14</div>
+                        <h3 class="problem-title">Duplicate Management</h3>
+                        <p class="problem-desc">Rapid-fire shooting creates many similar frames to sort through</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="event-phase4" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number event">04</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Editing</h2>
+                        <p class="phase-time">4-8 hours → <span class="improved">5 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card event">
+                        <div class="problem-number">15</div>
+                        <h3 class="problem-title">Brand Consistency Requirements</h3>
+                        <p class="problem-desc">Corporate clients need specific color grading to match brand guidelines</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">16</div>
+                        <h3 class="problem-title">Batch Speed Pressure</h3>
+                        <p class="problem-desc">500-3,000 images need consistent editing within 24-48 hours</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">17</div>
+                        <h3 class="problem-title">Mixed Venue Lighting</h3>
+                        <p class="problem-desc">Stage lighting, ambient, flash, and outdoor all in one event</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">18</div>
+                        <h3 class="problem-title">Recurring Event Consistency</h3>
+                        <p class="problem-desc">Same client expects identical look across quarterly/annual events</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">19</div>
+                        <h3 class="problem-title">Multi-Format Export</h3>
+                        <p class="problem-desc">Social media sizes, press kit quality, web gallery, print resolution all needed</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">20</div>
+                        <h3 class="problem-title">Watermarking & Branding</h3>
+                        <p class="problem-desc">Different watermarks for preview vs final, client branding requirements</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="event-phase5" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number event">05</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Delivery & Distribution</h2>
+                        <p class="phase-time">1-3 hours</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card event">
+                        <div class="problem-number">21</div>
+                        <h3 class="problem-title">Multi-Stakeholder Delivery</h3>
+                        <p class="problem-desc">Organizer, marketing, sponsors, speakers, attendees—each needs different photos</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">22</div>
+                        <h3 class="problem-title">Attendee Self-Service</h3>
+                        <p class="problem-desc">Event attendees want to find and download their own photos</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">23</div>
+                        <h3 class="problem-title">Marketing Asset Organization</h3>
+                        <p class="problem-desc">Photos need to be organized by session, speaker, sponsor for marketing use</p>
+                    </div>
+                    <div class="problem-card event">
+                        <div class="problem-number">24</div>
+                        <h3 class="problem-title">Usage Rights Management</h3>
+                        <p class="problem-desc">Different stakeholders have different usage rights and restrictions</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 5 Unsolved for Event -->
+            <section id="event-unsolved" class="unsolved-section">
+                <h2 class="unsolved-title">🎯 Top 5 Unsolved Opportunities</h2>
+                <p class="unsolved-subtitle">Problems Imagen AI doesn't currently solve but would provide the highest value for Event Photographers</p>
+                
+                <div class="unsolved-list">
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">1</div>
+                            <div class="unsolved-problem-name">AI Facial Recognition & Attendee Tagging</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 95%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 Critical</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Time Saved</div>
+                                    <div class="metric-value frequency">2-4 hrs/event</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Auto-identify and tag VIPs, speakers, and sponsors across all event photos. Enable attendee self-service galleries where people find photos of themselves.</p>
+                            <div class="why-solve event">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Upload attendee list with headshots → AI auto-tags all photos</li>
+                                    <li>Self-service galleries where attendees find themselves via selfie match</li>
+                                    <li>Massive differentiator for event photography market</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 2-4 hours per event</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">2</div>
+                            <div class="unsolved-problem-name">Real-Time Event Gallery with Live Upload</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 90%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 Critical</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Competitive Edge</div>
+                                    <div class="metric-value frequency">Major</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Upload, edit, and publish photos during the event. Marketing teams share on social media in real-time while attendees are still engaged.</p>
+                            <div class="why-solve event">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Mobile upload → instant cloud editing with pre-set event profile</li>
+                                    <li>QR code at event links to updating gallery</li>
+                                    <li>Social media auto-posting during event</li>
+                                </ul>
+                                <div class="time-savings">⚡ Enables same-day delivery while event is happening</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">3</div>
+                            <div class="unsolved-problem-name">Multi-Stakeholder Delivery Hub</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Time Saved</div>
+                                    <div class="metric-value frequency">1-2 hrs/event</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Deliver different photo sets to different stakeholders from one upload: organizer gets all, sponsors get their booth photos, speakers get their sessions.</p>
+                            <div class="why-solve event">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Tag photos by category during culling</li>
+                                    <li>Auto-generate stakeholder-specific galleries</li>
+                                    <li>One-click delivery to multiple recipients</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 1-2 hours per event</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">4</div>
+                            <div class="unsolved-problem-name">Corporate Brand Profile Templates</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 80%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Retention</div>
+                                    <div class="metric-value frequency">Very High</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Save client-specific editing profiles that match their brand colors and style—apply automatically to all future events for that client.</p>
+                            <div class="why-solve event">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Create "Client Profiles" in addition to Personal Profiles</li>
+                                    <li>Each corporate client gets their own AI profile</li>
+                                    <li>Consistent brand-matched editing across all their events</li>
+                                </ul>
+                                <div class="time-savings">⚡ Ensures recurring client retention</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">5</div>
+                            <div class="unsolved-problem-name">Event Coverage Checklist & Gap Detection</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 85%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 Medium</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Anxiety Reduction</div>
+                                    <div class="metric-value frequency">High</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">AI analyzes uploaded photos against event agenda and flags missing coverage before delivery: "No photos of Sponsor Booth B"</p>
+                            <div class="why-solve event">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Upload event agenda → AI matches photos to sessions</li>
+                                    <li>Dashboard shows coverage completeness</li>
+                                    <li>Alerts for gaps before client delivery</li>
+                                </ul>
+                                <div class="time-savings">⚡ Peace of mind for photographers</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 3 Solved for Event -->
+            <section class="top-problems event">
+                <h2 class="top-problems-title">✅ Top 3 Problems Imagen AI Solves</h2>
+                <p class="top-problems-subtitle">The most critical pain points already addressed for Event Photographers</p>
+                
+                <div class="top-problem-list">
+                    <div class="top-problem-item event">
+                        <div class="top-problem-rank event">1</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Batch Editing Speed</div>
+                            <div class="top-problem-impact">95% time reduction: 4-8 hours → 5 minutes</div>
+                            <p class="top-problem-detail">Process 500-3,000 event photos with consistent style in minutes, enabling same-day delivery.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item event">
+                        <div class="top-problem-rank event">2</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Brand Consistency Across Events</div>
+                            <div class="top-problem-impact">Perfect consistency for recurring clients</div>
+                            <p class="top-problem-detail">AI maintains the same look across quarterly events, annual conferences, and multi-location shoots.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item event">
+                        <div class="top-problem-rank event">3</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Mixed Lighting Handling</div>
+                            <div class="top-problem-impact">Automatic color correction across venue zones</div>
+                            <p class="top-problem-detail">AI adapts to stage lighting, ambient, flash, and outdoor conditions within the same event.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PORTRAIT PHOTOGRAPHERS TAB -->
+        <div id="portrait-content" class="tab-content">
+            <!-- Summary Section -->
+            <section id="portrait-summary" class="summary-section">
+                <h2 class="summary-title">Summary by Phase Impact</h2>
+                <div class="summary-grid">
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Retouching</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
+                        </div>
+                        <div class="summary-time">30-60 min/image → <span style="color: var(--low); font-weight: 600;">2-5 min with AI</span></div>
+                        <div class="summary-problems">Skin, blemishes, body shaping</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Editing</div>
+                            <span class="severity-badge severity-critical">🔴 Critical</span>
+                        </div>
+                        <div class="summary-time">2-4 hrs/session → <span style="color: var(--low); font-weight: 600;">5 min with AI</span></div>
+                        <div class="summary-problems">Color grading, style consistency</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Client Proofing</div>
+                            <span class="severity-badge severity-high">🟠 High</span>
+                        </div>
+                        <div class="summary-time">1-2 hrs</div>
+                        <div class="summary-problems">Selection anxiety, revision cycles</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Print Fulfillment</div>
+                            <span class="severity-badge severity-high">🟠 High</span>
+                        </div>
+                        <div class="summary-time">1-3 hrs</div>
+                        <div class="summary-problems">Color calibration, lab coordination</div>
+                    </div>
+
+                    <div class="summary-card">
+                        <div class="summary-card-header">
+                            <div class="summary-phase">Session Booking</div>
+                            <span class="severity-badge severity-medium">🟡 Medium</span>
+                        </div>
+                        <div class="summary-time">30-60 min</div>
+                        <div class="summary-problems">Scheduling, deposits, prep guides</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PORTRAIT PHASES -->
+            <section id="portrait-phase1" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number portrait">01</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Pre-Session / Booking</h2>
+                        <p class="phase-time">30-60 minutes per client</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card portrait">
+                        <div class="problem-number">01</div>
+                        <h3 class="problem-title">Session Prep Coordination</h3>
+                        <p class="problem-desc">Wardrobe guidance, location scouting, and client prep instructions take significant time</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">02</div>
+                        <h3 class="problem-title">Expectation Management</h3>
+                        <p class="problem-desc">Clients have unrealistic expectations from social media filters and influencer photos</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">03</div>
+                        <h3 class="problem-title">Mini-Session Scheduling</h3>
+                        <p class="problem-desc">Managing back-to-back 15-30 minute sessions with tight turnarounds</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">04</div>
+                        <h3 class="problem-title">Seasonal Demand Spikes</h3>
+                        <p class="problem-desc">Holiday mini-sessions, senior portraits, and family photo seasons create overwhelming backlogs</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="portrait-phase2" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number portrait">02</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Session / Shoot</h2>
+                        <p class="phase-time">30 min - 2 hours</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card portrait">
+                        <div class="problem-number">05</div>
+                        <h3 class="problem-title">Posing Guidance</h3>
+                        <p class="problem-desc">Directing non-models to look natural and flattering requires constant attention</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">06</div>
+                        <h3 class="problem-title">Child/Pet Wrangling</h3>
+                        <p class="problem-desc">Getting cooperation from kids and pets while maintaining quality is exhausting</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">07</div>
+                        <h3 class="problem-title">Lighting Consistency</h3>
+                        <p class="problem-desc">Maintaining consistent lighting across poses and locations during session</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">08</div>
+                        <h3 class="problem-title">Client Confidence Issues</h3>
+                        <p class="problem-desc">Subjects who hate being photographed or are self-conscious about appearance</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="portrait-phase3" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number portrait">03</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Culling & Selection</h2>
+                        <p class="phase-time">30-60 minutes → <span class="improved">10 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card portrait">
+                        <div class="problem-number">09</div>
+                        <h3 class="problem-title">Expression Evaluation</h3>
+                        <p class="problem-desc">Comparing subtle expression differences across dozens of similar poses</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">10</div>
+                        <h3 class="problem-title">Group Shot Selection</h3>
+                        <p class="problem-desc">Finding the one frame where everyone looks good in family/group portraits</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">11</div>
+                        <h3 class="problem-title">Blink/Eyes Detection</h3>
+                        <p class="problem-desc">Manually checking every face for closed eyes, weird expressions, or unflattering angles</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">12</div>
+                        <h3 class="problem-title">Client Favorites vs Best Shots</h3>
+                        <p class="problem-desc">Clients often prefer different images than the photographer's artistic choices</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="portrait-phase4" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number portrait">04</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Editing & Retouching</h2>
+                        <p class="phase-time">2-4 hours → <span class="improved">5 min with AI</span></p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card portrait">
+                        <div class="problem-number">13</div>
+                        <h3 class="problem-title">Skin Retouching Time Sink</h3>
+                        <p class="problem-desc">Blemish removal, skin smoothing, and texture preservation takes 15-30 min per image</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">14</div>
+                        <h3 class="problem-title">Body Shaping Requests</h3>
+                        <p class="problem-desc">Clients request slimming, reshaping, and other body modifications</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">15</div>
+                        <h3 class="problem-title">Skin Tone Consistency</h3>
+                        <p class="problem-desc">Matching skin tones across different lighting conditions and poses</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">16</div>
+                        <h3 class="problem-title">Eye Enhancement</h3>
+                        <p class="problem-desc">Brightening eyes, removing red-eye, enhancing catchlights</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">17</div>
+                        <h3 class="problem-title">Background Cleanup</h3>
+                        <p class="problem-desc">Removing distractions, swapping backgrounds, or extending backdrops</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">18</div>
+                        <h3 class="problem-title">Headshot Standards</h3>
+                        <p class="problem-desc">Corporate headshots require specific crops, backgrounds, and professional polish</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="portrait-phase5" class="phase-section">
+                <div class="phase-header">
+                    <div class="phase-number portrait">05</div>
+                    <div class="phase-info">
+                        <h2 class="phase-title">Proofing & Sales</h2>
+                        <p class="phase-time">1-3 hours</p>
+                    </div>
+                </div>
+                <div class="problem-grid">
+                    <div class="problem-card portrait">
+                        <div class="problem-number">19</div>
+                        <h3 class="problem-title">In-Person Sales Sessions</h3>
+                        <p class="problem-desc">IPS requires dedicated time and space, limiting scalability</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">20</div>
+                        <h3 class="problem-title">Online Proofing Overwhelm</h3>
+                        <p class="problem-desc">Clients get decision paralysis when presented with too many options</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">21</div>
+                        <h3 class="problem-title">Print Product Complexity</h3>
+                        <p class="problem-desc">Explaining wall art sizes, canvas vs metal, frame options overwhelms clients</p>
+                    </div>
+                    <div class="problem-card portrait">
+                        <div class="problem-number">22</div>
+                        <h3 class="problem-title">Upselling Discomfort</h3>
+                        <p class="problem-desc">Many photographers hate the sales aspect and undercharge for products</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 5 Unsolved for Portrait -->
+            <section id="portrait-unsolved" class="unsolved-section">
+                <h2 class="unsolved-title">🎯 Top 5 Unsolved Opportunities</h2>
+                <p class="unsolved-subtitle">Problems Imagen AI doesn't currently solve but would provide the highest value for Portrait Photographers</p>
+                
+                <div class="unsolved-list">
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">1</div>
+                            <div class="unsolved-problem-name">AI-Powered Skin Retouching</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 100%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 Critical</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Time Saved</div>
+                                    <div class="metric-value frequency">20-40 min/image</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Automated blemish removal, skin smoothing with texture preservation, and frequency separation—the most time-consuming part of portrait editing.</p>
+                            <div class="why-solve portrait">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>AI can learn photographer's retouching style and intensity preferences</li>
+                                    <li>Preserves natural skin texture while removing imperfections</li>
+                                    <li>Batch process entire sessions with consistent retouching level</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 90% (30 min → 3 min per image)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">2</div>
+                            <div class="unsolved-problem-name">Smart Expression & Blink Detection</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 95%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🔴 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Time Saved</div>
+                                    <div class="metric-value frequency">30-60 min/session</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Auto-detect and flag closed eyes, awkward expressions, and unflattering angles. For groups, find the frame where everyone looks good.</p>
+                            <div class="why-solve portrait">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>AI scores expressions for natural smiles, open eyes, good angles</li>
+                                    <li>Group shot analysis: finds best composite of all faces</li>
+                                    <li>Dramatically speeds up culling for portrait sessions</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 80% on culling</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">3</div>
+                            <div class="unsolved-problem-name">Background Replacement & Cleanup</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 85%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Time Saved</div>
+                                    <div class="metric-value frequency">15-30 min/image</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">One-click background removal, replacement, or extension. Remove distracting elements, swap to studio backdrop, or extend tight crops.</p>
+                            <div class="why-solve portrait">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>AI-powered subject isolation with hair detail preservation</li>
+                                    <li>Library of professional backdrop options</li>
+                                    <li>Seamless edge blending and shadow matching</li>
+                                </ul>
+                                <div class="time-savings">⚡ Time savings: 85% on background work</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">4</div>
+                            <div class="unsolved-problem-name">Headshot Standardization Suite</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 70%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Revenue Unlock</div>
+                                    <div class="metric-value frequency">Corporate Market</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Auto-crop to standard headshot ratios, match backgrounds across team photos, ensure consistent head size and positioning for corporate clients.</p>
+                            <div class="why-solve portrait">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Corporate clients need consistent team photos</li>
+                                    <li>Auto-detect face position and crop to standards (LinkedIn, company site)</li>
+                                    <li>Match lighting and color across different session dates</li>
+                                </ul>
+                                <div class="time-savings">⚡ Opens corporate headshot market</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="unsolved-item">
+                        <div class="unsolved-header">
+                            <div class="unsolved-rank">5</div>
+                            <div class="unsolved-problem-name">Print-Ready Gallery with Room Visualization</div>
+                        </div>
+                        <div class="unsolved-body">
+                            <div class="unsolved-metrics">
+                                <div class="metric-card">
+                                    <div class="metric-label">Reach</div>
+                                    <div class="metric-value reach-high">🔴 80%</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Impact</div>
+                                    <div class="metric-value impact-high">🟠 High</div>
+                                </div>
+                                <div class="metric-card">
+                                    <div class="metric-label">Revenue Impact</div>
+                                    <div class="metric-value frequency">+40% Print Sales</div>
+                                </div>
+                            </div>
+                            <p class="unsolved-description">Show clients how prints will look on their walls with AR/room visualization. Increase print sales by helping clients see the value of wall art.</p>
+                            <div class="why-solve portrait">
+                                <div class="why-solve-title">Why Imagen AI Should Solve This</div>
+                                <ul class="why-solve-list">
+                                    <li>Upload room photo → AI places portrait on wall to scale</li>
+                                    <li>Increases average order value significantly</li>
+                                    <li>Reduces buyer hesitation and returns</li>
+                                </ul>
+                                <div class="time-savings">⚡ Increases print sales by 40%+</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 3 Solved for Portrait -->
+            <section class="top-problems portrait">
+                <h2 class="top-problems-title">✅ Top 3 Problems Imagen AI Solves</h2>
+                <p class="top-problems-subtitle">The most critical pain points already addressed for Portrait Photographers</p>
+                
+                <div class="top-problem-list">
+                    <div class="top-problem-item portrait">
+                        <div class="top-problem-rank portrait">1</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Color Grading Consistency</div>
+                            <div class="top-problem-impact">90% time reduction: 2-4 hours → 5 minutes</div>
+                            <p class="top-problem-detail">AI applies your signature color grade consistently across all images in a session, regardless of lighting changes.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item portrait">
+                        <div class="top-problem-rank portrait">2</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Skin Tone Matching</div>
+                            <div class="top-problem-impact">Perfect skin tones across all lighting</div>
+                            <p class="top-problem-detail">AI learns your preferred skin tone rendering and applies it consistently, even with mixed lighting conditions.</p>
+                        </div>
+                    </div>
+                    <div class="top-problem-item portrait">
+                        <div class="top-problem-rank portrait">3</div>
+                        <div class="top-problem-content">
+                            <div class="top-problem-name">Session Turnaround Speed</div>
+                            <div class="top-problem-impact">Same-day delivery becomes possible</div>
+                            <p class="top-problem-detail">What used to take days can now be delivered within hours, delighting clients and enabling more sessions.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer>
-        <p class="footer-text">Wedding Photography Workflow Research • 52 Problems Identified • December 2024</p>
+        <p class="footer-text">Photography Workflow Research • Wedding, Event & Portrait Analysis • December 2024</p>
     </footer>
 
     <script>
+        // Tab switching functionality
+        function switchTab(tab) {
+            const weddingTab = document.getElementById('weddingTab');
+            const eventTab = document.getElementById('eventTab');
+            const portraitTab = document.getElementById('portraitTab');
+            const weddingContent = document.getElementById('wedding-content');
+            const eventContent = document.getElementById('event-content');
+            const portraitContent = document.getElementById('portrait-content');
+            const bgGradient = document.getElementById('bgGradient');
+            const headerBadge = document.getElementById('headerBadge');
+            const statsBar = document.getElementById('statsBar');
+            const navInner = document.getElementById('navInner');
+
+            // Reset all tabs
+            weddingTab.classList.remove('active', 'event', 'portrait');
+            eventTab.classList.remove('active', 'event', 'portrait');
+            portraitTab.classList.remove('active', 'event', 'portrait');
+            weddingContent.classList.remove('active');
+            eventContent.classList.remove('active');
+            portraitContent.classList.remove('active');
+            bgGradient.classList.remove('event', 'portrait');
+            headerBadge.classList.remove('event', 'portrait');
+
+            if (tab === 'wedding') {
+                weddingTab.classList.add('active');
+                weddingContent.classList.add('active');
+                headerBadge.textContent = 'Wedding Photography Research';
+                
+                statsBar.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-value">52</div>
+                        <div class="stat-label">Total Problems</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">11</div>
+                        <div class="stat-label">Workflow Phases</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">30-40h</div>
+                        <div class="stat-label">Time Per Wedding</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">96%</div>
+                        <div class="stat-label">AI Time Savings</div>
+                    </div>
+                `;
+
+                navInner.innerHTML = `
+                    <button class="nav-btn" onclick="scrollToSection('wedding-summary')">Summary</button>
+                    <button class="nav-btn" onclick="scrollToSection('wedding-phase1')">Pre-Wedding</button>
+                    <button class="nav-btn" onclick="scrollToSection('wedding-phase2')">Shoot Day</button>
+                    <button class="nav-btn" onclick="scrollToSection('wedding-phase3')">Culling</button>
+                    <button class="nav-btn" onclick="scrollToSection('wedding-phase4')">Editing</button>
+                    <button class="nav-btn" onclick="scrollToSection('wedding-unsolved')">Top 5 Unsolved</button>
+                `;
+            } else if (tab === 'event') {
+                eventTab.classList.add('active', 'event');
+                eventContent.classList.add('active');
+                bgGradient.classList.add('event');
+                headerBadge.classList.add('event');
+                headerBadge.textContent = 'Event Photography Research';
+                
+                statsBar.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-value event">40+</div>
+                        <div class="stat-label">Total Problems</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value event">24-48h</div>
+                        <div class="stat-label">Delivery Expectation</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value event">500-3K</div>
+                        <div class="stat-label">Images Per Event</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value event">95%</div>
+                        <div class="stat-label">AI Time Savings</div>
+                    </div>
+                `;
+
+                navInner.innerHTML = `
+                    <button class="nav-btn" onclick="scrollToSection('event-summary')">Summary</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-phase1')">Pre-Event</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-phase2')">Event Day</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-phase3')">Culling</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-phase4')">Editing</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-phase5')">Delivery</button>
+                    <button class="nav-btn" onclick="scrollToSection('event-unsolved')">Top 5 Unsolved</button>
+                `;
+            } else if (tab === 'portrait') {
+                portraitTab.classList.add('active', 'portrait');
+                portraitContent.classList.add('active');
+                bgGradient.classList.add('portrait');
+                headerBadge.classList.add('portrait');
+                headerBadge.textContent = 'Portrait Photography Research';
+                
+                statsBar.innerHTML = `
+                    <div class="stat-item">
+                        <div class="stat-value portrait">35+</div>
+                        <div class="stat-label">Total Problems</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value portrait">30-60min</div>
+                        <div class="stat-label">Per Image Retouch</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value portrait">50-200</div>
+                        <div class="stat-label">Images Per Session</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value portrait">90%</div>
+                        <div class="stat-label">AI Time Savings</div>
+                    </div>
+                `;
+
+                navInner.innerHTML = `
+                    <button class="nav-btn" onclick="scrollToSection('portrait-summary')">Summary</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-phase1')">Pre-Session</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-phase2')">Session</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-phase3')">Culling</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-phase4')">Editing</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-phase5')">Proofing</button>
+                    <button class="nav-btn" onclick="scrollToSection('portrait-unsolved')">Top 5 Unsolved</button>
+                `;
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         function scrollToSection(id) {
             const element = document.getElementById(id);
             if (element) {
@@ -1634,6 +2468,9 @@
                 });
             }
         }
+
+        // Initialize with wedding tab
+        switchTab('wedding');
 
         // Intersection Observer for fade-in animations
         const observerOptions = {
@@ -1659,4 +2496,3 @@
     </script>
 </body>
 </html>
-
