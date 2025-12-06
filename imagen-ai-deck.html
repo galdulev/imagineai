@@ -505,6 +505,158 @@
             .theme-card div[style*="font-size: 24px"] { font-size: 20px !important; }
             .carousel-wrapper { min-height: 450px; }
         }
+
+        /* Workflow Carousel Styles */
+        @keyframes stageAppear {
+            0% { opacity: 0; transform: translateY(20px) scale(0.9); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        @keyframes stagePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
+            50% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
+        }
+        @keyframes exitBreak {
+            0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            25% { transform: scale(1.1) rotate(-2deg); opacity: 0.8; }
+            50% { transform: scale(0.95) rotate(2deg); opacity: 0.9; }
+            75% { transform: scale(1.05) rotate(-1deg); opacity: 0.85; }
+        }
+        @keyframes exitGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), 0 0 60px rgba(239, 68, 68, 0.5); }
+        }
+        @keyframes connectorDraw {
+            0% { width: 0; opacity: 0; }
+            100% { width: 100%; opacity: 1; }
+        }
+        @keyframes futureFlow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .workflow-carousel {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .workflow-carousel-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .workflow-carousel-slide {
+            min-width: 100%;
+            padding: 40px 20px;
+            animation: slideIn 0.6s ease-out;
+        }
+        .workflow-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin-bottom: 60px;
+            letter-spacing: -1px;
+        }
+        .workflow-chain {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        .workflow-stage {
+            background: rgba(255, 255, 255, 0.08);
+            border: 2px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            padding: 16px 24px;
+            font-size: 20px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            min-width: 140px;
+            text-align: center;
+            animation: stageAppear 0.6s ease-out both;
+            position: relative;
+            font-family: 'Inter', sans-serif;
+        }
+        .workflow-stage.imagen {
+            background: rgba(14, 165, 233, 0.15);
+            border-color: var(--accent);
+            color: var(--accent);
+            animation: stageAppear 0.6s ease-out both, stagePulse 2s ease-in-out infinite;
+        }
+        .workflow-stage.exit {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.8);
+            color: rgba(239, 68, 68, 1);
+            font-weight: 700;
+            animation: exitBreak 1.5s ease-in-out infinite, exitGlow 2s ease-in-out infinite;
+        }
+        .workflow-stage.future {
+            background: rgba(16, 185, 129, 0.15);
+            border-color: var(--success);
+            color: var(--success);
+        }
+        .workflow-connector {
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+            position: relative;
+            animation: connectorDraw 0.8s ease-out both;
+        }
+        .workflow-connector.broken {
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), transparent);
+            animation: exitGlow 2s ease-in-out infinite;
+        }
+        .workflow-connector.seamless {
+            background: linear-gradient(90deg, var(--success), var(--accent));
+            background-size: 200% 100%;
+            animation: futureFlow 3s ease-in-out infinite;
+        }
+        .workflow-description {
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 300;
+            margin-top: 30px;
+            letter-spacing: -0.5px;
+        }
+        .stage-delay-1 { animation-delay: 0.1s; }
+        .stage-delay-2 { animation-delay: 0.2s; }
+        .stage-delay-3 { animation-delay: 0.3s; }
+        .stage-delay-4 { animation-delay: 0.4s; }
+        .stage-delay-5 { animation-delay: 0.5s; }
+        .stage-delay-6 { animation-delay: 0.6s; }
+        .connector-delay-1 { animation-delay: 0.15s; }
+        .connector-delay-2 { animation-delay: 0.25s; }
+        .connector-delay-3 { animation-delay: 0.35s; }
+        .connector-delay-4 { animation-delay: 0.45s; }
+        .connector-delay-5 { animation-delay: 0.55s; }
+        .connector-delay-6 { animation-delay: 0.65s; }
+        .carousel-arrow {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 20px;
+        }
+        .carousel-arrow:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: var(--accent);
+            transform: scale(1.1);
+        }
+        .carousel-arrow:active {
+            transform: scale(0.95);
+        }
     </style>
 </head>
 <body>
@@ -1181,7 +1333,7 @@
             </div>
             
             <div class="card" style="margin-top: 60px; text-align: center; padding: 60px 40px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                <a href="wedding-photographer-workflow.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent-primary); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
+                <a href="https://galdulev.github.io/imagineai/wedding-photographer-workflow.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent-primary); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
                     View Complete Workflow Map →
                 </a>
                 <div style="margin-top: 24px; font-size: 16px; color: rgba(255,255,255,0.6);">
@@ -1197,7 +1349,7 @@
             <h2>User Journey Map</h2>
             
             <div class="card" style="margin-top: 60px; text-align: center; padding: 60px 40px; background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; max-width: 800px; margin-left: auto; margin-right: auto;">
-                <a href="imagen-ai-user-journey-map.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent-primary); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
+                <a href="https://galdulev.github.io/imagineai/imagen-ai-user-journey-map.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent-primary); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
                     View User Journey Map →
                 </a>
                 <div style="margin-top: 24px; font-size: 16px; color: rgba(255,255,255,0.6);">
@@ -1467,7 +1619,7 @@
                 Problems by Workflow Stage
             </div>
             <div style="margin-top: 60px;">
-                <a href="52.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
+                <a href="https://galdulev.github.io/imagineai/52.html" target="_blank" style="display: inline-block; padding: 20px 40px; background: var(--accent); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s;">
                     View Full 52 Problems Analysis →
                 </a>
             </div>
@@ -2195,7 +2347,7 @@
                     <div style="margin-bottom: 60px; background: rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 20px; border: 2px solid rgba(255, 255, 255, 0.1);">
                         <video 
                             controls 
-                            style="width: 100%; max-width: 1000px; border-radius: 16px; display: block; margin: 0 auto;"
+                            style="width: 100%; max-width: 500px; border-radius: 16px; display: block; margin: 0 auto;"
                             poster=""
                         >
                             <source src="YouCut_20251206_234355224 (1).mp4" type="video/mp4">
@@ -2310,6 +2462,74 @@
         </div>
     </section>
 
+    <!-- Slide 12.23: Ecosystem Fit -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 80px 40px;">
+                <h1 style="font-size: 120px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Ecosystem Fit</h1>
+                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Completing the One-Stop-Shop Mission</div>
+                
+                <div class="workflow-carousel" id="workflowCarousel">
+                    <div class="workflow-carousel-track" id="workflowTrack">
+                        <!-- Current State -->
+                        <div class="workflow-carousel-slide">
+                            <div class="workflow-title" style="color: rgba(239, 68, 68, 0.9);">Current State</div>
+                            <div class="workflow-chain">
+                                <div class="workflow-stage stage-delay-1">SHOOT</div>
+                                <div class="workflow-connector connector-delay-1"></div>
+                                <div class="workflow-stage stage-delay-2">IMPORT</div>
+                                <div class="workflow-connector connector-delay-2"></div>
+                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
+                                <div class="workflow-connector connector-delay-3"></div>
+                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
+                                <div class="workflow-connector broken connector-delay-4"></div>
+                                <div class="workflow-stage exit stage-delay-5">EXIT</div>
+                                <div class="workflow-connector broken connector-delay-5"></div>
+                                <div class="workflow-stage stage-delay-6">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(Pixieset/Pic-Time)</span></div>
+                            </div>
+                            <div class="workflow-description" style="margin-bottom: 20px;">Download, re-upload, pay extra, lose connection</div>
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Upsell</div>
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Retain</div>
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Marketing</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Future State -->
+                        <div class="workflow-carousel-slide">
+                            <div class="workflow-title" style="color: var(--success);">Future State</div>
+                            <div class="workflow-chain">
+                                <div class="workflow-stage stage-delay-1">SHOOT</div>
+                                <div class="workflow-connector seamless connector-delay-1"></div>
+                                <div class="workflow-stage stage-delay-2">IMPORT</div>
+                                <div class="workflow-connector seamless connector-delay-2"></div>
+                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
+                                <div class="workflow-connector seamless connector-delay-3"></div>
+                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
+                                <div class="workflow-connector seamless connector-delay-4"></div>
+                                <div class="workflow-stage future stage-delay-5">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(with cloud, on Imagen Mobile web app)</span></div>
+                            </div>
+                            <div class="workflow-description" style="margin-bottom: 20px;">Seamless workflow, no re-upload, continuous relationship</div>
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Upsell</div>
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Retain</div>
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Marketing</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Navigation -->
+                    <div class="carousel-nav" style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 40px;">
+                        <button class="carousel-arrow" id="prevBtn" onclick="changeWorkflowSlide(-1)">‹</button>
+                        <button class="carousel-dot active" onclick="goToWorkflowSlide(0)"></button>
+                        <button class="carousel-dot" onclick="goToWorkflowSlide(1)"></button>
+                        <button class="carousel-arrow" id="nextBtn" onclick="changeWorkflowSlide(1)">›</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Slide 12.24: Strategic Impact -->
     <section class="slide">
         <div class="slide-content" style="max-width: 1600px;">
@@ -2402,13 +2622,417 @@
         </div>
     </section>
 
+    <!-- Slide 12.26: Rollout Plan - Title -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Rollout Plan</h1>
+                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Validate stage expansion before scaling</div>
+                
+                <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
+                    <div style="font-size: 32px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; letter-spacing: -0.5px;">
+                        Expanding from <span style="color: rgba(255, 255, 255, 0.5);">2 stages</span> to <span style="color: var(--success); font-weight: 600;">3 stages</span><br>
+                        Cull + Edit → <span style="color: var(--accent); font-weight: 600;">+ Deliver</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.27: Strategic Context - Stage Expansion -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h2 style="font-size: 72px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Strategic Context</h2>
+                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">9-Stage Photographer Workflow</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto; background: rgba(255, 255, 255, 0.03); border-radius: 20px; padding: 60px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 20px; color: rgba(255, 255, 255, 0.5); margin-bottom: 40px; font-family: 'Courier New', monospace; letter-spacing: 2px; line-height: 2;">
+                        MARKETING → LEAD → BOOK → SHOOT → CULL → EDIT → DELIVER → UPSELL → RETAIN
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 60px; margin-bottom: 40px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; font-weight: 300;">Today</div>
+                            <div style="font-size: 48px; font-weight: 700; color: var(--accent);">2 stages</div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">Cull + Edit</div>
+                        </div>
+                        
+                        <div style="font-size: 64px; color: var(--success);">→</div>
+                        
+                        <div style="text-align: center;">
+                            <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; font-weight: 300;">After MVP</div>
+                            <div style="font-size: 48px; font-weight: 700; color: var(--success);">3 stages</div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">Cull + Edit + Deliver</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); line-height: 1.6; font-weight: 300;">
+                            Validate that photographers will adopt the <span style="color: var(--accent); font-weight: 600;">Deliver stage</span><br>
+                            before investing in <span style="color: rgba(255, 255, 255, 0.6);">Upsell</span> and <span style="color: rgba(255, 255, 255, 0.6);">Retain</span> stage expansion
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.28: Three-Phase Rollout Overview -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 80px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Three-Phase Rollout</h1>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1400px; margin: 0 auto; margin-top: 60px;">
+                    <!-- Phase 1 -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid var(--accent); border-radius: 20px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 20px;">Phase 1</div>
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">Closed Beta</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Weeks 1-4</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                            50-100 hand-selected photographers<br>
+                            Validate core flow<br>
+                            Identify critical bugs
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 2 -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid var(--success); border-radius: 20px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Phase 2</div>
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">Open Beta</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Weeks 5-10</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                            All users, opt-in<br>
+                            Measure adoption at scale<br>
+                            Target: ≥25% try within 60 days
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 3 -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid #a855f7; border-radius: 20px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 20px;">Phase 3</div>
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">General Availability</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Week 11+</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                            Default feature for all<br>
+                            Drive adoption to ≥40%<br>
+                            Prepare for V1.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.29: Phase 1 - Closed Beta Details -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: var(--accent);">Phase 1: Closed Beta</h2>
+                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Weeks 1-4 | 50-100 Selected Photographers</div>
+                
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px;">
+                        <!-- Selection Criteria -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Selection Criteria</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
+                                • Active Imagen users (≥5 projects)<br>
+                                • Wedding photographers<br>
+                                • High & moderate volume<br>
+                                • Geographic diversity<br>
+                                • Willing to provide feedback
+                            </div>
+                        </div>
+                        
+                        <!-- Goals -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Goals</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
+                                • Validate Deliver stage flow<br>
+                                • Identify critical bugs<br>
+                                • Gather qualitative feedback<br>
+                                • Test share delivery channels
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Gate -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 16px; padding: 40px; margin-top: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Success Gate to Phase 2</div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Beta Share Rate</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥60%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Share at least one gallery</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Client Open Rate</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥50%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Deliver stage works end-to-end</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.30: Phase 2 - Open Beta Details -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: var(--success);">Phase 2: Open Beta</h2>
+                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Weeks 5-10 | All Users, Opt-In</div>
+                
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; margin-bottom: 40px; text-align: left;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 30px;">Rollout Mechanism</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
+                            • In-app announcement: "New: Share galleries directly from Imagen"<br>
+                            • Email campaign to active users<br>
+                            • Feature flagged — users enable in settings
+                        </div>
+                    </div>
+                    
+                    <!-- Goals -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 40px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Goals</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                • Measure Deliver stage adoption<br>
+                                • Measure workflow completion<br>
+                                • Validate client open rate<br>
+                                • Gather competitive feedback
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Monitoring</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                • Daily KPI dashboard (first 2 weeks)<br>
+                                • Weekly cohort analysis<br>
+                                • Qualitative feedback prompts
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Gate -->
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 16px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px;">Success Gate to Phase 3</div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
+                            <div style="text-align: left;">
+                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Delivery Adoption</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥20%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Trending upward</div>
+                            </div>
+                            <div style="text-align: left;">
+                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Workflow Completion</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥15%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Cull → Edit → Deliver</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.31: Phase 3 - General Availability -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: #a855f7;">Phase 3: General Availability</h2>
+                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Week 11+ | Default Feature for All</div>
+                
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; margin-bottom: 40px; text-align: left;">
+                        <div style="font-size: 28px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">Rollout Mechanism</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
+                            • Mobile gallery becomes standard part of Imagen<br>
+                            • Onboarding updated: "Cull → Edit → Deliver" workflow<br>
+                            • Marketing positions Imagen as owner of 3 workflow stages
+                        </div>
+                    </div>
+                    
+                    <!-- Goals -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥40%</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Deliver stage adoption</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥35%</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Workflow completion rate</div>
+                        </div>
+                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥25%</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Tool consolidation</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 6-Month Evaluation -->
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 16px; padding: 40px; margin-top: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">6-Month Evaluation</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; text-align: left;">
+                            <strong style="color: #a855f7;">Decision:</strong><br>
+                            ✅ <strong>Proceed to V1.1</strong> — All targets met → Invest in Upsell stage<br>
+                            ⚠️ <strong>Extend</strong> — Partial targets → Continue iteration<br>
+                            ❌ <strong>Halt</strong> — Adoption <25% → Reassess strategy
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.32: Rollout Timeline -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 80px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Rollout Timeline</h1>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Week Timeline -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 50px; margin-bottom: 60px;">
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.6); margin-bottom: 40px; font-weight: 300;">Week-by-Week Breakdown</div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">1-4</div>
+                                <div style="color: var(--accent); font-weight: 600;">Closed Beta</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;">50-100 users</div>
+                            </div>
+                            <div style="font-size: 32px; color: var(--accent);">→</div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 12px;">5-10</div>
+                                <div style="color: var(--success); font-weight: 600;">Open Beta</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;">All users (opt-in)</div>
+                            </div>
+                            <div style="font-size: 32px; color: var(--success);">→</div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">11+</div>
+                                <div style="color: #a855f7; font-weight: 600;">GA Launch</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;">Default for all</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Month Timeline -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 50px;">
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.6); margin-bottom: 40px; font-weight: 300;">Long-Term Checkpoints</div>
+                        <div style="display: flex; align-items: center; justify-content: space-between; font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">Month 1</div>
+                                <div style="color: #a855f7; font-weight: 600;">GA Launch</div>
+                            </div>
+                            <div style="font-size: 32px; color: #a855f7;">→</div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 12px;">Month 3</div>
+                                <div style="color: var(--success); font-weight: 600;">90-Day Checkpoint</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;">Adoption ≥30%?</div>
+                            </div>
+                            <div style="font-size: 32px; color: var(--success);">→</div>
+                            <div style="text-align: center; flex: 1;">
+                                <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">Month 6</div>
+                                <div style="color: var(--accent); font-weight: 600;">6-Month Evaluation</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 8px;">Adoption ≥40%?<br>→ Plan V1.1</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.33: Path to Upsell Stage -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 80px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Path to Upsell Stage</h1>
+                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">If 6-month evaluation validates Deliver stage ownership</div>
+                
+                <div style="max-width: 1200px; margin: 0 auto;">
+                    <!-- V1.1 Features -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 50px; margin-bottom: 40px;">
+                        <div style="font-size: 36px; font-weight: 700; color: #a855f7; margin-bottom: 40px;">V1.1 Features (Upsell Foundation)</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 30px;">
+                                <div style="font-size: 24px; font-weight: 700; color: #a855f7; margin-bottom: 16px;">Client Favorites</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">Creates curated selection for album design</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 30px;">
+                                <div style="font-size: 24px; font-weight: 700; color: #a855f7; margin-bottom: 16px;">Engagement Notifications</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">Photographer sees client activity</div>
+                            </div>
+                            <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; padding: 30px;">
+                                <div style="font-size: 24px; font-weight: 700; color: #a855f7; margin-bottom: 16px;">Basic Analytics</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">Which photos resonate most</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Long-term Vision -->
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 16px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">Long-Term Vision</div>
+                        <div style="display: flex; align-items: center; justify-content: space-around; font-size: 20px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">Today</div>
+                                <div style="font-size: 36px; font-weight: 700; color: var(--accent);">2/9 (22%)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Cull + Edit</div>
+                            </div>
+                            <div style="font-size: 32px; color: #a855f7;">→</div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">MVP</div>
+                                <div style="font-size: 36px; font-weight: 700; color: var(--success);">3/9 (33%)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">+ Deliver</div>
+                            </div>
+                            <div style="font-size: 32px; color: #a855f7;">→</div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">V1.1</div>
+                                <div style="font-size: 36px; font-weight: 700; color: #a855f7;">3/9 + Upsell</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Foundation</div>
+                            </div>
+                            <div style="font-size: 32px; color: #a855f7;">→</div>
+                            <div style="text-align: center;">
+                                <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px;">V2+</div>
+                                <div style="font-size: 36px; font-weight: 700; color: #a855f7;">5/9 (55%)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">+ Upsell + Retain</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Slide 19: The Impact -->
     <section class="slide">
-        <div class="slide-content">
-            <h2>This Turns</h2>
-            <div class="subtitle" style="font-size: 48px; margin: 40px 0;">The worst part of their job</div>
-            <div class="big-number" style="font-size: 100px; margin: 40px 0;">→</div>
-            <div class="subtitle" style="font-size: 48px;">Into the easiest</div>
+        <div class="slide-content" style="max-width: 1200px;">
+            <div style="display: flex; align-items: center; justify-content: center; gap: 32px; width: 100%;">
+                <!-- Left: Text -->
+                <div style="text-align: center; flex: 0 0 auto;">
+                    <h2 style="font-size: 48px; margin: 0; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px;">Let's Turn This</h2>
+                    <div class="subtitle" style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-top: 12px; margin-bottom: 0; line-height: 1.4; font-weight: 300;">The worst part of their job</div>
+                </div>
+                
+                <!-- Arrow 1 -->
+                <div style="font-size: 32px; color: var(--accent); font-weight: 400; line-height: 1; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; opacity: 0.8;">→</div>
+                
+                <!-- Center: Image -->
+                <div style="flex: 0 0 auto; width: 280px; height: 200px; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); background: #1a1a1a; padding: 8px; display: flex; align-items: center; justify-content: center;">
+                    <img src="./Screenshot 2025-12-06 at 21.01.40.png" alt="Screenshot" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px; background: #2a2a2a; display: block;">
+                </div>
+                
+                <!-- Arrow 2 -->
+                <div style="font-size: 32px; color: var(--success); font-weight: 400; line-height: 1; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; opacity: 0.8;">→</div>
+                
+                <!-- Right: Ease -->
+                <div style="text-align: center; flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                    <h2 style="font-size: 48px; font-weight: 700; color: var(--success); margin: 0; line-height: 1.2; letter-spacing: -0.5px;">Ease</h2>
+                    <div style="height: 40px;"></div>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -2445,18 +3069,41 @@
         function showSlide(n) {
             slides.forEach(slide => slide.style.display = 'none');
             if (n >= slides.length) currentSlide = 0;
-            if (n < 0) currentSlide = slides.length - 1;
+            else if (n < 0) currentSlide = slides.length - 1;
+            else currentSlide = n;
             slides[currentSlide].style.display = 'flex';
             
             // Reset vision-mission-promise animation when navigating away or to it
             const visionSlide = document.getElementById('vision-mission-promise-slide');
             const missionSection = document.getElementById('mission-section');
             const promiseSection = document.getElementById('promise-section');
+            const visionSection = document.getElementById('vision-section');
             
-            if (visionSlide && currentSlide !== Array.from(slides).indexOf(visionSlide)) {
-                if (missionSection) missionSection.style.display = 'none';
-                if (promiseSection) promiseSection.style.display = 'none';
-                revealState = 0;
+            if (visionSlide && missionSection && promiseSection) {
+                const visionSlideIndex = Array.from(slides).indexOf(visionSlide);
+                if (currentSlide !== visionSlideIndex) {
+                    // Not on vision slide - reset
+                    missionSection.style.opacity = '0';
+                    missionSection.style.transform = 'translateY(40px)';
+                    missionSection.style.pointerEvents = 'none';
+                    promiseSection.style.opacity = '0';
+                    promiseSection.style.transform = 'translateY(40px)';
+                    promiseSection.style.pointerEvents = 'none';
+                    revealState = 0;
+                } else {
+                    // On vision slide - reset to initial state
+                    revealState = 0;
+                    if (visionSection) {
+                        visionSection.style.display = '';
+                        visionSection.style.opacity = '1';
+                    }
+                    missionSection.style.opacity = '0';
+                    missionSection.style.transform = 'translateY(40px)';
+                    missionSection.style.pointerEvents = 'none';
+                    promiseSection.style.opacity = '0';
+                    promiseSection.style.transform = 'translateY(40px)';
+                    promiseSection.style.pointerEvents = 'none';
+                }
             }
         }
         
@@ -2472,19 +3119,297 @@
         
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
+            const visionSlide = document.getElementById('vision-mission-promise-slide');
+            const visionSlideIndex = visionSlide ? Array.from(slides).indexOf(visionSlide) : -1;
+            const isOnVisionSlide = visionSlideIndex !== -1 && currentSlide === visionSlideIndex;
+            
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                // If on vision slide and not all revealed, reveal next section instead of moving
+                if (isOnVisionSlide && revealState < 2) {
+                    const missionSection = document.getElementById('mission-section');
+                    const promiseSection = document.getElementById('promise-section');
+                    
+                    if (revealState === 0 && missionSection) {
+                        // Reveal Mission
+                        missionSection.style.opacity = '1';
+                        missionSection.style.transform = 'translateY(0)';
+                        missionSection.style.pointerEvents = 'auto';
+                        revealState = 1;
+                    } else if (revealState === 1 && promiseSection) {
+                        // Reveal Promise
+                        promiseSection.style.opacity = '1';
+                        promiseSection.style.transform = 'translateY(0)';
+                        promiseSection.style.pointerEvents = 'auto';
+                        revealState = 2;
+                    }
+                } else {
+                    // Normal navigation
+                    nextSlide();
+                }
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
                 prevSlide();
             }
         });
         
         // Initialize
         showSlide(0);
+        
+        // Workflow Carousel functionality
+        let currentWorkflowSlide = 0;
+        const workflowTotalSlides = 2;
+        
+        function updateWorkflowCarousel() {
+            const track = document.getElementById('workflowTrack');
+            if (!track) return;
+            const dots = document.querySelectorAll('#workflowCarousel .carousel-dot');
+            track.style.transform = `translateX(-${currentWorkflowSlide * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentWorkflowSlide);
+            });
+        }
+        
+        function changeWorkflowSlide(direction) {
+            currentWorkflowSlide = (currentWorkflowSlide + direction + workflowTotalSlides) % workflowTotalSlides;
+            updateWorkflowCarousel();
+        }
+        
+        function goToWorkflowSlide(index) {
+            currentWorkflowSlide = index;
+            updateWorkflowCarousel();
+        }
+        
+        // Tab functionality for Mobile Jobs-to-Be-Done
+        document.addEventListener('DOMContentLoaded', () => {
+            const tabButtons = document.querySelectorAll('.tab-button');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    const targetTab = button.getAttribute('data-tab');
+
+                    // Remove active class from all buttons and contents
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+
+                    // Add active class to clicked button and corresponding content
+                    button.classList.add('active');
+                    const targetContent = document.getElementById(targetTab);
+                    if (targetContent) targetContent.classList.add('active');
+                });
+            });
+
+            // Carousel functionality for Qualitative Insights
+            let qualitativeCurrentSlide = 0;
+            const qualitativeCarousel = document.getElementById('qualitativeCarousel');
+            const qualitativeSlides = document.querySelectorAll('#qualitativeCarousel .carousel-slide');
+            const qualitativeDotsContainer = document.getElementById('qualitativeDots');
+            
+            // Create dots
+            if (qualitativeSlides.length > 0 && qualitativeDotsContainer) {
+                qualitativeSlides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot';
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => goToQualitativeSlide(index));
+                    qualitativeDotsContainer.appendChild(dot);
+                });
+                
+                // Initialize carousel position
+                const qualitativeDots = document.querySelectorAll('#qualitativeDots .carousel-dot');
+                updateQualitativeCarousel(qualitativeCarousel, qualitativeSlides, qualitativeDots);
+            }
+
+            // Carousel functionality for Strategic Fit
+            const strategicFitCarousel = document.getElementById('strategicFitCarousel');
+            const strategicFitSlides = document.querySelectorAll('#strategicFitCarousel .carousel-slide');
+            const strategicFitDotsContainer = document.getElementById('strategicFitDots');
+            
+            // Create dots
+            if (strategicFitSlides.length > 0 && strategicFitDotsContainer) {
+                strategicFitSlides.forEach((_, index) => {
+                    const dot = document.createElement('button');
+                    dot.className = 'carousel-dot';
+                    if (index === 0) dot.classList.add('active');
+                    dot.addEventListener('click', () => goToStrategicFitSlide(index));
+                    strategicFitDotsContainer.appendChild(dot);
+                });
+                
+                // Initialize carousel position
+                const strategicFitDots = document.querySelectorAll('#strategicFitDots .carousel-dot');
+                updateStrategicFitCarousel(strategicFitCarousel, strategicFitSlides, strategicFitDots);
+            }
+        });
+
+        function moveCarousel(direction) {
+            const qualitativeCarousel = document.getElementById('qualitativeCarousel');
+            const qualitativeSlides = document.querySelectorAll('#qualitativeCarousel .carousel-slide');
+            const qualitativeDots = document.querySelectorAll('#qualitativeDots .carousel-dot');
+            
+            if (!qualitativeCarousel || qualitativeSlides.length === 0) return;
+            
+            let qualitativeCurrentSlide = parseInt(qualitativeCarousel.dataset.currentSlide || '0');
+            qualitativeCurrentSlide += direction;
+            
+            if (qualitativeCurrentSlide < 0) {
+                qualitativeCurrentSlide = qualitativeSlides.length - 1;
+            } else if (qualitativeCurrentSlide >= qualitativeSlides.length) {
+                qualitativeCurrentSlide = 0;
+            }
+            
+            qualitativeCarousel.dataset.currentSlide = qualitativeCurrentSlide;
+            updateQualitativeCarousel(qualitativeCarousel, qualitativeSlides, qualitativeDots);
+        }
+
+        function goToQualitativeSlide(index) {
+            const qualitativeCarousel = document.getElementById('qualitativeCarousel');
+            const qualitativeSlides = document.querySelectorAll('#qualitativeCarousel .carousel-slide');
+            const qualitativeDots = document.querySelectorAll('#qualitativeDots .carousel-dot');
+            
+            if (!qualitativeCarousel || qualitativeSlides.length === 0) return;
+            
+            qualitativeCarousel.dataset.currentSlide = index;
+            updateQualitativeCarousel(qualitativeCarousel, qualitativeSlides, qualitativeDots);
+        }
+
+        function updateQualitativeCarousel(carousel, slides, dots) {
+            if (!carousel) return;
+            
+            const currentSlide = parseInt(carousel.dataset.currentSlide || '0');
+            const slideWidth = 100; // percentage
+            carousel.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+            
+            // Update dots
+            if (dots) {
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Carousel functionality for Strategic Fit
+        let strategicFitCurrentSlide = 0;
+        
+        function moveStrategicFitCarousel(direction) {
+            const strategicFitCarousel = document.getElementById('strategicFitCarousel');
+            const strategicFitSlides = document.querySelectorAll('#strategicFitCarousel .carousel-slide');
+            const strategicFitDots = document.querySelectorAll('#strategicFitDots .carousel-dot');
+            
+            if (!strategicFitCarousel || strategicFitSlides.length === 0) return;
+            
+            strategicFitCurrentSlide += direction;
+            
+            if (strategicFitCurrentSlide < 0) {
+                strategicFitCurrentSlide = strategicFitSlides.length - 1;
+            } else if (strategicFitCurrentSlide >= strategicFitSlides.length) {
+                strategicFitCurrentSlide = 0;
+            }
+            
+            updateStrategicFitCarousel(strategicFitCarousel, strategicFitSlides, strategicFitDots);
+        }
+
+        function goToStrategicFitSlide(index) {
+            const strategicFitCarousel = document.getElementById('strategicFitCarousel');
+            const strategicFitSlides = document.querySelectorAll('#strategicFitCarousel .carousel-slide');
+            const strategicFitDots = document.querySelectorAll('#strategicFitDots .carousel-dot');
+            
+            if (!strategicFitCarousel || strategicFitSlides.length === 0) return;
+            
+            strategicFitCurrentSlide = index;
+            updateStrategicFitCarousel(strategicFitCarousel, strategicFitSlides, strategicFitDots);
+        }
+
+        function updateStrategicFitCarousel(carousel, slides, dots) {
+            if (!carousel) return;
+            
+            const slideWidth = 100; // percentage
+            carousel.style.transform = `translateX(-${strategicFitCurrentSlide * slideWidth}%)`;
+            
+            // Update dots
+            if (dots) {
+                dots.forEach((dot, index) => {
+                    if (index === strategicFitCurrentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+
+        // Typewriter Animation for The Focus slide
+        let typewriterText = '';
+        let typewriterIndex = 0;
+        let typewriterSentenceIndex = 0;
+        let isDeleting = false;
+        let typewriterTimeout;
+
+        const typewriterSentences = [
+            'Be where their clients are',
+            'Be where they leave Imagen AI ecosystem',
+            'Be where Imagen AI has unfair advantage (sorry not sorry, dropbox)'
+        ];
+
+        function typeWriterAnimation() {
+            const textElement = document.getElementById('typewriter-text');
+            if (!textElement) return;
+
+            const currentSentence = typewriterSentences[typewriterSentenceIndex];
+
+            if (!isDeleting && typewriterIndex < currentSentence.length) {
+                // Typing
+                typewriterText = currentSentence.substring(0, typewriterIndex + 1);
+                textElement.textContent = typewriterText;
+                typewriterIndex++;
+                typewriterTimeout = setTimeout(typeWriterAnimation, 50); // Typing speed
+            } else if (!isDeleting && typewriterIndex === currentSentence.length) {
+                // Finished typing, pause before deleting
+                typewriterTimeout = setTimeout(() => {
+                    isDeleting = true;
+                    typeWriterAnimation();
+                }, 2000); // Pause for 2 seconds
+            } else if (isDeleting && typewriterIndex > 0) {
+                // Deleting
+                typewriterText = currentSentence.substring(0, typewriterIndex - 1);
+                textElement.textContent = typewriterText;
+                typewriterIndex--;
+                typewriterTimeout = setTimeout(typeWriterAnimation, 30); // Deleting speed (faster)
+            } else if (isDeleting && typewriterIndex === 0) {
+                // Finished deleting, move to next sentence
+                isDeleting = false;
+                typewriterSentenceIndex = (typewriterSentenceIndex + 1) % typewriterSentences.length;
+                typewriterTimeout = setTimeout(typeWriterAnimation, 300); // Brief pause before next sentence
+            }
+        }
+
+        // Start typewriter animation when the animated focus slide is shown
+        function checkAndStartTypewriter() {
+            const animatedFocusSlide = document.getElementById('animated-focus-text')?.closest('.slide');
+            if (animatedFocusSlide && slides[currentSlide] === animatedFocusSlide && animatedFocusSlide.style.display === 'flex') {
+                // Reset and start animation
+                clearTimeout(typewriterTimeout);
+                typewriterText = '';
+                typewriterIndex = 0;
+                typewriterSentenceIndex = 0;
+                isDeleting = false;
+                const textElement = document.getElementById('typewriter-text');
+                if (textElement) {
+                    textElement.textContent = '';
+                }
+                setTimeout(typeWriterAnimation, 500); // Start after slide transition
+            } else {
+                // Stop animation when leaving the slide
+                clearTimeout(typewriterTimeout);
+            }
+        }
+
+        // Note: Vision animation override is handled in the main script section below
     </script>
 </body>
 </html>
-                0% { opacity: 0; transform: translateY(20px) scale(0.9); }
                 100% { opacity: 1; transform: translateY(0) scale(1); }
             }
             @keyframes stagePulse {
@@ -2680,7 +3605,12 @@
                                 <div class="workflow-connector broken connector-delay-5"></div>
                                 <div class="workflow-stage stage-delay-6">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(Pixieset/Pic-Time)</span></div>
                             </div>
-                            <div class="workflow-description">Download, re-upload, pay extra, lose connection</div>
+                            <div class="workflow-description" style="margin-bottom: 20px;">Download, re-upload, pay extra, lose connection</div>
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Upsell</div>
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Retain</div>
+                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Marketing</div>
+                            </div>
                         </div>
                         
                         <!-- Future State -->
@@ -2695,11 +3625,14 @@
                                 <div class="workflow-connector seamless connector-delay-3"></div>
                                 <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
                                 <div class="workflow-connector seamless connector-delay-4"></div>
-                                <div class="workflow-stage future stage-delay-5">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(Imagen Mobile)</span></div>
-                                <div class="workflow-connector seamless connector-delay-5"></div>
-                                <div class="workflow-stage future stage-delay-6" style="opacity: 0.6;">ALBUM<br><span style="font-size: 14px; opacity: 0.7;">(Future)</span></div>
+                                <div class="workflow-stage future stage-delay-5">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(with cloud, on Imagen Mobile web app)</span></div>
                             </div>
-                            <div class="workflow-description">Seamless workflow, no re-upload, continuous relationship</div>
+                            <div class="workflow-description" style="margin-bottom: 20px;">Seamless workflow, no re-upload, continuous relationship</div>
+                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Upsell</div>
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Retain</div>
+                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Marketing</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -2930,7 +3863,8 @@
         function showSlide(n) {
             slides.forEach(slide => slide.style.display = 'none');
             if (n >= slides.length) currentSlide = 0;
-            if (n < 0) currentSlide = slides.length - 1;
+            else if (n < 0) currentSlide = slides.length - 1;
+            else currentSlide = n;
             slides[currentSlide].style.display = 'flex';
             
             // Reset vision-mission-promise animation when navigating away or to it
@@ -2939,9 +3873,16 @@
             const promiseSection = document.getElementById('promise-section');
             
             if (visionSlide && missionSection && promiseSection) {
-                if (slides[currentSlide] === visionSlide) {
+                const visionSlideIndex = Array.from(slides).indexOf(visionSlide);
+                const visionSection = document.getElementById('vision-section');
+                if (currentSlide === visionSlideIndex) {
                     // Reset to initial state when showing this slide
                     revealState = 0;
+                    // Make sure vision section is visible
+                    if (visionSection) {
+                        visionSection.style.display = '';
+                        visionSection.style.opacity = '1';
+                    }
                     missionSection.style.opacity = '0';
                     missionSection.style.transform = 'translateY(40px)';
                     missionSection.style.pointerEvents = 'none';
@@ -2954,9 +3895,10 @@
         
         document.addEventListener('keydown', (e) => {
             const visionSlide = document.getElementById('vision-mission-promise-slide');
-            const isOnVisionSlide = visionSlide && slides[currentSlide] === visionSlide;
+            const visionSlideIndex = visionSlide ? Array.from(slides).indexOf(visionSlide) : -1;
+            const isOnVisionSlide = visionSlideIndex !== -1 && currentSlide === visionSlideIndex;
             
-            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
                 // If on vision slide and not all revealed, reveal next section instead of moving
                 if (isOnVisionSlide && revealState < 2) {
                     const missionSection = document.getElementById('mission-section');
@@ -3020,21 +3962,26 @@
         
         if (visionSlide) {
             visionSlide.addEventListener('click', () => {
-                if (revealState === 0) {
-                    // Reveal Mission
-                    missionSection.style.opacity = '1';
-                    missionSection.style.transform = 'translateY(0)';
-                    missionSection.style.pointerEvents = 'auto';
-                    revealState = 1;
-                } else if (revealState === 1) {
-                    // Reveal Promise
-                    promiseSection.style.opacity = '1';
-                    promiseSection.style.transform = 'translateY(0)';
-                    promiseSection.style.pointerEvents = 'auto';
-                    revealState = 2;
+                // Check if we're actually on the vision slide
+                const visionSlideIndex = Array.from(slides).indexOf(visionSlide);
+                if (currentSlide === visionSlideIndex && revealState < 2) {
+                    if (revealState === 0 && missionSection) {
+                        // Reveal Mission
+                        missionSection.style.opacity = '1';
+                        missionSection.style.transform = 'translateY(0)';
+                        missionSection.style.pointerEvents = 'auto';
+                        revealState = 1;
+                    } else if (revealState === 1 && promiseSection) {
+                        // Reveal Promise
+                        promiseSection.style.opacity = '1';
+                        promiseSection.style.transform = 'translateY(0)';
+                        promiseSection.style.pointerEvents = 'auto';
+                        revealState = 2;
+                    }
                 }
             });
         }
+
 
         // Tab functionality for Mobile Jobs-to-Be-Done
         document.addEventListener('DOMContentLoaded', () => {
@@ -3203,8 +4150,8 @@
 
         const typewriterSentences = [
             'Be where their clients are',
-            'Be where they leave Imagine AI ecosystem',
-            'Be where Imgine AI has unfair advantage (sorry not sorry, dropbox)'
+            'Be where they leave Imagen AI ecosystem',
+            'Be where Imagen AI has unfair advantage (sorry not sorry, dropbox)'
         ];
 
         function typeWriterAnimation() {
@@ -3242,7 +4189,12 @@
         // Start typewriter animation when the animated focus slide is shown
         function checkAndStartTypewriter() {
             const animatedFocusSlide = document.getElementById('animated-focus-text')?.closest('.slide');
-            if (animatedFocusSlide && slides[currentSlide] === animatedFocusSlide && animatedFocusSlide.style.display === 'flex') {
+            if (!animatedFocusSlide) return;
+            
+            const slideIndex = Array.from(slides).indexOf(animatedFocusSlide);
+            const isCurrentSlide = slideIndex === currentSlide;
+            
+            if (isCurrentSlide) {
                 // Reset and start animation
                 clearTimeout(typewriterTimeout);
                 typewriterText = '';
@@ -3257,6 +4209,10 @@
             } else {
                 // Stop animation when leaving the slide
                 clearTimeout(typewriterTimeout);
+                const textElement = document.getElementById('typewriter-text');
+                if (textElement) {
+                    textElement.textContent = '';
+                }
             }
         }
 
