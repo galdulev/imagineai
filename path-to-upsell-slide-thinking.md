@@ -209,3 +209,4 @@
 - Show Client Favorites dual purpose clearly
 - Keep progression timeline at bottom
 
+
