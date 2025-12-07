@@ -5174,39 +5174,100 @@
     <!-- Slide 12.25: Long-Term Vision -->
     <section class="slide" style="display: none;">
         <div class="slide-content" style="max-width: 1600px;">
-            <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900;">Long-Term Vision</h1>
-            <div style="font-size: 48px; color: rgba(255, 255, 255, 0.7); margin-bottom: 100px; font-weight: 300;">From Editing Tool to Workflow Platform</div>
-            
-            <div style="max-width: 1400px; margin: 0 auto; text-align: center;">
-                <!-- Timeline - Large and Bold -->
-                <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-bottom: 80px; font-size: 32px;">
-                    <div>
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 12px; font-weight: 300;">TODAY</div>
-                        <div style="color: rgba(255, 255, 255, 0.8);">Edit-only</div>
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: clamp(72px, 8vw, 96px); margin-bottom: 20px; font-weight: 900; letter-spacing: -2px;">Long-Term Vision</h1>
+                <div style="font-size: clamp(24px, 2.5vw, 32px); color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -0.5px;">Path to 5 Stages</div>
+                
+                <!-- Progress Bars -->
+                <div style="max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 24px; margin-bottom: 60px;">
+                    <!-- TODAY -->
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="width: 120px; text-align: right;">
+                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px;">TODAY</div>
+                            <div style="font-size: 24px; font-weight: 700; color: rgba(255, 255, 255, 0.7);">2/9</div>
+                        </div>
+                        <div style="flex: 1; height: 48px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; position: relative;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 22%; background: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white;">
+                                Cull + Edit
+                            </div>
+                        </div>
+                        <div style="width: 100px; font-size: 32px; color: rgba(255, 255, 255, 0.5); font-weight: 700;">22%</div>
                     </div>
-                    <div style="font-size: 64px; color: var(--accent);">→</div>
-                    <div>
-                        <div style="color: var(--accent); margin-bottom: 12px; font-weight: 700;">MVP</div>
-                        <div style="color: rgba(255, 255, 255, 0.9); font-size: 40px;">Edit + Deliver</div>
+                    
+                    <!-- MVP -->
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="width: 120px; text-align: right;">
+                            <div style="font-size: 14px; font-weight: 600; color: var(--accent); margin-bottom: 4px;">MVP</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--accent);">3/9</div>
+                        </div>
+                        <div style="flex: 1; height: 48px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; position: relative;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 33%; background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 66%, #ef4444 66%, #ef4444 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white;">
+                                + Deliver
+                            </div>
+                        </div>
+                        <div style="width: 100px; font-size: 32px; color: var(--accent); font-weight: 700;">33%</div>
                     </div>
-                    <div style="font-size: 64px; color: var(--success);">→</div>
-                    <div>
-                        <div style="color: var(--success); margin-bottom: 12px; font-weight: 700;">V1.1</div>
-                        <div style="color: rgba(255, 255, 255, 0.9);">+ Engagement</div>
+                    
+                    <!-- V1.1 -->
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="width: 120px; text-align: right;">
+                            <div style="font-size: 14px; font-weight: 600; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px;">V1.1</div>
+                            <div style="font-size: 24px; font-weight: 700; color: rgba(255, 255, 255, 0.7);">3+</div>
+                        </div>
+                        <div style="flex: 1; height: 48px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; position: relative;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 40%; background: linear-gradient(90deg, var(--accent) 0%, var(--accent) 75%, #facc15 75%, #facc15 100%); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white;">
+                                + Upsell (Favorites)
+                            </div>
+                        </div>
+                        <div style="width: 100px; font-size: 32px; color: rgba(255, 255, 255, 0.5); font-weight: 700;">~40%</div>
                     </div>
-                    <div style="font-size: 64px; color: #a855f7;">→</div>
-                    <div>
-                        <div style="color: #a855f7; margin-bottom: 12px; font-weight: 700;">V2+</div>
-                        <div style="color: rgba(255, 255, 255, 0.9); font-size: 40px;">Workflow Platform</div>
+                    
+                    <!-- FUTURE -->
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="width: 120px; text-align: right;">
+                            <div style="font-size: 14px; font-weight: 600; color: var(--success); margin-bottom: 4px;">FUTURE</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success);">5/9</div>
+                        </div>
+                        <div style="flex: 1; height: 48px; background: rgba(255, 255, 255, 0.05); border-radius: 12px; overflow: hidden; position: relative;">
+                            <div style="position: absolute; left: 0; top: 0; bottom: 0; width: 55%; background: var(--success); display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600; color: white;">
+                                + Upsell + Retain
+                            </div>
+                        </div>
+                        <div style="width: 100px; font-size: 32px; color: var(--success); font-weight: 700;">55%</div>
                     </div>
                 </div>
                 
-                <!-- Key Insight - Large -->
-                <div style="margin-top: 100px;">
-                    <div style="font-size: 56px; font-weight: 700; color: var(--success); margin-bottom: 40px;">Ecosystem Completion</div>
-                    <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); line-height: 1.6; font-weight: 300; max-width: 1000px; margin: 0 auto;">
-                        This isn't a feature addition -<br>
-                        it's ecosystem completion.
+                <!-- Two Column Cards -->
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; max-width: 1400px; margin: 0 auto;">
+                    <!-- Positioning Evolution -->
+                    <div style="background: rgba(15, 25, 25, 0.95); border-radius: 16px; padding: 32px; border: 1px solid rgba(255, 255, 255, 0.1); text-align: left;">
+                        <h3 style="font-size: 20px; font-weight: 700; color: #ffffff; margin-bottom: 24px;">Positioning Evolution</h3>
+                        <div style="display: flex; flex-direction: column; gap: 16px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.7);">Today</span>
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.9);">"Editing software"</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.7);">MVP</span>
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.9);">"Workflow solution"</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center; padding-bottom: 12px; border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.7);">V1.1</span>
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.9);">"Client relationship management"</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span style="font-size: 16px; color: rgba(255, 255, 255, 0.7);">Future</span>
+                                <span style="font-size: 16px; color: var(--success); font-weight: 600;">"Photography business OS"</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- The Unlock -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border-radius: 16px; padding: 32px; border: 1px solid var(--accent); text-align: left;">
+                        <h3 style="font-size: 20px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">The Unlock</h3>
+                        <p style="font-size: 16px; color: rgba(255, 255, 255, 0.9); line-height: 1.6; margin: 0;">
+                            The mobile gallery isn't the destination — it's the <strong style="color: var(--accent);">bridge</strong> from "editing tool" to "workflow platform." It tests whether photographers want Imagen to be more than editing.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -5222,8 +5283,8 @@
                 
                 <div style="max-width: 1200px; margin: 0 auto; text-align: center;">
                     <div style="font-size: 32px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; letter-spacing: -0.5px;">
-                        Expanding from <span style="color: rgba(255, 255, 255, 0.5);">3 stages</span> to <span style="color: var(--success); font-weight: 600;">4 stages</span><br>
-                        Cull + Edit + backup → <span style="color: var(--accent); font-weight: 600;">+ Deliver</span>
+                        Expanding from <span style="color: rgba(255, 255, 255, 0.5);">2 stages</span> to <span style="color: var(--success); font-weight: 600;">3 stages</span><br>
+                        Cull + Edit → <span style="color: var(--accent); font-weight: 600;">+ Deliver</span>
                     </div>
                 </div>
             </div>
