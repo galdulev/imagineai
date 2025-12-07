@@ -135,6 +135,17 @@
             }
         }
 
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+                color: rgba(255, 255, 255, 0);
+            }
+            100% {
+                opacity: 1;
+                color: rgba(255, 255, 255, 1);
+            }
+        }
+
         @keyframes zoomInTop {
             0% {
                 transform: scale(1) translateX(0);
@@ -657,6 +668,65 @@
         .carousel-arrow:active {
             transform: scale(0.95);
         }
+
+        /* Scalable Slide Styles */
+        .slide-content[style*="flex-direction: column"] {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(14, 165, 233, 0.5) rgba(255, 255, 255, 0.1);
+        }
+
+        .slide-content[style*="flex-direction: column"]::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .slide-content[style*="flex-direction: column"]::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .slide-content[style*="flex-direction: column"]::-webkit-scrollbar-thumb {
+            background: rgba(14, 165, 233, 0.5);
+            border-radius: 4px;
+        }
+
+        .slide-content[style*="flex-direction: column"]::-webkit-scrollbar-thumb:hover {
+            background: rgba(14, 165, 233, 0.7);
+        }
+
+        /* Responsive grid cards hover effect */
+        @media (hover: hover) {
+            .slide-content > div[style*="display: grid"] > div:hover {
+                background: rgba(255, 255, 255, 0.08) !important;
+                border-color: rgba(255, 255, 255, 0.2) !important;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        /* Doodle Arrow Animation */
+        @keyframes doodleWiggle {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg) scale(1);
+            }
+            15% { 
+                transform: translateY(-3px) rotate(-1.5deg) scale(1.02);
+            }
+            30% { 
+                transform: translateY(2px) rotate(1.5deg) scale(0.98);
+            }
+            45% { 
+                transform: translateY(-2px) rotate(-1deg) scale(1.01);
+            }
+            60% { 
+                transform: translateY(1px) rotate(0.8deg) scale(0.99);
+            }
+            75% { 
+                transform: translateY(-1px) rotate(-0.5deg) scale(1.005);
+            }
+            90% { 
+                transform: translateY(0.5px) rotate(0.3deg) scale(0.998);
+            }
+        }
     </style>
 </head>
 <body>
@@ -669,7 +739,44 @@
         </div>
     </section>
 
-    <!-- Slide 2: The Problem -->
+    <!-- Slide 2: Overview -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px; padding: 60px 40px;">
+            <h2 style="font-size: 64px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px; text-align: center;">Overview</h2>
+            <div style="max-width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: center; position: relative;">
+                <a 
+                    href="https://www.figma.com/board/dZ6p4MK07cWP7E4QhU8Z3t/Untitled?node-id=115-1220&t=bUPWUr9dI4B2GFRN-4" 
+                    target="_blank"
+                    style="position: relative; display: inline-block; text-decoration: none; transition: transform 0.3s ease, box-shadow 0.3s ease;"
+                    onmouseover="this.style.transform='scale(1.02)'; this.style.boxShadow='0 24px 72px rgba(0, 0, 0, 0.6)'; this.querySelector('.hover-tooltip').style.opacity='1';"
+                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 20px 60px rgba(0, 0, 0, 0.5)'; this.querySelector('.hover-tooltip').style.opacity='0';"
+                >
+                    <img 
+                        src="./Untitled (1).png" 
+                        alt="Overview" 
+                        style="max-width: 100%; height: auto; width: auto; object-fit: contain; border-radius: 12px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); display: block; cursor: pointer;"
+                    >
+                    <div class="hover-tooltip" style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); background: rgba(0, 0, 0, 0.9); color: white; padding: 12px 20px; border-radius: 8px; font-size: 14px; font-weight: 400; white-space: nowrap; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; z-index: 10; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1);">
+                        Check out the actual discovery board
+                        <div style="position: absolute; top: -6px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid rgba(0, 0, 0, 0.9);"></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: The Task -->
+    <section class="slide" id="the-task-slide" style="background: #000000;">
+        <div class="slide-content" style="max-width: 1600px; padding: 60px 40px;">
+            <div style="display: flex; align-items: center; justify-content: center; height: 100%; min-height: 60vh;">
+                <h1 id="the-task-text" style="font-size: 120px; font-weight: 900; letter-spacing: -3px; color: rgba(255, 255, 255, 0); text-align: center; animation: fadeInText 3s ease-in-out forwards;">
+                    the task
+                </h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: The Problem -->
     <section class="slide">
         <div class="slide-content">
             <h2>Photographers love what Imagen AI does</h2>
@@ -1361,47 +1468,49 @@
 
     <!-- Slide 12.5: Where They're Not Using Imagen AI -->
     <section class="slide">
-        <div class="slide-content">
-            <h2>Where They're Not Using Imagen AI</h2>
+        <div class="slide-content" style="max-width: 1600px; width: 100%; height: 100%; display: flex; flex-direction: column;">
+            <h2 style="flex-shrink: 0; margin-bottom: clamp(30px, 4vh, 60px);">Where They're Not Using Imagen AI</h2>
             
-            <div style="margin-top: 60px; text-align: left; max-width: 1200px; margin-left: auto; margin-right: auto;">
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 24px;">
-                    <div style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: #ffffff;">Marketing</div>
-                    <div style="font-size: 20px; color: #ffffff; margin-bottom: 12px;">No tools in Imagen</div>
-                    <div style="font-size: 16px; color: #ffffff;">
-                        <strong>Workaround:</strong> Instagram, separate tools (e.g. reel edit tools)
+            <div style="flex: 1; overflow-y: auto; overflow-x: hidden; padding-right: 10px; -webkit-overflow-scrolling: touch; margin-top: clamp(20px, 3vh, 40px);">
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 500px), 1fr)); gap: clamp(16px, 2vh, 24px); max-width: 1400px; margin: 0 auto; width: 100%;">
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: clamp(16px, 2vw, 20px); padding: clamp(24px, 3vw, 32px); transition: all 0.3s ease;">
+                        <div style="font-size: clamp(22px, 2.5vw, 28px); font-weight: 700; margin-bottom: clamp(12px, 1.5vh, 16px); color: #ffffff; line-height: 1.2;">Marketing</div>
+                        <div style="font-size: clamp(16px, 1.8vw, 20px); color: #ffffff; margin-bottom: clamp(8px, 1vh, 12px); line-height: 1.4;">No tools in Imagen</div>
+                        <div style="font-size: clamp(14px, 1.5vw, 16px); color: #ffffff; line-height: 1.6;">
+                            <strong>Workaround:</strong> Instagram, separate tools (e.g. reel edit tools)
+                        </div>
                     </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 24px;">
-                    <div style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: #ffffff;">Lead & Book</div>
-                    <div style="font-size: 20px; color: #ffffff; margin-bottom: 12px;">Manual CRM work</div>
-                    <div style="font-size: 16px; color: #ffffff;">
-                        <strong>Workaround:</strong> HoneyBook, Studio Ninja, WhatsApp, Google Calendar
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: clamp(16px, 2vw, 20px); padding: clamp(24px, 3vw, 32px); transition: all 0.3s ease;">
+                        <div style="font-size: clamp(22px, 2.5vw, 28px); font-weight: 700; margin-bottom: clamp(12px, 1.5vh, 16px); color: #ffffff; line-height: 1.2;">Lead & Book</div>
+                        <div style="font-size: clamp(16px, 1.8vw, 20px); color: #ffffff; margin-bottom: clamp(8px, 1vh, 12px); line-height: 1.4;">Manual CRM work</div>
+                        <div style="font-size: clamp(14px, 1.5vw, 16px); color: #ffffff; line-height: 1.6;">
+                            <strong>Workaround:</strong> HoneyBook, Studio Ninja, WhatsApp, Google Calendar
+                        </div>
                     </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 24px;">
-                    <div style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: #ffffff;">Delivery</div>
-                    <div style="font-size: 20px; color: #ffffff; margin-bottom: 12px;">Export & upload friction</div>
-                    <div style="font-size: 16px; color: #ffffff;">
-                        <strong>Workaround:</strong> Pixieset, Pic-Time, Dropbox
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: clamp(16px, 2vw, 20px); padding: clamp(24px, 3vw, 32px); transition: all 0.3s ease;">
+                        <div style="font-size: clamp(22px, 2.5vw, 28px); font-weight: 700; margin-bottom: clamp(12px, 1.5vh, 16px); color: #ffffff; line-height: 1.2;">Delivery</div>
+                        <div style="font-size: clamp(16px, 1.8vw, 20px); color: #ffffff; margin-bottom: clamp(8px, 1vh, 12px); line-height: 1.4;">Export & upload friction</div>
+                        <div style="font-size: clamp(14px, 1.5vw, 16px); color: #ffffff; line-height: 1.6;">
+                            <strong>Workaround:</strong> Pixieset, Pic-Time, Dropbox
+                        </div>
                     </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px; margin-bottom: 24px;">
-                    <div style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: #ffffff;">Upsell & Retain</div>
-                    <div style="font-size: 20px; color: #ffffff; margin-bottom: 12px;">Awkward sales, manual reviews</div>
-                    <div style="font-size: 16px; color: #ffffff;">
-                        <strong>Workaround:</strong> Manual processes
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: clamp(16px, 2vw, 20px); padding: clamp(24px, 3vw, 32px); transition: all 0.3s ease;">
+                        <div style="font-size: clamp(22px, 2.5vw, 28px); font-weight: 700; margin-bottom: clamp(12px, 1.5vh, 16px); color: #ffffff; line-height: 1.2;">Upsell & Retain</div>
+                        <div style="font-size: clamp(16px, 1.8vw, 20px); color: #ffffff; margin-bottom: clamp(8px, 1vh, 12px); line-height: 1.4;">Awkward sales, manual reviews</div>
+                        <div style="font-size: clamp(14px, 1.5vw, 16px); color: #ffffff; line-height: 1.6;">
+                            <strong>Workaround:</strong> Manual processes
+                        </div>
                     </div>
-                </div>
-                
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 20px; padding: 32px;">
-                    <div style="font-size: 28px; font-weight: 700; margin-bottom: 16px; color: #ffffff;">Payments</div>
-                    <div style="font-size: 20px; color: #ffffff; margin-bottom: 12px;">Payment collection</div>
-                    <div style="font-size: 16px; color: #ffffff;">
-                        <strong>Workaround:</strong> Their bank, Stripe, GreenInvoice, WhatsApp
+                    
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: clamp(16px, 2vw, 20px); padding: clamp(24px, 3vw, 32px); transition: all 0.3s ease;">
+                        <div style="font-size: clamp(22px, 2.5vw, 28px); font-weight: 700; margin-bottom: clamp(12px, 1.5vh, 16px); color: #ffffff; line-height: 1.2;">Payments</div>
+                        <div style="font-size: clamp(16px, 1.8vw, 20px); color: #ffffff; margin-bottom: clamp(8px, 1vh, 12px); line-height: 1.4;">Payment collection</div>
+                        <div style="font-size: clamp(14px, 1.5vw, 16px); color: #ffffff; line-height: 1.6;">
+                            <strong>Workaround:</strong> Their bank, Stripe, GreenInvoice, WhatsApp
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1413,6 +1522,95 @@
         <div class="slide-content">
             <h2 style="font-size: 64px; margin-bottom: 20px;">Insights from Research</h2>
             </div>
+    </section>
+
+    <!-- Slide 12.7.5: Research Methodology -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Research Methodology</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">How We Conducted Research</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-bottom: 60px;">
+                        <!-- Qualitative Research -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Qualitative Research</div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-weight: 600;">Sample Size</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; margin-bottom: 30px; font-weight: 300;">
+                                1 in-depth interview with a wedding photographer<br>
+                                (In real life ofc: 15 interviews with mix of high/medium volume, geographic diversity)
+                            </div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-weight: 600;">Method</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                Jobs-to-be-Done framework<br>
+                                Story-based interview synthesis<br>
+                                34 jobs mapped across 6 workflow phases
+                            </div>
+                        </div>
+                        
+                        <!-- Quantitative Research -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px;">Quantitative Research</div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-weight: 600;">Data Sources</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; margin-bottom: 30px; font-weight: 300;">
+                                1,500+ reviews analyzed<br>
+                                (Trustpilot, SaaSworthy, Software Advice)<br>
+                                Internal usage data by persona & flow<br>
+                                Churn & retention patterns
+                            </div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-weight: 600;">Analysis</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                Time saved vs. time still spent outside Imagen<br>
+                                Tool stack analysis<br>
+                                Desktop vs. mobile usage patterns (80% desktop)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Methods -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px;">Additional Research Methods</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 12px;">Competitive UX Research</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    5 gallery platforms analyzed<br>
+                                    (Pixieset, Pic-Time, ShootProof, etc.)
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 12px;">Community Analysis</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    Reddit discussions<br>
+                                    Facebook community groups<br>
+                                    (Aftershoot, Imagen AI, Photographers)
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 12px;">Internal Data Mining</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    Usage patterns by workflow stage<br>
+                                    Exit point analysis<br>
+                                    Retention by persona
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Limitations -->
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.3); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 24px; font-weight: 700; color: #ef4444; margin-bottom: 20px;">Research Limitations & Biases</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                            • Sample bias: Focus on wedding photographers (may not represent all segments)<br>
+                            • Self-selection bias: Interviewees were active Imagen users<br>
+                            • Temporal bias: Research conducted at specific point in time<br>
+                            • Quantitative data: Limited to available internal metrics and public reviews
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
 
     <!-- Slide 12.8: Qualitative Insights -->
@@ -1611,6 +1809,128 @@
         </div>
     </section>
 
+    <!-- Slide 12.8.5: Competitive Analysis Deep Dive -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Competitive Analysis</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Why They Win. Why We Can Win.</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Pixieset Analysis -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 40px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Pixieset / Pic-Time Analysis</div>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 30px;">
+                            <!-- Strengths -->
+                            <div>
+                                <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Strengths</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Beautiful mobile-first experience<br>
+                                    • Strong client engagement features<br>
+                                    • Established brand trust<br>
+                                    • Comprehensive gallery customization<br>
+                                    • Good performance & reliability
+                                </div>
+                            </div>
+                            
+                            <!-- Weaknesses -->
+                            <div>
+                                <div style="font-size: 24px; font-weight: 700; color: #ef4444; margin-bottom: 20px;">Weaknesses</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Requires manual upload (our advantage)<br>
+                                    • No AI integration<br>
+                                    • Additional cost for photographers<br>
+                                    • Desktop-era tools on mobile<br>
+                                    • No workflow integration
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Our Differentiation -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Our Differentiation Strategy</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 16px;">1</div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">Seamless Workflow</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    No re-upload step<br>
+                                    Direct from editing to delivery
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 16px;">2</div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">AI-Powered</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    Future segmentation<br>
+                                    Face recognition<br>
+                                    Proprietary data advantage
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 16px;">3</div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">Integrated Platform</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    Single platform<br>
+                                    No separate subscription<br>
+                                    Unified experience
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Why We Can Win -->
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px; text-align: center;">Why We Can Win</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 12px;">1. Switching Costs</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    We own the editing step (high switching cost)<br>
+                                    Photographers already invested in Imagen workflow<br>
+                                    Natural extension vs. new tool adoption
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 12px;">2. Better Economics</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    No separate subscription needed<br>
+                                    Integrated pricing model<br>
+                                    Cost savings for photographers
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 12px;">3. Innovation Speed</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    AI capabilities they can't match<br>
+                                    Faster iteration cycles<br>
+                                    Proprietary data advantage
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 12px;">4. Competitive Response</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    They can't integrate with editing tools<br>
+                                    We can match their UX, they can't match our workflow<br>
+                                    First-mover advantage in AI-powered delivery
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Slide 12.9: Problem & Pain Inventory -->
     <section class="slide">
         <div class="slide-content">
@@ -1714,6 +2034,152 @@
                         <div class="job-item">Job 34: Access client history and notes</div>
                     </div>
                 </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.10.5: User Journey Deep Dive -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">User Journey Deep Dive</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Emotional States, Pain Points & Moments of Truth</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Journey Stages with Emotional States -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Journey Stages & Emotional States</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">1. SHOOT</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Excitement, pressure<br>
+                                    <strong>Pain:</strong> Time constraints, weather, logistics
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">2. IMPORT</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Relief, anticipation<br>
+                                    <strong>Pain:</strong> Storage management, organization
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">3. CULL (Imagen)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Confidence, efficiency<br>
+                                    <strong>Pain:</strong> Still time-consuming, subjective decisions
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">4. EDIT (Imagen)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Satisfaction, progress<br>
+                                    <strong>Pain:</strong> Style consistency, batch processing
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">5. EXIT (Current)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Frustration, disconnection<br>
+                                    <strong>Pain:</strong> Re-upload, tool switching, lost context
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">6. DELIVER (Future)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300; margin-bottom: 12px;">
+                                    <strong>Emotion:</strong> Completion, pride<br>
+                                    <strong>Pain:</strong> Client experience, sharing workflow
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pain Point Prioritization -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Pain Point Prioritization Matrix</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">High Impact, High Frequency</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    • Re-upload step (every workflow)<br>
+                                    • Tool switching friction<br>
+                                    • Lost context between tools<br>
+                                    <strong>→ Primary focus for MVP</strong>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #fbbf24; margin-bottom: 16px;">High Impact, Low Frequency</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    • Client complaints about gallery UX<br>
+                                    • Lost revenue from poor delivery<br>
+                                    • Brand damage from bad experience<br>
+                                    <strong>→ V1.1 focus</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Moment of Truth & Aha Moment -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                        <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">Moment of Truth</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; margin-bottom: 20px;">
+                                <strong>When:</strong> After editing, at the export step<br><br>
+                                <strong>Current State:</strong> Photographer must exit Imagen, download, re-upload to Pixieset/Pic-Time<br><br>
+                                <strong>Future State:</strong> One-tap share directly from Imagen<br><br>
+                                <strong>Why Critical:</strong> This is where workflow breaks, where frustration peaks, where we lose connection
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Aha Moment</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; margin-bottom: 20px;">
+                                <strong>When:</strong> First gallery share from Imagen<br><br>
+                                <strong>Experience:</strong> "Wait, that was it? No download, no upload, no switching tools?"<br><br>
+                                <strong>Emotional State:</strong> Relief, delight, time saved<br><br>
+                                <strong>Why Critical:</strong> This moment creates habit, builds trust, proves value
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Emotional vs Functional Needs -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Emotional vs. Functional Needs</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">Functional Needs</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    • Share photos with clients<br>
+                                    • Mobile-optimized viewing<br>
+                                    • Gallery organization<br>
+                                    • Download capability<br>
+                                    • Basic customization
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">Emotional Needs</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    • Feel professional & polished<br>
+                                    • Save time (get life back)<br>
+                                    • Pride in work presentation<br>
+                                    • Confidence in client experience<br>
+                                    • Sense of completion
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2035,6 +2501,117 @@
         </div>
     </section>
 
+    <!-- Slide 12.17.5: Prioritization Framework Deep Dive -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Prioritization Deep Dive</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Let's Prioritize Solutions</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Scoring Rubric -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Detailed Scoring Framework</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">Impact (10 points)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Reach: How many users affected<br>
+                                    • Pain: Severity of problem<br>
+                                    • Frequency: How often it occurs<br>
+                                    • Time Saved: Hours per workflow
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">Strategic Fit (10 points)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Vision alignment<br>
+                                    • AI advantage<br>
+                                    • Existing capabilities<br>
+                                    • Brand positioning
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #a855f7; margin-bottom: 16px;">Differentiation (10 points)</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Data moat<br>
+                                    • Learning curve<br>
+                                    • Competitive edge<br>
+                                    • Unique capabilities
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Additional Factors -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-bottom: 40px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">Additional Evaluation Factors</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Effort Estimation:</strong> Engineering complexity, time to build<br><br>
+                                <strong>Risk Assessment:</strong> Technical, market, competitive risks<br><br>
+                                <strong>Dependencies:</strong> What blocks other initiatives<br><br>
+                                <strong>Time-to-Value:</strong> How quickly can we learn
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Why Gallery Delivery Won</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>vs. Client Communication:</strong><br>
+                                Higher strategic fit (completes workflow vs. adds new capability)<br>
+                                Lower technical risk<br>
+                                Faster time-to-value (4 weeks vs. 12 weeks)<br><br>
+                                <strong>vs. Upsell/Retain:</strong><br>
+                                Enables future capabilities (Upsell/Retain depend on delivery)<br>
+                                Foundation for revenue expansion<br>
+                                Removes primary exit point
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decision Matrix -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Final Scores</div>
+                        
+                        <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 20px; text-align: left; font-size: 18px;">
+                            <!-- Header -->
+                            <div style="font-weight: 700; color: rgba(255, 255, 255, 0.9); padding-bottom: 16px; border-bottom: 2px solid rgba(255, 255, 255, 0.2);">Opportunity</div>
+                            <div style="font-weight: 700; color: var(--accent); padding-bottom: 16px; border-bottom: 2px solid rgba(255, 255, 255, 0.2); text-align: center;">Impact</div>
+                            <div style="font-weight: 700; color: var(--success); padding-bottom: 16px; border-bottom: 2px solid rgba(255, 255, 255, 0.2); text-align: center;">Fit</div>
+                            <div style="font-weight: 700; color: #a855f7; padding-bottom: 16px; border-bottom: 2px solid rgba(255, 255, 255, 0.2); text-align: center;">Diff</div>
+                            <div style="font-weight: 700; color: rgba(255, 255, 255, 0.9); padding-bottom: 16px; border-bottom: 2px solid rgba(255, 255, 255, 0.2); text-align: center;">Total</div>
+                            
+                            <!-- Gallery Delivery -->
+                            <div style="color: rgba(255, 255, 255, 0.95); padding: 16px 0; font-weight: 600;">Gallery Delivery</div>
+                            <div style="color: var(--accent); text-align: center; padding: 16px 0; font-weight: 700;">10</div>
+                            <div style="color: var(--success); text-align: center; padding: 16px 0; font-weight: 700;">10</div>
+                            <div style="color: #a855f7; text-align: center; padding: 16px 0; font-weight: 700;">10</div>
+                            <div style="color: var(--success); text-align: center; padding: 16px 0; font-weight: 700; font-size: 24px;">30/30</div>
+                            
+                            <!-- Client Communication -->
+                            <div style="color: rgba(255, 255, 255, 0.7); padding: 16px 0;">Client Communication</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">8</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">9</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">8</div>
+                            <div style="color: #fbbf24; text-align: center; padding: 16px 0; font-weight: 600;">25/30</div>
+                            
+                            <!-- Upsell & Retain -->
+                            <div style="color: rgba(255, 255, 255, 0.7); padding: 16px 0;">Upsell & Retain</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">7</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">7</div>
+                            <div style="color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">7</div>
+                            <div style="color: #f97316; text-align: center; padding: 16px 0; font-weight: 600;">21/30</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Slide 12.18: Strategic Fit Deep Dive - Carousel -->
     <section class="slide">
         <div class="slide-content" style="max-width: 1600px;">
@@ -2113,7 +2690,7 @@
                 <!-- P0: Gallery Delivery - Large and Prominent -->
                 <div style="text-align: center; margin-top: 60px;">
                     <div style="font-size: 80px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 60px; line-height: 1.3; letter-spacing: -2px;">
-                        Gallery Delivery<br>+ AI Segmentation
+                        Gallery Delivery
                     </div>
                 </div>
                 
@@ -2121,6 +2698,116 @@
                 <div style="display: flex; justify-content: center; gap: 80px; margin-top: 120px; font-size: 28px; color: rgba(255, 255, 255, 0.5); font-weight: 300;">
                     <div>P1: Client Communication <span style="color: #fbbf24; font-weight: 400;">34/40</span></div>
                     <div>P2: Upsell & Retain <span style="color: #f97316; font-weight: 400;">28/40</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.19.5: Hypothesis Testing Framework -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Hypothesis & Testing</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">How We Validate Assumptions</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Hypothesis Statement -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 50px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Hypothesis Statement</div>
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.8; font-weight: 300; text-align: left; max-width: 1200px; margin: 0 auto;">
+                            <strong style="color: var(--accent);">If</strong> Imagen offers integrated gallery delivery that eliminates the re-upload step,<br>
+                            <strong style="color: var(--accent);">then</strong> photographers will complete their workflow within the platform,<br>
+                            <strong style="color: var(--accent);">because</strong> it removes the primary friction point causing them to exit.
+                        </div>
+                    </div>
+                    
+                    <!-- Test Design -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                        <!-- Control Group -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 24px;">Control Group</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Current Workflow:</strong><br>
+                                Export → Upload to Pixieset<br>
+                                Manual gallery creation<br>
+                                Separate subscription cost
+                            </div>
+                        </div>
+                        
+                        <!-- Treatment Group -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Treatment Group</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>New Workflow:</strong><br>
+                                Share directly from Imagen<br>
+                                Integrated gallery delivery<br>
+                                No re-upload step
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Success/Failure Criteria -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Success & Failure Criteria</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px;">
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">Success</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥40%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300;">
+                                    Delivery adoption<br>
+                                    within 6 months
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 600; color: #fbbf24; margin-bottom: 16px;">Partial Success</div>
+                                <div style="font-size: 48px; font-weight: 700; color: #fbbf24; margin-bottom: 12px;">25-39%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300;">
+                                    Continue iteration<br>
+                                    Refine value prop
+                                </div>
+                            </div>
+                            
+                            <div style="text-align: center;">
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Failure</div>
+                                <div style="font-size: 48px; font-weight: 700; color: #ef4444; margin-bottom: 12px;">&lt;25%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.5; font-weight: 300;">
+                                    Reassess strategy<br>
+                                    Pivot or halt
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Learning Metrics -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Learning Metrics & Measurement</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">Quantitative Signals</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Gallery creation rate<br>
+                                    • Share attempt rate<br>
+                                    • Client open rate<br>
+                                    • Time saved (vs. current workflow)<br>
+                                    • Tool usage patterns
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">Qualitative Signals</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • User feedback prompts<br>
+                                    • Support ticket analysis<br>
+                                    • Interview follow-ups<br>
+                                    • Workflow friction points<br>
+                                    • Value prop clarity
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -2335,19 +3022,233 @@
         </div>
     </section>
 
-    <!-- Slide 12.22a: Prototype Demo -->
+    <!-- Slide 12.22.1: MVP Scope Justification -->
     <section class="slide">
         <div class="slide-content" style="max-width: 1600px;">
             <div style="text-align: center; padding: 60px 40px;">
-                <h1 style="font-size: 80px; margin-bottom: 30px; font-weight: 900; letter-spacing: -2px;">Prototype Demo</h1>
-                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">See it in action</div>
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">MVP Scope Justification</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">What's In, What's Out, and Why</div>
                 
-                <div style="max-width: 1200px; margin: 0 auto;">
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- What's IN -->
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px; text-align: center;">What's IN the MVP</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">1. One-Tap Share</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why:</strong> Core value prop - eliminates re-upload step<br>
+                                    <strong>Validates:</strong> Primary hypothesis (workflow completion)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">2. Gallery Preview</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why:</strong> Required for photographer confidence<br>
+                                    <strong>Validates:</strong> Quality perception before sharing
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">3. Personal Message</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why:</strong> Differentiator vs. competitors<br>
+                                    <strong>Validates:</strong> Professional touch, brand connection
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">4. Client View & Share</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why:</strong> End-to-end flow validation<br>
+                                    <strong>Validates:</strong> Client experience quality
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- What's OUT -->
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.3); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #ef4444; margin-bottom: 30px; text-align: center;">What's EXPLICITLY CUT</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">AI Segmentation</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> Nice-to-have, not core to hypothesis<br>
+                                    <strong>When:</strong> V1.1 if delivery adoption succeeds
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Face Recognition</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> High effort, low MVP value<br>
+                                    <strong>When:</strong> Future enhancement
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Monetization</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> Premature optimization<br>
+                                    <strong>When:</strong> After validating core value
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Risk Assessment -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: #fbbf24; margin-bottom: 24px;">Risk: Too Narrow</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Concern:</strong> Photographers won't see value<br>
+                                <strong>Mitigation:</strong> Clear messaging on core benefit (no re-upload)<br>
+                                <strong>Signal:</strong> Low share rate → refine value prop
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 700; color: #fbbf24; margin-bottom: 24px;">Risk: Too Broad</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Concern:</strong> Delayed launch, overbuild<br>
+                                <strong>Mitigation:</strong> 4-week beta timeline forces focus<br>
+                                <strong>Signal:</strong> Launch delay → cut more features
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Minimum Viable Definition -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Minimum Viable Definition</div>
+                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; text-align: left; max-width: 1000px; margin: 0 auto;">
+                            The absolute bare minimum needed to validate the hypothesis:<br><br>
+                            <strong>1. Photographer can share a gallery directly from Imagen</strong> (no export/upload)<br>
+                            <strong>2. Client can view the gallery on mobile</strong> (validates experience)<br>
+                            <strong>3. Client can share individual photos</strong> (validates engagement)<br><br>
+                            Everything else is optimization for V1.1
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.22.2: Trade-off Analysis -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Trade-off Analysis</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">What We're NOT Building & Why</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- What We're NOT Building -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Explicitly Cut from MVP</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">AI Segmentation</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> Nice-to-have, not core to hypothesis<br>
+                                    <strong>When:</strong> V1.1 if delivery adoption succeeds
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Face Recognition</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> High effort, low MVP value<br>
+                                    <strong>When:</strong> Future enhancement
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Monetization</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.6; font-weight: 300;">
+                                    <strong>Why Cut:</strong> Premature optimization<br>
+                                    <strong>When:</strong> After validating core value
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Opportunity Cost -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">Opportunity Cost</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Resource Investment:</strong> 3 months engineering time<br><br>
+                                <strong>Could Have Built Instead:</strong><br>
+                                • Client communication tools<br>
+                                • Upsell features<br>
+                                • Mobile editing capabilities<br><br>
+                                <strong>Decision Rationale:</strong><br>
+                                Delivery unlocks both communication and upsell (strategic foundation)
+                            </div>
+                        </div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Build vs. Buy Analysis</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Considered:</strong> Partner with Pixieset<br><br>
+                                <strong>Why Build:</strong><br>
+                                • Need deep integration with editing workflow<br>
+                                • Must own the experience (brand, UX)<br>
+                                • AI capabilities require custom development<br>
+                                • Strategic value: Own the deliver stage<br><br>
+                                <strong>Risk:</strong> Higher effort, but higher strategic value
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Resource Constraints -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Resource Allocation Decisions</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 16px;">Engineering Capacity</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • 3-month sprint allocation<br>
+                                    • Mobile web app (faster than native)<br>
+                                    • Leverage existing cloud infrastructure<br>
+                                    • Progressive rollout reduces risk
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 16px;">What This Means</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                    • Other features delayed by 3 months<br>
+                                    • Focus enables faster learning<br>
+                                    • Validates stage expansion before scaling<br>
+                                    • Sets foundation for future capabilities
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.22a: Prototype Demo -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1400px;">
+            <div style="text-align: center; padding: 40px 40px 20px;">
+                <h1 style="font-size: 64px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px;">Prototype Demo</h1>
+                <div style="font-size: 24px; color: rgba(255, 255, 255, 0.6); margin-bottom: 40px; font-weight: 300; letter-spacing: -1px;">See it in action</div>
+                
+                <div style="max-width: 1000px; margin: 0 auto;">
                     <!-- Video Player -->
-                    <div style="margin-bottom: 60px; background: rgba(255, 255, 255, 0.05); border-radius: 24px; padding: 20px; border: 2px solid rgba(255, 255, 255, 0.1);">
+                    <div style="margin-bottom: 40px; background: rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 16px; border: 2px solid rgba(255, 255, 255, 0.1);">
                         <video 
                             controls 
-                            style="width: 100%; max-width: 500px; border-radius: 16px; display: block; margin: 0 auto;"
+                            style="width: 100%; max-width: 400px; border-radius: 12px; display: block; margin: 0 auto;"
                             poster=""
                         >
                             <source src="YouCut_20251206_234355224 (1).mp4" type="video/mp4">
@@ -2356,20 +3257,20 @@
                     </div>
                     
                     <!-- Link to Mobile Web App -->
-                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 50px 40px; max-width: 800px; margin: 0 auto;">
-                        <div style="font-size: 36px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 20px; padding: 32px 40px; max-width: 600px; margin: 0 auto;">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 24px; letter-spacing: -1px;">
                             Try the Mobile Web App
                         </div>
                         <a 
                             href="https://galdulev.github.io/imagen-mobile/#/login" 
                             target="_blank"
-                            style="display: inline-block; padding: 24px 48px; background: var(--accent); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 24px; transition: all 0.3s; letter-spacing: -0.5px; box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);"
+                            style="display: inline-block; padding: 18px 40px; background: var(--accent); color: white; text-decoration: none; border-radius: 12px; font-weight: 600; font-size: 20px; transition: all 0.3s; letter-spacing: -0.5px; box-shadow: 0 8px 24px rgba(14, 165, 233, 0.3);"
                             onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 32px rgba(14, 165, 233, 0.4)';"
                             onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 8px 24px rgba(14, 165, 233, 0.3)';"
                         >
                             Open Mobile App →
                         </a>
-                        <div style="margin-top: 24px; font-size: 18px; color: rgba(255, 255, 255, 0.5); font-weight: 300;">
+                        <div style="margin-top: 20px; font-size: 16px; color: rgba(255, 255, 255, 0.5); font-weight: 300;">
                             <a href="https://galdulev.github.io/imagen-mobile/#/login" target="_blank" style="color: rgba(255, 255, 255, 0.6); text-decoration: none; border-bottom: 1px solid rgba(255, 255, 255, 0.3);">
                                 galdulev.github.io/imagen-mobile
                             </a>
@@ -2408,6 +3309,170 @@
                         <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); font-weight: 300; letter-spacing: -0.5px; line-height: 1.4;">
                             of editing users also deliver via Imagen<br>
                             within 6 months
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.22b.1: Success Definition & Decision Framework -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Success Definition</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">When to Continue, Iterate, Pivot, or Halt</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Minimum Viable Success -->
+                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px; text-align: center;">Minimum Viable Success (Must Have)</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥25%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Delivery adoption<br>
+                                    (proves value prop)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥50%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Client open rate<br>
+                                    (proves experience works)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">Positive</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Qualitative feedback<br>
+                                    (proves user satisfaction)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Stretch Success -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Stretch Success (Nice to Have)</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥40%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Delivery adoption<br>
+                                    (exceeds target)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥60%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Client open rate<br>
+                                    (strong engagement)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥35%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Workflow completion<br>
+                                    (full end-to-end)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Failure Definition -->
+                    <div style="background: rgba(239, 68, 68, 0.1); border: 2px solid rgba(239, 68, 68, 0.3); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #ef4444; margin-bottom: 30px; text-align: center;">Failure Definition & Triggers</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Adoption < 25%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Value prop not clear<br>
+                                    → Reassess strategy<br>
+                                    → Consider pivot or halt
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Client Open Rate < 40%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Delivery experience broken<br>
+                                    → Pause, redesign gallery UX<br>
+                                    → Technical issues
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Negative Feedback</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Core flow has issues<br>
+                                    → Fundamental UX problems<br>
+                                    → Reassess approach
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Workflow Completion < 15%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Integration friction<br>
+                                    → Flow between stages broken<br>
+                                    → UX needs iteration
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decision Framework -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Decision Framework</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">✅ Continue</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    If minimum viable success met<br>
+                                    → Proceed to next phase<br>
+                                    → Scale rollout<br>
+                                    → Prepare for V1.1
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #fbbf24; margin-bottom: 16px;">⚠️ Iterate</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    If partial targets met<br>
+                                    → Continue iteration<br>
+                                    → Refine value prop<br>
+                                    → Extend beta period
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #f97316; margin-bottom: 16px;">🔄 Pivot</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    If value prop unclear<br>
+                                    → Reassess hypothesis<br>
+                                    → Change approach<br>
+                                    → Test new direction
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">❌ Halt</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    If adoption < 25% after 6 months<br>
+                                    → Reassess strategy<br>
+                                    → Consider alternative opportunities<br>
+                                    → Learn and move on
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2456,6 +3521,148 @@
                         <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">5. Client Share Rate</div>
                         <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥20%</div>
                         <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Clients share photos<br>Stage 9 foundation</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.22d: Metrics Deep Dive -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Metrics Deep Dive</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Baselines, Indicators & Correlation Analysis</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Current State Baselines -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Current State Baselines</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Delivery Adoption</div>
+                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">0%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">Currently exit Imagen</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Workflow Completion</div>
+                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">0%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">No Cull→Edit→Deliver</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Tool Consolidation</div>
+                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">N/A</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">No data yet</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Leading vs Lagging Indicators -->
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 40px;">
+                        <!-- Leading Indicators -->
+                        <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">Leading Indicators (Week 1-2)</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Gallery Creation Rate:</strong> Are photographers creating galleries?<br><br>
+                                <strong>Share Attempt Rate:</strong> Are they attempting to share?<br><br>
+                                <strong>Client Link Click-Through:</strong> Are clients opening links?<br><br>
+                                <strong>Time to First Share:</strong> How quickly do they try it?
+                            </div>
+                        </div>
+                        
+                        <!-- Lagging Indicators -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Lagging Indicators (Month 3-6)</div>
+                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
+                                <strong>Delivery Adoption (40%):</strong> Long-term behavior change<br><br>
+                                <strong>Workflow Completion (35%):</strong> End-to-end usage<br><br>
+                                <strong>Tool Consolidation (25%):</strong> Competitive displacement<br><br>
+                                <strong>Retention Impact:</strong> Churn reduction
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Correlation Analysis -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Correlation Analysis</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Client Open Rate < 50%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Delivery experience is broken<br>
+                                    → Gallery UX needs redesign<br>
+                                    → Mobile optimization issue
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Share Rate < 20%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Photographer workflow friction<br>
+                                    → Value prop not clear<br>
+                                    → Onboarding needs improvement
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Adoption < 25%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Value prop not resonating<br>
+                                    → Reassess core hypothesis<br>
+                                    → Consider pivot or halt
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Workflow Completion < 15%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Integration friction<br>
+                                    → Flow between stages broken<br>
+                                    → UX needs iteration
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Measurement Approach -->
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px; margin-top: 40px;">
+                        <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Measurement Approach</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: left;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 16px;">Event Tracking</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    Gallery created<br>
+                                    Share clicked<br>
+                                    Client link opened<br>
+                                    Photo shared
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 16px;">User Analytics</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    Cohort analysis<br>
+                                    Funnel conversion<br>
+                                    Time-to-value<br>
+                                    Feature usage
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 16px;">Qualitative</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    In-app feedback prompts<br>
+                                    Support ticket analysis<br>
+                                    User interviews<br>
+                                    NPS surveys
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2654,16 +3861,46 @@
                     <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-top: 60px; margin-bottom: 40px;">
                         <div style="text-align: center;">
                             <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; font-weight: 300;">Today</div>
-                            <div style="font-size: 48px; font-weight: 700; color: var(--accent);">2 stages</div>
-                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">Cull + Edit</div>
+                            <div style="font-size: 48px; font-weight: 700; color: var(--accent);">3 stages</div>
+                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">Cull + Edit + Backup</div>
                         </div>
                         
                         <div style="font-size: 64px; color: var(--success);">→</div>
                         
-                        <div style="text-align: center;">
-                            <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; font-weight: 300;">After MVP</div>
-                            <div style="font-size: 48px; font-weight: 700; color: var(--success);">3 stages</div>
-                            <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-top: 12px;">Cull + Edit + Deliver</div>
+                        <div style="text-align: center; position: relative;">
+                            <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 20px; font-weight: 300; letter-spacing: 0.5px;">After MVP</div>
+                            <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 24px; letter-spacing: -1px;">4 stages</div>
+                            
+                            <!-- Stages with elegant presentation -->
+                            <div style="background: rgba(255, 255, 255, 0.04); border-radius: 20px; padding: 28px 36px; margin: 0 auto; max-width: 420px; border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px);">
+                                <div style="font-size: 19px; color: rgba(255, 255, 255, 0.95); line-height: 2.2; font-weight: 400; letter-spacing: -0.4px;">
+                                    <span style="margin-right: 10px;">Cull</span>
+                                    <span style="color: rgba(255, 255, 255, 0.25); margin: 0 10px; font-weight: 300;">+</span>
+                                    <span style="margin-right: 10px;">Edit</span>
+                                    <span style="color: rgba(255, 255, 255, 0.25); margin: 0 10px; font-weight: 300;">+</span>
+                                    <span style="display: inline-flex; align-items: center; gap: 8px; position: relative;">
+                                        <span>Backup</span>
+                                        <svg width="18" height="18" viewBox="0 0 18 18" style="opacity: 0.85;">
+                                            <path d="M 5 13 L 13 5 M 13 5 L 9 5 M 13 5 L 13 9" 
+                                                  stroke="var(--accent)" 
+                                                  stroke-width="2.5" 
+                                                  fill="none" 
+                                                  stroke-linecap="round" 
+                                                  stroke-linejoin="round"
+                                                  style="filter: drop-shadow(0 0 6px rgba(14, 165, 233, 0.5));"/>
+                                        </svg>
+                                    </span>
+                                    <span style="color: rgba(255, 255, 255, 0.25); margin: 0 10px; font-weight: 300;">+</span>
+                                    <span style="color: var(--success); font-weight: 500;">Deliver</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Elegant improvement indicator -->
+                            <div style="margin-top: 24px; padding: 14px 24px; background: linear-gradient(135deg, rgba(14, 165, 233, 0.12), rgba(14, 165, 233, 0.04)); border-radius: 14px; border: 1px solid rgba(14, 165, 233, 0.25); display: inline-block; backdrop-filter: blur(8px);">
+                                <div style="font-size: 15px; color: rgba(255, 255, 255, 0.9); font-weight: 400; letter-spacing: -0.3px;">
+                                    Enhanced Backup capabilities
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
@@ -2718,6 +3955,42 @@
                             Default feature for all<br>
                             Drive adoption to ≥40%<br>
                             Prepare for V1.1
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- User Testing Section -->
+                <div style="margin-top: 60px; padding-top: 40px; border-top: 2px solid rgba(255, 255, 255, 0.1);">
+                    <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 40px; text-align: center;">User Testing</div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; max-width: 1400px; margin: 0 auto;">
+                        <!-- Phase 1 Testing -->
+                        <div style="background: rgba(14, 165, 233, 0.1); border: 1px solid var(--accent); border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">Phase 1</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                50-100 hand-selected photographers<br>
+                                Validate core flow<br>
+                                Identify critical bugs
+                            </div>
+                        </div>
+                        
+                        <!-- Phase 2 Testing -->
+                        <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">Phase 2</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                All users, opt-in<br>
+                                Measure adoption at scale<br>
+                                Target: ≥25% try within 60 days
+                            </div>
+                        </div>
+                        
+                        <!-- Phase 3 Testing -->
+                        <div style="background: rgba(168, 85, 247, 0.1); border: 1px solid #a855f7; border-radius: 16px; padding: 30px; text-align: center;">
+                            <div style="font-size: 20px; font-weight: 600; color: #a855f7; margin-bottom: 16px;">Phase 3</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                Default feature for all<br>
+                                Drive adoption to ≥40%<br>
+                                Prepare for V1.1
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2876,10 +4149,82 @@
                     <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 16px; padding: 40px; margin-top: 40px;">
                         <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">6-Month Evaluation</div>
                         <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; text-align: left;">
-                            <strong style="color: #a855f7;">Decision:</strong><br>
-                            ✅ <strong>Proceed to V1.1</strong> — All targets met → Invest in Upsell stage<br>
-                            ⚠️ <strong>Extend</strong> — Partial targets → Continue iteration<br>
-                            ❌ <strong>Halt</strong> — Adoption <25% → Reassess strategy
+                            <strong style="color: #a855f7;">What happens next:</strong><br><br>
+                            If we hit all our targets, we move forward with V1.1 and start building Upsell features.<br><br>
+                            If we're close but not quite there, we keep iterating on what we have.<br><br>
+                            If adoption stays below 25%, we pause and figure out what's not working.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.31.5: Risk Mitigation & Contingency Planning -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1600px;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900; letter-spacing: -2px;">Risk Mitigation</h1>
+                <div style="font-size: 32px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">What Could Go Wrong & How We'll Handle It</div>
+                
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Key Risks - 2x2 Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-bottom: 40px;">
+                        <!-- User Confusion -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 600; color: #ef4444; margin-bottom: 20px;">User Confusion</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Risk:</strong> Photographers don't understand how to use
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Mitigation:</strong> Clear UI, tooltips, help docs, video tutorials
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Contingency:</strong> Improve onboarding, add guided tour, support outreach
+                            </div>
+                        </div>
+                        
+                        <!-- Competitive Response -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 600; color: #ef4444; margin-bottom: 20px;">Competitive Response</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Risk:</strong> Pixieset/Pic-Time improve or lower prices
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Mitigation:</strong> Focus on integration advantage, AI differentiation
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Contingency:</strong> Accelerate AI features, emphasize workflow benefits
+                            </div>
+                        </div>
+                        
+                        <!-- Workflow Friction -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 600; color: #ef4444; margin-bottom: 20px;">Workflow Friction</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Risk:</strong> Share flow is too complex
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Mitigation:</strong> One-tap share, minimal steps, clear CTAs
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Contingency:</strong> Simplify flow, reduce steps, A/B test alternatives
+                            </div>
+                        </div>
+                        
+                        <!-- Market Risks -->
+                        <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; text-align: left;">
+                            <div style="font-size: 24px; font-weight: 600; color: #ef4444; margin-bottom: 20px;">Market Risks</div>
+                            <div style="font-size: 18px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">New Entrants</div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Risk:</strong> New competitor with better solution
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300; margin-bottom: 16px;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Mitigation:</strong> Fast iteration, user feedback loops, brand loyalty
+                            </div>
+                            <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); line-height: 1.8; font-weight: 300;">
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Contingency:</strong> Pivot features, improve differentiation, competitive analysis
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3008,56 +4353,51 @@
 
     <!-- Slide 19: The Impact -->
     <section class="slide">
-        <div class="slide-content" style="max-width: 1200px;">
-            <div style="display: flex; align-items: center; justify-content: center; gap: 32px; width: 100%;">
-                <!-- Left: Text -->
-                <div style="text-align: center; flex: 0 0 auto;">
+        <div class="slide-content" style="max-width: 1000px;">
+            <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; width: 100%;">
+                <!-- Top: Let's Turn This -->
+                <div style="text-align: center;">
                     <h2 style="font-size: 48px; margin: 0; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px;">Let's Turn This</h2>
                     <div class="subtitle" style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-top: 12px; margin-bottom: 0; line-height: 1.4; font-weight: 300;">The worst part of their job</div>
                 </div>
                 
-                <!-- Arrow 1 -->
-                <div style="font-size: 32px; color: var(--accent); font-weight: 400; line-height: 1; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; opacity: 0.8;">→</div>
-                
-                <!-- Center: Image -->
-                <div style="flex: 0 0 auto; width: 280px; height: 200px; border-radius: 8px; overflow: hidden; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); background: #1a1a1a; padding: 8px; display: flex; align-items: center; justify-content: center;">
-                    <img src="./Screenshot 2025-12-06 at 21.01.40.png" alt="Screenshot" style="width: 100%; height: 100%; object-fit: contain; border-radius: 4px; background: #2a2a2a; display: block;">
+                <!-- Doodle Arrow -->
+                <div style="margin: 8px 0; transform: rotate(-5deg);">
+                    <svg width="140" height="100" viewBox="0 0 140 100" style="overflow: visible;">
+                        <!-- Hand-drawn style arrow with slight imperfections -->
+                        <path d="M 15 25 Q 25 30, 35 35 Q 45 40, 55 45 Q 65 50, 75 55 Q 85 60, 95 65 L 88 60 L 105 68 L 92 72 Z" 
+                              stroke="var(--accent)" 
+                              stroke-width="3.5" 
+                              fill="var(--accent)" 
+                              stroke-linecap="round" 
+                              stroke-linejoin="round"
+                              style="filter: drop-shadow(0 2px 6px rgba(14, 165, 233, 0.4));"
+                              opacity="0.85"
+                              vector-effect="non-scaling-stroke">
+                        </path>
+                        <!-- Small decorative line for hand-drawn feel -->
+                        <path d="M 20 28 Q 30 33, 40 38" 
+                              stroke="var(--accent)" 
+                              stroke-width="1.5" 
+                              fill="none" 
+                              stroke-linecap="round"
+                              opacity="0.4"
+                              stroke-dasharray="2,2">
+                        </path>
+                    </svg>
                 </div>
                 
-                <!-- Arrow 2 -->
-                <div style="font-size: 32px; color: var(--success); font-weight: 400; line-height: 1; flex: 0 0 auto; display: flex; align-items: center; justify-content: center; opacity: 0.8;">→</div>
+                <!-- Screenshot (Bigger) -->
+                <div style="width: 600px; height: 450px; border-radius: 12px; overflow: hidden; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); background: #1a1a1a; padding: 12px; display: flex; align-items: center; justify-content: center;">
+                    <img src="./Screenshot 2025-12-06 at 21.01.40.png" alt="Screenshot" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px; background: #2a2a2a; display: block;">
+                </div>
                 
-                <!-- Right: Ease -->
-                <div style="text-align: center; flex: 0 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-                    <h2 style="font-size: 48px; font-weight: 700; color: var(--success); margin: 0; line-height: 1.2; letter-spacing: -0.5px;">Ease</h2>
-                    <div style="height: 40px;"></div>
+                <!-- Bottom: to Ease -->
+                <div style="text-align: center; margin-top: 16px;">
+                    <h2 style="font-size: 48px; font-weight: 700; color: var(--success); margin: 0; line-height: 1.2; letter-spacing: -0.5px;">to Ease</h2>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Slide 20: The Vision -->
-    <section class="slide">
-        <div class="slide-content">
-            <h2>From 22%</h2>
-            <div class="big-number" style="font-size: 100px; margin: 40px 0;">→</div>
-            <h2>To Dominating</h2>
-            <div class="subtitle" style="margin-top: 40px;">The photographer workflow</div>
-        </div>
-    </section>
-
-    <!-- Slide 21: One More Thing -->
-    <section class="slide">
-        <div class="slide-content">
-            <h2 style="margin-bottom: 60px;">One More Thing</h2>
-            <div class="subtitle" style="font-size: 40px; line-height: 1.4;">
-                This isn't just about adding features.<br><br>
-                It's about completing the mission.<br><br>
-                Giving photographers their time back.<br><br>
-                So they can focus on what they love.
-            </div>
-        </div>
-        <div class="one-more-thing">Thank You</div>
     </section>
 
     <script>
@@ -3104,6 +4444,16 @@
                     promiseSection.style.transform = 'translateY(40px)';
                     promiseSection.style.pointerEvents = 'none';
                 }
+            }
+            
+            // Check if current slide is the animated focus slide and trigger typewriter
+            const animatedFocusSlide = document.getElementById('animated-focus-text')?.closest('.slide');
+            if (animatedFocusSlide && slides[currentSlide] === animatedFocusSlide) {
+                setTimeout(() => {
+                    if (typeof checkAndStartTypewriter === 'function') {
+                        checkAndStartTypewriter();
+                    }
+                }, 300);
             }
         }
         
@@ -3387,472 +4737,45 @@
 
         // Start typewriter animation when the animated focus slide is shown
         function checkAndStartTypewriter() {
+            const textElement = document.getElementById('typewriter-text');
             const animatedFocusSlide = document.getElementById('animated-focus-text')?.closest('.slide');
-            if (animatedFocusSlide && slides[currentSlide] === animatedFocusSlide && animatedFocusSlide.style.display === 'flex') {
+            
+            if (!textElement || !animatedFocusSlide) return;
+            
+            // Check if slide is currently displayed
+            const isVisible = animatedFocusSlide.style.display === 'flex';
+            
+            if (isVisible && slides[currentSlide] === animatedFocusSlide) {
                 // Reset and start animation
                 clearTimeout(typewriterTimeout);
                 typewriterText = '';
                 typewriterIndex = 0;
                 typewriterSentenceIndex = 0;
                 isDeleting = false;
-                const textElement = document.getElementById('typewriter-text');
-                if (textElement) {
-                    textElement.textContent = '';
-                }
+                textElement.textContent = '';
                 setTimeout(typeWriterAnimation, 500); // Start after slide transition
             } else {
                 // Stop animation when leaving the slide
                 clearTimeout(typewriterTimeout);
+                if (textElement) {
+                    textElement.textContent = '';
+                }
             }
         }
 
+        // Start animation on initial load if on the correct slide
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (typeof checkAndStartTypewriter === 'function') {
+                    checkAndStartTypewriter();
+                }
+            }, 1000);
+        });
+
+        // Override showSlide to trigger typewriter - this will be done in main script section
+
         // Note: Vision animation override is handled in the main script section below
     </script>
-</body>
-</html>
-                100% { opacity: 1; transform: translateY(0) scale(1); }
-            }
-            @keyframes stagePulse {
-                0%, 100% { box-shadow: 0 0 0 0 rgba(14, 165, 233, 0.7); }
-                50% { box-shadow: 0 0 0 10px rgba(14, 165, 233, 0); }
-            }
-            @keyframes exitBreak {
-                0%, 100% { transform: scale(1) rotate(0deg); opacity: 1; }
-                25% { transform: scale(1.1) rotate(-2deg); opacity: 0.8; }
-                50% { transform: scale(0.95) rotate(2deg); opacity: 0.9; }
-                75% { transform: scale(1.05) rotate(-1deg); opacity: 0.85; }
-            }
-            @keyframes exitGlow {
-                0%, 100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), 0 0 40px rgba(239, 68, 68, 0.3); }
-                50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.8), 0 0 60px rgba(239, 68, 68, 0.5); }
-            }
-            @keyframes connectorDraw {
-                0% { width: 0; opacity: 0; }
-                100% { width: 100%; opacity: 1; }
-            }
-            @keyframes futureFlow {
-                0% { background-position: 0% 50%; }
-                50% { background-position: 100% 50%; }
-                100% { background-position: 0% 50%; }
-            }
-            @keyframes slideIn {
-                from { opacity: 0; transform: translateX(30px); }
-                to { opacity: 1; transform: translateX(0); }
-            }
-            .workflow-carousel {
-                position: relative;
-                max-width: 1400px;
-                margin: 0 auto;
-                overflow: hidden;
-            }
-            .workflow-carousel-track {
-                display: flex;
-                transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            .workflow-carousel-slide {
-                min-width: 100%;
-                padding: 40px 20px;
-                animation: slideIn 0.6s ease-out;
-            }
-            .workflow-title {
-                font-size: 48px;
-                font-weight: 600;
-                margin-bottom: 60px;
-                letter-spacing: -1px;
-            }
-            .workflow-chain {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                flex-wrap: wrap;
-                gap: 8px;
-                margin-bottom: 40px;
-                position: relative;
-            }
-            .workflow-stage {
-                background: rgba(255, 255, 255, 0.08);
-                border: 2px solid rgba(255, 255, 255, 0.15);
-                border-radius: 12px;
-                padding: 16px 24px;
-                font-size: 20px;
-                font-weight: 600;
-                color: rgba(255, 255, 255, 0.9);
-                min-width: 140px;
-                text-align: center;
-                animation: stageAppear 0.6s ease-out both;
-                position: relative;
-                font-family: 'Inter', sans-serif;
-            }
-            .workflow-stage.imagen {
-                background: rgba(14, 165, 233, 0.15);
-                border-color: var(--accent);
-                color: var(--accent);
-                animation: stageAppear 0.6s ease-out both, stagePulse 2s ease-in-out infinite;
-            }
-            .workflow-stage.exit {
-                background: rgba(239, 68, 68, 0.2);
-                border-color: rgba(239, 68, 68, 0.8);
-                color: rgba(239, 68, 68, 1);
-                font-weight: 700;
-                animation: exitBreak 1.5s ease-in-out infinite, exitGlow 2s ease-in-out infinite;
-            }
-            .workflow-stage.future {
-                background: rgba(16, 185, 129, 0.15);
-                border-color: var(--success);
-                color: var(--success);
-            }
-            .workflow-connector {
-                width: 40px;
-                height: 3px;
-                background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
-                position: relative;
-                animation: connectorDraw 0.8s ease-out both;
-            }
-            .workflow-connector.broken {
-                background: linear-gradient(90deg, rgba(239, 68, 68, 0.6), transparent);
-                animation: exitGlow 2s ease-in-out infinite;
-            }
-            .workflow-connector.seamless {
-                background: linear-gradient(90deg, var(--success), var(--accent));
-                background-size: 200% 100%;
-                animation: futureFlow 3s ease-in-out infinite;
-            }
-            .workflow-description {
-                font-size: 24px;
-                color: rgba(255, 255, 255, 0.5);
-                font-weight: 300;
-                margin-top: 30px;
-                letter-spacing: -0.5px;
-            }
-            .stage-delay-1 { animation-delay: 0.1s; }
-            .stage-delay-2 { animation-delay: 0.2s; }
-            .stage-delay-3 { animation-delay: 0.3s; }
-            .stage-delay-4 { animation-delay: 0.4s; }
-            .stage-delay-5 { animation-delay: 0.5s; }
-            .stage-delay-6 { animation-delay: 0.6s; }
-            .connector-delay-1 { animation-delay: 0.15s; }
-            .connector-delay-2 { animation-delay: 0.25s; }
-            .connector-delay-3 { animation-delay: 0.35s; }
-            .connector-delay-4 { animation-delay: 0.45s; }
-            .connector-delay-5 { animation-delay: 0.55s; }
-            .connector-delay-6 { animation-delay: 0.65s; }
-            .carousel-nav {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 16px;
-                margin-top: 40px;
-            }
-            .carousel-dot {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.3);
-                border: none;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                padding: 0;
-            }
-            .carousel-dot.active {
-                background: var(--accent);
-                width: 32px;
-                border-radius: 6px;
-                box-shadow: 0 0 20px rgba(14, 165, 233, 0.5);
-            }
-            .carousel-arrow {
-                background: rgba(255, 255, 255, 0.1);
-                border: 1px solid rgba(255, 255, 255, 0.2);
-                border-radius: 50%;
-                width: 48px;
-                height: 48px;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                cursor: pointer;
-                transition: all 0.3s ease;
-                color: rgba(255, 255, 255, 0.7);
-                font-size: 20px;
-            }
-            .carousel-arrow:hover {
-                background: rgba(255, 255, 255, 0.2);
-                color: var(--accent);
-                transform: scale(1.1);
-            }
-            .carousel-arrow:active {
-                transform: scale(0.95);
-            }
-        </style>
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 80px 40px;">
-                <h1 style="font-size: 120px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Ecosystem Fit</h1>
-                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Completing the One-Stop-Shop Mission</div>
-                
-                <div class="workflow-carousel" id="workflowCarousel">
-                    <div class="workflow-carousel-track" id="workflowTrack">
-                        <!-- Current State -->
-                        <div class="workflow-carousel-slide">
-                            <div class="workflow-title" style="color: rgba(239, 68, 68, 0.9);">Current State</div>
-                            <div class="workflow-chain">
-                                <div class="workflow-stage stage-delay-1">SHOOT</div>
-                                <div class="workflow-connector connector-delay-1"></div>
-                                <div class="workflow-stage stage-delay-2">IMPORT</div>
-                                <div class="workflow-connector connector-delay-2"></div>
-                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector connector-delay-3"></div>
-                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector broken connector-delay-4"></div>
-                                <div class="workflow-stage exit stage-delay-5">EXIT</div>
-                                <div class="workflow-connector broken connector-delay-5"></div>
-                                <div class="workflow-stage stage-delay-6">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(Pixieset/Pic-Time)</span></div>
-                            </div>
-                            <div class="workflow-description" style="margin-bottom: 20px;">Download, re-upload, pay extra, lose connection</div>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Upsell</div>
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Retain</div>
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Marketing</div>
-                            </div>
-                        </div>
-                        
-                        <!-- Future State -->
-                        <div class="workflow-carousel-slide">
-                            <div class="workflow-title" style="color: var(--success);">Future State</div>
-                            <div class="workflow-chain">
-                                <div class="workflow-stage stage-delay-1">SHOOT</div>
-                                <div class="workflow-connector seamless connector-delay-1"></div>
-                                <div class="workflow-stage stage-delay-2">IMPORT</div>
-                                <div class="workflow-connector seamless connector-delay-2"></div>
-                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector seamless connector-delay-3"></div>
-                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector seamless connector-delay-4"></div>
-                                <div class="workflow-stage future stage-delay-5">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(with cloud, on Imagen Mobile web app)</span></div>
-                            </div>
-                            <div class="workflow-description" style="margin-bottom: 20px;">Seamless workflow, no re-upload, continuous relationship</div>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Upsell</div>
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Retain</div>
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Marketing</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation -->
-                    <div class="carousel-nav">
-                        <button class="carousel-arrow" id="prevBtn" onclick="changeWorkflowSlide(-1)">‹</button>
-                        <button class="carousel-dot active" onclick="goToWorkflowSlide(0)"></button>
-                        <button class="carousel-dot" onclick="goToWorkflowSlide(1)"></button>
-                        <button class="carousel-arrow" id="nextBtn" onclick="changeWorkflowSlide(1)">›</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <script>
-            let currentWorkflowSlide = 0;
-            const workflowTotalSlides = 2;
-            
-            function updateWorkflowCarousel() {
-                const track = document.getElementById('workflowTrack');
-                const dots = document.querySelectorAll('.carousel-dot');
-                track.style.transform = `translateX(-${currentWorkflowSlide * 100}%)`;
-                dots.forEach((dot, index) => {
-                    dot.classList.toggle('active', index === currentWorkflowSlide);
-                });
-            }
-            
-            function changeWorkflowSlide(direction) {
-                currentWorkflowSlide = (currentWorkflowSlide + direction + workflowTotalSlides) % workflowTotalSlides;
-                updateWorkflowCarousel();
-            }
-            
-            function goToWorkflowSlide(index) {
-                currentWorkflowSlide = index;
-                updateWorkflowCarousel();
-            }
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', function(e) {
-                const carousel = document.getElementById('workflowCarousel');
-                if (carousel && carousel.closest('.slide')) {
-                    if (e.key === 'ArrowLeft') {
-                        changeWorkflowSlide(-1);
-                    } else if (e.key === 'ArrowRight') {
-                        changeWorkflowSlide(1);
-                    }
-                }
-            });
-    <!-- Slide 12.24: Strategic Impact -->
-    <section class="slide">
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 80px 40px;">
-                <h1 style="font-size: 120px; margin-bottom: 100px; font-weight: 900; letter-spacing: -2px;">Strategic Impact</h1>
-                
-                <div style="display: flex; justify-content: center; gap: 120px; margin-top: 80px; max-width: 1400px; margin-left: auto; margin-right: auto;">
-                    <!-- Retention -->
-                    <div style="text-align: center; flex: 1; max-width: 400px;">
-                        <h2 style="font-size: 72px; font-weight: 700; color: var(--success); margin-bottom: 40px; letter-spacing: -1px;">Retention</h2>
-                        <div style="font-size: 32px; color: rgba(255, 255, 255, 0.85); line-height: 1.7; margin-bottom: 40px; font-weight: 300; letter-spacing: -0.5px;">
-                            More stages = Higher switching cost = Lower churn
-                        </div>
-                        <div style="font-size: 28px; color: rgba(255, 255, 255, 0.7); line-height: 2; font-weight: 300; letter-spacing: -0.5px;">
-                            Editing: Low<br>
-                            + Culling: Medium<br>
-                            <strong style="color: var(--success); font-size: 40px; font-weight: 600;">+ Delivery: High</strong>
-                        </div>
-                    </div>
-                    
-                    <!-- Differentiation -->
-                    <div style="text-align: center; flex: 1; max-width: 400px;">
-                        <h2 style="font-size: 72px; font-weight: 700; color: var(--accent); margin-bottom: 40px; letter-spacing: -1px;">Differentiation</h2>
-                        <div style="font-size: 32px; color: rgba(255, 255, 255, 0.85); line-height: 1.7; margin-bottom: 40px; font-weight: 300; letter-spacing: -0.5px;">
-                            Only solution with AI editing AND delivery
-                        </div>
-                        <div style="font-size: 28px; color: rgba(255, 255, 255, 0.7); line-height: 2; font-weight: 300; letter-spacing: -0.5px;">
-                            AI Tools: No delivery<br>
-                            Gallery Tools: No AI<br>
-                            <strong style="color: var(--accent); font-size: 40px; font-weight: 600;">Imagen: Both</strong>
-                        </div>
-                    </div>
-                    
-                    <!-- Revenue -->
-                    <div style="text-align: center; flex: 1; max-width: 400px;">
-                        <h2 style="font-size: 72px; font-weight: 700; color: #a855f7; margin-bottom: 40px; letter-spacing: -1px;">Revenue</h2>
-                        <div style="font-size: 32px; color: rgba(255, 255, 255, 0.85); line-height: 1.7; margin-bottom: 40px; font-weight: 300; letter-spacing: -0.5px;">
-                            Paths to premium tiers, storage, payments
-                        </div>
-                        <div style="font-size: 28px; color: rgba(255, 255, 255, 0.7); line-height: 2; font-weight: 300; letter-spacing: -0.5px;">
-                            Premium galleries<br>
-                            Storage upsell<br>
-                            <strong style="color: #a855f7; font-size: 40px; font-weight: 600;">Payment gating</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12.25: Long-Term Vision -->
-    <section class="slide">
-        <div class="slide-content" style="max-width: 1600px;">
-            <h1 style="font-size: 96px; margin-bottom: 40px; font-weight: 900;">Long-Term Vision</h1>
-            <div style="font-size: 48px; color: rgba(255, 255, 255, 0.7); margin-bottom: 100px; font-weight: 300;">From Editing Tool to Workflow Platform</div>
-            
-            <div style="max-width: 1400px; margin: 0 auto; text-align: center;">
-                <!-- Timeline - Large and Bold -->
-                <div style="display: flex; align-items: center; justify-content: center; gap: 40px; margin-bottom: 80px; font-size: 32px;">
-                    <div>
-                        <div style="color: rgba(255, 255, 255, 0.5); margin-bottom: 12px; font-weight: 300;">TODAY</div>
-                        <div style="color: rgba(255, 255, 255, 0.8);">Edit-only</div>
-                    </div>
-                    <div style="font-size: 64px; color: var(--accent);">→</div>
-                    <div>
-                        <div style="color: var(--accent); margin-bottom: 12px; font-weight: 700;">MVP</div>
-                        <div style="color: rgba(255, 255, 255, 0.9); font-size: 40px;">Edit + Deliver</div>
-                    </div>
-                    <div style="font-size: 64px; color: var(--success);">→</div>
-                    <div>
-                        <div style="color: var(--success); margin-bottom: 12px; font-weight: 700;">V1.1</div>
-                        <div style="color: rgba(255, 255, 255, 0.9);">+ Engagement</div>
-                    </div>
-                    <div style="font-size: 64px; color: #a855f7;">→</div>
-                    <div>
-                        <div style="color: #a855f7; margin-bottom: 12px; font-weight: 700;">V2+</div>
-                        <div style="color: rgba(255, 255, 255, 0.9); font-size: 40px;">Workflow Platform</div>
-                    </div>
-                </div>
-                
-                <!-- Key Insight - Large -->
-                <div style="margin-top: 100px;">
-                    <div style="font-size: 56px; font-weight: 700; color: var(--success); margin-bottom: 40px;">Ecosystem Completion</div>
-                    <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); line-height: 1.6; font-weight: 300; max-width: 1000px; margin: 0 auto;">
-                        This isn't a feature addition —<br>
-                        it's ecosystem completion.
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12.20: Why This Solution -->
-    <section class="slide">
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 100px 40px;">
-                <h1 style="font-size: 120px; margin-bottom: 80px; font-weight: 900; letter-spacing: -2px;">Why This Solution</h1>
-                
-                <div style="margin-top: 80px;">
-                    <div style="font-size: 100px; font-weight: 700; line-height: 1.2; margin-bottom: 60px; color: rgba(255, 255, 255, 0.95); letter-spacing: -2px;">
-                        AI Mobile Gallery
-                    </div>
-                    <div style="font-size: 44px; color: rgba(255, 255, 255, 0.7); margin-bottom: 120px; font-weight: 300; line-height: 1.5; letter-spacing: -1px;">
-                        The only solution that scores<br>10/10 in Impact, Strategic Fit, and Differentiation
-                    </div>
-                    
-                    <div style="display: flex; justify-content: center; gap: 100px; margin-top: 100px; max-width: 1200px; margin-left: auto; margin-right: auto;">
-                        <div style="text-align: center; flex: 1;">
-                            <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 300; letter-spacing: -1px;">Solves the #1 Exit Point</div>
-                            <div style="font-size: 36px; color: var(--accent); font-weight: 600; letter-spacing: -1px;">Prevents churn</div>
-                        </div>
-                        <div style="text-align: center; flex: 1;">
-                            <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 300; letter-spacing: -1px;">Leverages AI Moat</div>
-                            <div style="font-size: 36px; color: var(--success); font-weight: 600; letter-spacing: -1px;">Unique capability</div>
-                        </div>
-                        <div style="text-align: center; flex: 1;">
-                            <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 300; letter-spacing: -1px;">Natural Extension</div>
-                            <div style="font-size: 36px; color: #a855f7; font-weight: 600; letter-spacing: -1px;">Uses existing assets</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 19: Let's Turn This -->
-    <section class="slide">
-        <div class="slide-content" style="max-width: 1600px; padding: 60px 40px;">
-            <div style="text-align: center;">
-                <h1 style="font-size: 96px; margin-bottom: 60px; font-weight: 900; letter-spacing: -2px;">Let's turn this</h1>
-                
-                <div style="position: relative; max-width: 1000px; margin: 0 auto 60px;">
-                    <!-- Arrow pointing to image -->
-                    <div style="position: absolute; top: -80px; left: 50%; transform: translateX(-50%); z-index: 10;">
-                        <div style="font-size: 120px; color: var(--accent); font-weight: 700; line-height: 1;">↓</div>
-                    </div>
-                    
-                    <!-- Reddit image reference -->
-                    <div style="max-width: 100%; margin: 0 auto; border-radius: 12px; overflow: hidden; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5); background: #1a1a1a; padding: 20px; position: relative;">
-                        <img src="./Screenshot 2025-12-06 at 21.01.40.png" alt="Reddit screenshot" style="width: 100%; height: auto; display: block; object-fit: contain; border-radius: 8px; background: #2a2a2a;">
-                    </div>
-                </div>
-                
-                <div style="font-size: 64px; font-weight: 700; color: var(--success); letter-spacing: -1px; margin-top: 40px;">
-                    to be easier.
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 20: The Vision -->
-    <section class="slide">
-        <div class="slide-content">
-            <h2>From 22%</h2>
-            <div class="big-number" style="font-size: 100px; margin: 40px 0;">→</div>
-            <h2>To Dominating</h2>
-            <div class="subtitle" style="margin-top: 40px;">The photographer workflow</div>
-        </div>
-    </section>
-
-    <!-- Slide 21: One More Thing -->
-    <section class="slide">
-        <div class="slide-content">
-            <h2 style="margin-bottom: 60px;">One More Thing</h2>
-            <div class="subtitle" style="font-size: 40px; line-height: 1.4;">
-                This isn't just about adding features.<br><br>
-                It's about completing the mission.<br><br>
-                Giving photographers their time back.<br><br>
-                So they can focus on what they love.
-            </div>
-        </div>
-        <div class="one-more-thing">Thank You</div>
-    </section>
 
     <script>
         // Simple keyboard navigation
@@ -3892,6 +4815,30 @@
                 }
             }
         }
+        
+        // Override showSlide to trigger typewriter animation
+        const originalShowSlide = showSlide;
+        showSlide = function(n) {
+            originalShowSlide(n);
+            setTimeout(() => {
+                // Trigger "the task" animation
+                const taskSlide = document.getElementById('the-task-slide');
+                const taskText = document.getElementById('the-task-text');
+                if (taskSlide && taskText && slides[currentSlide] === taskSlide) {
+                    // Reset and restart animation
+                    taskText.style.animation = 'none';
+                    taskText.offsetHeight; // Trigger reflow
+                    taskText.style.animation = 'fadeInText 3s ease-in-out forwards';
+                }
+                
+                if (typeof checkAndStartTypewriter === 'function') {
+                    checkAndStartTypewriter();
+                }
+                if (typeof checkAndStartVisionAnimation === 'function') {
+                    checkAndStartVisionAnimation();
+                }
+            }, 200);
+        };
         
         document.addEventListener('keydown', (e) => {
             const visionSlide = document.getElementById('vision-mission-promise-slide');
@@ -4141,92 +5088,6 @@
             }
         }
 
-        // Typewriter Animation for The Focus slide
-        let typewriterText = '';
-        let typewriterIndex = 0;
-        let typewriterSentenceIndex = 0;
-        let isDeleting = false;
-        let typewriterTimeout;
-
-        const typewriterSentences = [
-            'Be where their clients are',
-            'Be where they leave Imagen AI ecosystem',
-            'Be where Imagen AI has unfair advantage (sorry not sorry, dropbox)'
-        ];
-
-        function typeWriterAnimation() {
-            const textElement = document.getElementById('typewriter-text');
-            if (!textElement) return;
-
-            const currentSentence = typewriterSentences[typewriterSentenceIndex];
-
-            if (!isDeleting && typewriterIndex < currentSentence.length) {
-                // Typing
-                typewriterText = currentSentence.substring(0, typewriterIndex + 1);
-                textElement.textContent = typewriterText;
-                typewriterIndex++;
-                typewriterTimeout = setTimeout(typeWriterAnimation, 50); // Typing speed
-            } else if (!isDeleting && typewriterIndex === currentSentence.length) {
-                // Finished typing, pause before deleting
-                typewriterTimeout = setTimeout(() => {
-                    isDeleting = true;
-                    typeWriterAnimation();
-                }, 2000); // Pause for 2 seconds
-            } else if (isDeleting && typewriterIndex > 0) {
-                // Deleting
-                typewriterText = currentSentence.substring(0, typewriterIndex - 1);
-                textElement.textContent = typewriterText;
-                typewriterIndex--;
-                typewriterTimeout = setTimeout(typeWriterAnimation, 30); // Deleting speed (faster)
-            } else if (isDeleting && typewriterIndex === 0) {
-                // Finished deleting, move to next sentence
-                isDeleting = false;
-                typewriterSentenceIndex = (typewriterSentenceIndex + 1) % typewriterSentences.length;
-                typewriterTimeout = setTimeout(typeWriterAnimation, 300); // Brief pause before next sentence
-            }
-        }
-
-        // Start typewriter animation when the animated focus slide is shown
-        function checkAndStartTypewriter() {
-            const animatedFocusSlide = document.getElementById('animated-focus-text')?.closest('.slide');
-            if (!animatedFocusSlide) return;
-            
-            const slideIndex = Array.from(slides).indexOf(animatedFocusSlide);
-            const isCurrentSlide = slideIndex === currentSlide;
-            
-            if (isCurrentSlide) {
-                // Reset and start animation
-                clearTimeout(typewriterTimeout);
-                typewriterText = '';
-                typewriterIndex = 0;
-                typewriterSentenceIndex = 0;
-                isDeleting = false;
-                const textElement = document.getElementById('typewriter-text');
-                if (textElement) {
-                    textElement.textContent = '';
-                }
-                setTimeout(typeWriterAnimation, 500); // Start after slide transition
-            } else {
-                // Stop animation when leaving the slide
-                clearTimeout(typewriterTimeout);
-                const textElement = document.getElementById('typewriter-text');
-                if (textElement) {
-                    textElement.textContent = '';
-                }
-            }
-        }
-
-        // Override showSlide to trigger typewriter
-        const originalShowSlide = showSlide;
-        showSlide = function(n) {
-            originalShowSlide(n);
-            setTimeout(checkAndStartTypewriter, 100); // Check after slide transition
-        };
-
-        // Also check on initial load
-        document.addEventListener('DOMContentLoaded', () => {
-            setTimeout(checkAndStartTypewriter, 1000);
-        });
     </script>
 
 </body>
