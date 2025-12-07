@@ -4878,169 +4878,154 @@
     <!-- Slide 12.28: Four-Phase Rollout Overview -->
     <section class="slide" style="display: none;">
         <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 60px 40px;">
-                <h1 style="font-size: 80px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Four-Phase Rollout</h1>
+            <div style="text-align: left; padding: 50px 60px;">
+                <h1 style="font-size: 72px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Four-Phase Rollout</h1>
                 
-                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; max-width: 1600px; margin: 0 auto; margin-top: 60px;">
-                    <!-- Phase 1 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid var(--accent); border-radius: 20px; padding: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 20px;">Phase 1</div>
-                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">User Testing</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">(and maybe iterate)</div>
-                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                            50-100 hand-selected photographers<br>
-                            Validate core flow<br>
-                            Identify critical bugs
-                        </div>
-                    </div>
+                <!-- Timeline -->
+                <div style="position: relative; margin-bottom: 50px; padding: 0 20px;">
+                    <!-- Timeline line - positioned at top -->
+                    <div style="position: relative; height: 3px; background: linear-gradient(to right, var(--accent) 0%, var(--accent) 25%, var(--success) 25%, var(--success) 50%, #fbbf24 50%, #fbbf24 75%, #a855f7 75%, #a855f7 100%); margin-bottom: 0;"></div>
                     
-                    <!-- Phase 2 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid var(--success); border-radius: 20px; padding: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Phase 2</div>
-                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">Closed Beta</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Weeks 1-4</div>
-                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                            50-100 hand-selected photographers<br>
-                            Validate core flow<br>
-                            Identify critical bugs
+                    <!-- Phase markers and labels -->
+                    <div style="display: flex; justify-content: space-between; position: relative; margin-top: -10px;">
+                        <div style="text-align: center; width: 180px;">
+                            <div style="width: 20px; height: 20px; background: var(--accent); border-radius: 50%; margin: 0 auto 15px; box-shadow: 0 0 15px var(--accent);"></div>
+                            <div style="font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Phase 1: User Testing</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 4px;">Pre-launch</div>
                         </div>
-                    </div>
-                    
-                    <!-- Phase 3 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid #fbbf24; border-radius: 20px; padding: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: #fbbf24; margin-bottom: 20px;">Phase 3</div>
-                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">Open Beta</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Weeks 5-10</div>
-                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                            All users, opt-in<br>
-                            Measure adoption at scale<br>
-                            Target: ≥25% try within 60 days
+                        <div style="text-align: center; width: 180px;">
+                            <div style="width: 16px; height: 16px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; margin: 0 auto 15px;"></div>
+                            <div style="font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Phase 2: Closed Beta</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 4px;">Weeks 1-4</div>
                         </div>
-                    </div>
-                    
-                    <!-- Phase 4 -->
-                    <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid #a855f7; border-radius: 20px; padding: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 20px;">Phase 4</div>
-                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px; font-weight: 600;">General Availability</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Week 11+</div>
-                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                            Default feature for all<br>
-                            Drive adoption to ≥40%<br>
-                            Prepare for V1.1
+                        <div style="text-align: center; width: 180px;">
+                            <div style="width: 16px; height: 16px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; margin: 0 auto 15px;"></div>
+                            <div style="font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Phase 3: Open Beta</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 4px;">Weeks 5-10</div>
+                        </div>
+                        <div style="text-align: center; width: 180px;">
+                            <div style="width: 16px; height: 16px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; margin: 0 auto 15px;"></div>
+                            <div style="font-size: 16px; font-weight: 600; color: rgba(255, 255, 255, 0.9);">Phase 4: GA</div>
+                            <div style="font-size: 14px; color: rgba(255, 255, 255, 0.5); margin-top: 4px;">Week 11+</div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12.29: Phase 1 - Closed Beta Details -->
-    <section class="slide" style="display: none;">
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 60px 40px;">
-                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: var(--accent);">Phase 1: Closed Beta</h2>
-                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Weeks 1-4 | 50-100 Selected Photographers</div>
                 
-                <div style="max-width: 1200px; margin: 0 auto;">
-                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px;">
-                        <!-- Selection Criteria -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; text-align: left;">
-                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Selection Criteria</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
-                                • Active Imagen users (≥5 projects)<br>
-                                • Wedding photographers<br>
-                                • High &amp; moderate volume<br>
-                                • Geographic diversity<br>
-                                • Willing to provide feedback
+                <!-- Phase Cards -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px;">
+                    <!-- Phase 1: User Testing -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 28px; display: flex; flex-direction: column;">
+                        <div style="font-size: 24px; font-weight: 700; color: var(--accent); margin-bottom: 8px;">User Testing</div>
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.5); margin-bottom: 24px;">Internal &amp; select users</div>
+                        
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.9; flex-grow: 1;">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--accent); margin-right: 10px;">•</span>
+                                <span>Internal team testing</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--accent); margin-right: 10px;">•</span>
+                                <span>10-20 trusted photographers</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--accent); margin-right: 10px;">•</span>
+                                <span>Bug identification</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <span style="color: var(--accent); margin-right: 10px;">•</span>
+                                <span>UX iteration</span>
                             </div>
                         </div>
                         
-                        <!-- Goals -->
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; text-align: left;">
-                            <div style="font-size: 28px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Goals</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
-                                • Validate Deliver stage flow<br>
-                                • Identify critical bugs<br>
-                                • Gather qualitative feedback<br>
-                                • Test share delivery channels
-                            </div>
+                        <div style="margin-top: 24px; padding: 12px 16px; background: rgba(14, 165, 233, 0.15); border-radius: 8px; text-align: center;">
+                            <span style="font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px;">GATE: ZERO CRITICAL BUGS</span>
                         </div>
                     </div>
                     
-                    <!-- Success Gate -->
-                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 16px; padding: 40px; margin-top: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px;">Success Gate to Phase 2</div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
-                            <div>
-                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Beta Share Rate</div>
-                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥60%</div>
-                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Share at least one gallery</div>
+                    <!-- Phase 2: Closed Beta -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 28px; display: flex; flex-direction: column;">
+                        <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 8px;">Closed Beta</div>
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.5); margin-bottom: 24px;">50-100 hand-selected users</div>
+                        
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.9; flex-grow: 1;">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--success); margin-right: 10px;">•</span>
+                                <span>Active Imagen users (≥5 projects)</span>
                             </div>
-                            <div>
-                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Client Open Rate</div>
-                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥50%</div>
-                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Deliver stage works end-to-end</div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--success); margin-right: 10px;">•</span>
+                                <span>Wedding photographers</span>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12.30: Phase 2 - Open Beta Details -->
-    <section class="slide" style="display: none;">
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 60px 40px;">
-                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: var(--success);">Phase 2: Open Beta</h2>
-                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Weeks 5-10 | All Users, Opt-In</div>
-                
-                <div style="max-width: 1200px; margin: 0 auto;">
-                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; margin-bottom: 40px; text-align: left;">
-                        <div style="font-size: 28px; font-weight: 700; color: var(--success); margin-bottom: 30px;">Rollout Mechanism</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
-                            • In-app announcement: "New: Share galleries directly from Imagen"<br>
-                            • Email campaign to active users<br>
-                            • Feature flagged - users enable in settings
-                        </div>
-                    </div>
-                    
-                    <!-- Goals -->
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 40px;">
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: left;">
-                            <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Goals</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
-                                • Measure Deliver stage adoption<br>
-                                • Measure workflow completion<br>
-                                • Validate client open rate<br>
-                                • Gather competitive feedback
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: var(--success); margin-right: 10px;">•</span>
+                                <span>Geographic diversity</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <span style="color: var(--success); margin-right: 10px;">•</span>
+                                <span>Willing to provide feedback</span>
                             </div>
                         </div>
                         
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: left;">
-                            <div style="font-size: 24px; font-weight: 700; color: var(--success); margin-bottom: 20px;">Monitoring</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
-                                • Daily KPI dashboard (first 2 weeks)<br>
-                                • Weekly cohort analysis<br>
-                                • Qualitative feedback prompts
-                            </div>
+                        <div style="margin-top: 24px; padding: 12px 16px; background: rgba(16, 185, 129, 0.15); border-radius: 8px; text-align: center;">
+                            <span style="font-size: 13px; font-weight: 600; color: var(--success); text-transform: uppercase; letter-spacing: 0.5px;">GATE: ≥60% SHARE AT LEAST ONE GALLERY</span>
                         </div>
                     </div>
                     
-                    <!-- Success Gate -->
-                    <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 16px; padding: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px;">Success Gate to Phase 3</div>
-                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px;">
-                            <div style="text-align: left;">
-                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Delivery Adoption</div>
-                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥20%</div>
-                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Trending upward</div>
+                    <!-- Phase 3: Open Beta -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 28px; display: flex; flex-direction: column;">
+                        <div style="font-size: 24px; font-weight: 700; color: #fbbf24; margin-bottom: 8px;">Open Beta</div>
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.5); margin-bottom: 24px;">All Imagen users, opt-in</div>
+                        
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.9; flex-grow: 1;">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #fbbf24; margin-right: 10px;">•</span>
+                                <span>In-app announcement</span>
                             </div>
-                            <div style="text-align: left;">
-                                <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 8px; font-weight: 600;">Workflow Completion</div>
-                                <div style="font-size: 48px; font-weight: 700; color: var(--success);">≥15%</div>
-                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px;">Cull → Edit → Deliver</div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #fbbf24; margin-right: 10px;">•</span>
+                                <span>Email campaign to active users</span>
                             </div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #fbbf24; margin-right: 10px;">•</span>
+                                <span>Feature flagged in settings</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <span style="color: #fbbf24; margin-right: 10px;">•</span>
+                                <span>Daily KPI monitoring</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 24px; padding: 12px 16px; background: rgba(251, 191, 36, 0.15); border-radius: 8px; text-align: center;">
+                            <span style="font-size: 13px; font-weight: 600; color: #fbbf24; text-transform: uppercase; letter-spacing: 0.5px;">GATE: ADOPTION ≥20% AND TRENDING UP</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Phase 4: GA -->
+                    <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 28px; display: flex; flex-direction: column;">
+                        <div style="font-size: 24px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">General Availability</div>
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.5); margin-bottom: 24px;">Default for all users</div>
+                        
+                        <div style="font-size: 15px; color: rgba(255, 255, 255, 0.8); line-height: 1.9; flex-grow: 1;">
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #a855f7; margin-right: 10px;">•</span>
+                                <span>Standard part of Imagen</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #a855f7; margin-right: 10px;">•</span>
+                                <span>Onboarding updated</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start; margin-bottom: 8px;">
+                                <span style="color: #a855f7; margin-right: 10px;">•</span>
+                                <span>Marketing positions 4 stages</span>
+                            </div>
+                            <div style="display: flex; align-items: flex-start;">
+                                <span style="color: #a855f7; margin-right: 10px;">•</span>
+                                <span>V1.1 planning begins</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 24px; padding: 12px 16px; background: rgba(168, 85, 247, 0.15); border-radius: 8px; text-align: center;">
+                            <span style="font-size: 13px; font-weight: 600; color: #a855f7; text-transform: uppercase; letter-spacing: 0.5px;">GOAL: 40% ADOPTION BY MONTH 6</span>
                         </div>
                     </div>
                 </div>
@@ -5048,49 +5033,144 @@
         </div>
     </section>
 
-    <!-- Slide 12.31: Phase 3 - General Availability -->
+    <!-- Slide 12.29: Success Gates -->
     <section class="slide" style="display: none;">
         <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 60px 40px;">
-                <h2 style="font-size: 72px; margin-bottom: 20px; font-weight: 900; letter-spacing: -2px; color: #a855f7;">Phase 3: General Availability</h2>
-                <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300;">Week 11+ | Default Feature for All</div>
+            <div style="text-align: left; padding: 50px 60px;">
+                <h1 style="font-size: 72px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Success Gates</h1>
                 
-                <div style="max-width: 1200px; margin: 0 auto;">
-                    <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 40px; margin-bottom: 40px; text-align: left;">
-                        <div style="font-size: 28px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">Rollout Mechanism</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
-                            • Mobile gallery becomes standard part of Imagen<br>
-                            • Onboarding updated: "Cull → Edit → Deliver" workflow<br>
-                            • Marketing positions Imagen as owner of 3 workflow stages
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px;">
+                    <!-- Phase 1 → Phase 2 Gate -->
+                    <div>
+                        <div style="font-size: 22px; font-weight: 700; color: var(--accent); margin-bottom: 24px;">Phase 1 → Phase 2 Gate</div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; overflow: hidden;">
+                            <!-- Header -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Question</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Metric</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Must Achieve</div>
+                            </div>
+                            
+                            <!-- Row 1 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Does it work?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Critical bugs</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">Zero blocking</div>
+                            </div>
+                            
+                            <!-- Row 2 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Is UX intuitive?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Task completion</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">≥80%</div>
+                            </div>
+                            
+                            <!-- Row 3 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Is sentiment positive?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Qualitative feedback</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">Net positive</div>
+                            </div>
+                            
+                            <!-- Row 4 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px;">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Ready to scale?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Team confidence</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">Go decision</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- Goals -->
-                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 40px;">
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
-                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥40%</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Deliver stage adoption</div>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
-                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥35%</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Workflow completion rate</div>
-                        </div>
-                        <div style="background: rgba(255, 255, 255, 0.05); border-radius: 16px; padding: 30px; text-align: center;">
-                            <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥25%</div>
-                            <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300;">Tool consolidation</div>
+                    <!-- Phase 2 → Phase 3 Gate -->
+                    <div>
+                        <div style="font-size: 22px; font-weight: 700; color: var(--success); margin-bottom: 24px;">Phase 2 → Phase 3 Gate</div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; overflow: hidden;">
+                            <!-- Header -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Question</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Metric</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Must Achieve</div>
+                            </div>
+                            
+                            <!-- Row 1 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Does Deliver stage work?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Critical bugs</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">Zero blocking</div>
+                            </div>
+                            
+                            <!-- Row 2 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Will photographers try it?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Beta share rate</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">≥60%</div>
+                            </div>
+                            
+                            <!-- Row 3 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Does delivery reach clients?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Client open rate</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">≥50%</div>
+                            </div>
+                            
+                            <!-- Row 4 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px;">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Is sentiment positive?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Qualitative feedback</div>
+                                <div style="font-size: 14px; font-weight: 600; color: var(--success);">Net positive</div>
+                            </div>
                         </div>
                     </div>
                     
-                    <!-- 6-Month Evaluation -->
-                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 16px; padding: 40px; margin-top: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px;">6-Month Evaluation</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); line-height: 1.8; font-weight: 300; text-align: left;">
-                            <strong style="color: #a855f7;">What happens next:</strong><br><br>
-                            If we hit all our targets, we move forward with V1.1 and start building Upsell features.<br><br>
-                            If we're close but not quite there, we keep iterating on what we have.<br><br>
-                            If adoption stays below 25%, we pause and figure out what's not working.
+                    <!-- Phase 3 → Phase 4 Gate -->
+                    <div>
+                        <div style="font-size: 22px; font-weight: 700; color: #fbbf24; margin-bottom: 24px;">Phase 3 → Phase 4 Gate</div>
+                        
+                        <div style="background: rgba(255, 255, 255, 0.03); border-radius: 12px; overflow: hidden;">
+                            <!-- Header -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 14px 20px; background: rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.1);">
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Question</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Metric</div>
+                                <div style="font-size: 12px; font-weight: 600; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px;">Must Achieve</div>
+                            </div>
+                            
+                            <!-- Row 1 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Is adoption growing?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Delivery Adoption</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #fbbf24;">≥20%, upward</div>
+                            </div>
+                            
+                            <!-- Row 2 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Becoming part of workflow?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Workflow Completion</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #fbbf24;">≥15%</div>
+                            </div>
+                            
+                            <!-- Row 3 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Clients receiving photos?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Client Open Rate</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #fbbf24;">≥50%</div>
+                            </div>
+                            
+                            <!-- Row 4 -->
+                            <div style="display: grid; grid-template-columns: 1.2fr 1fr 0.8fr; padding: 16px 20px;">
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.9);">Retain stage potential?</div>
+                                <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7);">Client Share Rate</div>
+                                <div style="font-size: 14px; font-weight: 600; color: #fbbf24;">≥15%</div>
+                            </div>
                         </div>
                     </div>
+                </div>
+                
+                <!-- Rollout Philosophy -->
+                <div style="margin-top: 50px; background: rgba(255, 255, 255, 0.03); border-radius: 16px; padding: 24px 40px; border: 1px solid rgba(255, 255, 255, 0.08);">
+                    <span style="font-size: 18px; font-weight: 700; color: rgba(255, 255, 255, 0.9);">Rollout philosophy:</span>
+                    <span style="font-size: 18px; color: rgba(255, 255, 255, 0.7); font-weight: 300;"> Validate stage expansion before scaling. Learn quickly, minimize risk, expand only when signals are positive.</span>
                 </div>
             </div>
         </div>
