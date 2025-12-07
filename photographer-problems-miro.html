@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Problems - Miro Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --miro-yellow: #FEF445;
+            --miro-orange: #FFA629;
+            --miro-red: #F24726;
+            --miro-pink: #F797D6;
+            --miro-purple: #9747FF;
+            --miro-blue: #4BADE8;
+            --miro-cyan: #0CA789;
+            --miro-green: #93D500;
+            --miro-lime: #D5F692;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 11px rgba(0,0,0,0.1);
+            padding: 12px 20px;
+            z-index: 1000;
+            font-size: 14px;
+            font-weight: 600;
+            color: #050038;
+        }
+
+        .legend {
+            position: fixed;
+            top: 80px;
+            right: 16px;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 11px rgba(0,0,0,0.1);
+            z-index: 1000;
+            font-size: 12px;
+            max-width: 200px;
+        }
+
+        .legend-title {
+            font-weight: 700;
+            margin-bottom: 14px;
+            font-size: 14px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .instructions {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            background: #050038;
+            color: white;
+            padding: 16px 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            z-index: 1000;
+            box-shadow: 0 4px 11px rgba(0,0,0,0.2);
+        }
+
+        .instructions-title {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        #canvas {
+            position: relative;
+            min-width: 9000px;
+            min-height: 5500px;
+            padding: 100px;
+        }
+
+        .sticky {
+            position: absolute;
+            padding: 20px;
+            border-radius: 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            width: 280px;
+            min-height: 160px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sticky:hover {
+            box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+            transform: translateY(-4px) scale(1.03);
+            z-index: 100;
+        }
+
+        .sticky-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .sticky-title {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.3;
+            color: #050038;
+            flex: 1;
+        }
+
+        .sticky-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(5,0,56,0.4);
+            margin-left: 8px;
+            flex-shrink: 0;
+        }
+
+        .sticky-desc {
+            font-size: 13px;
+            line-height: 1.5;
+            color: #050038;
+            opacity: 0.8;
+            margin-bottom: 12px;
+        }
+
+        .sticky-badge {
+            display: inline-block;
+            font-size: 20px;
+            margin-top: 8px;
+        }
+
+        .sticky-meta {
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(5,0,56,0.5);
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid rgba(5,0,56,0.1);
+        }
+
+        .sticky.yellow { background: var(--miro-yellow); }
+        .sticky.orange { background: var(--miro-orange); }
+        .sticky.red { background: var(--miro-red); }
+        .sticky.pink { background: var(--miro-pink); }
+        .sticky.purple { background: var(--miro-purple); }
+        .sticky.blue { background: var(--miro-blue); }
+        .sticky.cyan { background: var(--miro-cyan); }
+        .sticky.green { background: var(--miro-green); }
+        .sticky.lime { background: var(--miro-lime); }
+
+        .text-box {
+            position: absolute;
+            font-family: 'Inter', sans-serif;
+            color: #050038;
+        }
+
+        .text-box.title {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        .text-box.heading {
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .text-box.subheading {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.3;
+        }
+
+        .text-box.label {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #6c6c6c;
+        }
+
+        .text-box.body {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 1.6;
+            max-width: 700px;
+        }
+
+        .arrow-line {
+            position: absolute;
+            height: 3px;
+            background: #050038;
+            transform-origin: left center;
+        }
+
+        .arrow-head {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid #050038;
+            border-top: 8px solid transparent;
+            border-bottom: 8px solid transparent;
+        }
+
+        .info-card {
+            position: absolute;
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 3px solid #050038;
+            max-width: 500px;
+        }
+
+        .info-card-title {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: #050038;
+        }
+
+        .info-card-body {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #050038;
+        }
+
+        .info-card-body strong {
+            font-weight: 700;
+            color: #0073ea;
+        }
+
+        .lane-divider {
+            position: absolute;
+            height: 2px;
+            background: #e0e0e0;
+            left: 0;
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="toolbar">
+        📸 Photographer Problems - Scroll to explore all 52 problems
+    </div>
+
+    <div class="legend">
+        <div class="legend-title">Legend</div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--miro-yellow);"></div>
+            <span>Pre-Event</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--miro-orange);"></div>
+            <span>Shoot Day</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--miro-green);"></div>
+            <span>✅ Solved</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--miro-red);"></div>
+            <span>⚠️ Unsolved</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background: var(--miro-cyan);"></div>
+            <span>🌐 All Segments</span>
+        </div>
+    </div>
+
+    <div class="instructions">
+        <div class="instructions-title">💡 How to Navigate</div>
+        <div>• <strong>Scroll horizontally</strong> to see workflow phases</div>
+        <div>• <strong>Scroll vertically</strong> to see different segments</div>
+        <div>• <strong>Hover cards</strong> to read full details</div>
+    </div>
+
+    <div id="canvas"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+
+        function createSticky(color, number, title, desc, x, y, badge = '', meta = '') {
+            const sticky = document.createElement('div');
+            sticky.className = `sticky ${color}`;
+            sticky.innerHTML = `
+                <div class="sticky-header">
+                    <div class="sticky-title">${title}</div>
+                    <div class="sticky-number">#${number}</div>
+                </div>
+                <div class="sticky-desc">${desc}</div>
+                ${badge ? `<div class="sticky-badge">${badge}</div>` : ''}
+                ${meta ? `<div class="sticky-meta">${meta}</div>` : ''}
+            `;
+            sticky.style.left = `${x}px`;
+            sticky.style.top = `${y}px`;
+            canvas.appendChild(sticky);
+        }
+
+        function createText(type, text, x, y) {
+            const textBox = document.createElement('div');
+            textBox.className = `text-box ${type}`;
+            textBox.innerHTML = text;
+            textBox.style.left = `${x}px`;
+            textBox.style.top = `${y}px`;
+            canvas.appendChild(textBox);
+        }
+
+        function createInfoCard(title, body, x, y) {
+            const card = document.createElement('div');
+            card.className = 'info-card';
+            card.innerHTML = `
+                <div class="info-card-title">${title}</div>
+                <div class="info-card-body">${body}</div>
+            `;
+            card.style.left = `${x}px`;
+            card.style.top = `${y}px`;
+            canvas.appendChild(card);
+        }
+
+        function createArrow(x1, y1, x2, y2) {
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            const length = Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2);
+            
+            const line = document.createElement('div');
+            line.className = 'arrow-line';
+            line.style.left = `${x1}px`;
+            line.style.top = `${y1}px`;
+            line.style.width = `${length - 12}px`;
+            line.style.transform = `rotate(${angle}rad)`;
+            canvas.appendChild(line);
+            
+            const head = document.createElement('div');
+            head.className = 'arrow-head';
+            head.style.left = `${x2}px`;
+            head.style.top = `${y2 - 8}px`;
+            head.style.transform = `rotate(${angle}rad)`;
+            canvas.appendChild(head);
+        }
+
+        function createDivider(y) {
+            const divider = document.createElement('div');
+            divider.className = 'lane-divider';
+            divider.style.top = `${y}px`;
+            canvas.appendChild(divider);
+        }
+
+        function createContent() {
+            // Title
+            createText('title', '📸 Photographer Workflow Problems', 100, 50);
+            createText('body', 'A comprehensive analysis of all 52 problems across Wedding, Event, and Portrait photography workflows. Scroll right to see the workflow progression from booking to delivery.', 100, 150);
+
+            // Define lanes
+            const weddingY = 500;
+            const commonY = 1700;
+            const eventY = 2900;
+            const portraitY = 4100;
+
+            // Lane dividers
+            createDivider(weddingY - 100);
+            createDivider(commonY - 100);
+            createDivider(eventY - 100);
+            createDivider(portraitY - 100);
+
+            // Lane labels
+            createText('heading', '💒 Wedding Photographers', 100, weddingY - 80);
+            createText('body', '25 unique problems specific to wedding photography', 100, weddingY - 30);
+            
+            createText('heading', '🌐 Common to All Segments', 100, commonY - 80);
+            createText('body', '14 problems that affect all photographer types', 100, commonY - 30);
+            
+            createText('heading', '🎉 Event Photographers', 100, eventY - 80);
+            createText('body', '24 unique problems specific to event photography', 100, eventY - 30);
+            
+            createText('heading', '📸 Portrait Photographers', 100, portraitY - 80);
+            createText('body', '22 unique problems specific to portrait photography', 100, portraitY - 30);
+
+            // PHASE 1: PRE-EVENT/BOOKING
+            const phase1X = 900;
+            createText('subheading', 'Phase 1: Pre-Event/Booking', phase1X, 250);
+            createText('label', 'ADMINISTRATIVE & PLANNING', phase1X, 295);
+            createArrow(phase1X + 300, 330, phase1X + 800, 330);
+
+            // Wedding pre-event
+            createSticky('yellow', 'W1', 'Administrative Overload', 'Managing inquiries, quotes, contracts, and deposits takes away from creative work. Photographers spend 1-2 hours per client on admin tasks.', phase1X, weddingY, '💒', 'Wedding-specific');
+            createSticky('yellow', 'W2', 'Scheduling Conflicts', 'Coordinating availability across multiple clients and venues. Wedding dates book 6-18 months in advance, creating complex scheduling.', phase1X + 320, weddingY, '💒', 'Wedding-specific');
+            createSticky('yellow', 'W3', 'Contract Management', 'Tracking signed contracts, terms, and payment schedules across different CRM tools. Lost contracts = lost money.', phase1X + 640, weddingY, '💒', 'Wedding-specific');
+            createSticky('yellow', 'W4', 'Client Communication Fatigue', 'Endless back-and-forth emails for details, expectations, and logistics. Can take 10-20 email exchanges per wedding.', phase1X, weddingY + 220, '💒', 'Wedding-specific');
+
+            // Common pre-event
+            createSticky('cyan', 'C1', 'Client Expectation Management', 'Setting realistic expectations for deliverables, timelines, and final product quality. Prevents disappointment later.', phase1X, commonY, '🌐', 'All segments');
+            createSticky('cyan', 'C2', 'Pricing & Packages', 'Creating competitive yet profitable pricing structures. Many photographers undercharge and struggle financially.', phase1X + 320, commonY, '🌐', 'All segments');
+            createSticky('cyan', 'C3', 'Time Management', 'Balancing bookings with personal life and avoiding burnout. Photographers often overbook and sacrifice family time.', phase1X + 640, commonY, '🌐', 'All segments');
+
+            // Event pre-event
+            createSticky('yellow', 'E1', 'Multi-Stakeholder Coordination', 'Event organizer, marketing team, sponsors, and venue all have different requirements and contacts to manage.', phase1X, eventY, '🎉', 'Event-specific');
+            createSticky('yellow', 'E2', 'Shot List Complexity', 'Coordinating must-have shots: keynotes, breakouts, sponsors, VIPs, networking moments. Lists can have 50+ items.', phase1X + 320, eventY, '🎉', 'Event-specific');
+            createSticky('yellow', 'E3', 'Corporate Branding Requirements', 'Understanding client brand guidelines, color preferences, and style expectations. Corporate clients are very particular.', phase1X + 640, eventY, '🎉', 'Event-specific');
+            createSticky('yellow', 'E4', 'Recurring Client Expectations', 'Quarterly events require consistent look across different dates and venues. Building style guides for each client.', phase1X, eventY + 220, '🎉', 'Event-specific');
+
+            // Portrait pre-event
+            createSticky('yellow', 'P1', 'Session Prep Coordination', 'Wardrobe guidance, location scouting, and client prep instructions take significant time. Each session needs custom prep.', phase1X, portraitY, '📸', 'Portrait-specific');
+            createSticky('yellow', 'P2', 'Expectation Management', 'Clients have unrealistic expectations from social media filters and influencer photos. Need to educate on realistic results.', phase1X + 320, portraitY, '📸', 'Portrait-specific');
+            createSticky('yellow', 'P3', 'Mini-Session Scheduling', 'Managing back-to-back 15-30 minute sessions with tight turnarounds. One delay cascades to all sessions.', phase1X + 640, portraitY, '📸', 'Portrait-specific');
+            createSticky('yellow', 'P4', 'Seasonal Demand Spikes', 'Holiday mini-sessions, senior portraits, and family photo seasons create overwhelming backlogs in Q4.', phase1X, portraitY + 220, '📸', 'Portrait-specific');
+
+            // PHASE 2: SHOOT DAY
+            const phase2X = 2100;
+            createText('subheading', 'Phase 2: Shoot Day', phase2X, 250);
+            createText('label', 'CAPTURE & EXECUTION', phase2X, 295);
+            createArrow(phase2X + 500, 330, phase2X + 1000, 330);
+
+            // Wedding shoot day
+            createSticky('orange', 'W5', 'Physical Exhaustion', '8-12 hour shoots with heavy equipment cause burnout and fatigue. Photographers carry 20-30 lbs of gear all day.', phase2X, weddingY, '💒', '8-12 hours');
+            createSticky('orange', 'W6', 'Volume Overload', 'Capturing 2,000-5,000 images creates a massive post-production backlog. More images = more culling/editing time.', phase2X + 320, weddingY, '💒', '2,000-5,000 images');
+            createSticky('orange', 'W7', 'Mixed Lighting Challenges', 'Constantly adapting to indoor/outdoor, flash, and ambient lighting conditions. Church, reception hall, outdoor all different.', phase2X + 640, weddingY, '💒', 'Multiple venues');
+            createSticky('orange', 'W8', 'Missed Moments Anxiety', 'Fear of missing critical shots (first kiss, reactions, speeches). These moments happen once and can\'t be recreated.', phase2X, weddingY + 220, '💒', 'High pressure');
+            createSticky('orange', 'W9', 'Equipment Failures', 'Memory card corruption, battery issues, or gear malfunctions during the event. Backup equipment is essential.', phase2X + 320, weddingY + 220, '💒', 'Critical risk');
+            createSticky('orange', 'W10', 'Coordination Stress', 'Working with videographers, DJs, planners, and family members. Everyone wants the photographer\'s attention.', phase2X + 640, weddingY + 220, '💒', 'Multi-vendor');
+
+            // Common shoot day
+            createSticky('cyan', 'C4', 'Weather Unpredictability', 'Outdoor shoots affected by weather. Rain, wind, extreme heat/cold impact quality and client comfort.', phase2X, commonY, '🌐', 'All segments');
+            createSticky('cyan', 'C5', 'Backup & Redundancy Anxiety', 'Fear of losing images during shoot. Dual card slots, multiple backups essential but add complexity.', phase2X + 320, commonY, '🌐', 'All segments');
+            createSticky('cyan', 'C6', 'Creative Block', 'Running out of pose/composition ideas during long shoots. Need to stay creative under pressure.', phase2X + 640, commonY, '🌐', 'All segments');
+
+            // Event shoot day
+            createSticky('orange', 'E5', 'Same-Day Delivery Pressure', 'Corporate clients expect photos within 24-48 hours while event is fresh in minds. Extremely tight turnaround.', phase2X, eventY, '🎉', '24-48 hour deadline');
+            createSticky('orange', 'E6', 'Real-Time Social Media Demands', 'Marketing teams want photos posted during the event—requires on-site editing and immediate delivery.', phase2X + 320, eventY, '🎉', 'Live posting');
+            createSticky('orange', 'E7', 'VIP Identification', 'Recognizing and prioritizing speakers, sponsors, and key attendees in crowds. Missing a VIP = unhappy client.', phase2X + 640, eventY, '🎉', 'High stakes');
+            createSticky('orange', 'E8', 'Coverage Completeness Anxiety', 'Fear of missing sponsor booths, breakout sessions, or key networking moments. Checklist can have 50+ items.', phase2X, eventY + 220, '🎉', 'Comprehensive coverage');
+            createSticky('orange', 'E9', 'Multi-Photographer Coordination', 'Large events require multiple photographers—coordinating coverage and style consistency is challenging.', phase2X + 320, eventY + 220, '🎉', '2-5 photographers');
+            createSticky('orange', 'E10', 'Challenging Venue Lighting', 'Convention centers, ballrooms, and outdoor venues with mixed lighting conditions. Often poor lighting.', phase2X + 640, eventY + 220, '🎉', 'Difficult lighting');
+
+            // Portrait shoot day
+            createSticky('orange', 'P5', 'Posing Guidance', 'Directing non-models to look natural and flattering requires constant attention and expertise.', phase2X, portraitY, '📸', '30min-2hrs');
+            createSticky('orange', 'P6', 'Child/Pet Wrangling', 'Getting cooperation from kids and pets while maintaining quality is exhausting. Requires patience and creativity.', phase2X + 320, portraitY, '📸', 'High difficulty');
+            createSticky('orange', 'P7', 'Lighting Consistency', 'Maintaining consistent lighting across poses and locations during session. Outdoor light changes constantly.', phase2X + 640, portraitY, '📸', 'Technical challenge');
+            createSticky('orange', 'P8', 'Client Confidence Issues', 'Subjects who hate being photographed or are self-conscious about appearance. Need to make them comfortable.', phase2X, portraitY + 220, '📸', 'Psychology required');
+
+            // PHASE 3: CULLING - MOSTLY SOLVED
+            const phase3X = 3600;
+            createText('subheading', 'Phase 3: Culling ✅', phase3X, 250);
+            createText('label', 'SOLVED BY IMAGEN AI', phase3X, 295);
+            createArrow(phase3X + 400, 330, phase3X + 900, 330);
+
+            createInfoCard('✅ Culling: 85-96% Time Saved', '<strong>Imagen AI solves the culling bottleneck</strong> by automatically reviewing thousands of images and selecting the best shots based on technical quality (sharpness, exposure, eyes open) and learned preferences. What used to take 2-4 hours now takes 20-30 minutes.', phase3X, 380);
+
+            // Wedding culling (SOLVED)
+            createSticky('green', 'W11', 'Decision Fatigue ✅', 'AI reviews 2,000-5,000 images to select 500-800 keepers, eliminating mental exhaustion from manual review.', phase3X, weddingY, '✓', 'SOLVED: 87% faster');
+            createSticky('green', 'W12', 'Duplicate Identification ✅', 'AI automatically finds and eliminates near-identical shots from burst mode shooting.', phase3X + 320, weddingY, '✓', 'SOLVED');
+            createSticky('green', 'W13', 'Quality Assessment ✅', 'AI checks every image for sharpness, exposure, eyes open, and expressions automatically.', phase3X + 640, weddingY, '✓', 'SOLVED');
+            createSticky('green', 'W14', 'Time Bottleneck ✅', 'Culling time reduced from 2-4 hours to 30 minutes. No longer the #1 bottleneck.', phase3X, weddingY + 220, '✓', 'SOLVED: 2-4hrs → 30min');
+
+            // Common culling (SOLVED)
+            createSticky('green', 'C7', 'Technical Quality Check ✅', 'AI automatically detects blur, exposure issues, and technical problems in every image.', phase3X, commonY, '✓', 'SOLVED');
+            createSticky('green', 'C8', 'Batch Selection ✅', 'AI intelligently selects the best image from similar shots, saving hours of comparison work.', phase3X + 320, commonY, '✓', 'SOLVED');
+
+            // Event culling (PARTIALLY SOLVED)
+            createSticky('green', 'E11', 'Speed vs Quality Tradeoff ✅', 'AI enables fast culling without sacrificing quality. Meet 24-48 hour deadlines easily.', phase3X, eventY, '✓', 'SOLVED: 85% faster');
+            createSticky('red', 'E12', 'Attendee Identification ⚠️', 'Manually identifying who is in each photo for tagging and delivery. Facial recognition would solve this.', phase3X + 320, eventY, '⚠️', 'UNSOLVED: 2-4hrs');
+            createSticky('red', 'E13', 'Category Organization ⚠️', 'Sorting photos by session, speaker, sponsor, venue area, and moment type. Manual tagging required.', phase3X + 640, eventY, '⚠️', 'UNSOLVED');
+            createSticky('green', 'E14', 'Duplicate Management ✅', 'AI handles rapid-fire shooting duplicates from fast-paced event coverage.', phase3X, eventY + 220, '✓', 'SOLVED');
+
+            // Portrait culling (SOLVED)
+            createSticky('green', 'P9', 'Expression Evaluation ✅', 'AI compares subtle expression differences across dozens of similar poses to find the best smile.', phase3X, portraitY, '✓', 'SOLVED');
+            createSticky('green', 'P10', 'Group Shot Selection ✅', 'AI finds the one frame where everyone looks good in family/group portraits. Checks every face.', phase3X + 320, portraitY, '✓', 'SOLVED');
+            createSticky('green', 'P11', 'Blink/Eyes Detection ✅', 'AI automatically checks every face for closed eyes, weird expressions, or unflattering angles.', phase3X + 640, portraitY, '✓', 'SOLVED');
+            createSticky('green', 'P12', 'Client Favorites ✅', 'AI learns which images clients prefer vs photographer\'s artistic choices over time.', phase3X, portraitY + 220, '✓', 'SOLVED');
+
+            // PHASE 4: EDITING - MOSTLY SOLVED
+            const phase4X = 5000;
+            createText('subheading', 'Phase 4: Editing ✅', phase4X, 250);
+            createText('label', 'SOLVED BY IMAGEN AI', phase4X, 295);
+            createArrow(phase4X + 500, 330, phase4X + 1000, 330);
+
+            createInfoCard('✅ Editing: 90-96% Time Saved', '<strong>Imagen AI revolutionizes editing</strong> by learning your unique style and applying it consistently to hundreds of images in minutes. What used to take 15-25 hours now takes 5-10 minutes. Perfect consistency across all images.', phase4X, 380);
+
+            // Wedding editing (SOLVED)
+            createSticky('green', 'W15', 'Massive Time Investment ✅', '96% time reduction: Manual editing of 500-800 images reduced from 15-25+ hours to 5-10 minutes.', phase4X, weddingY, '✓', 'SOLVED: 15-25hrs → 5-10min');
+            createSticky('green', 'W16', 'Style Inconsistency ✅', 'AI maintains the same look across hundreds of images. No more variation from editing fatigue.', phase4X + 320, weddingY, '✓', 'SOLVED: Perfect consistency');
+            createSticky('green', 'W17', 'Color Correction Complexity ✅', 'AI handles mixed lighting, white balance issues, and skin tones automatically across all venues.', phase4X + 640, weddingY, '✓', 'SOLVED');
+            createSticky('green', 'W18', 'Creative Burnout ✅', 'AI eliminates endless editing hours, restoring creative passion and preventing photographer burnout.', phase4X, weddingY + 220, '✓', 'SOLVED');
+            createSticky('orange', 'W19', 'Backlog Accumulation', 'Multiple weddings stack up, creating overwhelming editing queues during busy season (May-Oct).', phase4X + 320, weddingY + 220, '💒', 'Partially solved');
+            createSticky('orange', 'W20', 'Outsourcing Frustrations', 'Interns or outsourced editors don\'t match your style. AI solves this but some still outsource.', phase4X + 640, weddingY + 220, '💒', 'Partially solved');
+
+            // Common editing (SOLVED)
+            createSticky('green', 'C9', 'Batch Processing ✅', 'AI processes thousands of images with consistent style in minutes instead of hours.', phase4X, commonY, '✓', 'SOLVED');
+            createSticky('green', 'C10', 'Style Learning ✅', 'AI learns your unique editing style from just 2,000-3,000 sample images. Gets better over time.', phase4X + 320, commonY, '✓', 'SOLVED');
+            createSticky('green', 'C11', 'Exposure Correction ✅', 'AI automatically fixes exposure, highlights, shadows across all lighting conditions.', phase4X + 640, commonY, '✓', 'SOLVED');
+
+            // Event editing (SOLVED)
+            createSticky('green', 'E15', 'Brand Consistency Requirements ✅', 'AI applies corporate brand color grading to match client guidelines automatically.', phase4X, eventY, '✓', 'SOLVED');
+            createSticky('green', 'E16', 'Batch Speed Pressure ✅', '500-3,000 images edited in minutes to meet 24-48 hour deadlines. Enables same-day delivery.', phase4X + 320, eventY, '✓', 'SOLVED: 4-8hrs → 5min');
+            createSticky('green', 'E17', 'Mixed Venue Lighting ✅', 'AI adapts to stage lighting, ambient, flash, and outdoor all in one event automatically.', phase4X + 640, eventY, '✓', 'SOLVED');
+            createSticky('green', 'E18', 'Recurring Event Consistency ✅', 'AI maintains identical look across quarterly/annual events for the same client.', phase4X, eventY + 220, '✓', 'SOLVED');
+            createSticky('orange', 'E19', 'Multi-Format Export', 'Social media sizes, press kit quality, web gallery, print resolution all needed. Manual export.', phase4X + 320, eventY + 220, '🎉', 'Partially solved');
+            createSticky('orange', 'E20', 'Watermarking & Branding', 'Different watermarks for preview vs final, client branding requirements. Manual process.', phase4X + 640, eventY + 220, '🎉', 'Not solved');
+
+            // Portrait editing (PARTIALLY SOLVED)
+            createSticky('green', 'P13', 'Basic Skin Retouching ✅', 'AI handles basic blemish removal and skin smoothing while preserving natural texture.', phase4X, portraitY, '✓', 'SOLVED: Basic only');
+            createSticky('green', 'P14', 'Color Grading ✅', 'AI applies consistent color grade across entire session regardless of lighting changes.', phase4X + 320, portraitY, '✓', 'SOLVED');
+            createSticky('green', 'P15', 'Batch Consistency ✅', 'All images in a session match perfectly. No variation between images.', phase4X + 640, portraitY, '✓', 'SOLVED');
+            createSticky('red', 'P16', 'Advanced Retouching ⚠️', 'Body shaping, teeth whitening, eye enhancement still require manual work. Takes 20-40 min per image.', phase4X, portraitY + 220, '⚠️', 'UNSOLVED: 20-40min/image');
+            createSticky('red', 'P17', 'Client-Specific Adjustments ⚠️', 'Each client wants different retouching levels. Some want heavy, some want natural. Manual.', phase4X + 320, portraitY + 220, '⚠️', 'UNSOLVED');
+            createSticky('red', 'P18', 'Background Cleanup ⚠️', 'Removing distractions, swapping backgrounds, or extending backdrops requires manual Photoshop work.', phase4X + 640, portraitY + 220, '⚠️', 'UNSOLVED: 15-30min/image');
+
+            // PHASE 5: DELIVERY - MOSTLY UNSOLVED
+            const phase5X = 6800;
+            createText('subheading', 'Phase 5: Delivery ⚠️', phase5X, 250);
+            createText('label', 'MAJOR OPPORTUNITIES', phase5X, 295);
+
+            createInfoCard('⚠️ Delivery: Biggest Opportunity', '<strong>Delivery phase is largely unsolved</strong> and represents the biggest opportunity for Imagen AI. Album design, gallery platforms, payment integration, and client communication are all manual processes taking significant time.', phase5X, 380);
+
+            // Wedding delivery (UNSOLVED)
+            createSticky('red', 'W21', 'Album Design Time Sink ⚠️', '3-6 hours per album for manual layout and revision cycles. 95% of wedding photographers offer albums.', phase5X, weddingY, '⚠️', 'UNSOLVED: 3-6hrs');
+            createSticky('red', 'W22', 'Gallery Platform Fragmentation ⚠️', 'Managing Pic-Time, Pixieset, ShootProof separately. Photos already in Imagen cloud after editing.', phase5X + 320, weddingY, '⚠️', 'UNSOLVED: 30-60min');
+            createSticky('red', 'W23', 'Payment Chasing ⚠️', 'Awkward follow-ups, manual invoicing, delayed payments. Cash flow stress and uncomfortable chasing.', phase5X + 640, weddingY, '⚠️', 'UNSOLVED');
+            createSticky('red', 'W24', 'Client Communication Fatigue ⚠️', 'Endless back-and-forth emails scattered across platforms. 1-2 hours per client managing communication.', phase5X, weddingY + 220, '⚠️', 'UNSOLVED: 1-2hrs');
+            createSticky('red', 'W25', 'Booking & Contract Management ⚠️', 'Multiple CRMs, lost leads, manual contract tracking. Photographers lose clients to competitors.', phase5X + 320, weddingY + 220, '⚠️', 'UNSOLVED');
+
+            // Common delivery (UNSOLVED)
+            createSticky('red', 'C12', 'Gallery Platform Needed ⚠️', 'Need unified delivery solution. Currently using 3-5 different platforms for different purposes.', phase5X, commonY, '⚠️', 'UNSOLVED: All segments');
+            createSticky('red', 'C13', 'Payment Integration ⚠️', 'Automated invoicing and collection needed. Manual payment tracking causes cash flow issues.', phase5X + 320, commonY, '⚠️', 'UNSOLVED: All segments');
+            createSticky('red', 'C14', 'Client Portal ⚠️', 'Centralized communication hub needed. Currently scattered across email, text, social media.', phase5X + 640, commonY, '⚠️', 'UNSOLVED: All segments');
+
+            // Event delivery (UNSOLVED)
+            createSticky('red', 'E21', 'Facial Recognition ⚠️', 'Auto-tag VIPs, speakers, and attendees across all event photos. Enable attendee self-service galleries.', phase5X, eventY, '⚠️', 'UNSOLVED: 2-4hrs saved');
+            createSticky('red', 'E22', 'Real-Time Event Gallery ⚠️', 'Upload, edit, and publish photos during the event. Marketing teams share on social media in real-time.', phase5X + 320, eventY, '⚠️', 'UNSOLVED: Game-changer');
+            createSticky('red', 'E23', 'Multi-Stakeholder Delivery ⚠️', 'Deliver different photo sets to different stakeholders from one upload: organizer, sponsors, speakers.', phase5X + 640, eventY, '⚠️', 'UNSOLVED: 1-2hrs saved');
+            createSticky('red', 'E24', 'Attendee Self-Service ⚠️', 'Event attendees want to find and download their own photos. Facial recognition would enable this.', phase5X, eventY + 220, '⚠️', 'UNSOLVED');
+
+            // Portrait delivery (UNSOLVED)
+            createSticky('red', 'P19', 'In-Person Sales Sessions ⚠️', 'IPS requires dedicated time and space, limiting scalability. Need better online proofing.', phase5X, portraitY, '⚠️', 'UNSOLVED: 2-3hrs');
+            createSticky('red', 'P20', 'Online Proofing Overwhelm ⚠️', 'Clients get decision paralysis when presented with too many options. Need better selection tools.', phase5X + 320, portraitY, '⚠️', 'UNSOLVED');
+            createSticky('red', 'P21', 'Print Product Complexity ⚠️', 'Explaining wall art sizes, canvas vs metal, frame options overwhelms clients. Need visualization.', phase5X + 640, portraitY, '⚠️', 'UNSOLVED');
+            createSticky('red', 'P22', 'Upselling Discomfort ⚠️', 'Many photographers hate the sales aspect and undercharge for products. Need automated upselling.', phase5X, portraitY + 220, '⚠️', 'UNSOLVED');
+
+            // SUMMARY SECTION
+            const summaryX = 8100;
+            createText('title', '📊 Summary', summaryX, 200);
+            
+            createInfoCard('✅ What Imagen AI Solves', '<strong>18 problems solved (34%)</strong> primarily in culling and editing phases:<br><br>• <strong>Culling:</strong> 85-96% time reduction<br>• <strong>Editing:</strong> 90-96% time reduction<br>• <strong>Consistency:</strong> Perfect style matching<br>• <strong>Speed:</strong> Process thousands of images in minutes<br><br>Imagen AI has revolutionized post-production workflow.', summaryX, 400);
+
+            createInfoCard('⚠️ Top Unsolved Opportunities', '<strong>15+ high-value opportunities (66%)</strong> remaining in delivery phase:<br><br><strong>Wedding:</strong> Album design (3-6 hrs)<br><strong>Event:</strong> Facial recognition (2-4 hrs)<br><strong>Portrait:</strong> Advanced retouching (20-40 min/image)<br><strong>All Segments:</strong> Gallery delivery platform, payment integration, client communication hub<br><br>Delivery phase is the biggest opportunity.', summaryX, 800);
+
+            createInfoCard('🌐 Common vs Unique', '<strong>Pattern Analysis:</strong><br><br>• <strong>14 common problems</strong> affect all segments<br>• <strong>38 unique problems</strong> specific to each segment<br><br><strong>Wedding:</strong> 25 unique problems<br><strong>Event:</strong> 24 unique problems<br><strong>Portrait:</strong> 22 unique problems<br><br>While some problems are universal, most are segment-specific requiring tailored solutions.', summaryX, 1200);
+
+            createInfoCard('📈 Total Impact', '<strong>52 total problems analyzed</strong><br><br>• <strong>34% solved</strong> (culling + editing)<br>• <strong>66% unsolved</strong> (delivery + workflow)<br>• <strong>Biggest ROI:</strong> Delivery phase automation<br>• <strong>Time saved so far:</strong> 85-96% in post-production<br>• <strong>Remaining opportunity:</strong> 10-15 hours per job in delivery/admin', summaryX, 1600);
+        }
+
+        createContent();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI - ICP Analysis | Evidence-Based Research</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #18181b;
+            --bg-card: #1c1c1f;
+            --border: #27272a;
+            --border-light: #3f3f46;
+            --text-primary: #fafafa;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --accent-green: #22c55e;
+            --accent-green-dim: rgba(34, 197, 94, 0.15);
+            --accent-red: #ef4444;
+            --accent-red-dim: rgba(239, 68, 68, 0.15);
+            --accent-yellow: #eab308;
+            --accent-yellow-dim: rgba(234, 179, 8, 0.15);
+            --accent-blue: #3b82f6;
+            --accent-blue-dim: rgba(59, 130, 246, 0.15);
+            --accent-purple: #a855f7;
+            --accent-purple-dim: rgba(168, 85, 247, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Ambient background */
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .ambient-bg::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(34, 197, 94, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(168, 85, 247, 0.04) 0%, transparent 60%);
+            animation: ambientMove 30s ease-in-out infinite;
+        }
+
+        @keyframes ambientMove {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(-5%, 5%) rotate(2deg); }
+            66% { transform: translate(5%, -5%) rotate(-2deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            padding: 4rem 0;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+        }
+
+        .header-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-green-dim);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        .header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .header h1 span {
+            font-style: italic;
+            color: var(--accent-green);
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Executive Summary */
+        .executive-summary {
+            background: linear-gradient(135deg, var(--accent-red-dim), var(--bg-card));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .executive-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent-red), var(--accent-yellow));
+        }
+
+        .executive-summary h2 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-red);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .executive-summary .key-finding {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.75rem;
+            line-height: 1.4;
+        }
+
+        .executive-summary .key-finding strong {
+            color: var(--accent-green);
+        }
+
+        .executive-summary .key-finding .negative {
+            color: var(--accent-red);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .section-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent-blue);
+        }
+
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            font-weight: 400;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+
+        .stat-value {
+            font-family: 'Space Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-source {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+        }
+
+        thead {
+            background: var(--bg-tertiary);
+        }
+
+        th {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.95rem;
+        }
+
+        tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .evidence-strong {
+            color: var(--accent-green);
+        }
+
+        .evidence-moderate {
+            color: var(--accent-yellow);
+        }
+
+        .evidence-weak {
+            color: var(--accent-red);
+        }
+
+        /* Quote Cards */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .quote-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--accent-purple);
+            border-radius: 0 12px 12px 0;
+            padding: 1.5rem;
+        }
+
+        .quote-text {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.1rem;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .quote-author {
+            font-size: 0.85rem;
+            color: var(--accent-purple);
+            font-weight: 500;
+        }
+
+        /* Evidence Cards */
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .evidence-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+
+        .evidence-card h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .evidence-card ul {
+            list-style: none;
+        }
+
+        .evidence-card li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .evidence-card li:last-child {
+            border-bottom: none;
+        }
+
+        .check-icon {
+            color: var(--accent-green);
+        }
+
+        .x-icon {
+            color: var(--accent-red);
+        }
+
+        /* Debunked Section */
+        .debunked-section {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), var(--bg-secondary));
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .debunked-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .debunked-badge {
+            background: var(--accent-red);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .debunked-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+        }
+
+        /* ICP Profile Cards */
+        .icp-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .icp-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .icp-card.primary {
+            border-color: var(--accent-green);
+        }
+
+        .icp-card.primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-green);
+        }
+
+        .icp-card.secondary {
+            border-color: var(--accent-blue);
+        }
+
+        .icp-card.secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .icp-card.tertiary {
+            border-color: var(--accent-yellow);
+        }
+
+        .icp-card.tertiary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--accent-yellow);
+        }
+
+        .icp-badge {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .icp-card.primary .icp-badge {
+            background: var(--accent-green-dim);
+            color: var(--accent-green);
+        }
+
+        .icp-card.secondary .icp-badge {
+            background: var(--accent-blue-dim);
+            color: var(--accent-blue);
+        }
+
+        .icp-card.tertiary .icp-badge {
+            background: var(--accent-yellow-dim);
+            color: var(--accent-yellow);
+        }
+
+        .icp-card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .icp-section {
+            margin-bottom: 1.25rem;
+        }
+
+        .icp-section h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .icp-section ul {
+            list-style: none;
+        }
+
+        .icp-section li {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            padding: 0.25rem 0;
+            padding-left: 1rem;
+            position: relative;
+        }
+
+        .icp-section li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--text-muted);
+        }
+
+        /* Confidence Meter */
+        .confidence-section {
+            margin: 2rem 0;
+        }
+
+        .confidence-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .confidence-item:last-child {
+            border-bottom: none;
+        }
+
+        .confidence-label {
+            flex: 0 0 200px;
+            font-weight: 500;
+        }
+
+        .confidence-bar-wrapper {
+            flex: 1;
+            background: var(--bg-tertiary);
+            border-radius: 100px;
+            height: 24px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .confidence-bar {
+            height: 100%;
+            border-radius: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 0.75rem;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            transition: width 1s ease;
+        }
+
+        .confidence-bar.high {
+            background: linear-gradient(90deg, var(--accent-green), #16a34a);
+        }
+
+        .confidence-bar.medium {
+            background: linear-gradient(90deg, var(--accent-yellow), #ca8a04);
+        }
+
+        .confidence-bar.low {
+            background: linear-gradient(90deg, var(--accent-red), #dc2626);
+        }
+
+        .confidence-evidence {
+            flex: 0 0 180px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-align: right;
+        }
+
+        /* No Evidence Section */
+        .no-evidence {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .no-evidence h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-red);
+        }
+
+        .no-evidence-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+        }
+
+        .no-evidence-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem;
+            background: var(--bg-tertiary);
+            border-radius: 8px;
+        }
+
+        .no-evidence-item i {
+            color: var(--accent-red);
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .no-evidence-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        /* Conclusion */
+        .conclusion {
+            background: linear-gradient(135deg, var(--accent-green-dim), var(--bg-secondary));
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+
+        .conclusion h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .conclusion-text {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .conclusion-text strong {
+            color: var(--accent-green);
+        }
+
+        .conclusion-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-green);
+            color: var(--bg-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+
+        /* Sources */
+        .sources-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .sources-section h3 {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+        }
+
+        .source-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .source-item:last-child {
+            border-bottom: none;
+        }
+
+        .source-name {
+            font-weight: 500;
+        }
+
+        .source-type {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .source-reliability {
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 3rem 0;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .footer-meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-meta p {
+            margin: 0.25rem 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .confidence-item {
+                flex-wrap: wrap;
+            }
+
+            .confidence-label {
+                flex: 0 0 100%;
+            }
+
+            .confidence-bar-wrapper {
+                flex: 1;
+            }
+
+            .confidence-evidence {
+                flex: 0 0 100%;
+                text-align: left;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-badge">
+                <i data-lucide="search" style="width: 16px; height: 16px;"></i>
+                Evidence-Based Research
+            </div>
+            <h1>Imagen AI <span>ICP Analysis</span></h1>
+            <p class="header-subtitle">A comprehensive, data-driven analysis of Imagen AI's actual customer profile based on public evidence</p>
+        </header>
+
+        <!-- Executive Summary -->
+        <div class="executive-summary">
+            <h2>
+                <i data-lucide="alert-triangle" style="width: 18px; height: 18px;"></i>
+                Executive Summary
+            </h2>
+            <p class="key-finding">
+                Based on all available public data, Imagen AI's primary ICP is <strong>individual professional photographers</strong>, <span class="negative">NOT enterprise platforms like Airbnb</span>. There is <span class="negative">no evidence</span> of Airbnb or similar platforms being direct customers.
+            </p>
+        </div>
+
+        <!-- Hard Data Points -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="bar-chart-3" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">Hard Data Points</h2>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value">150M+</div>
+                    <div class="stat-label">Photos processed annually</div>
+                    <div class="stat-source">Source: TechCrunch</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">Tens of Thousands</div>
+                    <div class="stat-label">Customer count</div>
+                    <div class="stat-source">Source: TechCrunch</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">19,000+</div>
+                    <div class="stat-label">Photographers in community</div>
+                    <div class="stat-source">Source: Imagen AI website</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$30M</div>
+                    <div class="stat-label">Series A funding (Dec 2022)</div>
+                    <div class="stat-source">Source: TechCrunch, BusinessWire</div>
+                </div>
+            </div>
+
+            <div class="evidence-card" style="margin-top: 1rem;">
+                <h4><i data-lucide="trending-up" style="width: 18px; height: 18px; color: var(--accent-blue);"></i> Funding Context</h4>
+                <ul>
+                    <li><span class="check-icon"><i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i></span> Use of Funds: Expand to creator economy sectors (e-commerce, travel, sports, food)</li>
+                    <li><span class="check-icon"><i data-lucide="arrow-right" style="width: 14px; height: 14px;"></i></span> Signal: Still focused on individual creators, not enterprise pivot</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- User Reviews Evidence -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="users" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">Primary ICP: Professional Photographers</h2>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-secondary);">Self-Identified User Types in Reviews</h3>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Photographer Type</th>
+                            <th>Frequency</th>
+                            <th>Key Use Case</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wedding Photographers</strong></td>
+                            <td class="evidence-strong">⭐⭐⭐⭐⭐ Most Common</td>
+                            <td>High volume (500-2000+ photos/event), quick turnaround</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Portrait Photographers</strong></td>
+                            <td class="evidence-strong">⭐⭐⭐⭐ Very Common</td>
+                            <td>Style consistency, personal branding</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Event Photographers</strong></td>
+                            <td class="evidence-strong">⭐⭐⭐⭐ Very Common</td>
+                            <td>Fast processing, diverse lighting</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Real Estate Photographers</strong></td>
+                            <td class="evidence-moderate">⭐⭐ Mentioned</td>
+                            <td>Fast turnaround for listings</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Newborn/Family</strong></td>
+                            <td class="evidence-moderate">⭐⭐ Mentioned</td>
+                            <td>Soft, consistent style</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="font-size: 1.25rem; margin: 2rem 0 1rem; color: var(--text-secondary);">Actual User Quotes from Trustpilot</h3>
+
+            <div class="quotes-grid">
+                <div class="quote-card">
+                    <p class="quote-text">"After using Imagen AI, I could deliver images to clients by the next day, reducing turnaround from 5-7 business days."</p>
+                    <p class="quote-author">— Wedding Photographer</p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">"A four-hour event shoot, which previously took 2–3 hours to process, now takes about 45 minutes with Imagen AI."</p>
+                    <p class="quote-author">— Event Photographer</p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">"For fast turnaround with real estate, I see Imagen AI as a valuable tool."</p>
+                    <p class="quote-author">— Real Estate Photographer</p>
+                </div>
+                <div class="quote-card">
+                    <p class="quote-text">"Approximately 90% of images edited by Imagen AI need no further adjustment."</p>
+                    <p class="quote-author">— Portrait Photographer</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Design Evidence -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="layers" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">Product Design Evidence</h2>
+            </div>
+
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Who It's For</th>
+                            <th>Enterprise Relevance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Personal AI Profile</td>
+                            <td>Individual style learning</td>
+                            <td class="evidence-weak">❌ Not enterprise-focused</td>
+                        </tr>
+                        <tr>
+                            <td>Adobe Lightroom integration</td>
+                            <td>Individual workflow</td>
+                            <td class="evidence-weak">❌ Photographers use Lightroom</td>
+                        </tr>
+                        <tr>
+                            <td>Talent AI Profiles</td>
+                            <td>Learn from famous photographers</td>
+                            <td class="evidence-weak">❌ Individual creators</td>
+                        </tr>
+                        <tr>
+                            <td>1,000 free edits to start</td>
+                            <td>Freemium for individuals</td>
+                            <td class="evidence-weak">❌ Enterprise would need API</td>
+                        </tr>
+                        <tr>
+                            <td>Culling feature</td>
+                            <td>Personal selection process</td>
+                            <td class="evidence-weak">❌ Individual workflow</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="evidence-grid" style="margin-top: 2rem;">
+                <div class="evidence-card">
+                    <h4><i data-lucide="x-circle" style="width: 18px; height: 18px; color: var(--accent-red);"></i> Missing Enterprise Features</h4>
+                    <ul>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> No public API documentation</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> No enterprise pricing page</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> No "For Business" section</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> No enterprise case studies</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> No white-label offering</li>
+                    </ul>
+                </div>
+                <div class="evidence-card">
+                    <h4><i data-lucide="megaphone" style="width: 18px; height: 18px; color: var(--accent-blue);"></i> Website Messaging Targets</h4>
+                    <ul>
+                        <li><span class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></span> "Professional photographers"</li>
+                        <li><span class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></span> "Save 96% of your time"</li>
+                        <li><span class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></span> "Focus on what you Love"</li>
+                        <li><span class="check-icon"><i data-lucide="check" style="width: 14px; height: 14px;"></i></span> "Grow your business"</li>
+                    </ul>
+                </div>
+                <div class="evidence-card">
+                    <h4><i data-lucide="x-circle" style="width: 18px; height: 18px; color: var(--accent-red);"></i> NOT Mentioned Anywhere</h4>
+                    <ul>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> Airbnb</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> Enterprise solutions</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> Platform integrations</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> API access</li>
+                        <li><span class="x-icon"><i data-lucide="x" style="width: 14px; height: 14px;"></i></span> B2B partnerships</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Airbnb Debunked -->
+        <section class="section">
+            <div class="debunked-section">
+                <div class="debunked-header">
+                    <span class="debunked-badge">Debunked</span>
+                    <h3 class="debunked-title">Airbnb Hypothesis</h3>
+                </div>
+
+                <div class="table-wrapper" style="margin-top: 1rem;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Check</th>
+                                <th>Finding</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Press releases mentioning Airbnb</td>
+                                <td class="evidence-weak">❌ None found</td>
+                            </tr>
+                            <tr>
+                                <td>Case studies with Airbnb</td>
+                                <td class="evidence-weak">❌ None found</td>
+                            </tr>
+                            <tr>
+                                <td>Partnership announcements</td>
+                                <td class="evidence-weak">❌ None found</td>
+                            </tr>
+                            <tr>
+                                <td>API/Enterprise offering</td>
+                                <td class="evidence-weak">❌ Not publicly available</td>
+                            </tr>
+                            <tr>
+                                <td>Airbnb mentions on website</td>
+                                <td class="evidence-weak">❌ None</td>
+                            </tr>
+                            <tr>
+                                <td>News articles confirming relationship</td>
+                                <td class="evidence-weak">❌ None</td>
+                            </tr>
+                            <tr>
+                                <td>LinkedIn connections from Airbnb</td>
+                                <td class="evidence-weak">❌ No evidence</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="margin-top: 1.5rem; padding: 1.5rem; background: var(--bg-tertiary); border-radius: 8px;">
+                    <h4 style="margin-bottom: 1rem; color: var(--accent-yellow);">What Likely Happened</h4>
+                    <ul style="list-style: decimal; padding-left: 1.5rem; color: var(--text-secondary);">
+                        <li style="margin-bottom: 0.5rem;"><strong>Real estate photographers</strong> (who shoot for Airbnb hosts) using Imagen AI</li>
+                        <li style="margin-bottom: 0.5rem;">Speculation about potential use cases</li>
+                        <li>Confusion with other AI photo tools</li>
+                    </ul>
+                    <p style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); color: var(--text-primary);">
+                        <strong>Reality:</strong> Individual real estate photographers who serve Airbnb hosts may use Imagen AI, but <span style="color: var(--accent-red);">Airbnb itself is NOT a confirmed customer.</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Validated ICP Profiles -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="target" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">Validated ICP Profiles</h2>
+            </div>
+
+            <div class="icp-cards">
+                <div class="icp-card primary">
+                    <span class="icp-badge">Primary ICP</span>
+                    <h3>Wedding & Event Photographers</h3>
+                    
+                    <div class="icp-section">
+                        <h4>Demographics</h4>
+                        <ul>
+                            <li>Professional photographers (not hobbyists)</li>
+                            <li>Running a photography business</li>
+                            <li>Age 25-44 (based on industry data)</li>
+                            <li>Already using Adobe Lightroom</li>
+                        </ul>
+                    </div>
+
+                    <div class="icp-section">
+                        <h4>Psychographics</h4>
+                        <ul>
+                            <li>Time-constrained (editing is a bottleneck)</li>
+                            <li>Quality-conscious (won't sacrifice style)</li>
+                            <li>Business-minded (want to scale)</li>
+                            <li>Tech-comfortable (willing to try AI)</li>
+                        </ul>
+                    </div>
+
+                    <div class="icp-section">
+                        <h4>Behavioral</h4>
+                        <ul>
+                            <li>Process 500-5,000+ photos per event</li>
+                            <li>Need turnaround in days, not weeks</li>
+                            <li>Want consistent style across galleries</li>
+                            <li>Spend 3-10+ hours editing per event</li>
+                        </ul>
+                    </div>
+
+                    <div class="icp-section">
+                        <h4>Business Characteristics</h4>
+                        <ul>
+                            <li>Solo or small studios (1-5 people)</li>
+                            <li>Revenue: $50K-$500K annually</li>
+                            <li>High season pressure (wedding season)</li>
+                            <li>Client-facing business</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icp-card secondary">
+                    <span class="icp-badge">Secondary ICP</span>
+                    <h3>Portrait & Commercial Photographers</h3>
+                    
+                    <div class="icp-section">
+                        <h4>Similar to Primary, But...</h4>
+                        <ul>
+                            <li>Lower volume per session</li>
+                            <li>Higher emphasis on style consistency</li>
+                            <li>More diverse client types</li>
+                            <li>Year-round workflow (less seasonal)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="icp-card tertiary">
+                    <span class="icp-badge">Tertiary ICP</span>
+                    <h3>Real Estate Photographers</h3>
+                    
+                    <div class="icp-section">
+                        <h4>Distinct Characteristics</h4>
+                        <ul>
+                            <li>Very fast turnaround (same day)</li>
+                            <li>Higher volume, lower price per image</li>
+                            <li>Less emphasis on "artistic style"</li>
+                            <li>More standardized editing needs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ICP Confidence Levels -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="gauge" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">ICP Segmentation by Evidence Strength</h2>
+            </div>
+
+            <div class="confidence-section">
+                <div class="confidence-item">
+                    <span class="confidence-label">Wedding Photographers</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar high" style="width: 95%;">95%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐⭐⭐⭐⭐ Strong</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">Event Photographers</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar high" style="width: 90%;">90%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐⭐⭐⭐⭐ Strong</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">Portrait Photographers</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar high" style="width: 85%;">85%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐⭐⭐⭐ Good</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">Real Estate Photographers</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar medium" style="width: 70%;">70%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐⭐⭐ Moderate</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">Photography Studios</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar medium" style="width: 50%;">50%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐⭐ Limited</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">E-commerce/Product</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar low" style="width: 30%;">30%</div>
+                    </div>
+                    <span class="confidence-evidence">⭐ Minimal</span>
+                </div>
+                <div class="confidence-item">
+                    <span class="confidence-label">Enterprise Platforms (Airbnb)</span>
+                    <div class="confidence-bar-wrapper">
+                        <div class="confidence-bar low" style="width: 5%;">5%</div>
+                    </div>
+                    <span class="confidence-evidence">❌ None</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- What Data Does NOT Support -->
+        <section class="section">
+            <div class="no-evidence">
+                <h3><i data-lucide="alert-octagon" style="width: 24px; height: 24px; margin-right: 0.5rem;"></i> What The Data Does NOT Support</h3>
+                <div class="no-evidence-list">
+                    <div class="no-evidence-item">
+                        <i data-lucide="x-circle" style="width: 20px; height: 20px;"></i>
+                        <span><strong>Airbnb as a customer</strong> — Zero mentions in any source</span>
+                    </div>
+                    <div class="no-evidence-item">
+                        <i data-lucide="x-circle" style="width: 20px; height: 20px;"></i>
+                        <span><strong>Enterprise/Platform sales</strong> — No API, no enterprise pricing, no B2B case studies</span>
+                    </div>
+                    <div class="no-evidence-item">
+                        <i data-lucide="x-circle" style="width: 20px; height: 20px;"></i>
+                        <span><strong>Large company customers</strong> — All evidence points to individuals/small businesses</span>
+                    </div>
+                    <div class="no-evidence-item">
+                        <i data-lucide="x-circle" style="width: 20px; height: 20px;"></i>
+                        <span><strong>White-label or API offering</strong> — Not publicly available</span>
+                    </div>
+                    <div class="no-evidence-item">
+                        <i data-lucide="x-circle" style="width: 20px; height: 20px;"></i>
+                        <span><strong>B2B2C business model</strong> — Current model is B2C (direct to photographers)</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Future Expansion -->
+        <section class="section">
+            <div class="section-header">
+                <div class="section-icon">
+                    <i data-lucide="rocket" style="width: 24px; height: 24px;"></i>
+                </div>
+                <h2 class="section-title">Future Expansion Signals</h2>
+            </div>
+
+            <div class="quote-card" style="border-left-color: var(--accent-blue);">
+                <p class="quote-text">"ImagenAI's services are applicable to other sectors within the creator economy that generate high volumes of digital assets, including e-commerce, travel, sports, food, and portraiture."</p>
+                <p class="quote-author">— BusinessWire Press Release (Dec 2022)</p>
+            </div>
+
+            <p style="margin-top: 1rem; color: var(--text-secondary); padding: 1rem; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--accent-yellow);">
+                <strong style="color: var(--accent-yellow);">Interpretation:</strong> They WANT to expand to these markets but current ICP remains photographers.
+            </p>
+        </section>
+
+        <!-- Conclusion -->
+        <div class="conclusion">
+            <h2>Conclusion</h2>
+            <p class="conclusion-text">
+                Imagen AI is a <strong>B2C SaaS product for individual professional photographers</strong>, not a B2B enterprise solution. The Airbnb hypothesis is not supported by any available data.
+            </p>
+            <div class="table-wrapper" style="max-width: 600px; margin: 0 auto 2rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Customer Segment</th>
+                            <th>Evidence</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Wedding Photographers</td>
+                            <td class="evidence-strong">✅ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Event Photographers</td>
+                            <td class="evidence-strong">✅ Strong</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Portrait Photographers</td>
+                            <td class="evidence-strong">✅ Good</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Real Estate Photographers</td>
+                            <td class="evidence-moderate">⚠️ Moderate</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Small Photography Studios</td>
+                            <td class="evidence-moderate">⚠️ Limited</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Enterprise/Platforms</td>
+                            <td class="evidence-weak">❌ No Evidence</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="conclusion-badge">
+                <i data-lucide="check-circle" style="width: 20px; height: 20px;"></i>
+                B2C SaaS for Professional Photographers
+            </div>
+        </div>
+
+        <!-- Data Sources -->
+        <div class="sources-section">
+            <h3><i data-lucide="database" style="width: 16px; height: 16px; margin-right: 0.5rem;"></i> Data Sources</h3>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">TechCrunch (Dec 2022)</span>
+                    <span class="source-type"> — News/Funding</span>
+                </div>
+                <span class="source-reliability evidence-strong">⭐⭐⭐⭐⭐ High</span>
+            </div>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">BusinessWire Press Release</span>
+                    <span class="source-type"> — Official</span>
+                </div>
+                <span class="source-reliability evidence-strong">⭐⭐⭐⭐⭐ High</span>
+            </div>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">Trustpilot Reviews</span>
+                    <span class="source-type"> — User Reviews</span>
+                </div>
+                <span class="source-reliability evidence-strong">⭐⭐⭐⭐ Good</span>
+            </div>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">Imagen AI Website</span>
+                    <span class="source-type"> — Official</span>
+                </div>
+                <span class="source-reliability evidence-strong">⭐⭐⭐⭐⭐ High</span>
+            </div>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">G2/Capterra Reviews</span>
+                    <span class="source-type"> — User Reviews</span>
+                </div>
+                <span class="source-reliability evidence-strong">⭐⭐⭐⭐ Good</span>
+            </div>
+            <div class="source-item">
+                <div>
+                    <span class="source-name">Photography Blogs (Shotkit, etc.)</span>
+                    <span class="source-type"> — Reviews</span>
+                </div>
+                <span class="source-reliability evidence-moderate">⭐⭐⭐ Moderate</span>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-meta">
+                <p>Research conducted: December 2024</p>
+                <p>Methodology: Web search, review aggregation, website analysis, press release analysis</p>
+                <p>Confidence Level: High for primary ICP, Low for enterprise hypothesis</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Animate confidence bars on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const bars = entry.target.querySelectorAll('.confidence-bar');
+                    bars.forEach(bar => {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    });
+                }
+            });
+        }, { threshold: 0.3 });
+
+        const confidenceSection = document.querySelector('.confidence-section');
+        if (confidenceSection) {
+            observer.observe(confidenceSection);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Next Capability Research - Miro Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Miro-style colors */
+            --miro-bg: #f5f6f8;
+            --miro-grid: #e1e4e8;
+            --miro-white: #ffffff;
+            
+            /* Sticky colors - vibrant Miro palette */
+            --yellow: #fff475;
+            --yellow-border: #ffd700;
+            --pink: #ff9ce6;
+            --pink-border: #ff69d2;
+            --blue: #8fd3ff;
+            --blue-border: #4fb3ff;
+            --green: #a6f6c8;
+            --green-border: #5ae899;
+            --purple: #d4bbff;
+            --purple-border: #b794ff;
+            --orange: #ffb380;
+            --orange-border: #ff8c42;
+            --teal: #7ee8d5;
+            --teal-border: #3dd5ba;
+            --lime: #d4ff8f;
+            --lime-border: #b8f54e;
+            
+            /* Frame colors */
+            --frame-blue: #4353ff;
+            --frame-green: #00c875;
+            --frame-purple: #a25ddc;
+            --frame-orange: #ff6f3c;
+            --frame-teal: #00d4aa;
+            
+            /* Text */
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #7a7a7a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--miro-bg);
+            overflow: hidden;
+            color: var(--text-dark);
+        }
+
+        /* Miro-style grid background */
+        .miro-canvas {
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(var(--miro-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--miro-grid) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: relative;
+            overflow: auto;
+            cursor: grab;
+        }
+
+        .miro-canvas:active {
+            cursor: grabbing;
+        }
+
+        /* Board container - large scrollable area */
+        .board-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5000px;
+            height: 3500px;
+            padding: 100px;
+        }
+
+        /* Miro-style toolbar */
+        .miro-toolbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .toolbar-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-dark);
+            padding-right: 24px;
+            border-right: 1px solid #e1e4e8;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            font-size: 18px;
+        }
+
+        .toolbar-btn:hover {
+            background: #f5f6f8;
+        }
+
+        /* Zoom controls - bottom right */
+        .zoom-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: #f5f6f8;
+        }
+
+        /* Miro-style frames */
+        .miro-frame {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 60px 40px 40px 40px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+        }
+
+        .frame-label {
+            position: absolute;
+            top: 16px;
+            left: 40px;
+            font-size: 24px;
+            font-weight: 700;
+            color: inherit;
+        }
+
+        .frame-blue { border-color: var(--frame-blue); color: var(--frame-blue); }
+        .frame-green { border-color: var(--frame-green); color: var(--frame-green); }
+        .frame-purple { border-color: var(--frame-purple); color: var(--frame-purple); }
+        .frame-orange { border-color: var(--frame-orange); color: var(--frame-orange); }
+        .frame-teal { border-color: var(--frame-teal); color: var(--frame-teal); }
+
+        /* Sticky notes - Miro style */
+        .sticky {
+            position: absolute;
+            width: 240px;
+            min-height: 200px;
+            padding: 20px;
+            border-radius: 0;
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: rotate(var(--rotation, 0deg));
+            transition: transform 0.2s ease, box-shadow 0.2s ease, z-index 0s;
+            cursor: move;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            border-left: 8px solid;
+        }
+
+        .sticky:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.15),
+                0 16px 48px rgba(0, 0, 0, 0.1);
+            z-index: 100 !important;
+        }
+
+        .sticky.yellow { background: var(--yellow); border-left-color: var(--yellow-border); }
+        .sticky.pink { background: var(--pink); border-left-color: var(--pink-border); }
+        .sticky.blue { background: var(--blue); border-left-color: var(--blue-border); }
+        .sticky.green { background: var(--green); border-left-color: var(--green-border); }
+        .sticky.purple { background: var(--purple); border-left-color: var(--purple-border); }
+        .sticky.orange { background: var(--orange); border-left-color: var(--orange-border); }
+        .sticky.teal { background: var(--teal); border-left-color: var(--teal-border); }
+        .sticky.lime { background: var(--lime); border-left-color: var(--lime-border); }
+
+        .sticky-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .sticky-content {
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .sticky-content ul {
+            margin-left: 16px;
+            margin-top: 8px;
+        }
+
+        .sticky-content li {
+            margin-bottom: 6px;
+        }
+
+        .sticky-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            margin-bottom: 8px;
+        }
+
+        /* Cards - for larger content */
+        .miro-card {
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Arrows and connectors */
+        .arrow {
+            position: absolute;
+            stroke: var(--text-medium);
+            stroke-width: 2;
+            fill: none;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .arrow-head {
+            fill: var(--text-medium);
+        }
+
+        /* Handwritten text - Miro style */
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--frame-purple);
+            position: absolute;
+            transform: rotate(-3deg);
+        }
+
+        /* Shapes */
+        .circle-badge {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Timeline blocks */
+        .timeline-block {
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-left: 4px solid;
+            width: 280px;
+        }
+
+        .timeline-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .timeline-weeks {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 12px;
+        }
+
+        .timeline-list {
+            font-size: 13px;
+            margin-left: 16px;
+            color: var(--text-medium);
+        }
+
+        .timeline-list li {
+            margin-bottom: 4px;
+        }
+
+        /* Experiment cards */
+        .experiment-card {
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            width: 220px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid;
+        }
+
+        .experiment-card.fast { border-top-color: var(--frame-green); }
+        .experiment-card.medium { border-top-color: var(--frame-orange); }
+        .experiment-card.slow { border-top-color: #ff4757; }
+
+        .experiment-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            padding: 4px 8px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+        }
+
+        .experiment-card.fast .experiment-badge {
+            background: rgba(0, 200, 117, 0.15);
+            color: var(--frame-green);
+        }
+
+        .experiment-card.medium .experiment-badge {
+            background: rgba(255, 111, 60, 0.15);
+            color: var(--frame-orange);
+        }
+
+        .experiment-card.slow .experiment-badge {
+            background: rgba(255, 71, 87, 0.15);
+            color: #ff4757;
+        }
+
+        .experiment-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .experiment-desc {
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--text-medium);
+        }
+
+        /* Workflow steps */
+        .workflow-step {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 3px solid #e1e4e8;
+        }
+
+        .workflow-step.active {
+            border-color: var(--frame-blue);
+            background: linear-gradient(135deg, rgba(67, 83, 255, 0.1), rgba(162, 93, 220, 0.1));
+        }
+
+        .step-number {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .workflow-step.active .step-number {
+            color: var(--frame-blue);
+        }
+
+        .step-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        /* Decision boxes */
+        .decision-box {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            border: 3px solid;
+        }
+
+        .decision-box.green { 
+            border-color: var(--frame-green);
+            background: linear-gradient(135deg, rgba(0, 200, 117, 0.05), rgba(0, 212, 170, 0.05));
+        }
+        .decision-box.yellow { 
+            border-color: var(--frame-orange);
+            background: linear-gradient(135deg, rgba(255, 111, 60, 0.05), rgba(255, 180, 128, 0.05));
+        }
+        .decision-box.red { 
+            border-color: #ff4757;
+            background: linear-gradient(135deg, rgba(255, 71, 87, 0.05), rgba(255, 99, 132, 0.05));
+        }
+
+        .decision-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .decision-content {
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-medium);
+        }
+
+        .decision-content ul {
+            margin-left: 16px;
+            margin-top: 8px;
+        }
+
+        .decision-content li {
+            margin-bottom: 4px;
+        }
+
+        /* Logo badge */
+        .logo-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(67, 83, 255, 0.3);
+            z-index: 999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .miro-toolbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .toolbar-title {
+                padding-right: 0;
+                padding-bottom: 12px;
+                border-right: none;
+                border-bottom: 1px solid #e1e4e8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-badge">IM</div>
+
+    <!-- Toolbar -->
+    <div class="miro-toolbar">
+        <div class="toolbar-title">Imagen Research</div>
+        <div class="toolbar-actions">
+            <button class="toolbar-btn" title="Hand tool">✋</button>
+            <button class="toolbar-btn" title="Comment">💬</button>
+            <button class="toolbar-btn" title="Share">↗️</button>
+        </div>
+    </div>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+        <button class="zoom-btn" title="Zoom In">+</button>
+        <button class="zoom-btn" title="Zoom Out">−</button>
+        <button class="zoom-btn" title="Fit">⊡</button>
+    </div>
+
+    <!-- Main Canvas -->
+    <div class="miro-canvas" id="canvas">
+        <div class="board-content">
+            
+            <!-- FRAME 1: Strategic Challenge (Top Left) -->
+            <div class="miro-frame frame-blue" style="left: 100px; top: 100px; width: 1200px; height: 600px;">
+                <div class="frame-label">🎯 Strategic Challenge</div>
+                
+                <!-- Current State -->
+                <div class="sticky yellow" style="left: 40px; top: 100px; --rotation: -2deg;">
+                    <div class="sticky-tag">Current State</div>
+                    <div class="sticky-title">What We Have Today</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>AI-powered photo editing</li>
+                            <li>Intelligent culling</li>
+                            <li>Established user base</li>
+                            <li>Proven AI/ML capabilities</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Vision -->
+                <div class="sticky pink" style="left: 320px; top: 90px; --rotation: 1.5deg;">
+                    <div class="sticky-tag">Vision</div>
+                    <div class="sticky-title">Where We Want to Go</div>
+                    <div class="sticky-content">
+                        Become the photographer's <strong>one-stop-shop</strong>—the single platform for their entire workflow, from shoot to delivery.
+                    </div>
+                </div>
+
+                <!-- The Question -->
+                <div class="sticky blue" style="left: 600px; top: 95px; --rotation: -1deg;">
+                    <div class="sticky-tag">The Question</div>
+                    <div class="sticky-title">What Capability Next?</div>
+                    <div class="sticky-content">
+                        <strong>Not:</strong> "What feature should we build?"<br><br>
+                        <strong>But:</strong> "What are the most important unsolved problems?"
+                    </div>
+                </div>
+
+                <!-- Principle -->
+                <div class="sticky green" style="left: 880px; top: 100px; --rotation: 0.8deg;">
+                    <div class="sticky-tag">Principle</div>
+                    <div class="sticky-title">Discovery Before Delivery</div>
+                    <div class="sticky-content">
+                        The goal isn't to find the right answer—it's to reduce the risk of building the wrong thing through systematic discovery.
+                    </div>
+                </div>
+
+                <!-- Handwritten note -->
+                <div class="handwritten" style="left: 400px; top: 420px;">
+                    Evidence, not assumptions!
+                </div>
+
+                <!-- Circle badge -->
+                <div class="circle-badge" style="left: 520px; top: 360px; background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple));">
+                    ?
+                </div>
+            </div>
+
+            <!-- FRAME 2: Photographer Workflow (Top Right) -->
+            <div class="miro-frame frame-green" style="left: 1400px; top: 100px; width: 1400px; height: 600px;">
+                <div class="frame-label">🔄 Photographer Workflow Spectrum</div>
+                
+                <!-- Workflow steps as circles -->
+                <div class="workflow-step" style="left: 60px; top: 120px;">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Book</div>
+                </div>
+                
+                <div class="workflow-step" style="left: 220px; top: 120px;">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Shoot</div>
+                </div>
+                
+                <div class="workflow-step" style="left: 380px; top: 120px;">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Import</div>
+                </div>
+                
+                <div class="workflow-step active" style="left: 540px; top: 120px;">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Cull ✓</div>
+                </div>
+                
+                <div class="workflow-step active" style="left: 700px; top: 120px;">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Edit ✓</div>
+                </div>
+                
+                <div class="workflow-step" style="left: 860px; top: 120px;">
+                    <div class="step-number">6</div>
+                    <div class="step-label">Deliver</div>
+                </div>
+                
+                <div class="workflow-step" style="left: 1020px; top: 120px;">
+                    <div class="step-number">7</div>
+                    <div class="step-label">Archive</div>
+                </div>
+                
+                <div class="workflow-step" style="left: 1180px; top: 120px;">
+                    <div class="step-number">8</div>
+                    <div class="step-label">Market</div>
+                </div>
+
+                <!-- Evaluation criteria stickies -->
+                <div class="sticky purple" style="left: 60px; top: 300px; --rotation: -1deg; width: 280px;">
+                    <div class="sticky-title">Workflow Adjacency</div>
+                    <div class="sticky-content">
+                        How close is this to our current editing/culling workflow? Adjacent capabilities have lower adoption friction.
+                    </div>
+                </div>
+
+                <div class="sticky orange" style="left: 380px; top: 295px; --rotation: 1.2deg; width: 280px;">
+                    <div class="sticky-title">Pain Intensity</div>
+                    <div class="sticky-content">
+                        Is this a "hair on fire" problem or "nice to have"? High-pain problems drive adoption and willingness to pay.
+                    </div>
+                </div>
+
+                <div class="sticky teal" style="left: 700px; top: 300px; --rotation: -0.8deg; width: 280px;">
+                    <div class="sticky-title">Frequency of Use</div>
+                    <div class="sticky-content">
+                        How often would photographers use this? Higher frequency = more engagement = higher retention.
+                    </div>
+                </div>
+
+                <div class="sticky lime" style="left: 1020px; top: 295px; --rotation: 0.5deg; width: 280px;">
+                    <div class="sticky-title">Competitive Moat</div>
+                    <div class="sticky-content">
+                        Can we build defensible AI advantages here? Commoditized features don't drive differentiation.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAME 3: Discovery Research (Middle Left) -->
+            <div class="miro-frame frame-purple" style="left: 100px; top: 800px; width: 1400px; height: 700px;">
+                <div class="frame-label">🔍 Phase 1: Discovery Research (Weeks 1-3)</div>
+                
+                <!-- Internal Data Mining -->
+                <div class="sticky yellow" style="left: 40px; top: 100px; --rotation: -1.5deg; width: 300px; min-height: 240px;">
+                    <div class="sticky-title">Internal Data Mining</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Feature usage analytics</li>
+                            <li>Churn analysis: Why do users leave?</li>
+                            <li>Support ticket themes</li>
+                            <li>NPS verbatims analysis</li>
+                            <li>Integration patterns</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Story-Based Interviews -->
+                <div class="sticky pink" style="left: 380px; top: 95px; --rotation: 1deg; width: 300px; min-height: 260px;">
+                    <div class="sticky-title">Story-Based Interviews</div>
+                    <div class="sticky-content">
+                        <strong>15-20 interviews focused on stories:</strong>
+                        <ul>
+                            <li>"Tell me about the last wedding you shot..."</li>
+                            <li>"What happened next?"</li>
+                            <li>"What was hard about that?"</li>
+                        </ul>
+                        <p style="margin-top: 8px;"><em>Collect specific stories, not generalizations</em></p>
+                    </div>
+                </div>
+
+                <!-- Competitive Intelligence -->
+                <div class="sticky blue" style="left: 720px; top: 100px; --rotation: -0.8deg; width: 300px; min-height: 240px;">
+                    <div class="sticky-title">Competitive Intelligence</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Feature matrix vs. competitors</li>
+                            <li>Pricing & bundling analysis</li>
+                            <li>Review mining (G2, Capterra)</li>
+                            <li>Acquisition signals</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Community Listening -->
+                <div class="sticky green" style="left: 1060px; top: 95px; --rotation: 0.7deg; width: 300px; min-height: 240px;">
+                    <div class="sticky-title">Community Listening</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Facebook: Rising Tide Society</li>
+                            <li>Reddit: r/WeddingPhotography</li>
+                            <li>YouTube workflow videos</li>
+                        </ul>
+                        <p style="margin-top: 8px;"><strong>Look for:</strong> "I wish..." statements, tool recommendations</p>
+                    </div>
+                </div>
+
+                <!-- Key Questions -->
+                <div class="sticky orange" style="left: 40px; top: 400px; --rotation: -1deg; width: 300px; min-height: 200px;">
+                    <div class="sticky-tag">Question 1</div>
+                    <div class="sticky-title">Evidence of Demand?</div>
+                    <div class="sticky-content">
+                        "What evidence do we have that photographers actually want this?" — Not opinions. <em>Behavioral evidence.</em>
+                    </div>
+                </div>
+
+                <div class="sticky teal" style="left: 380px; top: 395px; --rotation: 1.2deg; width: 300px; min-height: 200px;">
+                    <div class="sticky-tag">Question 2</div>
+                    <div class="sticky-title">Why Will Imagen Win?</div>
+                    <div class="sticky-content">
+                        "Why will Imagen win here vs. existing solutions?" — "We'll be integrated" is not enough. What's the 10x improvement?
+                    </div>
+                </div>
+
+                <div class="sticky purple" style="left: 720px; top: 400px; --rotation: -0.5deg; width: 300px; min-height: 200px;">
+                    <div class="sticky-tag">Question 3</div>
+                    <div class="sticky-title">Riskiest Assumption?</div>
+                    <div class="sticky-content">
+                        "What's the riskiest assumption, and how have we tested it?" — If we can't name it, we haven't thought hard enough.
+                    </div>
+                </div>
+
+                <div class="sticky lime" style="left: 1060px; top: 395px; --rotation: 0.8deg; width: 300px; min-height: 200px;">
+                    <div class="sticky-tag">Question 4</div>
+                    <div class="sticky-title">Pivot Plan?</div>
+                    <div class="sticky-content">
+                        "What will we do if this doesn't work?" — We need kill criteria and a pivot plan before we start.
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAME 4: Opportunity Tree (Middle Right) -->
+            <div class="miro-frame frame-orange" style="left: 1600px; top: 800px; width: 900px; height: 700px;">
+                <div class="frame-label">🎯 Phase 2: Opportunity Prioritization (Weeks 4-5)</div>
+                
+                <!-- Outcome -->
+                <div class="circle-badge" style="left: 380px; top: 100px; background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple)); width: 140px; height: 140px; font-size: 14px; flex-direction: column;">
+                    <div style="font-size: 24px; margin-bottom: 4px;">🎯</div>
+                    <div style="font-size: 13px; font-weight: 600;">OUTCOME</div>
+                    <div style="font-size: 12px; opacity: 0.9;">Increase LTV 40%</div>
+                </div>
+
+                <!-- Opportunities -->
+                <div class="sticky yellow" style="left: 60px; top: 300px; --rotation: -1deg; width: 220px;">
+                    <div class="sticky-tag">Opportunity</div>
+                    <div class="sticky-title">💡 Gallery Delivery</div>
+                    <div class="sticky-content">
+                        "I waste hours on gallery delivery"
+                    </div>
+                </div>
+
+                <div class="sticky yellow" style="left: 340px; top: 295px; --rotation: 0.8deg; width: 220px;">
+                    <div class="sticky-tag">Opportunity</div>
+                    <div class="sticky-title">💡 Client Follow-up</div>
+                    <div class="sticky-content">
+                        "Clients ghost me after delivery"
+                    </div>
+                </div>
+
+                <div class="sticky yellow" style="left: 620px; top: 300px; --rotation: -0.5deg; width: 220px;">
+                    <div class="sticky-tag">Opportunity</div>
+                    <div class="sticky-title">💡 Marketing Content</div>
+                    <div class="sticky-content">
+                        "I never know what to post"
+                    </div>
+                </div>
+
+                <!-- Solutions -->
+                <div class="sticky blue" style="left: 60px; top: 480px; --rotation: 0.5deg; width: 180px; min-height: 120px;">
+                    <div class="sticky-tag">Solution</div>
+                    <div class="sticky-content">
+                        🔧 Smart galleries<br>
+                        🔧 Auto-proofing
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 280px; top: 475px; --rotation: -1deg; width: 180px; min-height: 120px;">
+                    <div class="sticky-tag">Solution</div>
+                    <div class="sticky-content">
+                        🔧 Payment reminders<br>
+                        🔧 Integrated invoicing
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 500px; top: 480px; --rotation: 0.8deg; width: 180px; min-height: 120px;">
+                    <div class="sticky-tag">Solution</div>
+                    <div class="sticky-content">
+                        🔧 AI content suggestions<br>
+                        🔧 Auto-scheduling
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 280px; top: 620px; font-size: 22px;">
+                    Opportunities are needs, not solutions!
+                </div>
+            </div>
+
+            <!-- FRAME 5: Assumption Mapping (Bottom Left) -->
+            <div class="miro-frame frame-teal" style="left: 100px; top: 1600px; width: 1200px; height: 600px;">
+                <div class="frame-label">📋 Phase 3: Assumption Mapping (Week 5)</div>
+                
+                <div class="sticky purple" style="left: 40px; top: 100px; --rotation: 0.5deg; width: 260px; min-height: 220px;">
+                    <div class="sticky-title">Desirability</div>
+                    <div class="sticky-content">
+                        <em>Will they want it?</em>
+                        <ul>
+                            <li>Want it in same tool as editing</li>
+                            <li>Current solutions painful enough to switch</li>
+                            <li>Will pay incrementally</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky orange" style="left: 340px; top: 95px; --rotation: -0.8deg; width: 260px; min-height: 220px;">
+                    <div class="sticky-title">Viability</div>
+                    <div class="sticky-content">
+                        <em>Will it work for business?</em>
+                        <ul>
+                            <li>Can price competitively</li>
+                            <li>Unit economics work at scale</li>
+                            <li>Increases retention, not just acquisition</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky teal" style="left: 640px; top: 100px; --rotation: 1.2deg; width: 260px; min-height: 220px;">
+                    <div class="sticky-title">Feasibility</div>
+                    <div class="sticky-content">
+                        <em>Can we build it?</em>
+                        <ul>
+                            <li>Have technical capabilities</li>
+                            <li>Infrastructure can handle load</li>
+                            <li>Can ship in reasonable timeframe</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky pink" style="left: 940px; top: 95px; --rotation: -0.3deg; width: 260px; min-height: 220px;">
+                    <div class="sticky-title">Usability</div>
+                    <div class="sticky-content">
+                        <em>Can they use it?</em>
+                        <ul>
+                            <li>Can set up without training</li>
+                            <li>Clients can navigate easily</li>
+                            <li>Feels seamless with existing features</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 400px; top: 380px;">
+                    Test the riskiest assumptions first!
+                </div>
+
+                <div class="circle-badge" style="left: 540px; top: 440px; background: var(--frame-orange); width: 60px; height: 60px; font-size: 28px;">
+                    ⚠️
+                </div>
+            </div>
+
+            <!-- FRAME 6: Experiments (Bottom Middle) -->
+            <div class="miro-frame frame-purple" style="left: 1400px; top: 1600px; width: 1100px; height: 900px;">
+                <div class="frame-label">🧪 Phase 3: Testing Hypotheses (Weeks 6-8)</div>
+                
+                <div class="handwritten" style="left: 400px; top: 80px; font-size: 24px;">
+                    Fastest → Slowest
+                </div>
+
+                <!-- Fast experiments -->
+                <div class="experiment-card fast" style="left: 40px; top: 140px;">
+                    <div class="experiment-badge">Hours</div>
+                    <div class="experiment-title">One-Question Survey</div>
+                    <div class="experiment-desc">"How painful is gallery delivery on a scale of 1-10?" Send to 500 users, get signal in 24 hours.</div>
+                </div>
+
+                <div class="experiment-card fast" style="left: 300px; top: 135px;">
+                    <div class="experiment-badge">Hours</div>
+                    <div class="experiment-title">Data Mining</div>
+                    <div class="experiment-desc">What % of users have Pixieset/ShootProof integrations? Check our own analytics.</div>
+                </div>
+
+                <div class="experiment-card fast" style="left: 560px; top: 140px;">
+                    <div class="experiment-badge">Days</div>
+                    <div class="experiment-title">Customer Interviews</div>
+                    <div class="experiment-desc">"Tell me about the last time you delivered a gallery..." 5-10 interviews reveal patterns.</div>
+                </div>
+
+                <div class="experiment-card fast" style="left: 820px; top: 135px;">
+                    <div class="experiment-badge">Days</div>
+                    <div class="experiment-title">Usability Test</div>
+                    <div class="experiment-desc">Show prototype, watch them try to use it. UsabilityHub or Maze.</div>
+                </div>
+
+                <!-- Medium experiments -->
+                <div class="experiment-card medium" style="left: 40px; top: 380px;">
+                    <div class="experiment-badge">1-2 Weeks</div>
+                    <div class="experiment-title">Smoke Test</div>
+                    <div class="experiment-desc">"Coming Soon: Imagen Galleries" → measure clicks and waitlist signups. Real behavioral data.</div>
+                </div>
+
+                <div class="experiment-card medium" style="left: 300px; top: 375px;">
+                    <div class="experiment-badge">2-4 Weeks</div>
+                    <div class="experiment-title">Wizard of Oz</div>
+                    <div class="experiment-desc">Manually deliver the experience to 10 users. Understand the real workflow first.</div>
+                </div>
+
+                <!-- Slow experiments -->
+                <div class="experiment-card slow" style="left: 560px; top: 380px;">
+                    <div class="experiment-badge">4-8 Weeks</div>
+                    <div class="experiment-title">Concierge MVP</div>
+                    <div class="experiment-desc">Build minimal UI with heavy manual backend. Validate value before automation.</div>
+                </div>
+
+                <div class="experiment-card slow" style="left: 820px; top: 375px;">
+                    <div class="experiment-badge">2-4 Weeks</div>
+                    <div class="experiment-title">Clickable Prototype</div>
+                    <div class="experiment-desc">High-fidelity prototype for usability testing. Test usability before feasibility.</div>
+                </div>
+
+                <!-- Decision Framework -->
+                <div class="decision-box green" style="left: 40px; top: 620px; width: 300px;">
+                    <div class="decision-title">🟢 GREEN LIGHT</div>
+                    <div class="decision-content">
+                        <strong>Build & Scale</strong>
+                        <ul>
+                            <li>Fake door CTR > 15%</li>
+                            <li>NPS in beta > 50</li>
+                            <li>30-day retention > 70%</li>
+                            <li>Clear willingness to pay</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="decision-box yellow" style="left: 380px; top: 615px; width: 300px;">
+                    <div class="decision-title">🟡 YELLOW LIGHT</div>
+                    <div class="decision-content">
+                        <strong>Iterate & Retest</strong>
+                        <ul>
+                            <li>Mixed signals across metrics</li>
+                            <li>Strong interest but execution issues</li>
+                            <li>Usability problems identified</li>
+                            <li>→ Refine and re-test</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="decision-box red" style="left: 720px; top: 620px; width: 300px;">
+                    <div class="decision-title">🔴 RED LIGHT</div>
+                    <div class="decision-content">
+                        <strong>Kill or Pivot</strong>
+                        <ul>
+                            <li>Low interest in fake door tests</li>
+                            <li>Poor retention in beta</li>
+                            <li>No willingness to pay</li>
+                            <li>→ Move to next opportunity</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAME 7: Timeline (Bottom Right) -->
+            <div class="miro-frame frame-blue" style="left: 2600px; top: 1600px; width: 1100px; height: 900px;">
+                <div class="frame-label">⏱️ Research Timeline & Cadence</div>
+                
+                <!-- Timeline blocks -->
+                <div class="timeline-block" style="left: 40px; top: 100px; border-left-color: var(--frame-green);">
+                    <div class="timeline-title" style="color: var(--frame-green);">Discovery</div>
+                    <div class="timeline-weeks">Weeks 1-3</div>
+                    <ul class="timeline-list">
+                        <li>Internal data analysis</li>
+                        <li>15-20 user interviews</li>
+                        <li>Competitive analysis</li>
+                        <li>Community listening</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-block" style="left: 360px; top: 100px; border-left-color: var(--frame-blue);">
+                    <div class="timeline-title" style="color: var(--frame-blue);">Prioritization</div>
+                    <div class="timeline-weeks">Weeks 4-5</div>
+                    <ul class="timeline-list">
+                        <li>Synthesis & scoring</li>
+                        <li>Opportunity tree building</li>
+                        <li>Assumption mapping</li>
+                        <li>Stakeholder alignment</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-block" style="left: 680px; top: 100px; border-left-color: var(--frame-purple);">
+                    <div class="timeline-title" style="color: var(--frame-purple);">Rapid Testing</div>
+                    <div class="timeline-weeks">Weeks 6-8</div>
+                    <ul class="timeline-list">
+                        <li>Fake door tests</li>
+                        <li>Landing page experiments</li>
+                        <li>WTP research</li>
+                        <li>Wizard of Oz (if needed)</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-block" style="left: 40px; top: 320px; border-left-color: var(--frame-orange);">
+                    <div class="timeline-title" style="color: var(--frame-orange);">Validation</div>
+                    <div class="timeline-weeks">Weeks 9-12</div>
+                    <ul class="timeline-list">
+                        <li>Concierge MVP build</li>
+                        <li>Beta user recruitment</li>
+                        <li>Metrics collection</li>
+                        <li>Go/No-Go decision</li>
+                    </ul>
+                </div>
+
+                <!-- Weekly rhythm -->
+                <div class="sticky yellow" style="left: 40px; top: 540px; --rotation: -1deg; width: 300px;">
+                    <div class="sticky-title">Every Week</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Conduct at least 1 customer interview</li>
+                            <li>Synthesize learnings</li>
+                            <li>Run at least 1 small experiment</li>
+                            <li>Update assumptions</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 380px; top: 535px; --rotation: 0.8deg; width: 300px;">
+                    <div class="sticky-title">Who's Involved</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li><strong>PM:</strong> Owns the process</li>
+                            <li><strong>Designer:</strong> Leads usability tests</li>
+                            <li><strong>Engineer:</strong> Advises on feasibility</li>
+                            <li><em>Ideally trio attends interviews together</em></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky green" style="left: 720px; top: 540px; --rotation: -0.5deg; width: 300px;">
+                    <div class="sticky-title">Living Artifacts</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Interview snapshots (1-pager each)</li>
+                            <li>Opportunity Solution Tree</li>
+                            <li>Assumption map (updated weekly)</li>
+                            <li>Experiment tracker</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAME 8: Research Principles (Far Right) -->
+            <div class="miro-frame frame-purple" style="left: 2900px; top: 100px; width: 800px; height: 1400px;">
+                <div class="frame-label">★ Research Principles</div>
+                
+                <div class="sticky purple" style="left: 40px; top: 100px; --rotation: 1deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">1. Problem First, Solution Second</div>
+                    <div class="sticky-content">
+                        Avoid solutioning before deeply understanding user pain. The capability emerges from the research.
+                    </div>
+                </div>
+
+                <div class="sticky orange" style="left: 420px; top: 95px; --rotation: -1.5deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">2. Triangulate Data Sources</div>
+                    <div class="sticky-content">
+                        No single data point should drive decisions. Combine quantitative analytics, qualitative interviews, and behavioral experiments.
+                    </div>
+                </div>
+
+                <div class="sticky teal" style="left: 40px; top: 310px; --rotation: 0.8deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">3. Test Cheap Before Building Expensive</div>
+                    <div class="sticky-content">
+                        Fake doors and painted doors before engineering. The goal is to fail fast and learn cheap.
+                    </div>
+                </div>
+
+                <div class="sticky pink" style="left: 420px; top: 305px; --rotation: -0.5deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">4. Segment the Research</div>
+                    <div class="sticky-content">
+                        Wedding photographers ≠ Portrait photographers ≠ Commercial photographers. Each segment has different needs.
+                    </div>
+                </div>
+
+                <div class="sticky yellow" style="left: 40px; top: 520px; --rotation: 1.2deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">5. Measure Behavior, Not Just Opinions</div>
+                    <div class="sticky-content">
+                        What users do > What users say. Behavioral evidence trumps stated preferences every time.
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 420px; top: 515px; --rotation: -0.8deg; width: 340px; min-height: 160px;">
+                    <div class="sticky-title">6. Set Kill Criteria Upfront</div>
+                    <div class="sticky-content">
+                        Define what failure looks like before we're emotionally invested. Know when to pivot or kill an idea.
+                    </div>
+                </div>
+
+                <!-- Bottom line card -->
+                <div class="miro-card" style="left: 40px; top: 740px; width: 720px;">
+                    <div class="card-title">
+                        <div class="card-icon">💡</div>
+                        The Bottom Line
+                    </div>
+                    <p style="font-size: 14px; line-height: 1.7; color: var(--text-medium);">
+                        The methodology isn't about finding the right answer in a research project. It's about building an 
+                        <strong style="color: var(--text-dark);">ongoing capability to continuously discover and validate opportunities</strong>—so that 
+                        "what should we build next?" becomes a question we can answer with confidence, every quarter, forever.
+                    </p>
+                </div>
+
+                <div class="handwritten" style="left: 260px; top: 1100px; font-size: 32px;">
+                    Continuous discovery habit!
+                </div>
+
+                <div class="circle-badge" style="left: 340px; top: 1200px; background: linear-gradient(135deg, var(--frame-purple), var(--frame-blue)); width: 100px; height: 100px; font-size: 40px;">
+                    ∞
+                </div>
+            </div>
+
+            <!-- SVG Arrows connecting frames -->
+            <svg width="5000" height="3500" style="position: absolute; top: 0; left: 0; pointer-events: none;">
+                <!-- Arrow from Challenge to Workflow -->
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" class="arrow-head" />
+                    </marker>
+                </defs>
+                
+                <path d="M 1300 400 L 1400 400" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Workflow to Discovery -->
+                <path d="M 1400 700 L 1400 750 L 800 750 L 800 800" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Discovery to Opportunity -->
+                <path d="M 1500 1100 L 1600 1100" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Opportunity to Assumptions -->
+                <path d="M 1600 1500 L 1600 1550 L 700 1550 L 700 1600" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Assumptions to Experiments -->
+                <path d="M 1300 1900 L 1400 1900" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Experiments to Timeline -->
+                <path d="M 2500 2050 L 2600 2050" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from Timeline to Principles -->
+                <path d="M 3700 1900 L 3750 1900 L 3750 1400 L 3100 1400 L 3100 1500" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+            </svg>
+
+        </div>
+    </div>
+
+    <script>
+        // Pan and zoom functionality
+        const canvas = document.getElementById('canvas');
+        let isPanning = false;
+        let startX, startY;
+        let scrollLeft, scrollTop;
+        let scale = 1;
+
+        // Panning
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.target === canvas || e.target.classList.contains('board-content')) {
+                isPanning = true;
+                startX = e.pageX - canvas.offsetLeft;
+                startY = e.pageY - canvas.offsetTop;
+                scrollLeft = canvas.scrollLeft;
+                scrollTop = canvas.scrollTop;
+                canvas.style.cursor = 'grabbing';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            e.preventDefault();
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            canvas.scrollLeft = scrollLeft - walkX;
+            canvas.scrollTop = scrollTop - walkY;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        // Zoom controls
+        const zoomBtns = document.querySelectorAll('.zoom-btn');
+        const boardContent = document.querySelector('.board-content');
+
+        zoomBtns[0].addEventListener('click', () => {
+            scale = Math.min(1.5, scale + 0.1);
+            boardContent.style.transform = `scale(${scale})`;
+            boardContent.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[1].addEventListener('click', () => {
+            scale = Math.max(0.5, scale - 0.1);
+            boardContent.style.transform = `scale(${scale})`;
+            boardContent.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[2].addEventListener('click', () => {
+            scale = 1;
+            boardContent.style.transform = 'scale(1)';
+            canvas.scrollLeft = 0;
+            canvas.scrollTop = 0;
+        });
+
+        // Mouse wheel zoom
+        canvas.addEventListener('wheel', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.05 : 0.05;
+                scale = Math.max(0.5, Math.min(1.5, scale + delta));
+                boardContent.style.transform = `scale(${scale})`;
+                boardContent.style.transformOrigin = 'top left';
+            }
+        });
+
+        // Random rotations for stickies
+        document.querySelectorAll('.sticky').forEach(sticky => {
+            if (!sticky.style.getPropertyValue('--rotation')) {
+                const rotation = (Math.random() - 0.5) * 3;
+                sticky.style.setProperty('--rotation', `${rotation}deg`);
+            }
+        });
+
+        // Start at a good viewing position
+        setTimeout(() => {
+            canvas.scrollLeft = 0;
+            canvas.scrollTop = 0;
+        }, 100);
+    </script>
+</body>
+</html>
+

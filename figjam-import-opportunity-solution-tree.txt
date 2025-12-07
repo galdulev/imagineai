@@ -1,0 +1,330 @@
+IMAGEN AI - OPPORTUNITY SOLUTION TREE
+FigJam Import Format
+
+===== SECTION: DESIRED OUTCOME =====
+
+OUTCOME: Increase LTV by 40% by keeping photographers in Imagen ecosystem throughout entire workflow
+
+METRICS:
+- LTV: +40%
+- Retention: +25%
+- ARPU: +$100/month
+
+===== SECTION: OPPORTUNITY 1 (HIGHEST PRIORITY) =====
+
+OPPORTUNITY 1: "I waste hours on delivery and client management after editing is done"
+
+Pain Level: 8/10
+Frequency: Every single shoot
+Evidence: 40% of stories mention this
+Workflow Adjacency: ⭐⭐⭐⭐⭐ (directly follows editing)
+Revenue Potential: ⭐⭐⭐⭐⭐
+Competitive Moat: ⭐⭐⭐⭐
+Priority: 🔥 HIGHEST
+
+SUB-OPPORTUNITY 1a: Gallery Upload Chaos
+"I spend 20-30 minutes uploading to a separate gallery platform after every edit"
+- Pain: 7/10
+- Frequency: Every shoot
+- Current Solution: Pixieset, ShootProof, Pic-Time
+- Why It Fails: Separate tool, manual upload, no integration
+- Quote: "I wish the gallery was just... there. After editing."
+
+SUB-OPPORTUNITY 1b: Payment Collection Friction
+"Chasing payment is awkward and time-consuming"
+- Pain: 8/10
+- Frequency: Every job
+- Current Solution: Stripe, PayPal, manual invoicing
+- Why It Fails: Separate from delivery, manual follow-ups
+- Quote: "I feel like a debt collector, not a photographer"
+
+SUB-OPPORTUNITY 1c: Client Non-Response Anxiety
+"I deliver galleries and hear nothing—I don't know if they're happy"
+- Pain: 6/10
+- Frequency: 30% of deliveries
+- Current Solution: Manual follow-up emails
+- Why It Fails: No visibility, missed timing
+- Quote: "I spent three weeks anxious about nothing"
+
+===== SECTION: OPPORTUNITY 2 (HIGH PRIORITY) =====
+
+OPPORTUNITY 2: "I leave money on the table after delivery—clients would buy more if I made it easy"
+
+Pain Level: 7/10
+Frequency: Every client
+Evidence: 25% of stories mention this
+Workflow Adjacency: ⭐⭐⭐⭐
+Revenue Potential: ⭐⭐⭐⭐⭐ (20-40% increase)
+Competitive Moat: ⭐⭐⭐
+Priority: ⚡ HIGH
+
+SUB-OPPORTUNITY 2a: Album/Print Upsell Missed
+"I want to sell albums and prints but don't have a system"
+- Pain: 7/10
+- Frequency: Every wedding/portrait
+- Current Solution: Manual follow-up, separate tools
+- Why It Fails: Wrong timing, too much effort
+- Quote: "By the time I follow up, they've made a Shutterfly book"
+
+SUB-OPPORTUNITY 2b: Social Media Neglect
+"I have amazing photos but never know what to post"
+- Pain: 7/10
+- Frequency: Weekly
+- Current Solution: Manual, Later, Planoly
+- Why It Fails: Mental overhead, photo selection
+- Quote: "I have thousands of photos and never know which to post"
+
+SUB-OPPORTUNITY 2c: Review Collection Timing
+"I never ask for reviews at the right moment"
+- Pain: 5/10
+- Frequency: Every delivery
+- Current Solution: Manual, often forgotten
+- Why It Fails: Missed optimal timing
+- Quote: "She loved the photos but never left a review"
+
+===== SECTION: OPPORTUNITY 3 (HIGH PRIORITY) =====
+
+OPPORTUNITY 3: "I can't scale my business because operations eat my time"
+
+Pain Level: 7/10
+Frequency: Daily
+Evidence: 20% of stories mention this
+Workflow Adjacency: ⭐⭐⭐
+Revenue Potential: ⭐⭐⭐⭐
+Competitive Moat: ⭐⭐⭐
+Priority: ⚡ HIGH
+
+SUB-OPPORTUNITY 3a: Booking Process Chaos
+"My booking process loses me clients"
+- Pain: 8/10
+- Frequency: Every lead
+- Current Solution: Honeybook, Dubsado, manual
+- Why It Fails: Separate from workflow, complex
+- Quote: "I lost a client because their process was easier"
+
+SUB-OPPORTUNITY 3b: Client Communication Scatter
+"Messages are scattered across email, text, DMs"
+- Pain: 6/10
+- Frequency: Daily
+- Current Solution: Email, text, social DMs
+- Why It Fails: No central record
+
+SUB-OPPORTUNITY 3c: Multi-Tool Fatigue
+"I'm paying for and managing 5-7 different tools"
+- Pain: 7/10
+- Frequency: Daily
+- Current Solution: Multiple subscriptions
+- Why It Fails: Cost, complexity, data silos
+- Quote: "I dream of one platform. One login. One subscription."
+
+===== SECTION: OPPORTUNITY PRIORITY RANKING =====
+
+TIER 1 - HIGHEST PRIORITY (Score 8+):
+🥇 1b. Payment Collection Friction | Score: 8.85 | 🔥 BUILD FIRST
+🥇 1a. Gallery Upload Chaos | Score: 8.15 | 🔥 BUILD FIRST
+
+TIER 2 - HIGH PRIORITY (Score 7-8):
+🥈 2a. Album/Print Upsell Missed | Score: 7.85 | ⚡ BUILD SECOND
+
+TIER 3 - MEDIUM PRIORITY (Score 6-7):
+🥉 3c. Multi-Tool Fatigue | Score: 6.55 | 📋 PHASE 2
+🥉 1c. Client Non-Response | Score: 6.35 | 📋 PHASE 2
+🥉 3a. Booking Process Chaos | Score: 6.35 | 📋 PHASE 2
+🥉 2b. Social Media Neglect | Score: 6.25 | 📋 PHASE 2
+🥉 2c. Review Collection Timing | Score: 6.05 | 📋 PHASE 2
+
+TIER 4 - LOWER PRIORITY (Score <6):
+📋 3b. Communication Scatter | Score: 5.55 | 📋 PHASE 3
+
+===== SECTION: SOLUTION SPACE =====
+
+SOLUTION A: Integrated Gallery + Payment Hub (RECOMMENDED)
+- Build native gallery delivery with integrated payment
+- Effort: HIGH
+- Impact: HIGH
+- Moat: HIGH
+- Status: ✅ RECOMMENDED
+
+Features:
+✅ One-click gallery creation from edited photos
+✅ Branded client galleries with custom domain
+✅ Integrated payment processing (Stripe Connect)
+✅ Gallery access tied to payment status
+✅ Automated payment reminders
+✅ Client engagement tracking
+
+Why This Solution:
+- Highest impact on user pain
+- Creates strongest competitive moat
+- Enables future upsell capabilities
+- Aligns with "one-stop shop" vision
+
+SOLUTION B: Partner with Existing Galleries (FALLBACK)
+- Deep integration with Pixieset/ShootProof
+- Effort: MEDIUM
+- Impact: MEDIUM
+- Moat: LOW
+- Status: ⚠️ FALLBACK
+
+SOLUTION C: API to Existing Galleries (NOT RECOMMENDED)
+- Simple API export to user's platform
+- Effort: LOW
+- Impact: LOW
+- Moat: NONE
+- Status: ❌ NOT ENOUGH
+
+===== SECTION: RECOMMENDED SOLUTION =====
+
+NAME: Imagen AI Delivery Hub
+TAGLINE: "Edit. Deliver. Get Paid. All in One."
+
+MVP FEATURES (Priority):
+P0: Gallery creation from Lightroom | Effort: HIGH | Impact: HIGH
+P0: Branded gallery pages | Effort: MEDIUM | Impact: HIGH
+P0: Client download management | Effort: MEDIUM | Impact: HIGH
+P0: Stripe payment integration | Effort: HIGH | Impact: HIGH
+P1: Payment-gated gallery access | Effort: MEDIUM | Impact: HIGH
+P1: Automated payment reminders | Effort: LOW | Impact: MEDIUM
+P1: Gallery view notifications | Effort: LOW | Impact: MEDIUM
+P2: Client engagement analytics | Effort: MEDIUM | Impact: MEDIUM
+P2: Review request automation | Effort: LOW | Impact: MEDIUM
+
+===== SECTION: USER FLOW =====
+
+PHOTOGRAPHER FLOW:
+1. EDIT → Imagen AI edits photos
+2. REVIEW → Approve in Lightroom
+3. DELIVER → One-click gallery create
+4. PAYMENT → Auto-invoice sent
+5. ENGAGE → Track views & sales
+
+CLIENT FLOW:
+1. RECEIVE → Email with link
+2. VIEW → Preview gallery (watermarked)
+3. PAY → Stripe checkout
+4. DOWNLOAD → Full gallery access
+5. REVIEW → Auto review request
+
+===== SECTION: SUCCESS METRICS =====
+
+Adoption Rate:
+- Target: 60% of active users
+- Measurement: Feature usage analytics
+
+Galleries Delivered via Imagen:
+- Target: 50% of edited galleries
+- Measurement: Delivery analytics
+
+Payment Processing Volume:
+- Target: $X GMV/month
+- Measurement: Stripe dashboard
+
+Time Savings:
+- Target: 30 min/delivery
+- Measurement: User survey
+
+NPS Impact:
+- Target: +5 points
+- Measurement: NPS survey
+
+Churn Reduction:
+- Target: -15%
+- Measurement: Retention analytics
+
+===== SECTION: PHASED ROADMAP =====
+
+PHASE 1: Gallery Delivery MVP (Months 1-3)
+Scope:
+- Gallery creation from Lightroom
+- Branded gallery pages
+- Client download management
+- Basic analytics
+Success: 40% try feature, 4.0+ satisfaction
+
+PHASE 2: Payment Integration (Months 3-6)
+Scope:
+- Stripe Connect integration
+- Invoice generation
+- Payment-gated access
+- Automated reminders
+Success: 30% use payment, $X GMV
+
+PHASE 3: Engagement & Upsell (Months 6-9)
+Scope:
+- Review collection automation
+- Product upsell engine
+- Advanced analytics
+- Social media automation
+Success: 20% generate upsell revenue
+
+PHASE 4: Full Business Platform (Months 9-12)
+Scope:
+- Booking/CRM integration
+- Client portal
+- Business intelligence
+- Mobile app
+Success: 50% run entire business on Imagen, +40% LTV
+
+===== SECTION: KEY DECISIONS =====
+
+DECISION 1: Build vs. Partner for Galleries
+Option: Build native | ✅ RECOMMENDED
+Pros: Full control, moat, revenue
+Cons: High effort, time
+Alternative: Partner | Fallback
+
+DECISION 2: Payment Processing Partner
+Option: Stripe Connect | ✅ RECOMMENDED
+Pros: Best-in-class, trusted
+Cons: 2.9% + 30¢ fees
+Alternative: Square | Fallback
+
+DECISION 3: Pricing Model
+Gallery: Included in subscription | ✅ RECOMMENDED
+Payments: Transaction fee | ✅ RECOMMENDED
+Future: Separate tier for Phase 3+
+
+===== SECTION: RISKS & MITIGATIONS =====
+
+RISK: Low Adoption
+- Likelihood: MEDIUM | Impact: HIGH
+- Mitigation: Beta program, migration tools
+
+RISK: Payment Complexity
+- Likelihood: MEDIUM | Impact: MEDIUM
+- Mitigation: Start with Stripe only
+
+RISK: Competitive Response
+- Likelihood: HIGH | Impact: MEDIUM
+- Mitigation: Move fast, integrate deeply
+
+RISK: Scope Creep
+- Likelihood: HIGH | Impact: HIGH
+- Mitigation: Strict MVP discipline
+
+RISK: Technical Challenges
+- Likelihood: MEDIUM | Impact: MEDIUM
+- Mitigation: Proof of concept first
+
+===== SECTION: NEXT STEPS =====
+
+IMMEDIATE (Week 1-2):
+✅ Validate with fake door test
+✅ Technical feasibility assessment
+✅ Stripe partnership exploration
+✅ User research (10 interviews)
+
+SHORT-TERM (Month 1):
+✅ MVP specification
+✅ Design sprint
+✅ Beta user recruitment (50 users)
+✅ Go/no-go decision
+
+===== SECTION: EVIDENCE SUMMARY =====
+
+Reviews: 1,526 reviews | 40% mention post-delivery pain
+Stories: 80 stories synthesized | Delivery is #1 post-editing pain
+Competitive: 8 competitors analyzed | No one integrates editing + delivery
+Personas: 4 personas | All mention delivery fragmentation
+Data Mining: Usage patterns | 95% leave ecosystem after editing
+

@@ -1,0 +1,172 @@
+IMAGEN AI - INTERNAL DATA MINING ANALYSIS
+FigJam Import Format
+
+===== SECTION: EXECUTIVE SUMMARY =====
+Key Finding: Photographers spend 98% less time in Imagen AI after editing is complete
+Opportunity: Post-delivery engagement represents massive value capture potential
+Evidence: 1,526+ reviews analyzed, 40% mention post-delivery pain
+
+===== SECTION: WORKFLOW TIME ALLOCATION =====
+
+BEFORE IMAGEN AI:
+- Booking: 2-4 hrs (8%)
+- Shoot: 8-10 hrs (30%)
+- Import/Backup: 1-2 hrs (5%)
+- Culling: 2-4 hrs (10%) [PAIN: 9/10]
+- Editing: 12-16 hrs (45%) [PAIN: 10/10]
+- Delivery: 1-2 hrs (5%) [PAIN: 7/10]
+- Post-Delivery: 2-4 hrs (8%) [PAIN: 7/10]
+TOTAL: 28-42 hours
+
+AFTER IMAGEN AI:
+- Booking: 2-4 hrs (20%)
+- Shoot: 8-10 hrs (50%)
+- Import/Backup: 1-2 hrs (10%)
+- Culling: 0.5-1 hr (5%) [✅ 75% reduction]
+- Editing: 0.5-2 hrs (10%) [✅ 90% reduction]
+- Delivery: 1-2 hrs (10%) [⚠️ NO CHANGE]
+- Post-Delivery: 2-4 hrs (20%) [⚠️ NO CHANGE]
+TOTAL: 15-25 hours (40% reduction)
+
+===== SECTION: WHAT USERS DO AFTER IMAGEN AI =====
+
+Gallery Delivery (95%+ of users):
+- Tools: Pixieset, ShootProof, Pic-Time, CloudSpot
+- Integration: ❌ None
+- Opportunity: 🔥 HIGH
+
+Client Communication (90%+ of users):
+- Tools: Email, Honeybook, Dubsado
+- Integration: ❌ None
+- Opportunity: 🔥 HIGH
+
+Payment Collection (85%+ of users):
+- Tools: Stripe, Square, PayPal, Honeybook
+- Integration: ❌ None
+- Opportunity: 🔥 HIGH
+
+Review Collection (30% of users):
+- Tools: Manual, Google, The Knot
+- Integration: ❌ None
+- Opportunity: 🔥 HIGH
+
+===== SECTION: CHURN INDICATORS =====
+
+Pricing Unpredictability: 20% of concerns | Severity: HIGH
+Mixed Lighting Results: 15% of concerns | Severity: MEDIUM
+Learning Curve: 10% of concerns | Severity: MEDIUM
+No Capture One: 5% of concerns | Severity: HIGH
+Competitor Switch: 5% of concerns | Severity: HIGH
+
+===== SECTION: RETENTION DRIVERS =====
+
+Time Savings: ⭐⭐⭐⭐⭐ | "Can't imagine going back"
+Style Accuracy: ⭐⭐⭐⭐⭐ | "Clients can't tell the difference"
+Customer Support: ⭐⭐⭐⭐⭐ | "Best support ever"
+Business Impact: ⭐⭐⭐⭐ | "30% more clients"
+Profile Investment: ⭐⭐⭐⭐ | "Months of learning would be lost"
+
+===== SECTION: SUPPORT THEMES =====
+
+Profile Training Questions: 30%
+Pricing/Billing Questions: 20%
+Mixed Lighting Issues: 15%
+Export/Lightroom Sync: 10%
+Style Accuracy Concerns: 10%
+Feature Requests: 15%
+
+===== SECTION: FEATURE REQUESTS =====
+
+Capture One Support: HIGH frequency | Category: Integration
+Faster Profile Training: MEDIUM frequency | Category: Onboarding
+Pricing Predictability: MEDIUM frequency | Category: Business
+Mobile App: MEDIUM frequency | Category: Platform
+Gallery Delivery: LOW frequency (LATENT NEED) | Category: Expansion 🔥
+Payment Integration: LOW frequency (LATENT NEED) | Category: Expansion 🔥
+
+===== SECTION: NPS SENTIMENT =====
+
+Promoters (9-10): 85% | "Life-changing time savings"
+Passives (7-8): 8% | "Good but not great"
+Detractors (1-6): 7% | "Pricing concerns"
+ESTIMATED NPS: +78 (Excellent)
+
+===== SECTION: INTEGRATION OPPORTUNITIES =====
+
+Gallery Delivery (native):
+- User Demand: MEDIUM
+- Workflow Fit: ⭐⭐⭐⭐⭐
+- Revenue Potential: ⭐⭐⭐⭐⭐
+- Priority: 🔥 P0
+
+Payment Processing:
+- User Demand: LOW (latent)
+- Workflow Fit: ⭐⭐⭐⭐⭐
+- Revenue Potential: ⭐⭐⭐⭐⭐
+- Priority: 🔥 P0
+
+Pixieset/ShootProof Integration:
+- User Demand: MEDIUM
+- Workflow Fit: ⭐⭐⭐⭐
+- Revenue Potential: ⭐⭐⭐
+- Priority: P1
+
+Print Labs Integration:
+- User Demand: MEDIUM
+- Workflow Fit: ⭐⭐⭐⭐
+- Revenue Potential: ⭐⭐⭐⭐⭐
+- Priority: P1
+
+===== SECTION: KEY INSIGHTS =====
+
+INSIGHT 1: The Workflow Gap is Real
+- 95%+ users leave ecosystem after editing
+- Post-delivery = 30% of workflow time
+- 3-5 tools used for delivery/payment/reviews
+
+INSIGHT 2: Latent Needs > Stated Needs
+- Users don't request gallery delivery (already solved)
+- But integration would create massive value
+- "I didn't know I needed this until I had it"
+
+INSIGHT 3: Retention is Emotional, Not Functional
+- Strongest drivers are emotional (life-changing)
+- Expanding into post-delivery = new emotional connections
+- Each capability increases switching costs
+
+INSIGHT 4: The 90% Satisfaction Ceiling
+- 90% of images need no adjustment
+- 10% creates disproportionate frustration
+- Better to expand horizontally than vertically
+
+===== SECTION: RECOMMENDED ACTIONS =====
+
+P0: Build native gallery delivery | Natural workflow extension
+P0: Add payment processing | High pain, high revenue, high switching cost
+P1: Develop review collection | Low effort, high value
+P1: Create client portal | Differentiator, client-facing value
+P2: Add social media automation | Marketing value
+P2: Develop product upsell engine | Revenue expansion
+
+===== SECTION: SUCCESS METRICS =====
+
+Time in Product Post-Edit:
+- Current: ~0 minutes
+- Target (12 months): 15+ minutes
+
+Features Used Per Session:
+- Current: 2-3
+- Target (12 months): 5-6
+
+Revenue Per User:
+- Current: $X/month
+- Target (12 months): $X+50%/month
+
+Churn Rate:
+- Current: X%
+- Target (12 months): X-30%
+
+NPS:
+- Current: +78
+- Target (12 months): +85
+

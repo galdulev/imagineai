@@ -152,6 +152,13 @@
                 font-size: clamp(42px, 6vw, 80px);
             }
         }
+        
+        /* Responsive grid for pain points */
+        @media (max-width: 1200px) {
+            .pain-points-grid {
+                grid-template-columns: 1fr !important;
+            }
+        }
 
         h3 {
             font-size: 48px;
@@ -2007,6 +2014,78 @@
         </div>
     </section>
 
+    <!-- Slide 12.10.2: Key Pain Points -->
+    <section class="slide">
+        <div class="slide-content" style="max-width: 1400px; width: 100%; box-sizing: border-box;">
+            <h2 style="font-size: clamp(56px, 6vw, 72px); margin-bottom: 50px; font-weight: 800; letter-spacing: -1px;">Key Pain Points</h2>
+            
+            <!-- Pain Points Grid -->
+            <div class="pain-points-grid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 32px; max-width: 100%;">
+                <!-- Pain Point 1: Exit Point After Editing -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; position: relative;">
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 40px; height: 40px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; font-weight: 700; color: white;">1</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 28px; font-weight: 700; margin: 0 0 12px 0; line-height: 1.2;">Exit Point After Editing</h3>
+                            <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin: 0; font-weight: 300;">
+                                After completing editing in Imagen, photographers must download and re-upload 500-800 photos to separate gallery tools. Takes 30-60 minutes per wedding.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pain Point 2: Desktop-Locked Delivery -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; position: relative;">
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 40px; height: 40px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; font-weight: 700; color: white;">2</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 28px; font-weight: 700; margin: 0 0 12px 0; line-height: 1.2;">Desktop-Locked Delivery</h3>
+                            <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin: 0; font-weight: 300;">
+                                Gallery delivery can only happen at the desktop. Client asks "When can I see photos?" while photographer is out - can't respond until home.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pain Point 3: Tool Fragmentation -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; position: relative;">
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 40px; height: 40px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; font-weight: 700; color: white;">3</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 28px; font-weight: 700; margin: 0 0 12px 0; line-height: 1.2;">Tool Fragmentation</h3>
+                            <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin: 0; font-weight: 300;">
+                                Photographers manage 5+ separate tools: Imagen + Gallery + CRM + Backup + Album design. $84-149/month across multiple platforms.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pain Point 4: Invisible Referrals -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; position: relative;">
+                    <div style="display: flex; align-items: flex-start; gap: 16px;">
+                        <div style="width: 40px; height: 40px; background: #ef4444; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 24px; font-weight: 700; color: white;">4</div>
+                        <div style="flex: 1;">
+                            <h3 style="font-size: 28px; font-weight: 700; margin: 0 0 12px 0; line-height: 1.2;">Invisible Referrals</h3>
+                            <p style="font-size: 18px; line-height: 1.6; color: rgba(255, 255, 255, 0.8); margin: 0; font-weight: 300;">
+                                85.9% rely on referrals, but when clients share photos, photographers have zero visibility. Can't track or encourage referral behavior.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quote Card -->
+            <div style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 32px; margin-top: 24px;">
+                <p style="font-size: 24px; line-height: 1.6; color: rgba(255, 255, 255, 0.9); margin: 0 0 12px 0; font-style: italic; font-weight: 300;">
+                    "I pay for too many subscriptions and switch between too many tools"
+                </p>
+                <p style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin: 0; font-weight: 300;">
+                    - Photographer community research
+                </p>
+            </div>
+        </div>
+    </section>
+
     <!-- Slide 12.10.5: User Journey Deep Dive -->
     <section class="slide">
         <div class="slide-content" style="max-width: 1600px;">
@@ -2186,7 +2265,7 @@
                 <!-- Key Finding 3 -->
                 <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px;">
                     <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 24px; line-height: 1.6;">
-                        There is <strong>no high pain</strong> in a mobile experience that supports the editing phase. There were signals for these pain points:
+                        There is <strong>no high pain</strong> in a mobile experience that supports the editing phase. Synthesis from 1,500+ reviews and communities shows signals for these pain points:
                     </div>
                     
                     <div style="display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr; gap: 16px; margin-top: 24px;">
@@ -2238,7 +2317,7 @@
             <div style="margin-top: 40px; text-align: left; max-width: 1400px; margin-left: auto; margin-right: auto;">
                 <!-- Data Sources -->
                 <div style="font-size: 13px; color: rgba(255, 255, 255, 0.4); margin-bottom: 50px; text-align: left; line-height: 1.8; font-style: italic;">
-                    Data Sources: Usage data (Imagen) by persona & flow • Time saved vs time still spent outside Imagen • Churn & retention patterns
+                    Data Sources I wish I had: Usage data (Imagen) by persona & flow • Time saved vs time still spent outside Imagen • Churn & retention patterns • wayyyyy more
                 </div>
                 
                 <!-- Insight 1: Tool Stack Analysis -->
@@ -2295,7 +2374,7 @@
                             </div>
                         </div>
                         <div style="font-size: 20px; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; line-height: 1.5;">
-                            In November, more than 80% of web visits were from desktop
+                            Based on Semrush Analysis: In November, more than 80% of web visits were from desktop
                         </div>
                         <div style="background: rgba(16, 185, 129, 0.15); border-left: 4px solid var(--success); padding: 20px; border-radius: 8px;">
                             <div style="font-size: 18px; font-weight: 600; color: var(--success); margin-bottom: 8px;">Hypothesis</div>
@@ -2387,7 +2466,7 @@
                 <div class="bullet" style="text-align: left;">
                     <div class="bullet-item" style="font-size: 32px; line-height: 1.8; margin-bottom: 30px; padding-left: 50px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--accent); font-weight: 700;">1.</span>
-                        This is the step they exit — for other tools, for manual work
+                        This is the step they exit - for other tools, for manual work
                     </div>
                     <div class="bullet-item" style="font-size: 32px; line-height: 1.8; margin-bottom: 30px; padding-left: 50px; position: relative;">
                         <span style="position: absolute; left: 0; color: var(--accent); font-weight: 700;">2.</span>
@@ -3037,7 +3116,7 @@
                     <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 8px; font-weight: 600;">What:</div>
                     <div style="font-size: 15px; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px; line-height: 1.5;">Reorder segments, rename sections, hide or spotlight specific photos</div>
                     <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); margin-bottom: 8px; font-weight: 600;">Why:</div>
-                    <div style="font-size: 15px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;">AI does the heavy lifting but photographers stay in control — builds trust and reduces friction.</div>
+                    <div style="font-size: 15px; color: rgba(255, 255, 255, 0.7); line-height: 1.5;">AI does the heavy lifting but photographers stay in control - builds trust and reduces friction.</div>
                 </div>
                 
                 <!-- Feature 14 -->
@@ -3082,7 +3161,7 @@
                     <div style="text-align: center; margin-bottom: 60px;">
                         <div style="font-size: 24px; color: rgba(255, 255, 255, 0.85); line-height: 1.6; font-weight: 300; letter-spacing: -0.5px;">
                             If Imagen offers integrated gallery delivery that eliminates the re-upload step,<br>
-                            photographers will complete their workflow within the platform —<br>
+                            photographers will complete their workflow within the platform -<br>
                             reducing tool fragmentation and increasing retention.
                         </div>
                     </div>
@@ -3385,22 +3464,41 @@
                     <div style="font-size: 40px; font-weight: 600; color: var(--accent); margin-bottom: 32px; letter-spacing: -1px;">North Star Metric</div>
                     <div style="font-size: 56px; font-weight: 700; color: rgba(255, 255, 255, 0.95); line-height: 1.3; margin-bottom: 24px; letter-spacing: -2px;">
                         Increase workflow stages<br>
-                        from <span style="color: rgba(255, 255, 255, 0.5);">2</span> to <span style="color: var(--success);">3</span>
+                        from <span style="color: rgba(255, 255, 255, 0.5);">3</span> to <span style="color: var(--success);">4</span>
                     </div>
-                    <div style="font-size: 112px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 24px; letter-spacing: -3px;">+50%</div>
+                    <div style="font-size: 112px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 24px; letter-spacing: -3px;">+33%</div>
                     <div style="font-size: 32px; color: rgba(255, 255, 255, 0.7); font-weight: 300; letter-spacing: -0.5px; margin-bottom: 48px;">
-                        Cull + Edit + Deliver
+                        Cull + Edit + Backup + Deliver
                     </div>
                     
                     <!-- Target -->
                     <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 40px; margin-top: 40px;">
-                        <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Target</div>
+                        <div style="font-size: 28px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Target (6 months from launch)</div>
                         <div style="font-size: 72px; font-weight: 700; color: var(--accent); letter-spacing: -2px; line-height: 1.1; margin-bottom: 12px;">
                             ≥40%
                         </div>
                         <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); font-weight: 300; letter-spacing: -0.5px; line-height: 1.4;">
-                            of editing users also deliver via Imagen<br>
-                            within 6 months
+                            of active editing users* deliver via Imagen<br>
+                            <span style="font-size: 18px; color: rgba(255, 255, 255, 0.4); font-style: italic;">*Active = edited in last 90 days</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Outcome Connection -->
+                    <div style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 40px; margin-top: 40px;">
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.6); margin-bottom: 20px; font-weight: 300;">Expected Business Impact</div>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 36px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">+30%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); font-weight: 300;">Retention improvement</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 36px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">+20%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); font-weight: 300;">LTV increase</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 36px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">Break-even</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.7); font-weight: 300;">Unit economics</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -3418,14 +3516,14 @@
                 <div style="max-width: 1400px; margin: 0 auto;">
                     <!-- Minimum Viable Success -->
                     <div style="background: rgba(16, 185, 129, 0.1); border: 2px solid var(--success); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px; text-align: center;">Minimum Viable Success (Must Have)</div>
+                        <div style="font-size: 32px; font-weight: 700; color: var(--success); margin-bottom: 30px; text-align: center;">Minimum Viable Success (Go/No-Go)</div>
                         
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;">
                             <div>
                                 <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥25%</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
                                     Delivery adoption<br>
-                                    (proves value prop)
+                                    (active users deliver)
                                 </div>
                             </div>
                             
@@ -3433,15 +3531,23 @@
                                 <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥50%</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
                                     Client open rate<br>
-                                    (proves experience works)
+                                    (vs. industry ~45-55%)
                                 </div>
                             </div>
                             
                             <div>
-                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">Positive</div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">NPS ≥30</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
-                                    Qualitative feedback<br>
-                                    (proves user satisfaction)
+                                    User satisfaction<br>
+                                    (Net Promoter Score)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--success); margin-bottom: 12px;">≥15%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Workflow completion<br>
+                                    (Cull→Edit→Deliver in 7 days)
                                 </div>
                             </div>
                         </div>
@@ -3449,9 +3555,9 @@
                     
                     <!-- Stretch Success -->
                     <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
-                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Stretch Success (Nice to Have)</div>
+                        <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Stretch Success (Exceed Expectations)</div>
                         
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;">
                             <div>
                                 <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥40%</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
@@ -3464,7 +3570,7 @@
                                 <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥60%</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
                                     Client open rate<br>
-                                    (strong engagement)
+                                    (exceeds industry)
                                 </div>
                             </div>
                             
@@ -3472,7 +3578,46 @@
                                 <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">≥35%</div>
                                 <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
                                     Workflow completion<br>
-                                    (full end-to-end)
+                                    (Cull→Edit→Deliver)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: var(--accent); margin-bottom: 12px;">< 5 min</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Time to first delivery<br>
+                                    (from edit complete)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Business Success Metrics -->
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px; text-align: center;">Business Success Metrics</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥30%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Retention improvement<br>
+                                    (delivery users vs. baseline)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥20%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    LTV increase<br>
+                                    (delivery users)
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 12px;">≥40%</div>
+                                <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); font-weight: 300; line-height: 1.5;">
+                                    Repeat usage rate<br>
+                                    (deliver in 2nd+ workflow)
                                 </div>
                             </div>
                         </div>
@@ -3502,7 +3647,7 @@
                             </div>
                             
                             <div>
-                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Negative Feedback</div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">NPS < 30</div>
                                 <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
                                     → Core flow has issues<br>
                                     → Fundamental UX problems<br>
@@ -3518,18 +3663,36 @@
                                     → UX needs iteration
                                 </div>
                             </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Retention < Baseline</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Feature not driving retention<br>
+                                    → Value prop unclear<br>
+                                    → Reassess business model
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">Unit Economics Negative</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Not financially viable<br>
+                                    → Reassess pricing model<br>
+                                    → Consider strategic pivot
+                                </div>
+                            </div>
                         </div>
                     </div>
                     
                     <!-- Decision Framework -->
-                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px;">
+                    <div style="background: rgba(14, 165, 233, 0.1); border: 2px solid var(--accent); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
                         <div style="font-size: 32px; font-weight: 700; color: var(--accent); margin-bottom: 30px; text-align: center;">Decision Framework</div>
                         
                         <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; text-align: left;">
                             <div>
                                 <div style="font-size: 20px; font-weight: 600; color: var(--success); margin-bottom: 16px;">✅ Continue</div>
                                 <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                                    If minimum viable success met<br>
+                                    All minimum viable success met<br>
                                     → Proceed to next phase<br>
                                     → Scale rollout<br>
                                     → Prepare for V1.1
@@ -3539,7 +3702,7 @@
                             <div>
                                 <div style="font-size: 20px; font-weight: 600; color: #fbbf24; margin-bottom: 16px;">⚠️ Iterate</div>
                                 <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                                    If partial targets met<br>
+                                    Partial targets met (2-3 of 4)<br>
                                     → Continue iteration<br>
                                     → Refine value prop<br>
                                     → Extend beta period
@@ -3549,7 +3712,7 @@
                             <div>
                                 <div style="font-size: 20px; font-weight: 600; color: #f97316; margin-bottom: 16px;">🔄 Pivot</div>
                                 <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                                    If value prop unclear<br>
+                                    Value prop unclear or wrong<br>
                                     → Reassess hypothesis<br>
                                     → Change approach<br>
                                     → Test new direction
@@ -3559,11 +3722,31 @@
                             <div>
                                 <div style="font-size: 20px; font-weight: 600; color: #ef4444; margin-bottom: 16px;">❌ Halt</div>
                                 <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
-                                    If adoption < 25% after 6 months<br>
+                                    Adoption < 25% after 6 months<br>
+                                    OR unit economics negative<br>
                                     → Reassess strategy<br>
                                     → Consider alternative opportunities<br>
                                     → Learn and move on
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Metric Definitions -->
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 30px;">
+                        <div style="font-size: 24px; font-weight: 700; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; text-align: center;">Metric Definitions</div>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; text-align: left; font-size: 14px; color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+                            <div>
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Delivery Adoption:</strong> % of active editing users (last 90 days) who share at least one gallery within 6 months of feature launch
+                            </div>
+                            <div>
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Workflow Completion:</strong> % of editing sessions that result in delivery within 7 days (Cull→Edit→Deliver sequence)
+                            </div>
+                            <div>
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Client Open Rate:</strong> % of gallery links clicked by clients within 7 days of share (vs. industry benchmark ~45-55%)
+                            </div>
+                            <div>
+                                <strong style="color: rgba(255, 255, 255, 0.9);">Retention Improvement:</strong> % point increase in 90-day retention for delivery users vs. non-delivery users (cohort-matched)
                             </div>
                         </div>
                     </div>
@@ -3576,43 +3759,50 @@
     <section class="slide">
         <div class="slide-content" style="max-width: 1600px;">
             <div style="text-align: center; padding: 80px 40px;">
-                <h1 style="font-size: 120px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">5 Key Metrics</h1>
-                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 80px; font-weight: 300; letter-spacing: -1px;">Aligned to North Star</div>
+                <h1 style="font-size: 120px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">6 Key Metrics</h1>
+                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 80px; font-weight: 300; letter-spacing: -1px;">Aligned to North Star & Business Goals</div>
                 
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; max-width: 1400px; margin: 0 auto;">
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; max-width: 1600px; margin: 0 auto;">
                     <!-- Metric 1 -->
                     <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">1. Delivery Adoption</div>
-                        <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥40%</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Stage 7 adoption<br>within 6 months</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">1. Delivery Adoption</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥40%</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Active editing users deliver<br>within 6 months</div>
                     </div>
                     
                     <!-- Metric 2 -->
                     <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">2. Workflow Completion</div>
-                        <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥35%</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Cull → Edit → Deliver<br>full workflow</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">2. Workflow Completion</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥35%</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Cull→Edit→Deliver<br>within 7 days</div>
                     </div>
                     
                     <!-- Metric 3 -->
                     <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">3. Tool Consolidation</div>
-                        <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥25%</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Reduce external tools<br>Pic-Time/Pixieset</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">3. Retention Improvement</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥30%</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">90-day retention increase<br>vs. non-delivery users</div>
                     </div>
                     
                     <!-- Metric 4 -->
                     <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
-                        <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">4. Client Open Rate</div>
-                        <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥60%</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Galleries opened<br>by clients</div>
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">4. Client Open Rate</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥60%</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Gallery links clicked<br>(vs. industry ~45-55%)</div>
                     </div>
                     
                     <!-- Metric 5 -->
-                    <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
-                        <div style="font-size: 32px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">5. Client Share Rate</div>
-                        <div style="font-size: 96px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥20%</div>
-                        <div style="font-size: 20px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Clients share photos<br>Stage 9 foundation</div>
+                    <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">5. Repeat Usage</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">≥40%</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">Deliver in 2nd+ workflow<br>(habit formation)</div>
+                    </div>
+                    
+                    <!-- Metric 6 -->
+                    <div style="text-align: center; padding: 40px; background: rgba(255, 255, 255, 0.03); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="font-size: 28px; font-weight: 600; color: var(--accent); margin-bottom: 30px; letter-spacing: -1px;">6. Time to Value</div>
+                        <div style="font-size: 80px; font-weight: 700; color: var(--success); line-height: 1; margin-bottom: 20px; letter-spacing: -2px;">< 5 min</div>
+                        <div style="font-size: 18px; color: rgba(255, 255, 255, 0.6); font-weight: 300; line-height: 1.5;">From edit complete<br>to first delivery</div>
                     </div>
                 </div>
             </div>
@@ -3631,7 +3821,7 @@
                     <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.1); border-radius: 24px; padding: 40px; margin-bottom: 40px;">
                         <div style="font-size: 32px; font-weight: 700; color: rgba(255, 255, 255, 0.95); margin-bottom: 30px; text-align: center;">Current State Baselines</div>
                         
-                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;">
                             <div>
                                 <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Delivery Adoption</div>
                                 <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">0%</div>
@@ -3645,9 +3835,40 @@
                             </div>
                             
                             <div>
-                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">Tool Consolidation</div>
-                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">N/A</div>
-                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">No data yet</div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">90-Day Retention</div>
+                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">Baseline</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">Current cohort rate</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); margin-bottom: 12px;">LTV</div>
+                                <div style="font-size: 64px; font-weight: 700; color: rgba(255, 255, 255, 0.5);">Baseline</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); margin-top: 8px; font-weight: 300;">Current 12-month LTV</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Competitive Benchmarks -->
+                    <div style="background: rgba(168, 85, 247, 0.1); border: 2px solid #a855f7; border-radius: 24px; padding: 40px; margin-bottom: 40px;">
+                        <div style="font-size: 32px; font-weight: 700; color: #a855f7; margin-bottom: 30px; text-align: center;">Competitive Benchmarks</div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; text-align: center;">
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">Client Open Rate</div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">~45-55%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); font-weight: 300;">Pixieset/Pic-Time<br>Industry standard</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">Gallery Creation Time</div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">~10-15 min</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); font-weight: 300;">Competitive tools<br>Upload + setup time</div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.9); margin-bottom: 12px;">Pricing</div>
+                                <div style="font-size: 48px; font-weight: 700; color: #a855f7; margin-bottom: 8px;">$X/mo</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.6); font-weight: 300;">Pixieset/Pic-Time<br>Standard pricing</div>
                             </div>
                         </div>
                     </div>
@@ -3671,8 +3892,9 @@
                             <div style="font-size: 18px; color: rgba(255, 255, 255, 0.8); line-height: 1.8; font-weight: 300;">
                                 <strong>Delivery Adoption (40%):</strong> Long-term behavior change<br><br>
                                 <strong>Workflow Completion (35%):</strong> End-to-end usage<br><br>
-                                <strong>Tool Consolidation (25%):</strong> Competitive displacement<br><br>
-                                <strong>Retention Impact:</strong> Churn reduction
+                                <strong>Retention Improvement (30%):</strong> Churn reduction impact<br><br>
+                                <strong>LTV Increase (20%):</strong> Business value realization<br><br>
+                                <strong>Repeat Usage (40%):</strong> Habit formation
                             </div>
                         </div>
                     </div>
@@ -3706,6 +3928,33 @@
                                     → Value prop not resonating<br>
                                     → Reassess core hypothesis<br>
                                     → Consider pivot or halt
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Retention < Baseline</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Feature not driving retention<br>
+                                    → Business model misaligned<br>
+                                    → Reassess value proposition
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If LTV Not Improving</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Revenue model needs review<br>
+                                    → Upsell strategy ineffective<br>
+                                    → Unit economics concern
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div style="font-size: 20px; font-weight: 600; color: var(--accent); margin-bottom: 16px;">If Repeat Usage < 30%</div>
+                                <div style="font-size: 16px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; font-weight: 300;">
+                                    → Not forming habits<br>
+                                    → One-time use pattern<br>
+                                    → UX friction or value gap
                                 </div>
                             </div>
                             
@@ -3763,66 +4012,109 @@
 
     <!-- Slide 12.23: Ecosystem Fit -->
     <section class="slide">
-        <div class="slide-content" style="max-width: 1600px;">
-            <div style="text-align: center; padding: 80px 40px;">
-                <h1 style="font-size: 120px; margin-bottom: 50px; font-weight: 900; letter-spacing: -2px;">Ecosystem Fit</h1>
-                <div style="font-size: 40px; color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -1px;">Completing the One-Stop-Shop Mission</div>
+        <div class="slide-content" style="max-width: 1600px; width: 100%; box-sizing: border-box;">
+            <div style="text-align: center; padding: 60px 40px;">
+                <h1 style="font-size: clamp(72px, 8vw, 96px); margin-bottom: 20px; font-weight: 900; letter-spacing: -2px;">Ecosystem Fit</h1>
+                <div style="font-size: clamp(24px, 2.5vw, 32px); color: rgba(255, 255, 255, 0.6); margin-bottom: 60px; font-weight: 300; letter-spacing: -0.5px;">Completing the One-Stop-Shop Mission</div>
                 
-                <div class="workflow-carousel" id="workflowCarousel">
-                    <div class="workflow-carousel-track" id="workflowTrack">
-                        <!-- Current State -->
-                        <div class="workflow-carousel-slide">
-                            <div class="workflow-title" style="color: rgba(239, 68, 68, 0.9);">Current State</div>
-                            <div class="workflow-chain">
-                                <div class="workflow-stage stage-delay-1">SHOOT</div>
-                                <div class="workflow-connector connector-delay-1"></div>
-                                <div class="workflow-stage stage-delay-2">IMPORT</div>
-                                <div class="workflow-connector connector-delay-2"></div>
-                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector connector-delay-3"></div>
-                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector broken connector-delay-4"></div>
-                                <div class="workflow-stage exit stage-delay-5">EXIT</div>
-                                <div class="workflow-connector broken connector-delay-5"></div>
-                                <div class="workflow-stage stage-delay-6">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(Pixieset/Pic-Time)</span></div>
-                            </div>
-                            <div class="workflow-description" style="margin-bottom: 20px;">Download, re-upload, pay extra, lose connection</div>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Upsell</div>
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Retain</div>
-                                <div style="padding: 12px 24px; background: rgba(239, 68, 68, 0.15); border: 2px solid rgba(239, 68, 68, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #ef4444;">Marketing</div>
-                            </div>
+                <!-- Unified Workflow View - Apple Style -->
+                <div style="max-width: 1400px; margin: 0 auto;">
+                    <!-- Main Workflow Chain -->
+                    <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px; margin-bottom: 40px; position: relative;">
+                        <!-- SHOOT -->
+                        <div style="padding: 16px 28px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); white-space: nowrap;">SHOOT</div>
+                        
+                        <!-- Arrow -->
+                        <div style="width: 24px; height: 2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); position: relative;">
+                            <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(255, 255, 255, 0.3); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
                         </div>
                         
-                        <!-- Future State -->
-                        <div class="workflow-carousel-slide">
-                            <div class="workflow-title" style="color: var(--success);">Future State</div>
-                            <div class="workflow-chain">
-                                <div class="workflow-stage stage-delay-1">SHOOT</div>
-                                <div class="workflow-connector seamless connector-delay-1"></div>
-                                <div class="workflow-stage stage-delay-2">IMPORT</div>
-                                <div class="workflow-connector seamless connector-delay-2"></div>
-                                <div class="workflow-stage imagen stage-delay-3">CULL<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector seamless connector-delay-3"></div>
-                                <div class="workflow-stage imagen stage-delay-4">EDIT<br><span style="font-size: 14px; opacity: 0.7;">(Imagen)</span></div>
-                                <div class="workflow-connector seamless connector-delay-4"></div>
-                                <div class="workflow-stage future stage-delay-5">DELIVER<br><span style="font-size: 14px; opacity: 0.7;">(with cloud, on Imagen Mobile web app)</span></div>
-                            </div>
-                            <div class="workflow-description" style="margin-bottom: 20px;">Seamless workflow, no re-upload, continuous relationship</div>
-                            <div style="display: flex; justify-content: center; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Upsell</div>
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Retain</div>
-                                <div style="padding: 12px 24px; background: rgba(34, 197, 94, 0.15); border: 2px solid rgba(34, 197, 94, 0.5); border-radius: 8px; font-size: 20px; font-weight: 600; color: #22c55e;">Marketing</div>
-                            </div>
+                        <!-- IMPORT -->
+                        <div style="padding: 16px 28px; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; font-size: 20px; font-weight: 600; color: rgba(255, 255, 255, 0.7); white-space: nowrap;">IMPORT</div>
+                        
+                        <!-- Arrow -->
+                        <div style="width: 24px; height: 2px; background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1)); position: relative;">
+                            <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(255, 255, 255, 0.3); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                        </div>
+                        
+                        <!-- CULL (Imagen) -->
+                        <div style="padding: 16px 28px; background: rgba(14, 165, 233, 0.15); border: 2px solid var(--accent); border-radius: 12px; font-size: 20px; font-weight: 600; color: var(--accent); white-space: nowrap;">
+                            CULL<br>
+                            <span style="font-size: 14px; opacity: 0.8; font-weight: 400;">(Imagen)</span>
+                        </div>
+                        
+                        <!-- Arrow -->
+                        <div style="width: 24px; height: 2px; background: linear-gradient(90deg, var(--accent), rgba(14, 165, 233, 0.3)); position: relative;">
+                            <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid var(--accent); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                        </div>
+                        
+                        <!-- EDIT (Imagen) -->
+                        <div style="padding: 16px 28px; background: rgba(14, 165, 233, 0.15); border: 2px solid var(--accent); border-radius: 12px; font-size: 20px; font-weight: 600; color: var(--accent); white-space: nowrap;">
+                            EDIT<br>
+                            <span style="font-size: 14px; opacity: 0.8; font-weight: 400;">(Imagen)</span>
+                        </div>
+                        
+                        <!-- Arrow - Broken/Transition -->
+                        <div style="width: 24px; height: 2px; background: linear-gradient(90deg, var(--accent), rgba(239, 68, 68, 0.5)); position: relative;">
+                            <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(239, 68, 68, 0.5); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                        </div>
+                        
+                        <!-- DELIVER (Future - Imagen) -->
+                        <div style="padding: 16px 28px; background: rgba(16, 185, 129, 0.15); border: 2px solid var(--success); border-radius: 12px; font-size: 20px; font-weight: 600; color: var(--success); white-space: nowrap; position: relative;">
+                            DELIVER<br>
+                            <span style="font-size: 14px; opacity: 0.8; font-weight: 400;">(Imagen)</span>
+                            <div style="position: absolute; top: -8px; right: -8px; width: 16px; height: 16px; background: var(--success); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: white; font-weight: 700;">NEW</div>
                         </div>
                     </div>
                     
-                    <!-- Navigation -->
-                    <div class="carousel-nav" style="display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 40px;">
-                        <button class="carousel-arrow" id="prevBtn" onclick="changeWorkflowSlide(-1)">‹</button>
-                        <button class="carousel-dot active" onclick="goToWorkflowSlide(0)"></button>
-                        <button class="carousel-dot" onclick="goToWorkflowSlide(1)"></button>
-                        <button class="carousel-arrow" id="nextBtn" onclick="changeWorkflowSlide(1)">›</button>
+                    <!-- Description -->
+                    <div style="font-size: 20px; color: rgba(255, 255, 255, 0.7); margin-bottom: 50px; font-weight: 300; line-height: 1.6;">
+                        Seamless workflow from shoot to delivery<br>
+                        <span style="color: rgba(255, 255, 255, 0.5); font-size: 16px;">No re-upload, no tool switching, continuous relationship</span>
+                    </div>
+                    
+                    <!-- Future Stages - Integrated into Flow -->
+                    <div style="margin-top: 60px; padding-top: 40px; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                        <div style="font-size: 24px; color: rgba(255, 255, 255, 0.5); margin-bottom: 30px; font-weight: 300; letter-spacing: 1px; text-transform: uppercase;">Future Expansion</div>
+                        
+                        <div style="display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;">
+                            <!-- Arrow from DELIVER -->
+                            <div style="width: 40px; height: 2px; background: linear-gradient(90deg, var(--success), rgba(168, 85, 247, 0.3)); position: relative;">
+                                <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(168, 85, 247, 0.3); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                            </div>
+                            
+                            <!-- UPSELL -->
+                            <div style="padding: 20px 32px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; font-size: 22px; font-weight: 600; color: #a855f7; white-space: nowrap; position: relative;">
+                                UPSELL
+                                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(168, 85, 247, 0.6); font-weight: 400; letter-spacing: 0.5px; white-space: nowrap;">V1.1</div>
+                            </div>
+                            
+                            <!-- Arrow -->
+                            <div style="width: 24px; height: 2px; background: linear-gradient(90deg, rgba(168, 85, 247, 0.3), rgba(168, 85, 247, 0.1)); position: relative;">
+                                <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(168, 85, 247, 0.3); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                            </div>
+                            
+                            <!-- RETAIN -->
+                            <div style="padding: 20px 32px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; font-size: 22px; font-weight: 600; color: #a855f7; white-space: nowrap; position: relative;">
+                                RETAIN
+                                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(168, 85, 247, 0.6); font-weight: 400; letter-spacing: 0.5px; white-space: nowrap;">V1.1</div>
+                            </div>
+                            
+                            <!-- Arrow -->
+                            <div style="width: 24px; height: 2px; background: linear-gradient(90deg, rgba(168, 85, 247, 0.3), rgba(168, 85, 247, 0.1)); position: relative;">
+                                <div style="position: absolute; right: -6px; top: -4px; width: 0; height: 0; border-left: 6px solid rgba(168, 85, 247, 0.3); border-top: 4px solid transparent; border-bottom: 4px solid transparent;"></div>
+                            </div>
+                            
+                            <!-- MARKETING -->
+                            <div style="padding: 20px 32px; background: rgba(168, 85, 247, 0.1); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 12px; font-size: 22px; font-weight: 600; color: #a855f7; white-space: nowrap; position: relative;">
+                                MARKETING
+                                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); font-size: 11px; color: rgba(168, 85, 247, 0.6); font-weight: 400; letter-spacing: 0.5px; white-space: nowrap;">V2+</div>
+                            </div>
+                        </div>
+                        
+                        <div style="font-size: 16px; color: rgba(168, 85, 247, 0.6); margin-top: 20px; font-weight: 300; font-style: italic;">
+                            Building on Deliver stage success
+                        </div>
                     </div>
                 </div>
             </div>
@@ -3843,7 +4135,7 @@
                             More stages = Higher switching cost = Lower churn
                         </div>
                         <div style="font-size: 28px; color: rgba(255, 255, 255, 0.7); line-height: 2; font-weight: 300; letter-spacing: -0.5px;">
-                            Editing: Low<br>
+                            Editing alone: Low<br>
                             + Culling: Medium<br>
                             <strong style="color: var(--success); font-size: 40px; font-weight: 600;">+ Delivery: High</strong>
                         </div>
@@ -3913,7 +4205,7 @@
                 <div style="margin-top: 100px;">
                     <div style="font-size: 56px; font-weight: 700; color: var(--success); margin-bottom: 40px;">Ecosystem Completion</div>
                     <div style="font-size: 40px; color: rgba(255, 255, 255, 0.9); line-height: 1.6; font-weight: 300; max-width: 1000px; margin: 0 auto;">
-                        This isn't a feature addition —<br>
+                        This isn't a feature addition -<br>
                         it's ecosystem completion.
                     </div>
                 </div>
@@ -4133,7 +4425,7 @@
                         <div style="font-size: 20px; color: rgba(255, 255, 255, 0.8); line-height: 2; font-weight: 300;">
                             • In-app announcement: "New: Share galleries directly from Imagen"<br>
                             • Email campaign to active users<br>
-                            • Feature flagged — users enable in settings
+                            • Feature flagged - users enable in settings
                         </div>
                     </div>
                     
@@ -4444,12 +4736,11 @@
                 <!-- Top: Let's Turn This -->
                 <div style="text-align: center; flex-shrink: 0;">
                     <h2 style="font-size: 42px; margin: 0; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px;">Let's Turn This</h2>
-                    <div class="subtitle" style="font-size: 18px; color: rgba(255, 255, 255, 0.6); margin-top: 10px; margin-bottom: 0; line-height: 1.4; font-weight: 300;">The worst part of their job</div>
                 </div>
                 
                 <!-- Elegant Arrow -->
                 <div style="margin: 12px 0; flex-shrink: 0;">
-                    <svg width="60" height="50" viewBox="0 0 60 50" style="overflow: visible;">
+                    <svg width="100" height="80" viewBox="0 0 60 50" style="overflow: visible;">
                         <!-- Clean, elegant curved arrow pointing down -->
                         <path d="M 30 8 
                                  C 33 15, 33 22, 30 28
@@ -4458,11 +4749,11 @@
                                  M 30 28
                                  L 38 24" 
                               stroke="var(--accent)" 
-                              stroke-width="2.5" 
+                              stroke-width="3.5" 
                               fill="none" 
                               stroke-linecap="round" 
                               stroke-linejoin="round"
-                              style="filter: drop-shadow(0 3px 6px rgba(14, 165, 233, 0.3));"
+                              style="filter: drop-shadow(0 4px 8px rgba(14, 165, 233, 0.4));"
                               opacity="0.9">
                         </path>
                     </svg>
@@ -4470,7 +4761,7 @@
                 
                 <!-- Screenshot (Optimized for desktop) -->
                 <div style="width: 100%; max-width: 500px; aspect-ratio: 4/3; border-radius: 12px; overflow: hidden; box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5); background: #1a1a1a; padding: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="./Screenshot 2025-12-06 at 21.01.40.png" alt="Screenshot" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px; background: #2a2a2a; display: block;">
+                    <img src="./wwww.png" alt="Screenshot" style="width: 100%; height: 100%; object-fit: contain; border-radius: 6px; background: #2a2a2a; display: block;">
                 </div>
                 
                 <!-- Bottom: to Ease -->

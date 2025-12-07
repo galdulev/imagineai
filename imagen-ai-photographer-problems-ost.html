@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Problems - Opportunity Solution Tree | Imagen AI</title>
+    <style>
+        /* ═══════════════════════════════════════════════════════════════
+           RESET & VARIABLES
+           ═══════════════════════════════════════════════════════════════ */
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            /* Dark theme with warm amber accents */
+            --bg: #0c0a09;
+            --surface: #1c1917;
+            --surface-elevated: #292524;
+            --border: rgba(255, 255, 255, 0.08);
+            --border-accent: rgba(251, 191, 36, 0.3);
+            
+            --text: #fafaf9;
+            --text-dim: rgba(250, 250, 249, 0.7);
+            --text-dimmer: rgba(250, 250, 249, 0.4);
+            
+            /* Accent colors */
+            --amber: #fbbf24;
+            --amber-dim: rgba(251, 191, 36, 0.15);
+            --green: #22c55e;
+            --green-dim: rgba(34, 197, 94, 0.15);
+            --red: #ef4444;
+            --red-dim: rgba(239, 68, 68, 0.15);
+            --blue: #3b82f6;
+            --blue-dim: rgba(59, 130, 246, 0.15);
+            --purple: #a855f7;
+            --purple-dim: rgba(168, 85, 247, 0.15);
+            --orange: #f97316;
+            --orange-dim: rgba(249, 115, 22, 0.15);
+            
+            /* Typography */
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap');
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           LAYOUT
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           HERO
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .hero {
+            min-height: 60vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(251, 191, 36, 0.08) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--amber-dim);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--amber);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 32px;
+        }
+
+        .hero h1 {
+            font-family: var(--font-display);
+            font-size: 72px;
+            font-weight: 400;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        .hero h1 em {
+            font-style: italic;
+            color: var(--amber);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 48px;
+        }
+
+        .hero-meta {
+            display: flex;
+            gap: 48px;
+            font-size: 14px;
+            color: var(--text-dimmer);
+        }
+
+        .hero-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-meta strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           OUTCOME BOX
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .outcome-section {
+            padding: 80px 0;
+        }
+
+        .outcome-box {
+            background: linear-gradient(135deg, var(--amber-dim) 0%, transparent 100%);
+            border: 2px solid var(--amber);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto 80px;
+            position: relative;
+        }
+
+        .outcome-box::before {
+            content: 'OUTCOME';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg);
+            padding: 0 16px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--amber);
+        }
+
+        .outcome-box h2 {
+            font-family: var(--font-display);
+            font-size: 36px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .outcome-box p {
+            color: var(--text-dim);
+            font-size: 16px;
+        }
+
+        .outcome-metric {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-top: 24px;
+            padding: 12px 24px;
+            background: var(--surface);
+            border-radius: 12px;
+        }
+
+        .outcome-metric .number {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--amber);
+            font-family: var(--font-mono);
+        }
+
+        .outcome-metric .label {
+            font-size: 16px;
+            color: var(--text-dim);
+        }
+
+        /* Tree connector */
+        .tree-connector {
+            width: 2px;
+            height: 60px;
+            background: linear-gradient(to bottom, var(--amber), var(--border));
+            margin: 0 auto;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           OPPORTUNITIES GRID
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .opportunities-section {
+            padding: 0 0 120px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 42px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            color: var(--text-dim);
+            font-size: 18px;
+        }
+
+        .opportunities-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+            margin-bottom: 80px;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           OPPORTUNITY CARD
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .opportunity-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .opportunity-card:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+        }
+
+        .opportunity-card::before {
+            content: 'OPPORTUNITY';
+            position: absolute;
+            top: -10px;
+            left: 24px;
+            background: var(--surface);
+            padding: 0 12px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            color: var(--text-dimmer);
+        }
+
+        .opportunity-card.solved {
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .opportunity-card.solved::before {
+            color: var(--green);
+        }
+
+        .opportunity-card.gap {
+            border-color: rgba(251, 191, 36, 0.3);
+        }
+
+        .opportunity-card.gap::before {
+            color: var(--amber);
+        }
+
+        .opp-phase {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            background: var(--surface-elevated);
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dimmer);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 16px;
+        }
+
+        .opp-quote {
+            font-family: var(--font-display);
+            font-size: 22px;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .opp-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .opp-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .opp-tag.frequency {
+            background: var(--blue-dim);
+            color: var(--blue);
+        }
+
+        .opp-tag.pain {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .opp-tag.status-solved {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .opp-tag.status-gap {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        /* Sub-opportunities */
+        .sub-opps {
+            background: var(--surface-elevated);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .sub-opps-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: var(--text-dimmer);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        .sub-opp {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--text-dim);
+        }
+
+        .sub-opp:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .sub-opp-bullet {
+            width: 6px;
+            height: 6px;
+            background: var(--text-dimmer);
+            border-radius: 50%;
+            margin-top: 7px;
+            flex-shrink: 0;
+        }
+
+        .sub-opp.solved .sub-opp-bullet {
+            background: var(--green);
+        }
+
+        .sub-opp.gap .sub-opp-bullet {
+            background: var(--amber);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           PHASE SECTIONS
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .phase-section {
+            padding: 80px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .phase-icon {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            font-size: 28px;
+        }
+
+        .phase-icon.pre { background: var(--purple-dim); }
+        .phase-icon.shoot { background: var(--blue-dim); }
+        .phase-icon.post { background: var(--red-dim); }
+        .phase-icon.delivery { background: var(--green-dim); }
+        .phase-icon.products { background: var(--orange-dim); }
+        .phase-icon.archive { background: var(--amber-dim); }
+
+        .phase-info h3 {
+            font-family: var(--font-display);
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .phase-info p {
+            color: var(--text-dim);
+            font-size: 14px;
+        }
+
+        .phase-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .phase-status.solved {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .phase-status.gap {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        .phase-status.partial {
+            background: var(--blue-dim);
+            color: var(--blue);
+        }
+
+        /* Problems Grid */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .problem-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .problem-card:hover {
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .problem-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--surface-elevated);
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--text-dimmer);
+            margin-bottom: 12px;
+            font-family: var(--font-mono);
+        }
+
+        .problem-title {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        .problem-desc {
+            font-size: 14px;
+            color: var(--text-dim);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .problem-meta {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .problem-tag {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .problem-tag.critical {
+            background: var(--red-dim);
+            color: var(--red);
+        }
+
+        .problem-tag.high {
+            background: var(--orange-dim);
+            color: var(--orange);
+        }
+
+        .problem-tag.medium {
+            background: var(--amber-dim);
+            color: var(--amber);
+        }
+
+        .problem-tag.low {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .problem-tag.solved {
+            background: var(--green-dim);
+            color: var(--green);
+        }
+
+        .problem-tag.gap {
+            background: var(--purple-dim);
+            color: var(--purple);
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           SUMMARY TABLE
+           ═══════════════════════════════════════════════════════════════ */
+        
+        .summary-section {
+            padding: 80px 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+
+        .summary-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .summary-table th {
+            text-align: left;
+            padding: 16px 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--text-dimmer);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .summary-table td {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .summary-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .time-comparison {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .time-old {
+            color: var(--text-dimmer);
+            text-decoration: line-through;
+        }
+
+        .time-arrow {
+            color: var(--green);
+        }
+
+        .time-new {
+            color: var(--green);
+            font-weight: 600;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════════════════════════════ */
+        
+        footer {
+            padding: 60px 0;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+
+        footer p {
+            font-size: 14px;
+            color: var(--text-dimmer);
+        }
+
+        footer a {
+            color: var(--amber);
+            text-decoration: none;
+        }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════════════════════════════ */
+        
+        @media (max-width: 1200px) {
+            .opportunities-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .container {
+                padding: 0 24px;
+            }
+
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .phase-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .phase-status {
+                margin-left: 0;
+            }
+
+            .hero-meta {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span>📸</span>
+            Teresa Torres Opportunity Solution Tree
+        </div>
+        <h1>Photographer <em>Problems</em><br>by Workflow Phase</h1>
+        <p>52 distinct problems identified across 6 workflow phases. Understanding pain points to drive LTV growth.</p>
+        <div class="hero-meta">
+            <span><strong>52</strong> Problems Identified</span>
+            <span><strong>6</strong> Workflow Phases</span>
+            <span><strong>25+ hrs</strong> Saved per Wedding</span>
+        </div>
+    </section>
+
+    <!-- Outcome -->
+    <section class="outcome-section">
+        <div class="container">
+            <div class="outcome-box">
+                <h2>Increase Photographer LTV</h2>
+                <p>Keep photographers in the Imagen AI ecosystem by solving problems across their entire workflow—making it a one-stop shop for photography businesses.</p>
+                <div class="outcome-metric">
+                    <span class="number">+40%</span>
+                    <span class="label">LTV Target</span>
+                </div>
+            </div>
+            
+            <div class="tree-connector"></div>
+        </div>
+    </section>
+
+    <!-- Main Opportunities -->
+    <section class="opportunities-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Primary Opportunities</h2>
+                <p class="section-subtitle">Three major opportunity areas derived from 52 photographer problems</p>
+            </div>
+
+            <div class="opportunities-grid">
+                <!-- Opportunity 1: Post-Production -->
+                <div class="opportunity-card solved">
+                    <span class="opp-phase">📷 Post-Production</span>
+                    <p class="opp-quote">"I'm drowning in editing and culling—it's eating my life and I'm 3 months behind on delivery"</p>
+                    <div class="opp-meta">
+                        <span class="opp-tag frequency">Every single shoot</span>
+                        <span class="opp-tag pain">Pain: 9/10</span>
+                        <span class="opp-tag status-solved">✅ SOLVED</span>
+                    </div>
+                    <div class="sub-opps">
+                        <div class="sub-opps-title">Sub-Opportunities</div>
+                        <div class="sub-opp solved">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Decision fatigue reviewing 2,000-5,000 images</span>
+                        </div>
+                        <div class="sub-opp solved">
+                            <span class="sub-opp-bullet"></span>
+                            <span>15-25 hours manual editing per wedding</span>
+                        </div>
+                        <div class="sub-opp solved">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Inconsistent style across galleries</span>
+                        </div>
+                        <div class="sub-opp solved">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Backlog accumulation & burnout</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Color correction in challenging lighting</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity 2: Client Delivery -->
+                <div class="opportunity-card gap">
+                    <span class="opp-phase">📤 Client Delivery & Engagement</span>
+                    <p class="opp-quote">"I deliver galleries but then what? Clients ghost me, I chase payment, and I never get reviews"</p>
+                    <div class="opp-meta">
+                        <span class="opp-tag frequency">After every delivery</span>
+                        <span class="opp-tag pain">Pain: 7/10</span>
+                        <span class="opp-tag status-gap">⚠️ GAP</span>
+                    </div>
+                    <div class="sub-opps">
+                        <div class="sub-opps-title">Sub-Opportunities</div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Clients don't respond after delivery email</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Chasing payment is awkward & unprofessional</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Never remember to ask for reviews/testimonials</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Clients lose gallery links, need to resend</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>No system for repeat business & referrals</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Opportunity 3: Business Growth -->
+                <div class="opportunity-card gap">
+                    <span class="opp-phase">📈 Business Growth</span>
+                    <p class="opp-quote">"I don't know what to post on social, how to upsell albums, or if my pricing is right—I'm leaving money on the table"</p>
+                    <div class="opp-meta">
+                        <span class="opp-tag frequency">Ongoing missed opportunity</span>
+                        <span class="opp-tag pain">Pain: 6/10</span>
+                        <span class="opp-tag status-gap">⚠️ GAP</span>
+                    </div>
+                    <div class="sub-opps">
+                        <div class="sub-opps-title">Sub-Opportunities</div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Don't know what to post on social media</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Want to upsell albums/prints but no system</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Booking process feels disorganized</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Don't know how to price services</span>
+                        </div>
+                        <div class="sub-opp gap">
+                            <span class="sub-opp-bullet"></span>
+                            <span>Need website but no time/skills to build</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 1: Pre-Wedding -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon pre">📋</div>
+                <div class="phase-info">
+                    <h3>Phase 1: Pre-Wedding / Booking</h3>
+                    <p>1-2 hours per client • Contract, scheduling, communication</p>
+                </div>
+                <div class="phase-status gap">⚠️ Opportunity Gap</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">01</div>
+                    <h4 class="problem-title">Administrative Overload</h4>
+                    <p class="problem-desc">Managing inquiries, quotes, contracts, and deposits takes away from creative work and photography time.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">02</div>
+                    <h4 class="problem-title">Scheduling Conflicts</h4>
+                    <p class="problem-desc">Coordinating availability across multiple clients, venues, and second shooters creates constant friction.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">03</div>
+                    <h4 class="problem-title">Contract Management Complexity</h4>
+                    <p class="problem-desc">Tracking signed contracts, terms, and payment schedules across different CRM tools (HoneyBook, Dubsado, Studio Ninja).</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">04</div>
+                    <h4 class="problem-title">Client Communication Fatigue</h4>
+                    <p class="problem-desc">Endless back-and-forth emails for details, expectations, timelines, and logistics before the wedding day.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 2: Wedding Day -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon shoot">📸</div>
+                <div class="phase-info">
+                    <h3>Phase 2: Wedding Day / Shoot</h3>
+                    <p>8-12 hours on-site • Capturing 2,000-5,000 images</p>
+                </div>
+                <div class="phase-status partial">🔧 Operational</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">05</div>
+                    <h4 class="problem-title">Physical Exhaustion</h4>
+                    <p class="problem-desc">8-12 hour shoots with heavy camera equipment cause burnout, fatigue, and long-term health issues.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">06</div>
+                    <h4 class="problem-title">Volume Overload</h4>
+                    <p class="problem-desc">Capturing 2,000-5,000 images per wedding creates a massive post-production backlog that takes weeks to process.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">07</div>
+                    <h4 class="problem-title">Mixed Lighting Challenges</h4>
+                    <p class="problem-desc">Constantly adapting to indoor/outdoor transitions, flash, ambient light, and color temperature changes.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">08</div>
+                    <h4 class="problem-title">Missed Moments Anxiety</h4>
+                    <p class="problem-desc">Fear of missing critical, unrepeatable shots—first kiss, reactions, speeches, ring exchange.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">09</div>
+                    <h4 class="problem-title">Equipment Failures</h4>
+                    <p class="problem-desc">Memory card corruption, battery issues, lens malfunctions, or gear failures during irreplaceable moments.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">10</div>
+                    <h4 class="problem-title">Coordination Stress</h4>
+                    <p class="problem-desc">Working with videographers, DJs, wedding planners, and family members who don't understand photography needs.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 3: Backup & Import -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon post">💾</div>
+                <div class="phase-info">
+                    <h3>Phase 3: Backup & Import</h3>
+                    <p>45-90 minutes • Memory cards → External drives → Cloud</p>
+                </div>
+                <div class="phase-status partial">🔧 Operational</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">11</div>
+                    <h4 class="problem-title">Data Loss Anxiety</h4>
+                    <p class="problem-desc">Fear of losing irreplaceable client images before backup is complete. One corrupted card = disaster.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">12</div>
+                    <h4 class="problem-title">Slow Transfer Speeds</h4>
+                    <p class="problem-desc">Copying thousands of large RAW files to multiple drives is time-consuming, especially with older equipment.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">13</div>
+                    <h4 class="problem-title">Redundancy Management</h4>
+                    <p class="problem-desc">Maintaining multiple backup copies across external drives and cloud services adds complexity and cost.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">14</div>
+                    <h4 class="problem-title">Storage Costs</h4>
+                    <p class="problem-desc">Cloud backup subscriptions and external drives are expensive, especially when storing years of RAW files.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">15</div>
+                    <h4 class="problem-title">Catalog Management Chaos</h4>
+                    <p class="problem-desc">Organizing thousands of images into logical folders, collections, and naming conventions in Lightroom.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">16</div>
+                    <h4 class="problem-title">Metadata Tagging Tedium</h4>
+                    <p class="problem-desc">Adding keywords, ratings, color labels, and metadata manually is repetitive and time-consuming.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">17</div>
+                    <h4 class="problem-title">Software Performance Issues</h4>
+                    <p class="problem-desc">Lightroom slows down significantly with large catalogs, making navigation and editing frustrating.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">18</div>
+                    <h4 class="problem-title">Corrupt File Handling</h4>
+                    <p class="problem-desc">Dealing with occasional corrupt RAW files that won't import properly or display correctly.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 4: Culling & Editing -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon post">✨</div>
+                <div class="phase-info">
+                    <h3>Phase 4: Culling & Editing</h3>
+                    <p>Was 17-29 hours → Now 2 hours with AI • The biggest time sink</p>
+                </div>
+                <div class="phase-status solved">✅ Solved by Imagen</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">19</div>
+                    <h4 class="problem-title">Decision Fatigue</h4>
+                    <p class="problem-desc">Reviewing 2,000-5,000 images to select 500-800 keepers is mentally exhausting and leads to poor decisions.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">20</div>
+                    <h4 class="problem-title">Duplicate Identification</h4>
+                    <p class="problem-desc">Manually finding and eliminating near-identical shots from burst sequences and similar compositions.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">21</div>
+                    <h4 class="problem-title">Quality Assessment Overload</h4>
+                    <p class="problem-desc">Checking every image for sharpness, exposure, eyes open, expressions, and composition quality.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">22</div>
+                    <h4 class="problem-title">Inconsistent Selection Criteria</h4>
+                    <p class="problem-desc">Maintaining consistent standards across hours of culling when fatigue sets in and judgment wavers.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">23</div>
+                    <h4 class="problem-title">Culling Bottleneck</h4>
+                    <p class="problem-desc">"Culling has been a constant bottleneck for me" — The #1 workflow blocker for many photographers.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">24</div>
+                    <h4 class="problem-title">Massive Editing Time Investment</h4>
+                    <p class="problem-desc">Manual editing of 500-800 images takes 15-25+ hours per wedding—the biggest time sink in the workflow.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">25</div>
+                    <h4 class="problem-title">Style Inconsistency</h4>
+                    <p class="problem-desc">Maintaining the same look across hundreds of images over hours of editing—galleries look uneven.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">26</div>
+                    <h4 class="problem-title">Color Correction Complexity</h4>
+                    <p class="problem-desc">Handling mixed lighting, white balance issues, and accurate skin tones across different scenes.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">27</div>
+                    <h4 class="problem-title">Repetitive Adjustments</h4>
+                    <p class="problem-desc">Applying similar edits (exposure, contrast, HSL, tone curves) to hundreds of similar shots manually.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">28</div>
+                    <h4 class="problem-title">Creative Burnout</h4>
+                    <p class="problem-desc">Endless editing leads to loss of creative passion and artistic vision—photography becomes a chore.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">29</div>
+                    <h4 class="problem-title">Backlog Accumulation</h4>
+                    <p class="problem-desc">Multiple weddings stack up, creating overwhelming editing queues—some photographers are 3+ months behind.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">30</div>
+                    <h4 class="problem-title">Outsourcing Frustrations</h4>
+                    <p class="problem-desc">"I've tried interns, outsourcing and staying up late"—external editors don't match your unique style.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 5: Fine-Tune & Export -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon post">🎨</div>
+                <div class="phase-info">
+                    <h3>Phase 5: Fine-Tune & Export</h3>
+                    <p>1.5-3 hours • Manual adjustments on ~10% of images + export</p>
+                </div>
+                <div class="phase-status partial">🔧 Partially Addressed</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">31</div>
+                    <h4 class="problem-title">Perfectionism Paralysis</h4>
+                    <p class="problem-desc">Spending too much time on minor adjustments that clients won't notice—diminishing returns on effort.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">32</div>
+                    <h4 class="problem-title">Retouching Demands</h4>
+                    <p class="problem-desc">Skin smoothing, blemish removal, and detail work on key images requires Photoshop expertise.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">33</div>
+                    <h4 class="problem-title">Special Client Requests</h4>
+                    <p class="problem-desc">Handling specific requests for certain images—black & white versions, special crops, composite shots.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">34</div>
+                    <h4 class="problem-title">Export Settings Complexity</h4>
+                    <p class="problem-desc">Managing different export presets for web, print, social media, and client delivery.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">35</div>
+                    <h4 class="problem-title">Processing Time</h4>
+                    <p class="problem-desc">Exporting 500-800 high-resolution JPEGs takes 30-60 minutes of computer time.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">36</div>
+                    <h4 class="problem-title">File Naming Conventions</h4>
+                    <p class="problem-desc">Maintaining consistent naming for client organization and future retrieval.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 6: Gallery & Delivery -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon delivery">📤</div>
+                <div class="phase-info">
+                    <h3>Phase 6: Gallery Upload & Client Delivery</h3>
+                    <p>1-2 hours • Upload, customize, deliver, and follow up</p>
+                </div>
+                <div class="phase-status gap">⚠️ Opportunity Gap</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">37</div>
+                    <h4 class="problem-title">Slow Upload Speeds</h4>
+                    <p class="problem-desc">Uploading hundreds of high-resolution images to gallery platforms (Pic-Time, Pixieset) is time-consuming.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">38</div>
+                    <h4 class="problem-title">Gallery Customization</h4>
+                    <p class="problem-desc">Adding branding, cover images, music, and settings for each client gallery is repetitive.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">39</div>
+                    <h4 class="problem-title">Platform Fragmentation</h4>
+                    <p class="problem-desc">Managing multiple gallery platforms (Pic-Time, Pixieset, ShootProof) with different interfaces.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">40</div>
+                    <h4 class="problem-title">Client Communication</h4>
+                    <p class="problem-desc">Writing personalized delivery emails and viewing instructions for each client.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">41</div>
+                    <h4 class="problem-title">Client Non-Response</h4>
+                    <p class="problem-desc">Clients don't respond after delivery—photographer doesn't know if they're happy or if there's an issue.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">42</div>
+                    <h4 class="problem-title">Payment Collection Friction</h4>
+                    <p class="problem-desc">Chasing final payments is awkward, unprofessional, and time-consuming—damages relationships.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">43</div>
+                    <h4 class="problem-title">Review Collection Failure</h4>
+                    <p class="problem-desc">Know they need reviews but never remember to ask at the right moment—miss the optimal timing window.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">44</div>
+                    <h4 class="problem-title">Gallery Link Management</h4>
+                    <p class="problem-desc">Clients lose gallery links and photographer has to resend—creates support burden.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 7: Products & Albums -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon products">📚</div>
+                <div class="phase-info">
+                    <h3>Phase 7: Products, Albums & Sales</h3>
+                    <p>4.5-9 hours • Album design, print orders, revisions</p>
+                </div>
+                <div class="phase-status gap">⚠️ Opportunity Gap</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">45</div>
+                    <h4 class="problem-title">Album Design Time Sink</h4>
+                    <p class="problem-desc">Designing wedding album spreads takes 3-6 hours per album using SmartAlbums or Fundy.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">46</div>
+                    <h4 class="problem-title">Revision Cycles</h4>
+                    <p class="problem-desc">Multiple rounds of client feedback and layout changes extend the album process by weeks.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">47</div>
+                    <h4 class="problem-title">Print Order Processing</h4>
+                    <p class="problem-desc">Managing orders across multiple print labs (WHCC, Miller's, Bay Photo) with different interfaces.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">48</div>
+                    <h4 class="problem-title">Product Fulfillment</h4>
+                    <p class="problem-desc">Coordinating shipping of albums, USB drives, and print products to clients.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag low">Low Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">49</div>
+                    <h4 class="problem-title">Upsell System Absence</h4>
+                    <p class="problem-desc">Want to sell albums and prints but have no integrated system—leaving significant revenue on the table.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Phase 8: Archive & Business -->
+    <section class="phase-section">
+        <div class="container">
+            <div class="phase-header">
+                <div class="phase-icon archive">🗄️</div>
+                <div class="phase-info">
+                    <h3>Phase 8: Archive & Business Operations</h3>
+                    <p>Ongoing • Long-term storage, marketing, client retention</p>
+                </div>
+                <div class="phase-status gap">⚠️ Opportunity Gap</div>
+            </div>
+
+            <div class="problems-grid">
+                <div class="problem-card">
+                    <div class="problem-number">50</div>
+                    <h4 class="problem-title">Storage Cost Scaling</h4>
+                    <p class="problem-desc">Long-term storage of RAW files becomes increasingly expensive over years of business operation.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">51</div>
+                    <h4 class="problem-title">Retrieval Complexity</h4>
+                    <p class="problem-desc">Finding specific images from old shoots when clients request them years later.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">52</div>
+                    <h4 class="problem-title">Work-Life Imbalance</h4>
+                    <p class="problem-desc">Editing nights and weekends destroys personal time—photography becomes all-consuming.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">53</div>
+                    <h4 class="problem-title">Scalability Ceiling</h4>
+                    <p class="problem-desc">Can't take on more clients because post-production is the bottleneck—revenue is capped.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag critical">Critical</span>
+                        <span class="problem-tag solved">✅ Solved</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">54</div>
+                    <h4 class="problem-title">Social Media Struggle</h4>
+                    <p class="problem-desc">Don't know what to post, when to post, or how to maintain consistent social presence.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">55</div>
+                    <h4 class="problem-title">Client Retention Gap</h4>
+                    <p class="problem-desc">No system to stay in touch with past clients—miss opportunities for repeat business and referrals.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag high">High Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+
+                <div class="problem-card">
+                    <div class="problem-number">56</div>
+                    <h4 class="problem-title">Pricing Uncertainty</h4>
+                    <p class="problem-desc">Don't know if pricing is competitive or if leaving money on the table—no market data.</p>
+                    <div class="problem-meta">
+                        <span class="problem-tag medium">Medium Pain</span>
+                        <span class="problem-tag gap">Gap</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Summary Table -->
+    <section class="summary-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Impact Summary by Phase</h2>
+                <p class="section-subtitle">Where Imagen AI creates the most value—and where opportunities remain</p>
+            </div>
+
+            <table class="summary-table">
+                <thead>
+                    <tr>
+                        <th>Phase</th>
+                        <th>Problems</th>
+                        <th>Time Impact</th>
+                        <th>Status</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Culling & Editing</strong></td>
+                        <td>12 problems</td>
+                        <td>
+                            <div class="time-comparison">
+                                <span class="time-old">17-29 hrs</span>
+                                <span class="time-arrow">→</span>
+                                <span class="time-new">2 hrs</span>
+                            </div>
+                        </td>
+                        <td><span class="problem-tag solved">✅ Solved</span></td>
+                        <td>Maintain excellence</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Pre-Wedding / Booking</strong></td>
+                        <td>4 problems</td>
+                        <td>1-2 hrs per client</td>
+                        <td><span class="problem-tag gap">Gap</span></td>
+                        <td>🔥 High (Phase 3)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Gallery & Delivery</strong></td>
+                        <td>8 problems</td>
+                        <td>1-2 hrs per wedding</td>
+                        <td><span class="problem-tag gap">Gap</span></td>
+                        <td>🔥 High (Phase 1)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Products & Albums</strong></td>
+                        <td>5 problems</td>
+                        <td>4.5-9 hrs per wedding</td>
+                        <td><span class="problem-tag gap">Gap</span></td>
+                        <td>🔥 High (Phase 2)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Business Operations</strong></td>
+                        <td>7 problems</td>
+                        <td>Ongoing revenue impact</td>
+                        <td><span class="problem-tag gap">Gap</span></td>
+                        <td>Medium (Phase 3)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Backup & Import</strong></td>
+                        <td>8 problems</td>
+                        <td>45-90 min per wedding</td>
+                        <td><span class="problem-tag medium">Operational</span></td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Wedding Day</strong></td>
+                        <td>6 problems</td>
+                        <td>8-12 hrs (unavoidable)</td>
+                        <td><span class="problem-tag medium">Operational</span></td>
+                        <td>Out of scope</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Fine-Tune & Export</strong></td>
+                        <td>6 problems</td>
+                        <td>1.5-3 hrs per wedding</td>
+                        <td><span class="problem-tag low">Partial</span></td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>Photographer Problems Opportunity Solution Tree • Based on workflow analysis and <a href="https://imagen-ai.com" target="_blank">Imagen AI</a> research</p>
+            <p style="margin-top: 8px;">December 2025 • Teresa Torres Framework</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+

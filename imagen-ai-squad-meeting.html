@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI Squad Meeting | Mobile Companion Strategy</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-void: #050507;
+            --bg-surface: #0c0c0f;
+            --bg-elevated: #131318;
+            --bg-card: #1a1a21;
+            --border: rgba(255,255,255,0.06);
+            --border-accent: rgba(255,255,255,0.12);
+            --text-primary: #f0f0f5;
+            --text-secondary: #9898a6;
+            --text-muted: #5c5c6a;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-cyan: #06b6d4;
+            --gradient-hero: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #f43f5e 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .noise {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            z-index: 1000;
+            opacity: 0.015;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        .glow-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orb-1 { width: 600px; height: 600px; top: -200px; left: -200px; background: rgba(59,130,246,0.08); }
+        .glow-orb-2 { width: 500px; height: 500px; bottom: -150px; right: -150px; background: rgba(139,92,246,0.06); }
+        .glow-orb-3 { width: 400px; height: 400px; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(244,63,94,0.04); }
+
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 100px 60px 80px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-inner { max-width: 1200px; margin: 0 auto; }
+
+        .meeting-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-accent);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 32px;
+        }
+
+        .meeting-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--accent-emerald);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: clamp(42px, 6vw, 72px);
+            font-weight: 600;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 20px;
+        }
+
+        h1 .gradient {
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        .participants {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .participant {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+
+        .participant-avatar {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .participant-info { display: flex; flex-direction: column; }
+        .participant-name { font-weight: 600; font-size: 14px; }
+        .participant-role { font-size: 12px; color: var(--text-muted); }
+
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+
+        .transcript {
+            display: flex;
+            flex-direction: column;
+            gap: 48px;
+        }
+
+        .message {
+            display: flex;
+            gap: 20px;
+            padding: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .message:hover {
+            border-color: var(--border-accent);
+            transform: translateY(-2px);
+        }
+
+        .message-avatar {
+            flex-shrink: 0;
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .message-content { flex: 1; }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .message-name { font-weight: 600; font-size: 16px; }
+
+        .message-role {
+            font-size: 11px;
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 100px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .message-text {
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.8;
+        }
+
+        .message-text p { margin-bottom: 16px; }
+        .message-text p:last-child { margin-bottom: 0; }
+
+        .message-text strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .message-text em {
+            color: var(--accent-cyan);
+            font-style: normal;
+        }
+
+        .highlight-box {
+            margin: 20px 0;
+            padding: 20px 24px;
+            background: var(--bg-elevated);
+            border-left: 3px solid var(--accent-blue);
+            border-radius: 0 12px 12px 0;
+        }
+
+        .highlight-box.purple { border-left-color: var(--accent-purple); }
+        .highlight-box.emerald { border-left-color: var(--accent-emerald); }
+        .highlight-box.amber { border-left-color: var(--accent-amber); }
+        .highlight-box.rose { border-left-color: var(--accent-rose); }
+
+        .highlight-title {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .highlight-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .highlight-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            font-size: 14px;
+        }
+
+        .highlight-list li::before {
+            content: '→';
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        .section-divider {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding: 40px 0;
+        }
+
+        .section-divider::before,
+        .section-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border-radius: 100px;
+        }
+
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .data-card {
+            padding: 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .data-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 28px;
+            font-weight: 700;
+            background: var(--gradient-hero);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .data-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .quote-block {
+            margin: 20px 0;
+            padding: 24px;
+            background: linear-gradient(135deg, rgba(59,130,246,0.05) 0%, rgba(139,92,246,0.05) 100%);
+            border: 1px solid rgba(139,92,246,0.2);
+            border-radius: 16px;
+            font-style: italic;
+            position: relative;
+        }
+
+        .quote-block::before {
+            content: '"';
+            position: absolute;
+            top: 10px; left: 20px;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 48px;
+            color: var(--accent-purple);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .quote-text {
+            padding-left: 30px;
+            color: var(--text-secondary);
+        }
+
+        .quote-source {
+            padding-left: 30px;
+            margin-top: 12px;
+            font-size: 12px;
+            color: var(--text-muted);
+            font-style: normal;
+        }
+
+        .kpi-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+        }
+
+        .kpi-table th,
+        .kpi-table td {
+            padding: 14px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .kpi-table th {
+            background: var(--bg-elevated);
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .kpi-table td { color: var(--text-secondary); }
+
+        .kpi-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .tag-primary { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+        .tag-success { background: rgba(16,185,129,0.15); color: var(--accent-emerald); }
+        .tag-warning { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+        .tag-danger { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+
+        .pm { --avatar-bg: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+        .ux { --avatar-bg: linear-gradient(135deg, #8b5cf6, #6d28d9); }
+        .ai { --avatar-bg: linear-gradient(135deg, #10b981, #059669); }
+
+        .pm .message-avatar,
+        .pm .participant-avatar { background: var(--avatar-bg); }
+        .ux .message-avatar,
+        .ux .participant-avatar { background: var(--avatar-bg); }
+        .ai .message-avatar,
+        .ai .participant-avatar { background: var(--avatar-bg); }
+
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px;
+            text-align: center;
+        }
+
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-text { color: var(--text-muted); font-size: 14px; }
+
+        @media (max-width: 768px) {
+            header, main, footer { padding-left: 24px; padding-right: 24px; }
+            .message { flex-direction: column; gap: 16px; padding: 24px; }
+            .participants { flex-direction: column; }
+            .data-grid { grid-template-columns: 1fr 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="noise"></div>
+    <div class="glow-orb glow-orb-1"></div>
+    <div class="glow-orb glow-orb-2"></div>
+    <div class="glow-orb glow-orb-3"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="meeting-badge">Live Strategy Session • December 2024</div>
+            <h1>Imagen AI <span class="gradient">One-Stop Shop</span><br>Mobile Companion Strategy</h1>
+            <p class="subtitle">A cross-functional squad meeting exploring how to make Imagen AI indispensable across the entire photographer workflow—anywhere, anytime, on any device.</p>
+            
+            <div class="participants">
+                <div class="participant pm">
+                    <div class="participant-avatar">PM</div>
+                    <div class="participant-info">
+                        <span class="participant-name">Maya Chen</span>
+                        <span class="participant-role">Principal Product Manager</span>
+                    </div>
+                </div>
+                <div class="participant ux">
+                    <div class="participant-avatar">UX</div>
+                    <div class="participant-info">
+                        <span class="participant-name">Jordan Rivera</span>
+                        <span class="participant-role">UX Researcher</span>
+                    </div>
+                </div>
+                <div class="participant ai">
+                    <div class="participant-avatar">AI</div>
+                    <div class="participant-info">
+                        <span class="participant-name">Dr. Alex Okonkwo</span>
+                        <span class="participant-role">AI/ML Lead</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="transcript">
+            
+            <!-- OPENING -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Alright team, let's dive in. The strategic question we're tackling today is: <strong>How do we make Imagen AI the one-stop shop for photographers?</strong> We need to think about every moment a photographer might leave our ecosystem—whether for another software, a different device, or a gap in their workflow—and figure out how we can provide value there.</p>
+                        
+                        <p>The mobile companion app is one piece of this puzzle, but I want us to think bigger. Let me frame the opportunity:</p>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <div class="data-value">19K+</div>
+                                <div class="data-label">Community Members</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">150M+</div>
+                                <div class="data-label">Photos/Year</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">$66B</div>
+                                <div class="data-label">Market by 2032</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">96%</div>
+                                <div class="data-label">Time Saved</div>
+                            </div>
+                        </div>
+                        
+                        <p>We've nailed the desktop editing experience. But photographers don't live at their desks. They're at weddings, in cars, on trains, texting clients on WhatsApp, reviewing proofs at coffee shops. <em>Where are we losing them?</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 1: Understanding the Gaps</span>
+            </div>
+
+            <!-- UX RESEARCH PERSPECTIVE -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Great framing, Maya. I've been deep in our user research, and I want to share some critical findings. When we look at the photographer workflow holistically, there are <strong>17 distinct steps</strong> from booking to final delivery. We currently dominate exactly <strong>two of them</strong>: culling and editing.</p>
+                        
+                        <div class="highlight-box emerald">
+                            <div class="highlight-title">Workflow Gaps Where Photographers Leave Imagen</div>
+                            <ul class="highlight-list">
+                                <li><strong>Pre-shoot:</strong> Booking, contracts, client communication (HoneyBook, Dubsado)</li>
+                                <li><strong>On-location:</strong> No mobile presence—they're on WhatsApp, iMessage, native camera</li>
+                                <li><strong>Post-shoot transit:</strong> Driving home, train rides—dead time with no Imagen touchpoint</li>
+                                <li><strong>Client delivery:</strong> Gallery platforms (Pic-Time, Pixieset, ShootProof)</li>
+                                <li><strong>Album design:</strong> SmartAlbums, Fundy—completely separate tools</li>
+                                <li><strong>Accounting/Invoicing:</strong> QuickBooks, Wave—no connection to us</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Here's what's fascinating from our interviews. I spoke with 47 wedding photographers over the past month. The most common phrase I heard was: <em>"I'm always thinking about my backlog."</em></p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">I shot a wedding Saturday. It's now Tuesday and I'm at my kid's soccer game, but all I can think about is the 3,000 photos sitting on my hard drive. I can't do anything about it until I get home at 9pm. That anxiety never leaves me.</p>
+                            <p class="quote-source">— Sarah, Wedding Photographer, 8 years experience</p>
+                        </div>
+                        
+                        <p>This is the emotional hook. <strong>The anxiety of the backlog follows them everywhere.</strong> If we can give them a way to chip away at that anxiety—even just psychologically—we create deep loyalty.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI LEAD PERSPECTIVE -->
+            <div class="message ai">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Dr. Alex Okonkwo</span>
+                        <span class="message-role">AI/ML Lead</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Jordan, that anxiety insight is gold. From a technical perspective, I want to add something important: <strong>our AI doesn't need a desktop to run.</strong> The actual inference happens in our cloud. The Lightroom plugin is just a submission and retrieval layer.</p>
+                        
+                        <p>This means we have a massive technical opportunity. A mobile app doesn't need to replicate Lightroom—it just needs to be a smart interface to our cloud AI. Let me break down what's technically feasible:</p>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Technical Capabilities for Mobile</div>
+                            <ul class="highlight-list">
+                                <li><strong>Cloud upload from phone:</strong> Photographers could upload RAW files directly from SD card readers connected to iPhone/iPad</li>
+                                <li><strong>AI processing monitoring:</strong> Real-time status of edits being processed</li>
+                                <li><strong>Preview and approval:</strong> View AI-edited results, approve or flag for manual review</li>
+                                <li><strong>Lightweight AI on-device:</strong> We could run culling suggestions locally using Core ML</li>
+                                <li><strong>Smart notifications:</strong> "Your wedding gallery is ready for review"</li>
+                            </ul>
+                        </div>
+                        
+                        <p>But here's where it gets interesting. Our AI learns from photographer behavior. If we can capture <em>mobile-specific signals</em>—like which photos they share first on WhatsApp, which ones they star while commuting—we can make our AI even smarter.</p>
+                        
+                        <p>Think about it: <strong>the photos a photographer shares from their phone immediately after a shoot are their instinctive "hero shots."</strong> That's pure signal for our culling AI.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PM RESPONSE -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Alex, that's a brilliant insight about capturing hero shot signals. Let me synthesize what I'm hearing and push us toward the strategic framework.</p>
+                        
+                        <p><strong>The core thesis:</strong> Photographers are emotionally invested in their editing style—it's their artistic identity. Imagen already owns that relationship. But we only engage them for 2 hours of a 25-hour workflow. Every hour they spend in another tool is an hour they might discover a competitor, or worse, decide they don't need us.</p>
+                        
+                        <div class="highlight-box purple">
+                            <div class="highlight-title">One-Stop Shop Strategy Framework</div>
+                            <ul class="highlight-list">
+                                <li><strong>Depth Strategy:</strong> Go deeper in editing (video, advanced retouching, album design)</li>
+                                <li><strong>Width Strategy:</strong> Expand across workflow (booking, delivery, client management)</li>
+                                <li><strong>Ubiquity Strategy:</strong> Be present on every device, every moment (mobile, web, integrations)</li>
+                                <li><strong>Ecosystem Strategy:</strong> Create switching costs through data, profiles, community</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The mobile app is primarily a <strong>Ubiquity play</strong>, but it can enable all four strategies. Let's dig into specific use cases. Jordan, what are the highest-value mobile moments you've identified?</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 2: Mobile Use Cases Deep Dive</span>
+            </div>
+
+            <!-- UX DEEP DIVE ON MOMENTS -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>I've mapped out what I call the <strong>"Mobile Moments Matrix"</strong>—the specific contexts where photographers are away from their desktop but still thinking about work. Each represents an opportunity:</p>
+                        
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>Moment</th>
+                                    <th>Context</th>
+                                    <th>Current Behavior</th>
+                                    <th>Opportunity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Post-Shoot Car Ride</strong></td>
+                                    <td>30-60 min after wedding</td>
+                                    <td>Text clients "great day!", scroll Instagram</td>
+                                    <td><span class="tag tag-success">High</span> Quick cull, share sneak peeks</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Between Events</strong></td>
+                                    <td>Ceremony to reception gap</td>
+                                    <td>Wait, eat, check email</td>
+                                    <td><span class="tag tag-success">High</span> Review ceremony shots, start upload</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Morning Commute</strong></td>
+                                    <td>Train/bus to day job</td>
+                                    <td>Podcast, social media</td>
+                                    <td><span class="tag tag-warning">Medium</span> Review AI edits from overnight batch</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Client Meeting</strong></td>
+                                    <td>Coffee shop consultation</td>
+                                    <td>Show portfolio on phone</td>
+                                    <td><span class="tag tag-warning">Medium</span> Show Talent AI profiles, style options</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Family Time</strong></td>
+                                    <td>Kids' activities, dinner</td>
+                                    <td>Anxiety about backlog</td>
+                                    <td><span class="tag tag-success">High</span> Progress notifications, peace of mind</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Late Night in Bed</strong></td>
+                                    <td>Before sleep</td>
+                                    <td>Quick email check</td>
+                                    <td><span class="tag tag-primary">Medium</span> Approve gallery, queue for export</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>The highest-value moment is what I call <strong>"The Golden Hour"</strong>—the 60 minutes after a shoot ends. This is when photographers are:</p>
+                        
+                        <div class="highlight-box amber">
+                            <div class="highlight-title">The Golden Hour Opportunity</div>
+                            <ul class="highlight-list">
+                                <li>Emotionally high from the shoot—they want to share</li>
+                                <li>Physically present with SD cards full of fresh content</li>
+                                <li>Clients are texting asking "how did it go?!"</li>
+                                <li>No access to their editing setup</li>
+                                <li>Competitors have ZERO presence in this moment</li>
+                            </ul>
+                        </div>
+                        
+                        <p>If we can own this moment—let them upload, start AI processing, and share a quick sneak peek—we become indispensable.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI TECHNICAL DEEP DIVE -->
+            <div class="message ai">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Dr. Alex Okonkwo</span>
+                        <span class="message-role">AI/ML Lead</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Jordan, the Golden Hour concept is perfect for what I've been prototyping. Let me walk through the technical architecture for a mobile-first workflow:</p>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Mobile Upload + AI Pipeline</div>
+                            <ul class="highlight-list">
+                                <li><strong>Step 1:</strong> Photographer connects SD card to iPhone via Lightning/USB-C reader</li>
+                                <li><strong>Step 2:</strong> App performs on-device "quick cull" using Core ML—identifies obvious rejects (blurry, eyes closed)</li>
+                                <li><strong>Step 3:</strong> Uploads "keepers" to Imagen cloud over WiFi/cellular (background upload)</li>
+                                <li><strong>Step 4:</strong> Cloud AI begins processing with their Personal AI Profile</li>
+                                <li><strong>Step 5:</strong> First 10 "hero shots" are processed in priority queue (5 min)</li>
+                                <li><strong>Step 6:</strong> Photographer can share these via WhatsApp/iMessage as sneak peeks</li>
+                                <li><strong>Step 7:</strong> Full gallery processes overnight, ready for morning review</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The key innovation here is <strong>progressive processing</strong>. We don't need to wait for the full gallery. We can use our AI to identify the most "shareable" shots—good composition, emotional moments, ring shots, first kiss—and prioritize those.</p>
+                        
+                        <p>I've been training a <strong>"Shareability Score" model</strong> on the photos that users export first, share on social media, or mark as favorites. Early results show 87% accuracy in predicting which photos will be selected for sneak peeks.</p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">Imagine: You finish shooting a wedding at 10pm. By 10:30pm, while driving home, your phone buzzes: "5 sneak peeks ready to share." You forward them to the couple before you even get home. That's magic.</p>
+                            <p class="quote-source">— Technical Vision Statement</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PM SYNTHESIS -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>This is coming together beautifully. Let me now push us to think about the <strong>ecosystem lock-in</strong> angle. We're not just building a mobile app—we're building a reason for photographers to never leave Imagen.</p>
+                        
+                        <p>Think about what happens when a photographer uses our mobile app for a year:</p>
+                        
+                        <div class="highlight-box rose">
+                            <div class="highlight-title">Ecosystem Lock-In Mechanisms</div>
+                            <ul class="highlight-list">
+                                <li><strong>Data Lock-In:</strong> All their uploads, culling decisions, and AI training data lives with us</li>
+                                <li><strong>Workflow Lock-In:</strong> Their entire post-shoot routine depends on our mobile → cloud → desktop flow</li>
+                                <li><strong>Style Lock-In:</strong> Their Personal AI Profile becomes more accurate over time—can't take it to a competitor</li>
+                                <li><strong>Client Lock-In:</strong> If we add client delivery, their clients expect "that Imagen gallery experience"</li>
+                                <li><strong>Community Lock-In:</strong> Talent AI profiles, shared presets, photographer network</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The question I want us to answer: <strong>What's the minimum viable mobile experience that creates meaningful lock-in while validating the use case?</strong></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 3: MVP Definition</span>
+            </div>
+
+            <!-- UX ON MVP -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>For MVP scoping, I always start with the <strong>Job-to-be-Done</strong>. Based on our research, the primary JTBD for mobile is:</p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text">When I'm away from my computer after a shoot, I want to start the editing process and share quick previews, so that I can reduce my anxiety, impress my clients, and feel productive.</p>
+                            <p class="quote-source">— Primary JTBD for Imagen Mobile</p>
+                        </div>
+                        
+                        <p>Notice it's not "edit photos on my phone." Nobody wants to do detailed color grading on a 6-inch screen. The job is about <strong>starting the process</strong> and <strong>sharing previews</strong>.</p>
+                        
+                        <div class="highlight-box emerald">
+                            <div class="highlight-title">MVP Feature Set (Tightly Scoped)</div>
+                            <ul class="highlight-list">
+                                <li><strong>Core Feature 1:</strong> Upload photos from SD card/camera roll to Imagen cloud</li>
+                                <li><strong>Core Feature 2:</strong> Monitor AI processing status in real-time</li>
+                                <li><strong>Core Feature 3:</strong> Preview AI-edited results (swipe through gallery)</li>
+                                <li><strong>Core Feature 4:</strong> Quick share to WhatsApp/iMessage/Instagram (1-tap)</li>
+                                <li><strong>Core Feature 5:</strong> Push notifications ("Your gallery is ready!")</li>
+                            </ul>
+                        </div>
+                        
+                        <p><strong>What we're explicitly NOT building in MVP:</strong></p>
+                        <ul class="highlight-list" style="margin-top: 12px;">
+                            <li>Manual editing tools (sliders, curves, etc.)</li>
+                            <li>Full culling workflow (just basic star/reject)</li>
+                            <li>Client gallery delivery</li>
+                            <li>Album design</li>
+                            <li>Invoicing/contracts</li>
+                        </ul>
+                        
+                        <p>The MVP is a <strong>"remote control for your AI"</strong>—not a mobile editing suite.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI ON MVP TECHNICAL -->
+            <div class="message ai">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Dr. Alex Okonkwo</span>
+                        <span class="message-role">AI/ML Lead</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Jordan's scoping is smart. From a technical perspective, here's how I'd prioritize the AI features for MVP:</p>
+                        
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>Feature</th>
+                                    <th>AI Complexity</th>
+                                    <th>User Value</th>
+                                    <th>MVP?</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Cloud upload + processing</td>
+                                    <td><span class="tag tag-success">Low</span></td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                    <td>✅ Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Personal AI Profile application</td>
+                                    <td><span class="tag tag-success">Low</span></td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                    <td>✅ Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>Priority "hero shot" processing</td>
+                                    <td><span class="tag tag-warning">Medium</span></td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                    <td>✅ Yes</td>
+                                </tr>
+                                <tr>
+                                    <td>On-device quick cull (Core ML)</td>
+                                    <td><span class="tag tag-warning">Medium</span></td>
+                                    <td><span class="tag tag-warning">Medium</span></td>
+                                    <td>⚠️ V1.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Shareability scoring</td>
+                                    <td><span class="tag tag-danger">High</span></td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                    <td>⚠️ V1.1</td>
+                                </tr>
+                                <tr>
+                                    <td>Mobile-based style learning</td>
+                                    <td><span class="tag tag-danger">High</span></td>
+                                    <td><span class="tag tag-warning">Medium</span></td>
+                                    <td>❌ V2</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>The key technical risk is <strong>upload reliability</strong>. Photographers will be uploading 500-3000 RAW files (15-100GB) over potentially spotty connections. We need:</p>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Upload Reliability Requirements</div>
+                            <ul class="highlight-list">
+                                <li>Background upload that survives app close</li>
+                                <li>Resume capability for interrupted uploads</li>
+                                <li>Smart compression for preview generation</li>
+                                <li>Cellular vs WiFi-only toggle</li>
+                                <li>Storage space warnings</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 4: Target User & Personas</span>
+            </div>
+
+            <!-- UX ON PERSONAS -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Let me share the persona work. For the mobile MVP, we're targeting a specific subset of our user base:</p>
+                        
+                        <div class="highlight-box purple">
+                            <div class="highlight-title">Primary Persona: "Sarah the Wedding Pro"</div>
+                            <ul class="highlight-list">
+                                <li><strong>Demographics:</strong> 28-42, female-leaning (54%), suburban/urban</li>
+                                <li><strong>Business:</strong> Solo or micro-studio, 25-40 weddings/year, $75K-$150K revenue</li>
+                                <li><strong>Tech Profile:</strong> iPhone user (78% of pro photographers), Lightroom Classic, MacBook</li>
+                                <li><strong>Pain Point:</strong> "I spend more time editing than with my family"</li>
+                                <li><strong>Mobile Behavior:</strong> Heavy WhatsApp/iMessage for client communication</li>
+                                <li><strong>Key Quote:</strong> "I've reclaimed my weekends" (after using Imagen)</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Why wedding photographers first?</p>
+                        
+                        <div class="data-grid">
+                            <div class="data-card">
+                                <div class="data-value">40-50%</div>
+                                <div class="data-label">of Imagen Users</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">2-5K</div>
+                                <div class="data-label">Photos per Event</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">16→2 hrs</div>
+                                <div class="data-label">Time Saved</div>
+                            </div>
+                            <div class="data-card">
+                                <div class="data-value">Highest</div>
+                                <div class="data-label">Willingness to Pay</div>
+                            </div>
+                        </div>
+                        
+                        <p><strong>Secondary Persona: "Mike the Event Shooter"</strong></p>
+                        <p>Corporate/event photographers who need same-day turnaround. They shoot 80-120 events/year, 1000-3000 images each. The mobile app lets them start processing during the event's cocktail hour.</p>
+                        
+                        <p><strong>Tertiary Persona: "David the Real Estate Hustler"</strong></p>
+                        <p>15-25 properties/week, needs same-day delivery. Mobile upload between properties means photos are processing while he drives to the next shoot.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PM ON STRATEGY FIT -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Perfect persona alignment. Now let's talk about how this fits into our broader product strategy and long-term vision.</p>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Strategic Fit: Mobile in the Imagen Ecosystem</div>
+                            <ul class="highlight-list">
+                                <li><strong>Retention Play:</strong> Daily engagement (checking status) vs. weekly (only when editing)</li>
+                                <li><strong>Expansion Play:</strong> Opens door to client delivery, album design, contracts</li>
+                                <li><strong>Differentiation Play:</strong> No competitor has mobile—first mover advantage</li>
+                                <li><strong>Data Play:</strong> Mobile usage patterns improve our AI (hero shot detection, culling preferences)</li>
+                                <li><strong>Revenue Play:</strong> Mobile-exclusive features could justify premium tier</li>
+                            </ul>
+                        </div>
+                        
+                        <p>Here's the user journey with mobile integrated:</p>
+                        
+                        <div class="quote-block">
+                            <p class="quote-text"><strong>Before:</strong> Shoot → Drive home → Import to Lightroom → Upload to Imagen → Wait → Edit → Export → Upload to gallery → Send to client<br><br><strong>After:</strong> Shoot → Upload from car (mobile) → Arrive home with edits ready → Quick review → Export → Deliver same night</p>
+                            <p class="quote-source">— Journey Transformation</p>
+                        </div>
+                        
+                        <p>The mobile app <strong>collapses the timeline</strong>. What used to take 3-5 days now happens in hours. That's not incremental improvement—that's category-defining.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 5: Success Metrics & KPIs</span>
+            </div>
+
+            <!-- PM ON KPIS -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Let's define what success looks like. I'm proposing a <strong>5-metric framework</strong> for the MVP:</p>
+                        
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>Metric</th>
+                                    <th>Definition</th>
+                                    <th>MVP Target</th>
+                                    <th>Signal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>1. Mobile Upload Adoption</strong></td>
+                                    <td>% of users who upload via mobile at least once</td>
+                                    <td>25% of active users in 90 days</td>
+                                    <td><span class="tag tag-success">Value exists</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2. Time-to-First-Share</strong></td>
+                                    <td>Minutes from shoot end to first sneak peek shared</td>
+                                    <td>&lt;60 minutes (vs. current 24-48 hrs)</td>
+                                    <td><span class="tag tag-success">Core value delivered</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3. Mobile DAU/MAU Ratio</strong></td>
+                                    <td>Daily engagement stickiness</td>
+                                    <td>&gt;15% (healthy for productivity app)</td>
+                                    <td><span class="tag tag-primary">Habit forming</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>4. Retention Lift</strong></td>
+                                    <td>30-day retention: mobile users vs. non-mobile</td>
+                                    <td>+10% retention for mobile users</td>
+                                    <td><span class="tag tag-warning">Ecosystem stickiness</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>5. NPS Delta</strong></td>
+                                    <td>NPS score change for mobile users</td>
+                                    <td>+15 points vs. desktop-only</td>
+                                    <td><span class="tag tag-success">Delight achieved</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="highlight-box rose">
+                            <div class="highlight-title">Pivot/Halt Signals</div>
+                            <ul class="highlight-list">
+                                <li><strong>Pivot if:</strong> &lt;10% adoption after 60 days—indicates wrong use case, not wrong execution</li>
+                                <li><strong>Pivot if:</strong> Upload completion rate &lt;70%—technical reliability issues</li>
+                                <li><strong>Halt if:</strong> Negative retention impact—mobile is cannibalizing desktop experience</li>
+                                <li><strong>Halt if:</strong> Support tickets spike 3x—UX is fundamentally broken</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UX ON QUALITATIVE SIGNALS -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Maya, I want to add some <strong>qualitative success signals</strong> we should track alongside those metrics:</p>
+                        
+                        <div class="highlight-box emerald">
+                            <div class="highlight-title">Qualitative Success Indicators</div>
+                            <ul class="highlight-list">
+                                <li><strong>Emotional Language:</strong> Users saying "peace of mind," "less anxiety," "finally relaxed after shoots"</li>
+                                <li><strong>Workflow Integration:</strong> "I can't imagine going back to waiting until I get home"</li>
+                                <li><strong>Client Impact:</strong> "My clients are blown away by same-day sneak peeks"</li>
+                                <li><strong>Competitive Moat:</strong> "This is why I'd never switch to Aftershoot"</li>
+                                <li><strong>Word of Mouth:</strong> Organic mentions in Facebook groups, Reddit, Instagram</li>
+                            </ul>
+                        </div>
+                        
+                        <p>I'll set up a <strong>continuous feedback loop</strong>:</p>
+                        <ul class="highlight-list" style="margin-top: 12px;">
+                            <li>In-app feedback prompts after first upload, first share, first week</li>
+                            <li>Monthly NPS surveys with open-ended "what would you improve?"</li>
+                            <li>Bi-weekly user interviews with 5 active mobile users</li>
+                            <li>Social listening on photographer Facebook groups</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 6: Rollout Strategy</span>
+            </div>
+
+            <!-- PM ON ROLLOUT -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>For rollout, I'm proposing a <strong>phased approach</strong> that balances speed with learning:</p>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Rollout Plan</div>
+                            <ul class="highlight-list">
+                                <li><strong>Phase 0 (Weeks 1-2):</strong> Internal dogfooding—team members use at real shoots</li>
+                                <li><strong>Phase 1 (Weeks 3-4):</strong> Private beta with 50 hand-picked power users (wedding photographers)</li>
+                                <li><strong>Phase 2 (Weeks 5-8):</strong> Expanded beta—500 users, waitlist for hype</li>
+                                <li><strong>Phase 3 (Weeks 9-12):</strong> Public launch to all Imagen users (iOS first)</li>
+                                <li><strong>Phase 4 (Weeks 13-16):</strong> Android launch, feature parity</li>
+                            </ul>
+                        </div>
+                        
+                        <p><strong>Why iOS first?</strong> 78% of professional photographers use iPhone. We get maximum learning with minimum platform complexity.</p>
+                        
+                        <p><strong>Launch Marketing:</strong></p>
+                        <ul class="highlight-list" style="margin-top: 12px;">
+                            <li>Exclusive beta access for Talent AI profile photographers (influencer seeding)</li>
+                            <li>"First sneak peek in 30 minutes" campaign</li>
+                            <li>Video testimonials from beta users showing real workflow</li>
+                            <li>Integration with wedding season (launch before spring rush)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-divider">
+                <span class="section-label">Part 7: Beyond Mobile—The One-Stop Shop Vision</span>
+            </div>
+
+            <!-- AI ON BIGGER VISION -->
+            <div class="message ai">
+                <div class="message-avatar">AI</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Dr. Alex Okonkwo</span>
+                        <span class="message-role">AI/ML Lead</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Let me zoom out and talk about the <strong>AI-powered one-stop shop vision</strong> that mobile enables. The mobile app is just the first step in a larger platform play:</p>
+                        
+                        <div class="highlight-box purple">
+                            <div class="highlight-title">AI-Powered Ecosystem Expansion (18-Month Vision)</div>
+                            <ul class="highlight-list">
+                                <li><strong>Smart Gallery Delivery:</strong> AI auto-generates client galleries with best photos, music, transitions</li>
+                                <li><strong>AI Album Design:</strong> One-click album layouts based on your style preferences</li>
+                                <li><strong>Intelligent Scheduling:</strong> AI suggests optimal shoot times based on weather, location, past performance</li>
+                                <li><strong>Client Communication AI:</strong> Draft emails, respond to inquiries, send reminders</li>
+                                <li><strong>Revenue Optimization:</strong> AI pricing recommendations based on market data</li>
+                                <li><strong>Cross-Platform Sync:</strong> Seamless flow between mobile, desktop, web, and client portal</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The key insight is that <strong>every touchpoint generates data that makes our AI smarter</strong>. Mobile usage patterns inform culling. Client preferences inform gallery design. Booking data informs scheduling. It's a flywheel.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- UX ON WORKFLOW EXPANSION -->
+            <div class="message ux">
+                <div class="message-avatar">UX</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Jordan Rivera</span>
+                        <span class="message-role">UX Researcher</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Alex, that vision is exciting. From a UX perspective, here's how I see the <strong>workflow expansion opportunity</strong>:</p>
+                        
+                        <table class="kpi-table">
+                            <thead>
+                                <tr>
+                                    <th>Workflow Gap</th>
+                                    <th>Current Tool</th>
+                                    <th>Imagen Opportunity</th>
+                                    <th>Priority</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Client Delivery</td>
+                                    <td>Pic-Time, Pixieset</td>
+                                    <td>AI-curated galleries with Imagen branding</td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Album Design</td>
+                                    <td>SmartAlbums, Fundy</td>
+                                    <td>AI-powered auto-layout based on style</td>
+                                    <td><span class="tag tag-warning">Medium</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Contracts/Booking</td>
+                                    <td>HoneyBook, Dubsado</td>
+                                    <td>Integration first, then native solution</td>
+                                    <td><span class="tag tag-primary">Low (integrate)</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Client Proofing</td>
+                                    <td>ShootProof</td>
+                                    <td>Mobile proofing with AI recommendations</td>
+                                    <td><span class="tag tag-success">High</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Print Fulfillment</td>
+                                    <td>WHCC, Miller's</td>
+                                    <td>Integration/partnership</td>
+                                    <td><span class="tag tag-primary">Low (partner)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <p>The key is to <strong>own the moments that matter most</strong>—editing, delivery, and proofing—while integrating with the rest. We don't need to replace HoneyBook; we need to make sure Imagen is the hub that connects everything.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CLOSING -->
+            <div class="message pm">
+                <div class="message-avatar">PM</div>
+                <div class="message-content">
+                    <div class="message-header">
+                        <span class="message-name">Maya Chen</span>
+                        <span class="message-role">Principal PM</span>
+                    </div>
+                    <div class="message-text">
+                        <p>Alright team, let me summarize our conclusions and next steps:</p>
+                        
+                        <div class="highlight-box emerald">
+                            <div class="highlight-title">Meeting Conclusions</div>
+                            <ul class="highlight-list">
+                                <li><strong>Strategic Thesis:</strong> Mobile is the key to ecosystem lock-in and workflow ubiquity</li>
+                                <li><strong>Primary Use Case:</strong> "Golden Hour" post-shoot upload and sneak peek sharing</li>
+                                <li><strong>Target Persona:</strong> Wedding photographers (40-50% of users, highest pain, highest WTP)</li>
+                                <li><strong>MVP Scope:</strong> Upload, monitor, preview, share—NOT mobile editing</li>
+                                <li><strong>Success Metric:</strong> 25% adoption, &lt;60 min time-to-first-share, +10% retention</li>
+                                <li><strong>Rollout:</strong> iOS beta in 4 weeks, public launch in 12 weeks</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="highlight-box">
+                            <div class="highlight-title">Next Steps</div>
+                            <ul class="highlight-list">
+                                <li><strong>Jordan:</strong> Recruit 50 beta users, set up feedback infrastructure</li>
+                                <li><strong>Alex:</strong> Prototype priority processing queue and hero shot detection</li>
+                                <li><strong>Maya:</strong> Write PRD, align with engineering on timeline</li>
+                                <li><strong>All:</strong> Reconvene in 2 weeks for design review</li>
+                            </ul>
+                        </div>
+                        
+                        <p>The vision is clear: <strong>Imagen AI becomes the operating system for professional photographers.</strong> Mobile is how we get there. Let's build it.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <p class="footer-text">Imagen AI Squad Meeting Transcript • Mobile Companion Strategy • December 2024</p>
+            <p class="footer-text" style="margin-top: 8px; opacity: 0.6;">Principal PM: Maya Chen | UX Researcher: Jordan Rivera | AI Lead: Dr. Alex Okonkwo</p>
+        </div>
+    </footer>
+
+</body>
+</html>
+

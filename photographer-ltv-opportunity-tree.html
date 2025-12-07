@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunity Solution Tree: Increase LTV by 40% - Miro Board</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --miro-yellow: #FEF445;
+            --miro-orange: #FFA629;
+            --miro-red: #F24726;
+            --miro-pink: #F797D6;
+            --miro-purple: #9747FF;
+            --miro-blue: #4BADE8;
+            --miro-cyan: #0CA789;
+            --miro-green: #93D500;
+            --miro-lime: #D5F692;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #ffffff;
+            overflow-x: auto;
+            overflow-y: auto;
+        }
+
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .toolbar {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 0 1px rgba(0,0,0,0.1), 0 4px 11px rgba(0,0,0,0.1);
+            padding: 12px 24px;
+            z-index: 1000;
+            font-size: 14px;
+            font-weight: 600;
+            color: #050038;
+        }
+
+        #canvas {
+            position: relative;
+            min-width: 4200px;
+            min-height: 3400px;
+            padding: 80px 40px 40px 40px;
+        }
+
+        /* Outcome - Top level */
+        .outcome {
+            position: absolute;
+            padding: 32px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(102, 126, 234, 0.4);
+            text-align: center;
+            color: white;
+        }
+
+        .outcome-label {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+
+        .outcome-title {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 12px;
+        }
+
+        .outcome-desc {
+            font-size: 14px;
+            opacity: 0.9;
+            line-height: 1.5;
+            max-width: 450px;
+        }
+
+        /* Opportunity cards */
+        .opportunity {
+            position: absolute;
+            padding: 20px;
+            background: var(--miro-blue);
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.12);
+            width: 240px;
+            transition: all 0.2s;
+        }
+
+        .opportunity:hover {
+            box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+            transform: translateY(-3px);
+        }
+
+        .opportunity-label {
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(5,0,56,0.5);
+            margin-bottom: 6px;
+        }
+
+        .opportunity-quote {
+            font-size: 14px;
+            font-weight: 700;
+            font-style: italic;
+            color: #050038;
+            line-height: 1.35;
+            margin-bottom: 10px;
+        }
+
+        .opportunity-evidence {
+            font-size: 11px;
+            color: rgba(5,0,56,0.75);
+            line-height: 1.4;
+            padding: 8px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 6px;
+        }
+
+        /* Solution cards */
+        .solution {
+            position: absolute;
+            padding: 16px;
+            background: var(--miro-green);
+            border-radius: 8px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            width: 220px;
+            transition: all 0.2s;
+        }
+
+        .solution:hover {
+            box-shadow: 0 5px 18px rgba(0,0,0,0.18);
+            transform: translateY(-2px);
+        }
+
+        .solution-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(5,0,56,0.5);
+            margin-bottom: 4px;
+        }
+
+        .solution-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #050038;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        .solution-desc {
+            font-size: 11px;
+            color: rgba(5,0,56,0.75);
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        .solution-metrics {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .solution-metric {
+            font-size: 10px;
+            font-weight: 600;
+            padding: 3px 6px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 4px;
+            color: #050038;
+        }
+
+        /* Experiment cards */
+        .experiment {
+            position: absolute;
+            padding: 14px;
+            background: var(--miro-yellow);
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            width: 200px;
+            transition: all 0.2s;
+        }
+
+        .experiment:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+
+        .experiment-label {
+            font-size: 9px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(5,0,56,0.5);
+            margin-bottom: 4px;
+        }
+
+        .experiment-title {
+            font-size: 12px;
+            font-weight: 700;
+            color: #050038;
+            line-height: 1.3;
+            margin-bottom: 6px;
+        }
+
+        .experiment-criteria {
+            font-size: 10px;
+            font-weight: 600;
+            color: rgba(5,0,56,0.6);
+            padding: 6px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 4px;
+        }
+
+        /* Connector lines */
+        .connector-v {
+            position: absolute;
+            width: 2px;
+            background: #bbb;
+            border-radius: 1px;
+        }
+
+        .connector-h {
+            position: absolute;
+            height: 2px;
+            background: #bbb;
+            border-radius: 1px;
+        }
+
+        /* Level labels */
+        .level-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #999;
+            background: white;
+            padding: 4px 12px;
+            border-radius: 4px;
+        }
+
+        /* Section dividers */
+        .section-line {
+            position: absolute;
+            height: 1px;
+            background: #e0e0e0;
+            left: 40px;
+            right: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="toolbar">
+        🎯 Teresa Torres OST: Increase Photographer LTV by 40%
+    </div>
+
+    <div id="canvas"></div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+
+        function createOutcome(title, desc, x, y, width) {
+            const el = document.createElement('div');
+            el.className = 'outcome';
+            el.style.width = `${width}px`;
+            el.innerHTML = `
+                <div class="outcome-label">Outcome</div>
+                <div class="outcome-title">${title}</div>
+                <div class="outcome-desc">${desc}</div>
+            `;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createOpportunity(num, quote, evidence, x, y) {
+            const el = document.createElement('div');
+            el.className = 'opportunity';
+            el.innerHTML = `
+                <div class="opportunity-label">Opportunity ${num}</div>
+                <div class="opportunity-quote">"${quote}"</div>
+                <div class="opportunity-evidence">${evidence}</div>
+            `;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createSolution(title, desc, metrics, x, y) {
+            const el = document.createElement('div');
+            el.className = 'solution';
+            const metricsHtml = metrics.map(m => `<span class="solution-metric">${m}</span>`).join('');
+            el.innerHTML = `
+                <div class="solution-label">Solution</div>
+                <div class="solution-title">${title}</div>
+                <div class="solution-desc">${desc}</div>
+                <div class="solution-metrics">${metricsHtml}</div>
+            `;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createExperiment(title, criteria, x, y) {
+            const el = document.createElement('div');
+            el.className = 'experiment';
+            el.innerHTML = `
+                <div class="experiment-label">Experiment</div>
+                <div class="experiment-title">${title}</div>
+                <div class="experiment-criteria">✓ ${criteria}</div>
+            `;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createConnectorV(x, y1, y2) {
+            const el = document.createElement('div');
+            el.className = 'connector-v';
+            el.style.left = `${x}px`;
+            el.style.top = `${y1}px`;
+            el.style.height = `${y2 - y1}px`;
+            canvas.appendChild(el);
+        }
+
+        function createConnectorH(x1, x2, y) {
+            const el = document.createElement('div');
+            el.className = 'connector-h';
+            el.style.left = `${x1}px`;
+            el.style.top = `${y}px`;
+            el.style.width = `${x2 - x1}px`;
+            canvas.appendChild(el);
+        }
+
+        function createLevelLabel(text, x, y) {
+            const el = document.createElement('div');
+            el.className = 'level-label';
+            el.textContent = text;
+            el.style.left = `${x}px`;
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createSectionLine(y) {
+            const el = document.createElement('div');
+            el.className = 'section-line';
+            el.style.top = `${y}px`;
+            canvas.appendChild(el);
+        }
+
+        function createContent() {
+            // Level labels
+            createLevelLabel('OUTCOME', 40, 80);
+            createLevelLabel('OPPORTUNITIES', 40, 340);
+            createLevelLabel('SOLUTIONS', 40, 900);
+            createLevelLabel('EXPERIMENTS', 40, 1550);
+
+            // Section lines
+            createSectionLine(320);
+            createSectionLine(880);
+            createSectionLine(1530);
+
+            // OUTCOME at top center
+            createOutcome(
+                '🎯 Increase LTV by 40%',
+                'Increase photographer LTV from ~$1,200 to $1,680 by solving critical workflow problems',
+                1600,
+                100,
+                500
+            );
+
+            // Main vertical connector from outcome
+            createConnectorV(1850, 230, 360);
+
+            // Horizontal connector to opportunities
+            createConnectorH(160, 3950, 360);
+
+            // OPPORTUNITIES ROW - 8 opportunities spread across
+            const oppY = 400;
+            const oppSpacing = 260;
+            const oppStart = 100;
+
+            // Vertical connectors to each opportunity
+            for (let i = 0; i < 8; i++) {
+                createConnectorV(oppStart + 120 + (i * oppSpacing), 360, oppY);
+            }
+
+            createOpportunity(1, 'I waste hours on tasks Imagen doesn\'t help with', '66% of workflow unsolved. 3-5 tools used. 10-15 hrs/job post-editing.', oppStart, oppY);
+            createOpportunity(2, 'I can\'t deliver photos fast enough', 'Event clients expect 24-48hr. Manual tagging: 2-4 hrs/event.', oppStart + oppSpacing, oppY);
+            createOpportunity(3, 'Album design takes forever and I dread it', '95% offer albums. 3-6 hrs design + 1-2 hrs revisions.', oppStart + oppSpacing*2, oppY);
+            createOpportunity(4, 'My portrait retouching still takes forever', 'Advanced retouching: 20-40 min/image. 6-33 hrs/session total.', oppStart + oppSpacing*3, oppY);
+            createOpportunity(5, 'I lose track of clients and miss follow-ups', '3-5 separate tools. No unified view. Leads fall through.', oppStart + oppSpacing*4, oppY);
+            createOpportunity(6, 'I want to look more professional to clients', 'Fragmented UX hurts perception. Studios have better client experience.', oppStart + oppSpacing*5, oppY);
+            createOpportunity(7, 'I can\'t keep up during busy season', 'Wedding season = 4-5x workload. Burnout is #1 exit reason.', oppStart + oppSpacing*6, oppY);
+            createOpportunity(8, 'Recurring clients need consistent look', 'Corporate events quarterly. No client profiles. Inconsistency loses contracts.', oppStart + oppSpacing*7, oppY);
+
+            // SOLUTIONS ROW - 2 solutions per opportunity
+            const solY = 940;
+            const solSpacing = 260;
+            const solStart = 100;
+
+            // Vertical connectors from opportunities to solutions
+            for (let i = 0; i < 8; i++) {
+                createConnectorV(solStart + 120 + (i * solSpacing), oppY + 200, solY);
+            }
+
+            // Solutions for each opportunity (2 per opportunity, stacked)
+            createSolution('📸 Gallery Delivery', 'Unified gallery replacing Pic-Time/Pixieset. Direct delivery from Imagen.', ['⚡30-60min', '💵+$15'], solStart, solY);
+            createSolution('💳 Payment Integration', 'Stripe invoicing with auto-reminders. Pay before gallery access.', ['⚡75% faster', '💵+$10'], solStart, solY + 200);
+
+            createSolution('🔍 AI Facial Recognition', 'Auto-tag attendees. Self-service galleries.', ['⚡2-4hrs saved', '💵+$25'], solStart + solSpacing, solY);
+            createSolution('📱 Mobile Companion', 'On-site culling, real-time upload for same-day delivery.', ['⚡Same-day', '💵+$10'], solStart + solSpacing, solY + 200);
+
+            createSolution('📖 AI Album Layouts', 'Auto-generate layouts from photos. Style templates.', ['⚡80% saved', '💵+$20'], solStart + solSpacing*2, solY);
+            createSolution('🔄 One-Click Revisions', 'Client marks changes, AI regenerates layout.', ['⚡50% faster', '💵Incl'], solStart + solSpacing*2, solY + 200);
+
+            createSolution('✨ AI Skin Retouching', 'Auto blemish removal, skin smoothing with texture.', ['⚡90% saved', '💵+$15'], solStart + solSpacing*3, solY);
+            createSolution('🎨 AI Background Removal', 'One-click swap/extension. Hair detail preservation.', ['⚡85% saved', '💵Incl'], solStart + solSpacing*3, solY + 200);
+
+            createSolution('📋 Client Dashboard', 'Single view: status, payments, deliverables, comms.', ['⚡No lost leads', '💵+$8'], solStart + solSpacing*4, solY);
+            createSolution('⚙️ Auto Workflows', 'Triggers: booked → shot → edited → delivered.', ['⚡2hrs/week', '💵Incl'], solStart + solSpacing*4, solY + 200);
+
+            createSolution('🏷️ White-Label Portal', 'Branded portal with logo, colors, custom domain.', ['⚡Premium UX', '💵+$12'], solStart + solSpacing*5, solY);
+            createSolution('🎁 Integrated Experience', 'Contract → Payment → Gallery → Comms in one flow.', ['⚡No switching', '💵Retention'], solStart + solSpacing*5, solY + 200);
+
+            createSolution('📦 Batch Processing', 'Queue jobs, process overnight, review in morning.', ['⚡Overnight', '💵Incl'], solStart + solSpacing*6, solY);
+            createSolution('👥 Team Collaboration', 'Multi-user accounts for studios. Share workload.', ['⚡Scale', '💵+$50'], solStart + solSpacing*6, solY + 200);
+
+            createSolution('🎯 Client Profiles', 'Save editing profile per client. Auto-apply to future jobs.', ['⚡Consistency', '💵+$5'], solStart + solSpacing*7, solY);
+            createSolution('🎨 Brand Matching', 'Upload brand guidelines, AI matches color grading.', ['⚡Compliance', '💵Incl'], solStart + solSpacing*7, solY + 200);
+
+            // EXPERIMENTS ROW - 2 experiments per solution column
+            const expY = 1590;
+            const expSpacing = 260;
+            const expStart = 100;
+
+            // Vertical connectors from solutions to experiments
+            for (let i = 0; i < 8; i++) {
+                createConnectorV(expStart + 110 + (i * expSpacing), solY + 380, expY);
+            }
+
+            // Experiments (2 per column)
+            createExperiment('Survey: Gallery Pain Points', '70%+ use 2+ gallery tools', expStart, expY);
+            createExperiment('Fake Door: Imagen Galleries', '15%+ CTR, 500+ signups', expStart, expY + 160);
+
+            createExperiment('Tech Spike: Face Matching', '90%+ accuracy, <2s/photo', expStart + expSpacing, expY);
+            createExperiment('Pilot: Event Tagging Beta', '80%+ satisfaction', expStart + expSpacing, expY + 160);
+
+            createExperiment('Concierge MVP: Manual Albums', '50%+ would pay $20/mo', expStart + expSpacing*2, expY);
+            createExperiment('Design Sprint: Album AI', 'Clear feature requirements', expStart + expSpacing*2, expY + 160);
+
+            createExperiment('Blind Test: AI vs Manual', '70%+ find AI acceptable', expStart + expSpacing*3, expY);
+            createExperiment('Alpha: Body Shaping AI', 'Quality score 7+/10', expStart + expSpacing*3, expY + 160);
+
+            createExperiment('Prototype: Dashboard Mockup', '80%+ find it valuable', expStart + expSpacing*4, expY);
+            createExperiment('Competitive Analysis', 'Clear feature priorities', expStart + expSpacing*4, expY + 160);
+
+            createExperiment('Survey: Branding Importance', '60%+ want custom branding', expStart + expSpacing*5, expY);
+            createExperiment('Beta: Custom Domains', '70%+ enable custom domain', expStart + expSpacing*5, expY + 160);
+
+            createExperiment('Usage Analysis: Peak Times', 'Clear overnight window', expStart + expSpacing*6, expY);
+            createExperiment('Beta: Job Queue', '40%+ use queue feature', expStart + expSpacing*6, expY + 160);
+
+            createExperiment('Beta: Client Profiles', '60%+ create client profiles', expStart + expSpacing*7, expY);
+            createExperiment('Case Study: Recurring Clients', 'Measurable retention lift', expStart + expSpacing*7, expY + 160);
+        }
+
+        createContent();
+    </script>
+</body>
+</html>

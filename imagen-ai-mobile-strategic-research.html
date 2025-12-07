@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI - Strategic Research: Mobile Product Development | CPO Perspective</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a25;
+            --bg-hover: #222230;
+            
+            --accent-primary: #f97316;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-info: #3b82f6;
+            --accent-pink: #ec4899;
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.4);
+            
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            
+            --gradient-primary: linear-gradient(135deg, #f97316, #ec4899);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6, #3b82f6);
+            --gradient-success: linear-gradient(135deg, #22c55e, #14b8a6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 8px;
+        }
+
+        .nav-link {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            color: var(--text-primary);
+            background: var(--bg-hover);
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 160px 32px 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 1000px;
+            height: 1000px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -400px;
+            right: -200px;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 .gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Section */
+        .section {
+            padding: 120px 0;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-title {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* Cards */
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Grids */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 32px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-surface);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--bg-elevated);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        td {
+            color: var(--text-secondary);
+        }
+
+        tr:hover {
+            background: var(--bg-hover);
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-success {
+            color: var(--accent-success);
+        }
+
+        .badge-warning {
+            color: var(--accent-warning);
+        }
+
+        .badge-critical {
+            color: var(--accent-pink);
+        }
+
+        /* Typography */
+        h2 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            margin-top: 48px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            margin-top: 32px;
+        }
+
+        h4 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            margin-top: 24px;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+        }
+
+        /* Code blocks */
+        pre {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            overflow-x: auto;
+            margin: 24px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+
+        code {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--bg-elevated);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* Stats */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 24px;
+            margin: 48px 0;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+        }
+
+        .stat-value {
+            font-size: 48px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Priority indicators */
+        .priority-critical {
+            color: var(--accent-pink);
+            font-weight: 700;
+        }
+
+        .priority-high {
+            color: var(--accent-warning);
+            font-weight: 600;
+        }
+
+        .priority-medium {
+            color: var(--accent-info);
+        }
+
+        /* Workflow visualization */
+        .workflow-visual {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            margin: 32px 0;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .section-title {
+                font-size: 36px;
+            }
+
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-container">
+            <div style="font-weight: 700; font-size: 18px;">Imagen AI</div>
+            <div class="nav-links">
+                <a href="#part1" class="nav-link">Part 1</a>
+                <a href="#part2" class="nav-link">Part 2</a>
+                <a href="#part3" class="nav-link">Part 3</a>
+                <a href="#part4" class="nav-link">Part 4</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">
+            <span class="hero-badge-dot"></span>
+            Strategic Research Document | CPO Perspective
+        </div>
+        <h1>
+            Strategic Research:<br>
+            <span class="gradient">Mobile Product Development</span>
+        </h1>
+        <p class="subtitle">
+            Preparing for 0-to-1 Product Development<br>
+            Understanding the opportunity to build a mobile experience for wedding photographers
+        </p>
+    </section>
+
+    <!-- Vision, Mission, Promise -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Our Foundation</h2>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3 class="card-title">Vision</h3>
+                    <p class="card-desc">
+                        We envision a world where technology handles the tedious, so photographers can focus on the timeless.
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Mission</h3>
+                    <p class="card-desc">
+                        "To give photographers their time back - by building a product that works the way they do, thinks the way they think, and protects what makes their art uniquely theirs."
+                    </p>
+                </div>
+                <div class="card">
+                    <h3 class="card-title">Promise</h3>
+                    <p class="card-desc">
+                        "Letting you focus on what you Love" — Beautiful photos without hours of tedious logistics, editing, culling.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 1: Business Goal & User Segmentation -->
+    <section id="part1" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Part 1: Business Goal & User Segmentation</h2>
+                <p class="section-subtitle">From "Tool" to "Operating System"</p>
+            </div>
+
+            <h3>The Business Goal: Maximize Share of Workflow</h3>
+            <p>
+                Our business goal is not just to sell more edits. It is to <strong>maximize Share of Workflow</strong>.
+            </p>
+            <p>
+                <strong>Current State:</strong> Imagen AI is a powerful tool that photographers use for specific tasks (culling & editing).<br>
+                <strong>Target State:</strong> Imagen AI becomes the <strong>operating system</strong> for photographers' entire workflow—from first client inquiry to final delivery and beyond.
+            </p>
+
+            <h3>Why "Share of Workflow" Matters</h3>
+            <div class="grid-2" style="margin-top: 32px;">
+                <div class="card">
+                    <h4>1. Retention</h4>
+                    <p>The more of a photographer's workflow we own, the harder it is to switch</p>
+                </div>
+                <div class="card">
+                    <h4>2. Revenue</h4>
+                    <p>More touchpoints = more opportunities for value creation and monetization</p>
+                </div>
+                <div class="card">
+                    <h4>3. Differentiation</h4>
+                    <p>Competitors can copy features, but they can't copy deep workflow integration</p>
+                </div>
+                <div class="card">
+                    <h4>4. Mission Alignment</h4>
+                    <p>"Photographers one-stop-shop" requires owning more than just editing</p>
+                </div>
+            </div>
+
+            <h3>User Segmentation Analysis</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Segment</th>
+                            <th>Current %</th>
+                            <th>Growth Potential</th>
+                            <th>Revenue Potential</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Professional Photographers</strong></td>
+                            <td>60-70%</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td><span class="badge badge-critical">PRIMARY</span></td>
+                        </tr>
+                        <tr>
+                            <td>Photo Editing Services/Outsourcing Companies</td>
+                            <td>10-15%</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td><span class="badge">Secondary</span></td>
+                        </tr>
+                        <tr>
+                            <td>In-House Photo Editors</td>
+                            <td>5-10%</td>
+                            <td>Low</td>
+                            <td>Low</td>
+                            <td><span class="badge">Tertiary</span></td>
+                        </tr>
+                        <tr>
+                            <td>Content Creators/Social Media</td>
+                            <td>5-10%</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td><span class="badge">Tertiary</span></td>
+                        </tr>
+                        <tr>
+                            <td>Marketing Agencies</td>
+                            <td>3-5%</td>
+                            <td>Medium</td>
+                            <td>Medium</td>
+                            <td><span class="badge">Tertiary</span></td>
+                        </tr>
+                        <tr>
+                            <td>B2B/Enterprise/API Users</td>
+                            <td>2-5%</td>
+                            <td>High</td>
+                            <td>High</td>
+                            <td><span class="badge">Future</span></td>
+                        </tr>
+                        <tr>
+                            <td>End Consumers (Indirect)</td>
+                            <td>&lt;1%</td>
+                            <td>Low</td>
+                            <td>Low</td>
+                            <td><span class="badge">Future</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Why Professional Photographers?</h3>
+            <ol>
+                <li><strong>Mission Alignment:</strong> "Photographers one-stop-shop" means we serve the end user (the photographer), not intermediaries</li>
+                <li><strong>They Are Our Core Users:</strong> 60-70% of current user base, highest engagement and retention rates</li>
+                <li><strong>Workflow Complexity = Opportunity:</strong> Professional photographers have the most complex, multi-step workflows</li>
+                <li><strong>Revenue Potential:</strong> High willingness to pay, recurring usage, upsell potential</li>
+                <li><strong>Strategic Moat Building:</strong> Deep integration, switching costs, data advantage, community</li>
+            </ol>
+
+            <h3>Why Wedding Photographers?</h3>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dimension</th>
+                            <th>Wedding</th>
+                            <th>Event/Corporate</th>
+                            <th>Portrait Studio</th>
+                            <th>Real Estate</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Workflow Complexity</strong></td>
+                            <td>⭐⭐⭐⭐⭐ (17 steps)</td>
+                            <td>⭐⭐⭐⭐ (14 steps)</td>
+                            <td>⭐⭐⭐ (13 steps)</td>
+                            <td>⭐⭐ (10 steps)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Time per Project</strong></td>
+                            <td>25-40 hours</td>
+                            <td>12-18 hours</td>
+                            <td>8-12 hours</td>
+                            <td>3-4 hours</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Revenue per Project</strong></td>
+                            <td>$3,000-$6,000</td>
+                            <td>$500-$3,000</td>
+                            <td>$200-$800</td>
+                            <td>$150-$400</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pain Point Intensity</strong></td>
+                            <td>⭐⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                            <td>⭐⭐⭐</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Current % of User Base</strong></td>
+                            <td>40-50%</td>
+                            <td>20-25%</td>
+                            <td>15-20%</td>
+                            <td>5-10%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="card" style="margin-top: 32px; background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(236, 72, 153, 0.1)); border-color: rgba(249, 115, 22, 0.3);">
+                <h3>Strategic Rationale: Focus on Wedding Photographers</h3>
+                <ol>
+                    <li><strong>Mission Alignment:</strong> Wedding photographers embody "focus on what you love"</li>
+                    <li><strong>Workflow Complexity:</strong> 17 steps = maximum Share of Workflow opportunity</li>
+                    <li><strong>Market Size:</strong> 40-50% of current user base = largest addressable market</li>
+                    <li><strong>Pain Intensity:</strong> Highest pain = highest willingness to pay</li>
+                    <li><strong>Revenue Potential:</strong> Highest LTV per client + post-delivery revenue</li>
+                    <li><strong>Strategic Moat:</strong> Most complex workflow = hardest to replicate</li>
+                    <li><strong>Foundation for Growth:</strong> Solve hardest case = solve entire market</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 2: Persona Deep Dive -->
+    <section id="part2" class="section" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Part 2: Persona Deep Dive & Wedding Photographer Focus</h2>
+                <p class="section-subtitle">Understanding Our Core User</p>
+            </div>
+
+            <h3>The Four Core Personas</h3>
+            <div class="grid-2" style="margin-top: 32px;">
+                <div class="card">
+                    <h4>"Sarah" - The Wedding Photography Pro</h4>
+                    <ul>
+                        <li>Age: 32 years old</li>
+                        <li>Business: Solo photographer or micro-studio</li>
+                        <li>Annual Revenue: $75,000 - $150,000</li>
+                        <li>Weddings/Year: 25-40 weddings</li>
+                        <li>Price per Wedding: $3,000 - $6,000</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Key Characteristics:</strong> Creative, perfectionist, entrepreneurial. Values quality, authenticity, work-life balance.</p>
+                </div>
+                <div class="card">
+                    <h4>"Mike" - The Event & Corporate Photographer</h4>
+                    <ul>
+                        <li>Age: 38 years old</li>
+                        <li>Business: Solo with occasional assistants</li>
+                        <li>Annual Revenue: $100,000 - $200,000</li>
+                        <li>Events/Year: 80-120 events</li>
+                        <li>Price per Event: $500 - $3,000</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Key Characteristics:</strong> Efficiency-focused, volume-oriented. Values speed, consistency, reliability.</p>
+                </div>
+                <div class="card">
+                    <h4>"Jessica" - The Portrait Studio Owner</h4>
+                    <ul>
+                        <li>Age: 42 years old</li>
+                        <li>Business: Small studio (2-4 employees)</li>
+                        <li>Annual Revenue: $150,000 - $300,000</li>
+                        <li>Sessions/Year: 300-500 sessions</li>
+                        <li>Price per Session: $200 - $800</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Key Characteristics:</strong> Business-minded, team-oriented. Values consistency, brand, scalability.</p>
+                </div>
+                <div class="card">
+                    <h4>"David" - The Real Estate Photographer</h4>
+                    <ul>
+                        <li>Age: 35 years old</li>
+                        <li>Business: Solo operator</li>
+                        <li>Properties/Week: 15-25 properties</li>
+                        <li>Price per Property: $150 - $400</li>
+                        <li>Annual Revenue: $80,000 - $150,000</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Key Characteristics:</strong> Speed-focused, volume-oriented. Values efficiency, turnaround time.</p>
+                </div>
+            </div>
+
+            <h3>Wedding Photographer: Complete Journey</h3>
+            <div class="grid-2" style="margin-top: 32px;">
+                <div class="card">
+                    <h4>Pre-Wedding Phase (1-2 hours)</h4>
+                    <ul>
+                        <li>Client inquiry and consultation</li>
+                        <li>Quote and contract negotiation</li>
+                        <li>Deposit collection</li>
+                        <li>Timeline planning</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Pain Points:</strong> Manual back-and-forth, contract management, payment collection</p>
+                    <p><strong>Opportunity:</strong> Booking and client management platform</p>
+                </div>
+                <div class="card">
+                    <h4>Wedding Day (8-12 hours)</h4>
+                    <ul>
+                        <li>Getting ready photos</li>
+                        <li>Ceremony</li>
+                        <li>Family portraits</li>
+                        <li>Couple portraits</li>
+                        <li>Reception</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Pain Points:</strong> No mobile workflow integration, can't preview/edit on-site, manual notes</p>
+                    <p><strong>Opportunity:</strong> <span class="priority-critical">Mobile companion app for on-site workflow</span></p>
+                </div>
+                <div class="card">
+                    <h4>Post-Production (17-29 hrs → 2 hrs with Imagen)</h4>
+                    <ul>
+                        <li>Import to Lightroom</li>
+                        <li>AI Culling (Imagen) ✅</li>
+                        <li>AI Editing (Imagen) ✅</li>
+                        <li>Fine-tuning</li>
+                        <li>Export</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Status:</strong> Culling and editing solved. Gaps: Mobile review, client preview</p>
+                </div>
+                <div class="card">
+                    <h4>Delivery & Post-Delivery (5.5-11 hours)</h4>
+                    <ul>
+                        <li>Upload to gallery</li>
+                        <li>Customize gallery</li>
+                        <li>Send link to client</li>
+                        <li>Print orders</li>
+                        <li>Album design (3-6 hrs)</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Pain Points:</strong> Disconnected platforms, manual processes, no retention system</p>
+                    <p><strong>Opportunity:</strong> Integrated gallery, payment, album design</p>
+                </div>
+            </div>
+
+            <h3>Wedding Photographer: Key Behaviors & Decision-Making</h3>
+            <div class="card" style="margin-top: 32px;">
+                <h4>Decision-Making Factors (When Choosing Tools):</h4>
+                <ol>
+                    <li><strong>Time Savings</strong> (⭐⭐⭐⭐⭐) - "How many hours will this save me?"</li>
+                    <li><strong>Quality Maintenance</strong> (⭐⭐⭐⭐⭐) - "Will this maintain my style?"</li>
+                    <li><strong>Workflow Integration</strong> (⭐⭐⭐⭐) - "Does this fit my existing process?"</li>
+                    <li><strong>Support & Community</strong> (⭐⭐⭐⭐) - "Can I get help when I need it?"</li>
+                    <li><strong>Cost vs. Value</strong> (⭐⭐⭐) - Willing to pay premium for clear value</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 3: Current State & Vision -->
+    <section id="part3" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Part 3: Current State, Vision & User Journey Mapping</h2>
+                <p class="section-subtitle">Mapping the Complete Workflow</p>
+            </div>
+
+            <h3>Current State: What We Have Today</h3>
+            <div class="grid-3" style="margin-top: 32px;">
+                <div class="card">
+                    <h4>✅ AI-Powered Photo Editing</h4>
+                    <p>Personal AI Profiles, Talent AI Profiles, Profile Shop, Batch processing (0.5s/photo)</p>
+                    <p style="margin-top: 12px;"><span class="badge badge-success">Core Product</span></p>
+                </div>
+                <div class="card">
+                    <h4>✅ AI Culling</h4>
+                    <p>Automatic selection based on sharpness, exposure, eyes open, expressions, composition</p>
+                    <p style="margin-top: 12px;"><span class="badge badge-success">Core Product</span></p>
+                </div>
+                <div class="card">
+                    <h4>✅ Cloud Backup</h4>
+                    <p>Automatic backup during editing, data protection</p>
+                    <p style="margin-top: 12px;"><span class="badge badge-success">Supporting Product</span></p>
+                </div>
+                <div class="card">
+                    <h4>🆕 Video (New)</h4>
+                    <p>Video editing capabilities, expanding beyond photography</p>
+                    <p style="margin-top: 12px;"><span class="badge">New Product</span></p>
+                </div>
+                <div class="card">
+                    <h4>✅ Established Assets</h4>
+                    <ul>
+                        <li>19,000+ community members</li>
+                        <li>150+ million photos processed annually</li>
+                        <li>4.9/5 customer support rating</li>
+                        <li>Proven AI/ML capabilities</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Vision: The "Photographers One-Stop-Shop"</h3>
+            <div class="card" style="margin-top: 32px; background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1)); border-color: rgba(139, 92, 246, 0.3);">
+                <h3>Current Coverage Analysis</h3>
+                <div class="stat-grid" style="margin-top: 24px;">
+                    <div class="stat-card">
+                        <div class="stat-value">36%</div>
+                        <div class="stat-label">Currently Owned</div>
+                        <p style="margin-top: 12px; font-size: 14px;">Culling & Editing (middle of workflow)</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">80%+</div>
+                        <div class="stat-label">Target Ownership</div>
+                        <p style="margin-top: 12px; font-size: 14px;">End-to-end workflow</p>
+                    </div>
+                </div>
+                <div style="margin-top: 24px;">
+                    <p><strong>The Gap:</strong></p>
+                    <ul>
+                        <li>Pre-shoot: 0% coverage</li>
+                        <li>Shoot day: 0% coverage <span class="priority-critical">(mobile gap)</span></li>
+                        <li>Post-production: 100% coverage (culling + editing)</li>
+                        <li>Delivery: 0% coverage</li>
+                        <li>Post-delivery: 0% coverage</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>Complete Wedding Photographer Workflow (17 Steps)</h3>
+            <div class="workflow-visual" style="margin-top: 32px;">
+<pre>WEDDING PHOTOGRAPHER WORKFLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRE-WEDDING          WEDDING DAY          POST-PRODUCTION        DELIVERY          POST-DELIVERY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Booking]            [Shoot]              [Import]               [Upload Gallery]  [Print Orders]
+❌ 0%                ❌ 0%                ⚠️ Indirect            ❌ 0%              ❌ 0%
+
+[Contract]           [Backup]             [Cull]                 [Customize]       [Album Design]
+❌ 0%                ⚠️ Partial          ✅ 100%                ❌ 0%              ❌ 0%
+
+[Payment]            [Mobile Gap]         [Edit]                 [Send Link]        [Revisions]
+❌ 0%                ⚠️ CRITICAL          ✅ 100%                ❌ 0%              ❌ 0%
+
+                                         [Fine-Tune]            [Client Reviews]   [Retention]
+                                         ⚠️ Indirect            ❌ 0%              ❌ 0%
+
+                                         [Export]
+                                         ❌ 0%
+
+CURRENT COVERAGE: 36% (Culling + Editing)
+TARGET COVERAGE: 80%+ (End-to-end workflow)</pre>
+            </div>
+
+            <h3>Problems Mapped to Workflow</h3>
+            <div class="table-wrapper" style="margin-top: 32px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Phase</th>
+                            <th>Problem</th>
+                            <th>Pain</th>
+                            <th>Frequency</th>
+                            <th>Time Impact</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Pre-Wedding</td>
+                            <td>Manual booking process</td>
+                            <td>7/10</td>
+                            <td>Every wedding</td>
+                            <td>1-2 hours</td>
+                            <td><span class="badge">Gap</span></td>
+                        </tr>
+                        <tr>
+                            <td>Pre-Wedding</td>
+                            <td>Payment collection friction</td>
+                            <td>8/10</td>
+                            <td>Every wedding</td>
+                            <td>30-60 min</td>
+                            <td><span class="badge">Gap</span></td>
+                        </tr>
+                        <tr>
+                            <td>Wedding Day</td>
+                            <td><strong>No mobile workflow</strong></td>
+                            <td>7/10</td>
+                            <td>Every wedding</td>
+                            <td>N/A (inefficiency)</td>
+                            <td><span class="badge badge-critical">CRITICAL GAP</span></td>
+                        </tr>
+                        <tr>
+                            <td>Post-Production</td>
+                            <td>Culling burden</td>
+                            <td>9/10</td>
+                            <td>Every wedding</td>
+                            <td>2-4 hrs → 30 min</td>
+                            <td><span class="badge badge-success">✅ SOLVED</span></td>
+                        </tr>
+                        <tr>
+                            <td>Post-Production</td>
+                            <td>Editing time</td>
+                            <td>9/10</td>
+                            <td>Every wedding</td>
+                            <td>15-25 hrs → 5-10 min</td>
+                            <td><span class="badge badge-success">✅ SOLVED</span></td>
+                        </tr>
+                        <tr>
+                            <td>Delivery</td>
+                            <td>Disconnected gallery platforms</td>
+                            <td>7/10</td>
+                            <td>Every wedding</td>
+                            <td>30-60 min</td>
+                            <td><span class="badge">Gap</span></td>
+                        </tr>
+                        <tr>
+                            <td>Post-Delivery</td>
+                            <td>Time-consuming album design</td>
+                            <td>8/10</td>
+                            <td>50-70% of weddings</td>
+                            <td>3-6 hrs</td>
+                            <td><span class="badge">Gap</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>The Mobile Experience Gap: Critical Analysis</h3>
+            <div class="card" style="margin-top: 32px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.1), rgba(249, 115, 22, 0.1)); border-color: rgba(236, 72, 153, 0.3);">
+                <h3 class="priority-critical">What Problem or Inefficiency Are They Facing Without a Mobile Experience?</h3>
+                <div style="margin-top: 24px;">
+                    <h4>1. No On-Site Workflow Integration (Highest Impact)</h4>
+                    <ul>
+                        <li><strong>Lost Time:</strong> Can't start culling during breaks (30-60 min lost per wedding)</li>
+                        <li><strong>Delayed Feedback:</strong> Can't preview/edit on-site to catch issues early</li>
+                        <li><strong>No Real-Time Backup:</strong> Can't verify backup integrity immediately</li>
+                        <li><strong>Client Communication:</strong> Can't share previews during day for "wow" moment</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Impact:</strong> Workflow starts only after returning home (8-12 hour delay). Can't provide "sneak peek" during wedding day.</p>
+                </div>
+                <div style="margin-top: 32px;">
+                    <h4>2. No Mobile Review Capability (High Impact)</h4>
+                    <ul>
+                        <li><strong>Location Constraint:</strong> Tied to desktop computer</li>
+                        <li><strong>Time Waste:</strong> Can't use travel time productively</li>
+                        <li><strong>Delayed Delivery:</strong> Must wait until at computer to finalize</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 32px;">
+                    <h4>3. No Client Preview System (Medium-High Impact)</h4>
+                    <ul>
+                        <li><strong>Missed Opportunity:</strong> Can't provide "sneak peek" experience</li>
+                        <li><strong>No Early Feedback:</strong> Can't catch client preferences early</li>
+                        <li><strong>Delayed Communication:</strong> Client sees nothing until full delivery</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 32px;">
+                    <h4>Strategic Value:</h4>
+                    <ul>
+                        <li><strong>Expands Share of Workflow:</strong> From 36% to 45%+ (adding shoot day)</li>
+                        <li><strong>Competitive Differentiation:</strong> No competitor offers mobile workflow</li>
+                        <li><strong>Daily Engagement:</strong> Mobile = daily touchpoint vs. weekly desktop</li>
+                        <li><strong>Retention:</strong> Mobile apps have 2-3x higher retention than web-only</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Part 4: Problem Prioritization -->
+    <section id="part4" class="section" style="background: var(--bg-surface);">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Part 4: Problem Prioritization & Mobile Experience Gap</h2>
+                <p class="section-subtitle">Prioritizing Opportunities for Maximum Share of Workflow</p>
+            </div>
+
+            <h3>Problem Prioritization Framework</h3>
+            <p>Each problem is evaluated across 8 dimensions (max 80 points):</p>
+            <div class="grid-4" style="margin-top: 32px;">
+                <div class="card">
+                    <h4>1. Opportunity</h4>
+                    <p>Potential to increase Share of Workflow</p>
+                </div>
+                <div class="card">
+                    <h4>2. Impact for User</h4>
+                    <p>Pain level × Frequency</p>
+                </div>
+                <div class="card">
+                    <h4>3. Time Savings</h4>
+                    <p>Hours saved per wedding</p>
+                </div>
+                <div class="card">
+                    <h4>4. Third-Party Risk</h4>
+                    <p>If they use third party, what do we lose?</p>
+                </div>
+                <div class="card">
+                    <h4>5. Share of Workflow</h4>
+                    <p>Does this expand our workflow ownership?</p>
+                </div>
+                <div class="card">
+                    <h4>6. Retention</h4>
+                    <p>Will this increase user stickiness?</p>
+                </div>
+                <div class="card">
+                    <h4>7. Brand Differentiation</h4>
+                    <p>Does this differentiate from competitors?</p>
+                </div>
+                <div class="card">
+                    <h4>8. Revenue Over Time</h4>
+                    <p>Does this create new revenue streams?</p>
+                </div>
+            </div>
+
+            <h3>🔥 CRITICAL PRIORITY Problems (60-80 points)</h3>
+            <div class="grid-2" style="margin-top: 32px;">
+                <div class="card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.15)); border-color: rgba(236, 72, 153, 0.4);">
+                    <h3 class="priority-critical">1. Mobile Workflow Experience (67 points)</h3>
+                    <ul>
+                        <li>No on-site workflow integration</li>
+                        <li>No mobile review capability</li>
+                        <li>No client preview system</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Why Critical:</strong> Expands Share of Workflow from 36% to 45%, no competitor offers this</p>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.15)); border-color: rgba(236, 72, 153, 0.4);">
+                    <h3 class="priority-critical">2. Payment Collection Integration (66 points)</h3>
+                    <p><strong>Why Critical:</strong> Highest switching cost, revenue opportunity, every wedding</p>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.15)); border-color: rgba(236, 72, 153, 0.4);">
+                    <h3 class="priority-critical">3. Gallery Delivery Platform (66 points)</h3>
+                    <p><strong>Why Critical:</strong> Owns client relationship, high switching cost, expands to 50% workflow</p>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.15)); border-color: rgba(236, 72, 153, 0.4);">
+                    <h3 class="priority-critical">4. Album Design Automation (66 points)</h3>
+                    <p><strong>Why Critical:</strong> Major time sink (3-6 hrs), high revenue potential, strong retention</p>
+                </div>
+                <div class="card" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(249, 115, 22, 0.15)); border-color: rgba(236, 72, 153, 0.4);">
+                    <h3 class="priority-critical">5. Booking System (60 points)</h3>
+                    <p><strong>Why Critical:</strong> Entry point, owns relationship from day one</p>
+                </div>
+            </div>
+
+            <h3>Complete Prioritization Matrix</h3>
+            <div class="table-wrapper" style="margin-top: 32px;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Phase</th>
+                            <th>Total Score</th>
+                            <th>Priority</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mobile Workflow Experience</strong></td>
+                            <td>Wedding Day</td>
+                            <td>67</td>
+                            <td><span class="badge badge-critical">🔥 CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td>Payment Collection Integration</td>
+                            <td>Pre-Wedding</td>
+                            <td>66</td>
+                            <td><span class="badge badge-critical">🔥 CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td>Gallery Delivery Platform</td>
+                            <td>Delivery</td>
+                            <td>66</td>
+                            <td><span class="badge badge-critical">🔥 CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td>Album Design Automation</td>
+                            <td>Post-Delivery</td>
+                            <td>66</td>
+                            <td><span class="badge badge-critical">🔥 CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td>Booking System</td>
+                            <td>Pre-Wedding</td>
+                            <td>60</td>
+                            <td><span class="badge badge-critical">🔥 CRITICAL</span></td>
+                        </tr>
+                        <tr>
+                            <td>Client Retention System</td>
+                            <td>Post-Delivery</td>
+                            <td>56</td>
+                            <td><span class="badge badge-warning">⭐ HIGH</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Review Capability</td>
+                            <td>Post-Production</td>
+                            <td>55</td>
+                            <td><span class="badge badge-warning">⭐ HIGH</span></td>
+                        </tr>
+                        <tr>
+                            <td>Print Order Integration</td>
+                            <td>Post-Delivery</td>
+                            <td>58</td>
+                            <td><span class="badge badge-warning">⭐ HIGH</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Recommended Product Roadmap</h3>
+            <div class="grid-3" style="margin-top: 32px;">
+                <div class="card">
+                    <h3>Phase 1: Mobile Experience (0-6 months)</h3>
+                    <p><strong>Goal:</strong> Expand Share of Workflow to 45%</p>
+                    <ul style="margin-top: 16px;">
+                        <li>Mobile culling app (on-site workflow)</li>
+                        <li>Mobile review/editing (on-the-go workflow)</li>
+                        <li>Client preview sharing</li>
+                        <li>Real-time backup verification</li>
+                        <li>Note-taking integration</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Expected Impact:</strong> Daily engagement, competitive differentiation, higher retention</p>
+                </div>
+                <div class="card">
+                    <h3>Phase 2: Delivery & Payment (6-12 months)</h3>
+                    <p><strong>Goal:</strong> Expand Share of Workflow to 60%</p>
+                    <ul style="margin-top: 16px;">
+                        <li>Integrated gallery delivery platform</li>
+                        <li>Payment processing integration</li>
+                        <li>Engagement tracking</li>
+                        <li>Review collection automation</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Expected Impact:</strong> Owns client relationship, high switching cost, revenue opportunities</p>
+                </div>
+                <div class="card">
+                    <h3>Phase 3: Post-Delivery Revenue (12-18 months)</h3>
+                    <p><strong>Goal:</strong> Expand Share of Workflow to 80%+</p>
+                    <ul style="margin-top: 16px;">
+                        <li>AI-powered album design</li>
+                        <li>Print order integration</li>
+                        <li>Client retention system</li>
+                        <li>Booking system</li>
+                    </ul>
+                    <p style="margin-top: 16px;"><strong>Expected Impact:</strong> Maximum switching cost, complete "one-stop-shop"</p>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 48px; background: linear-gradient(135deg, rgba(34, 197, 94, 0.1), rgba(20, 184, 166, 0.1)); border-color: rgba(34, 197, 94, 0.3);">
+                <h2>Strategic Recommendation</h2>
+                <h3 class="priority-critical" style="margin-top: 24px;">Start with Mobile Experience</h3>
+                <p style="font-size: 18px; margin-top: 16px;"><strong>Why:</strong></p>
+                <ol style="font-size: 16px;">
+                    <li>Highest priority score (67 points)</li>
+                    <li>No competitor offers this</li>
+                    <li>Expands Share of Workflow from 36% to 45%</li>
+                    <li>Creates daily engagement vs. weekly</li>
+                    <li>Strongest competitive differentiation</li>
+                    <li>Foundation for future mobile features</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Conclusion</h2>
+            </div>
+            <div class="card" style="background: var(--bg-elevated); border: 2px solid var(--accent-primary);">
+                <h3>Key Findings</h3>
+                <div class="stat-grid" style="margin-top: 32px;">
+                    <div class="stat-card">
+                        <div class="stat-value">67</div>
+                        <div class="stat-label">Mobile Experience Priority</div>
+                        <p style="margin-top: 12px; font-size: 14px;">Highest priority score</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">36%</div>
+                        <div class="stat-label">Current Coverage</div>
+                        <p style="margin-top: 12px; font-size: 14px;">Culling + Editing</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">45%</div>
+                        <div class="stat-label">With Mobile</div>
+                        <p style="margin-top: 12px; font-size: 14px;">Adding shoot day</p>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">80%+</div>
+                        <div class="stat-label">Target Coverage</div>
+                        <p style="margin-top: 12px; font-size: 14px;">End-to-end workflow</p>
+                    </div>
+                </div>
+                <p style="margin-top: 32px; font-size: 18px;">
+                    <strong>The mobile experience is the #1 priority</strong> because it represents the biggest gap, biggest opportunity, and strongest competitive differentiation. No competitor offers mobile workflow integration, making this a unique opportunity to expand Share of Workflow and create daily engagement with our users.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="padding: 80px 0; text-align: center; border-top: 1px solid var(--border);">
+        <div class="container">
+            <p style="color: var(--text-muted);">Strategic Research Document | CPO Perspective</p>
+            <p style="color: var(--text-muted); margin-top: 8px;">Prepared for: Strategic Product Planning | December 2024</p>
+            <p style="color: var(--text-muted); margin-top: 8px;">Focus: Wedding Photographers | Mobile Product Development</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    // Update active state
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Update active nav on scroll
+        const sections = document.querySelectorAll('section[id]');
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+

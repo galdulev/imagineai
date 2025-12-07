@@ -1,0 +1,1597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI | Opportunity Solution Tree</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Crimson+Pro:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-void: #050507;
+            --bg-deep: #0a0a0e;
+            --bg-surface: #111116;
+            --bg-elevated: #18181f;
+            --bg-card: #1e1e26;
+            
+            --text-bright: #fafafa;
+            --text-primary: #e4e4e7;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --text-dim: #52525b;
+            
+            --accent-electric: #6366f1;
+            --accent-violet: #8b5cf6;
+            --accent-fuchsia: #d946ef;
+            --accent-rose: #f43f5e;
+            --accent-amber: #f59e0b;
+            --accent-emerald: #10b981;
+            --accent-cyan: #06b6d4;
+            --accent-sky: #0ea5e9;
+            
+            --gradient-outcome: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+            --gradient-opportunity: linear-gradient(135deg, #06b6d4 0%, #0ea5e9 100%);
+            --gradient-solution: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            --gradient-experiment: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+            
+            --border-subtle: rgba(255,255,255,0.06);
+            --border-medium: rgba(255,255,255,0.1);
+            --border-strong: rgba(255,255,255,0.15);
+            
+            --glow-electric: 0 0 60px rgba(99,102,241,0.3);
+            --glow-emerald: 0 0 40px rgba(16,185,129,0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Syne', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-void);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Atmospheric Background */
+        .atmosphere {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .atmosphere::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: 
+                radial-gradient(ellipse 40% 30% at 20% 20%, rgba(99,102,241,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 50% 40% at 80% 10%, rgba(139,92,246,0.06) 0%, transparent 50%),
+                radial-gradient(ellipse 30% 50% at 90% 80%, rgba(217,70,239,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse 40% 30% at 10% 90%, rgba(6,182,212,0.06) 0%, transparent 50%);
+            animation: drift 30s ease-in-out infinite;
+        }
+
+        @keyframes drift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(2%, 1%) rotate(1deg); }
+            50% { transform: translate(-1%, 2%) rotate(-1deg); }
+            75% { transform: translate(1%, -1%) rotate(0.5deg); }
+        }
+
+        .grid-pattern {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 20%, transparent 70%);
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 80px 60px 60px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header-inner {
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .framework-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-medium);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--accent-violet);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 32px;
+        }
+
+        .framework-badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent-violet);
+            border-radius: 50%;
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--accent-violet); }
+            50% { opacity: 0.5; box-shadow: 0 0 4px var(--accent-violet); }
+        }
+
+        h1 {
+            font-size: clamp(48px, 7vw, 88px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        h1 .highlight {
+            background: var(--gradient-outcome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-family: 'Crimson Pro', Georgia, serif;
+            font-size: 22px;
+            font-style: italic;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 48px;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            padding: 24px 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 4px;
+        }
+
+        .legend-dot.outcome { background: var(--gradient-outcome); }
+        .legend-dot.opportunity { background: var(--gradient-opportunity); }
+        .legend-dot.solution { background: var(--gradient-solution); }
+        .legend-dot.experiment { background: var(--gradient-experiment); }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1800px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+
+        /* Tree Structure */
+        .tree-container {
+            position: relative;
+        }
+
+        /* Outcome Node */
+        .outcome-node {
+            max-width: 700px;
+            margin: 0 auto 80px;
+            text-align: center;
+        }
+
+        .outcome-card {
+            background: var(--bg-card);
+            border: 2px solid transparent;
+            border-radius: 24px;
+            padding: 48px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glow-electric);
+        }
+
+        .outcome-card::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: var(--gradient-outcome);
+            border-radius: 26px;
+            z-index: -1;
+        }
+
+        .outcome-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--bg-card);
+            border-radius: 22px;
+            z-index: -1;
+        }
+
+        .outcome-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-violet);
+            margin-bottom: 16px;
+        }
+
+        .outcome-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: var(--gradient-outcome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .outcome-metric {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 64px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin: 24px 0;
+            text-shadow: 0 0 40px rgba(99,102,241,0.5);
+        }
+
+        .outcome-desc {
+            font-size: 16px;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Tree Connector Lines */
+        .tree-connector {
+            width: 4px;
+            height: 60px;
+            background: linear-gradient(180deg, var(--accent-violet) 0%, var(--accent-cyan) 100%);
+            margin: 0 auto;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .tree-connector::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            box-shadow: 0 0 20px var(--accent-cyan);
+        }
+
+        /* Opportunity Clusters */
+        .opportunity-section {
+            margin-bottom: 100px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-size: 32px;
+            font-weight: 600;
+            color: var(--text-bright);
+        }
+
+        /* Opportunity Grid */
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 32px;
+        }
+
+        /* Opportunity Card */
+        .opportunity-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .opportunity-card:hover {
+            border-color: var(--accent-cyan);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 60px rgba(6,182,212,0.15);
+        }
+
+        .opportunity-header {
+            padding: 28px 28px 20px;
+            border-bottom: 1px solid var(--border-subtle);
+            position: relative;
+        }
+
+        .opportunity-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--gradient-opportunity);
+        }
+
+        .opportunity-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .opportunity-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+
+        .opportunity-problem {
+            font-size: 14px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .opportunity-tag {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 6px 12px;
+            background: rgba(6,182,212,0.1);
+            border: 1px solid rgba(6,182,212,0.2);
+            border-radius: 100px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Solutions Container */
+        .solutions-container {
+            padding: 24px;
+        }
+
+        .solutions-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--accent-emerald);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .solutions-label::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--accent-emerald);
+            border-radius: 50%;
+        }
+
+        .solution-item {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .solution-item:hover {
+            border-color: var(--accent-emerald);
+            background: rgba(16,185,129,0.05);
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+
+        .solution-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .solution-leverage {
+            flex-shrink: 0;
+            padding: 4px 10px;
+            background: rgba(16,185,129,0.1);
+            border: 1px solid rgba(16,185,129,0.2);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--accent-emerald);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .solution-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        /* Experiments */
+        .experiments {
+            border-top: 1px dashed var(--border-subtle);
+            padding-top: 12px;
+            margin-top: 12px;
+        }
+
+        .experiment-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--accent-amber);
+            margin-bottom: 8px;
+        }
+
+        .experiment-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            padding: 6px 0;
+        }
+
+        .experiment-item::before {
+            content: '→';
+            color: var(--accent-amber);
+            font-weight: 600;
+        }
+
+        /* Impact Indicators */
+        .impact-row {
+            display: flex;
+            gap: 16px;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .impact-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .impact-item strong {
+            color: var(--text-secondary);
+        }
+
+        .impact-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .impact-dot.high { background: var(--accent-emerald); }
+        .impact-dot.medium { background: var(--accent-amber); }
+        .impact-dot.low { background: var(--accent-rose); }
+
+        /* Competitive Advantages Section */
+        .advantages-section {
+            margin: 100px 0;
+            padding: 60px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .advantages-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-solution);
+        }
+
+        .advantages-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .advantages-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+
+        .advantages-subtitle {
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .advantage-card {
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .advantage-card:hover {
+            border-color: var(--accent-emerald);
+            transform: translateY(-2px);
+        }
+
+        .advantage-icon {
+            width: 44px;
+            height: 44px;
+            background: rgba(16,185,129,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 16px;
+        }
+
+        .advantage-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-bright);
+            margin-bottom: 8px;
+        }
+
+        .advantage-desc {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            margin-top: 100px;
+            padding: 60px;
+            background: linear-gradient(135deg, rgba(99,102,241,0.08) 0%, rgba(139,92,246,0.05) 50%, rgba(217,70,239,0.03) 100%);
+            border: 1px solid var(--border-medium);
+            border-radius: 32px;
+        }
+
+        .summary-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .summary-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-bright);
+            margin-bottom: 12px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .summary-stat {
+            text-align: center;
+            padding: 32px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+        }
+
+        .summary-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 48px;
+            font-weight: 700;
+            background: var(--gradient-outcome);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border-subtle);
+            padding: 40px 60px;
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .footer-method {
+            font-size: 12px;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            header, main, footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .opportunity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .advantages-section {
+                padding: 40px 24px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .opportunity-card {
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .opportunity-card:nth-child(1) { animation-delay: 0.1s; }
+        .opportunity-card:nth-child(2) { animation-delay: 0.15s; }
+        .opportunity-card:nth-child(3) { animation-delay: 0.2s; }
+        .opportunity-card:nth-child(4) { animation-delay: 0.25s; }
+        .opportunity-card:nth-child(5) { animation-delay: 0.3s; }
+        .opportunity-card:nth-child(6) { animation-delay: 0.35s; }
+    </style>
+</head>
+<body>
+    <div class="atmosphere"></div>
+    <div class="grid-pattern"></div>
+
+    <header>
+        <div class="header-inner">
+            <div class="framework-badge">Teresa Torres Framework • Opportunity Solution Tree</div>
+            <h1>Increase LTV by <span class="highlight">40%</span></h1>
+            <p class="subtitle">A strategic opportunity solution tree mapping photographer pain points to solutions that leverage Imagen AI's unique competitive advantages.</p>
+            
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-dot outcome"></div>
+                    <span>Desired Outcome</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot opportunity"></div>
+                    <span>Opportunity (User Problem)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot solution"></div>
+                    <span>Solution (Leveraging Moat)</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot experiment"></div>
+                    <span>Experiment to Validate</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="tree-container">
+            <!-- Outcome Node -->
+            <div class="outcome-node">
+                <div class="outcome-card">
+                    <div class="outcome-label">Desired Outcome</div>
+                    <div class="outcome-title">Increase Customer Lifetime Value</div>
+                    <div class="outcome-metric">+40%</div>
+                    <p class="outcome-desc">Drive retention, expand usage, and deepen engagement by solving critical photographer workflow problems through Imagen AI's unique competitive advantages.</p>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <!-- Competitive Advantages Reference -->
+            <div class="advantages-section">
+                <div class="advantages-header">
+                    <div class="advantages-title">🛡️ Imagen AI Competitive Moats</div>
+                    <p class="advantages-subtitle">Every solution must leverage one or more of these unique advantages</p>
+                </div>
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🎯</div>
+                        <div class="advantage-title">Personalized AI Style Learning</div>
+                        <div class="advantage-desc">AI that learns each photographer's unique editing style, creating emotional connection and switching costs.</div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">⭐</div>
+                        <div class="advantage-title">Talent AI Profiles Marketplace</div>
+                        <div class="advantage-desc">Unique marketplace of professional photographer styles—no competitor offers this.</div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">☁️</div>
+                        <div class="advantage-title">Complete Workflow Solution</div>
+                        <div class="advantage-desc">Culling + Editing + Cloud Storage in one platform. End-to-end automation.</div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">⚡</div>
+                        <div class="advantage-title">Cloud Speed (0.5s/image)</div>
+                        <div class="advantage-desc">Fastest processing in market. 96% time savings. Batch processing at scale.</div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">🎬</div>
+                        <div class="advantage-title">Video Editing (First Mover)</div>
+                        <div class="advantage-desc">Style-matched video editing. No competitor offers this capability yet.</div>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-icon">👥</div>
+                        <div class="advantage-title">19K+ Community</div>
+                        <div class="advantage-desc">Strong network effects and community engagement creating switching costs.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunity Cluster 1: Editing Pain -->
+            <div class="opportunity-section">
+                <div class="section-header">
+                    <div class="section-label">Opportunity Cluster 1</div>
+                    <div class="section-title">🔴 Editing Time & Burnout</div>
+                </div>
+
+                <div class="opportunity-grid">
+                    <!-- Opportunity 1 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">⏰</div>
+                            <div class="opportunity-title">Massive Editing Time Investment</div>
+                            <p class="opportunity-problem">"Manual editing of 500-800 images takes 15-25+ hours per wedding"</p>
+                            <span class="opportunity-tag">Critical</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Evolution Tracking</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Show photographers how their AI profile has evolved over time, visualizing the hours saved and style consistency achieved.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">A/B test monthly "style report" emails vs control</div>
+                                    <div class="experiment-item">In-app dashboard showing cumulative hours saved</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Predictive Editing Confidence</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Before processing, show predicted accuracy % based on lighting conditions, helping photographers trust the AI more.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Show confidence scores on 100 users, measure adjustment rate</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 2 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🎨</div>
+                            <div class="opportunity-title">Style Inconsistency Across Sessions</div>
+                            <p class="opportunity-problem">"Maintaining the same look across hundreds of images over hours of editing"</p>
+                            <span class="opportunity-tag">Critical</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Consistency Score</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">After each batch, show a "style consistency" score comparing output to their established profile, building confidence.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Prototype with 50 power users, measure NPS change</div>
+                                    <div class="experiment-item">Compare churn rate of users who see score vs those who don't</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Cross-Session Style Memory</div>
+                                    <span class="solution-leverage">Complete Workflow</span>
+                                </div>
+                                <div class="solution-desc">Remember and apply consistent edits across related shoots (same venue, same couple's engagement + wedding).</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Link shoots by client/venue, measure consistency satisfaction</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> High</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 3 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🔥</div>
+                            <div class="opportunity-title">Creative Burnout</div>
+                            <p class="opportunity-problem">"Endless editing leads to loss of creative passion and artistic vision"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Creative Time Reclaimed Dashboard</div>
+                                    <span class="solution-leverage">Cloud Speed</span>
+                                </div>
+                                <div class="solution-desc">Show photographers exactly how many hours they've reclaimed for creative work, family, or new clients.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Monthly email with "You saved X hours this month"</div>
+                                    <div class="experiment-item">Correlate dashboard engagement with renewal rates</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Exploration Mode</div>
+                                    <span class="solution-leverage">Talent Profiles</span>
+                                </div>
+                                <div class="solution-desc">Let photographers experiment with Talent AI profiles on sample images to reignite creativity without commitment.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Free "style playground" for existing users</div>
+                                    <div class="experiment-item">Track if exploration leads to Talent profile purchases</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunity Cluster 2: Culling Pain -->
+            <div class="opportunity-section">
+                <div class="section-header">
+                    <div class="section-label">Opportunity Cluster 2</div>
+                    <div class="section-title">🟠 Culling & Selection Bottleneck</div>
+                </div>
+
+                <div class="opportunity-grid">
+                    <!-- Opportunity 4 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🧠</div>
+                            <div class="opportunity-title">Decision Fatigue</div>
+                            <p class="opportunity-problem">"Reviewing 2,000-5,000 images to select 500-800 keepers is mentally exhausting"</p>
+                            <span class="opportunity-tag">Critical</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Personalized Culling Preferences</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Learn what each photographer considers a "keeper" beyond technical quality—their subjective preferences for moments, compositions.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Train on user's past selections, measure acceptance rate improvement</div>
+                                    <div class="experiment-item">Survey users on culling satisfaction before/after</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> High</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Smart Grouping by Moment</div>
+                                    <span class="solution-leverage">Complete Workflow</span>
+                                </div>
+                                <div class="solution-desc">Auto-group similar shots (e.g., "first kiss attempts") and recommend the best one, reducing decisions by 80%.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Prototype grouping UI, measure time-to-cull reduction</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 5 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">📊</div>
+                            <div class="opportunity-title">Inconsistent Selection Criteria</div>
+                            <p class="opportunity-problem">"Maintaining consistent standards across hours of culling"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Culling Calibration Sessions</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Periodically ask photographers to rate AI cull decisions, refining the model and keeping them engaged.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Weekly 5-minute calibration prompt, track engagement</div>
+                                    <div class="experiment-item">Measure cull accuracy improvement over time</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 6 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🔄</div>
+                            <div class="opportunity-title">Duplicate Identification</div>
+                            <p class="opportunity-problem">"Manually finding and eliminating near-identical shots"</p>
+                            <span class="opportunity-tag">Medium</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Intelligent Duplicate Stacking</div>
+                                    <span class="solution-leverage">Cloud Speed</span>
+                                </div>
+                                <div class="solution-desc">Instantly group duplicates and auto-select the sharpest/best-exposed version, with one-click override.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Compare duplicate detection accuracy to Aftershoot</div>
+                                    <div class="experiment-item">Measure user override rate to validate accuracy</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunity Cluster 3: Workflow Fragmentation -->
+            <div class="opportunity-section">
+                <div class="section-header">
+                    <div class="section-label">Opportunity Cluster 3</div>
+                    <div class="section-title">🟡 Workflow Fragmentation & Scalability</div>
+                </div>
+
+                <div class="opportunity-grid">
+                    <!-- Opportunity 7 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">📈</div>
+                            <div class="opportunity-title">Scalability Ceiling</div>
+                            <p class="opportunity-problem">"Can't take on more clients because post-production is the bottleneck"</p>
+                            <span class="opportunity-tag">Critical</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Capacity Calculator</div>
+                                    <span class="solution-leverage">Cloud Speed</span>
+                                </div>
+                                <div class="solution-desc">Show photographers exactly how many more weddings they could book based on their time savings with Imagen AI.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Add "You could book X more weddings" to dashboard</div>
+                                    <div class="experiment-item">Survey users who expanded business after using Imagen</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Team/Studio Profiles</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Allow studios to share a master style profile across associate photographers, ensuring brand consistency.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Beta with 10 studios, measure adoption and satisfaction</div>
+                                    <div class="experiment-item">Track if team accounts have higher LTV</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> High</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 8 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🔗</div>
+                            <div class="opportunity-title">Tool Fragmentation</div>
+                            <p class="opportunity-problem">"Managing multiple tools: Lightroom, gallery platforms, cloud storage, album design"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Gallery Platform Integration</div>
+                                    <span class="solution-leverage">Complete Workflow</span>
+                                </div>
+                                <div class="solution-desc">Direct export to Pic-Time, Pixieset, ShootProof with style-matched cover image suggestions.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Partner with Pic-Time for beta integration</div>
+                                    <div class="experiment-item">Measure if integration users have lower churn</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Workflow Automation Recipes</div>
+                                    <span class="solution-leverage">Complete Workflow</span>
+                                </div>
+                                <div class="solution-desc">Pre-built automation templates: "Wedding Workflow" that handles cull → edit → backup → gallery in one click.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Create 3 workflow templates, measure adoption</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 9 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">💰</div>
+                            <div class="opportunity-title">Revenue Limitation</div>
+                            <p class="opportunity-problem">"Time spent editing is time not spent shooting (revenue-generating activity)"</p>
+                            <span class="opportunity-tag">Critical</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">ROI Dashboard</div>
+                                    <span class="solution-leverage">Cloud Speed</span>
+                                </div>
+                                <div class="solution-desc">Calculate and display actual dollar value of time saved based on photographer's hourly rate.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Ask hourly rate at onboarding, show ROI monthly</div>
+                                    <div class="experiment-item">Correlate ROI visibility with renewal rates</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunity Cluster 4: Learning & Growth -->
+            <div class="opportunity-section">
+                <div class="section-header">
+                    <div class="section-label">Opportunity Cluster 4</div>
+                    <div class="section-title">🟢 Learning & Style Evolution</div>
+                </div>
+
+                <div class="opportunity-grid">
+                    <!-- Opportunity 10 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">📚</div>
+                            <div class="opportunity-title">Learning Curve for New Photographers</div>
+                            <p class="opportunity-problem">"May not suit photographers without established style"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Mentorship Program</div>
+                                    <span class="solution-leverage">Talent Profiles</span>
+                                </div>
+                                <div class="solution-desc">New photographers can start with a Talent AI profile and gradually blend in their own edits to develop their style.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">"Starter pack" with 3 Talent profiles for new users</div>
+                                    <div class="experiment-item">Track progression from Talent to Personal profile</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style DNA Analysis</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Analyze a photographer's portfolio and suggest which Talent profiles are closest to their emerging style.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Upload 50 images → get style recommendations</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 11 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🔄</div>
+                            <div class="opportunity-title">Outsourcing Frustrations</div>
+                            <p class="opportunity-problem">"Tried interns, outsourcing—they don't match my style"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">"Better Than Outsourcing" Guarantee</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Marketing and onboarding that directly compares Imagen AI accuracy to typical outsourced editor results.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Case study: Imagen vs outsourced editor blind test</div>
+                                    <div class="experiment-item">Testimonials from photographers who switched from outsourcing</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Consistency Report</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Show percentage of edits that matched style perfectly vs needed adjustment—building trust over time.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Track adjustment rates, show improvement over time</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 12 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">🎬</div>
+                            <div class="opportunity-title">Video Editing Gap</div>
+                            <p class="opportunity-problem">"Photographers increasingly offering video but editing is separate workflow"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style-Matched Video Grading</div>
+                                    <span class="solution-leverage">Video Editing</span>
+                                </div>
+                                <div class="solution-desc">Apply the same Personal AI profile to video clips, ensuring photo and video match perfectly.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Beta with hybrid photo/video shooters</div>
+                                    <div class="experiment-item">Measure upsell rate from photo-only to photo+video</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> High</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Photo-to-Video Style Transfer</div>
+                                    <span class="solution-leverage">Video Editing + AI Style</span>
+                                </div>
+                                <div class="solution-desc">Automatically generate video color grades from existing photo AI profile—zero additional setup.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">One-click video grade from photo profile</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Opportunity Cluster 5: Community & Engagement -->
+            <div class="opportunity-section">
+                <div class="section-header">
+                    <div class="section-label">Opportunity Cluster 5</div>
+                    <div class="section-title">🔵 Community & Engagement</div>
+                </div>
+
+                <div class="opportunity-grid">
+                    <!-- Opportunity 13 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">👥</div>
+                            <div class="opportunity-title">Isolation in Business</div>
+                            <p class="opportunity-problem">"Solo photographers lack community and peer learning"</p>
+                            <span class="opportunity-tag">Medium</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Challenges & Competitions</div>
+                                    <span class="solution-leverage">Community</span>
+                                </div>
+                                <div class="solution-desc">Monthly community challenges where photographers share before/after using different Talent profiles.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Launch first challenge, measure participation</div>
+                                    <div class="experiment-item">Track if challenge participants have higher engagement</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Talent Profile Creator Program</div>
+                                    <span class="solution-leverage">Talent Profiles</span>
+                                </div>
+                                <div class="solution-desc">Invite top users to become Talent profile creators, earning revenue share and building loyalty.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Recruit 10 creators, measure their churn vs average</div>
+                                    <div class="experiment-item">Track revenue from new Talent profiles</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Medium</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 14 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">⏳</div>
+                            <div class="opportunity-title">Onboarding Wait Time Anxiety</div>
+                            <p class="opportunity-problem">"2-3 day wait for AI profile training creates uncertainty"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Training Progress Transparency</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Real-time updates during profile training: "Analyzing color preferences... Learning exposure style..."</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Add progress emails/notifications during training</div>
+                                    <div class="experiment-item">Compare activation rates with/without updates</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot medium"></div><strong>LTV Impact:</strong> Medium</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Instant Start with Talent Profile</div>
+                                    <span class="solution-leverage">Talent Profiles</span>
+                                </div>
+                                <div class="solution-desc">Let new users immediately process images with a Talent profile while their Personal profile trains.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Offer Talent profile during wait, track conversion</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 15 -->
+                    <div class="opportunity-card">
+                        <div class="opportunity-header">
+                            <div class="opportunity-icon">💡</div>
+                            <div class="opportunity-title">Mixed Lighting Limitations</div>
+                            <p class="opportunity-problem">"AI struggles with complex mixed lighting scenarios"</p>
+                            <span class="opportunity-tag">High</span>
+                        </div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions Leveraging Moat</div>
+                            
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Lighting-Specific Sub-Profiles</div>
+                                    <span class="solution-leverage">AI Style Learning</span>
+                                </div>
+                                <div class="solution-desc">Train separate style preferences for different lighting conditions (indoor, outdoor, mixed, flash).</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Auto-detect lighting type, apply appropriate sub-profile</div>
+                                    <div class="experiment-item">Measure adjustment rate reduction for mixed lighting</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot high"></div><strong>LTV Impact:</strong> High</div>
+                                    <div class="impact-item"><strong>Effort:</strong> High</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-item">
+                                <div class="solution-header">
+                                    <div class="solution-title">Community Lighting Solutions</div>
+                                    <span class="solution-leverage">Community</span>
+                                </div>
+                                <div class="solution-desc">Share best practices from community on handling tricky lighting, building knowledge base.</div>
+                                <div class="experiments">
+                                    <div class="experiment-label">Experiments</div>
+                                    <div class="experiment-item">Create lighting tips section in community</div>
+                                </div>
+                                <div class="impact-row">
+                                    <div class="impact-item"><div class="impact-dot low"></div><strong>LTV Impact:</strong> Low</div>
+                                    <div class="impact-item"><strong>Effort:</strong> Low</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Section -->
+            <div class="summary-section">
+                <div class="summary-header">
+                    <div class="summary-title">📊 Opportunity Solution Tree Summary</div>
+                </div>
+                <div class="summary-grid">
+                    <div class="summary-stat">
+                        <div class="summary-value">15</div>
+                        <div class="summary-label">Opportunities</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-value">28</div>
+                        <div class="summary-label">Solutions</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-value">35+</div>
+                        <div class="summary-label">Experiments</div>
+                    </div>
+                    <div class="summary-stat">
+                        <div class="summary-value">6</div>
+                        <div class="summary-label">Moats Leveraged</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="footer-text">Imagen AI • Opportunity Solution Tree • December 2024</p>
+        <p class="footer-method">Framework: Teresa Torres Continuous Discovery • Outcome: Increase LTV by 40%</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.opportunity-card, .advantage-card, .summary-stat').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
+

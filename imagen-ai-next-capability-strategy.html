@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI | Next Capability Strategy Framework</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0a0b;
+            --bg-secondary: #111113;
+            --bg-tertiary: #1a1a1d;
+            --bg-card: #151518;
+            --text-primary: #f5f5f7;
+            --text-secondary: #a1a1a6;
+            --text-muted: #6e6e73;
+            --accent-cyan: #00d4ff;
+            --accent-magenta: #ff00aa;
+            --accent-yellow: #ffd60a;
+            --accent-green: #30d158;
+            --accent-orange: #ff9f0a;
+            --accent-red: #ff453a;
+            --accent-purple: #bf5af2;
+            --border-subtle: rgba(255,255,255,0.08);
+            --border-medium: rgba(255,255,255,0.12);
+            --gradient-primary: linear-gradient(135deg, #00d4ff 0%, #ff00aa 100%);
+            --gradient-card: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .bg-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(0, 212, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 0, 170, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 20%, rgba(191, 90, 242, 0.08) 0%, transparent 50%);
+            animation: bgShift 20s ease-in-out infinite;
+        }
+
+        @keyframes bgShift {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(30px, -30px) scale(1.05); }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .header h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.5rem;
+            font-weight: 400;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .header .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .header .meta {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 20px;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 170, 0.05) 100%);
+            border: 1px solid var(--border-medium);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-primary);
+        }
+
+        .question-card h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.75rem;
+            margin-bottom: 15px;
+            color: var(--accent-cyan);
+        }
+
+        .question-card p {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+        }
+
+        /* Section */
+        .section {
+            margin-bottom: 80px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .section-number {
+            font-family: 'Space Mono', monospace;
+            font-size: 1rem;
+            color: var(--accent-cyan);
+            font-weight: 700;
+        }
+
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            font-weight: 400;
+        }
+
+        .subsection {
+            margin-bottom: 50px;
+        }
+
+        .subsection h3 {
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .subsection h4 {
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .subsection p {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        /* Framework Cards */
+        .framework-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .framework-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .framework-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-cyan);
+        }
+
+        .framework-card .icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .framework-card h4 {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+
+        .framework-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .framework-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .framework-card li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .framework-card li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        /* Opportunity Cards */
+        .opportunity-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .opportunity-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .opportunity-card.recommended {
+            border-color: var(--accent-green);
+            background: linear-gradient(135deg, rgba(48, 209, 88, 0.05) 0%, var(--bg-card) 100%);
+        }
+
+        .opportunity-card.recommended::before {
+            content: '🔥 RECOMMENDED';
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--accent-green);
+            background: rgba(48, 209, 88, 0.15);
+            padding: 4px 10px;
+            border-radius: 6px;
+        }
+
+        .opportunity-card h4 {
+            font-size: 1.1rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            padding-right: 100px;
+        }
+
+        .opportunity-card .pain-level {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-orange);
+            margin-bottom: 10px;
+        }
+
+        .opportunity-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .opportunity-card .metrics {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .opportunity-card .metric {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-muted);
+        }
+
+        /* Research Phase Cards */
+        .phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .phase-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-primary);
+            border-radius: 16px 0 0 16px;
+        }
+
+        .phase-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .phase-title {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .phase-duration {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--accent-cyan);
+            background: rgba(0, 212, 255, 0.1);
+            padding: 4px 12px;
+            border-radius: 6px;
+        }
+
+        .phase-card .methods {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .phase-card .method {
+            font-size: 0.8rem;
+            padding: 6px 12px;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-subtle);
+        }
+
+        .phase-card .outputs {
+            padding-left: 20px;
+        }
+
+        .phase-card .outputs li {
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        /* Hypothesis Cards */
+        .hypothesis-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .hypothesis-statement {
+            background: rgba(0, 212, 255, 0.05);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+            font-style: italic;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+        }
+
+        .test-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .test-detail {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 8px;
+        }
+
+        .test-detail h5 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--accent-magenta);
+            margin-bottom: 8px;
+        }
+
+        .test-detail p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin: 0;
+        }
+
+        /* Tables */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 30px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-card);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        th {
+            padding: 16px 20px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            border-bottom: 2px solid var(--border-medium);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        td {
+            padding: 16px 20px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+            margin: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-subtle);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-cyan);
+            border-radius: 50%;
+            border: 3px solid var(--bg-primary);
+        }
+
+        .timeline-item h4 {
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+
+        .timeline-item p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: var(--border-subtle);
+            margin: 60px 0;
+        }
+
+        /* Highlight */
+        .highlight {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 170, 0.1) 100%);
+            border: 1px solid var(--border-medium);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .highlight h4 {
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+        }
+
+        .highlight p {
+            color: var(--text-secondary);
+        }
+
+        /* Decision Matrix */
+        .decision-matrix {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .matrix-quadrant {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .matrix-quadrant h4 {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 15px;
+        }
+
+        .matrix-quadrant.high-high {
+            border-color: var(--accent-green);
+        }
+
+        .matrix-quadrant.high-high h4 {
+            color: var(--accent-green);
+        }
+
+        .matrix-quadrant.high-low h4 {
+            color: var(--accent-orange);
+        }
+
+        .matrix-quadrant.low-high h4 {
+            color: var(--accent-yellow);
+        }
+
+        .matrix-quadrant.low-low h4 {
+            color: var(--text-muted);
+        }
+
+        .matrix-quadrant ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .matrix-quadrant li {
+            padding: 8px 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .matrix-quadrant li:last-child {
+            border-bottom: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .framework-grid,
+            .opportunity-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .decision-matrix {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        em {
+            color: var(--accent-cyan);
+            font-style: italic;
+        }
+
+        /* Code Block */
+        .code-block {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 30px 0;
+            overflow-x: auto;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.875rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre;
+        }
+
+        /* Callout */
+        .callout {
+            background: rgba(255, 159, 10, 0.1);
+            border-left: 4px solid var(--accent-orange);
+            padding: 20px 25px;
+            margin: 25px 0;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .callout h4 {
+            color: var(--accent-orange);
+            margin-bottom: 10px;
+        }
+
+        .callout p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Insight Box */
+        .insight-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .insight-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--gradient-primary);
+            border-radius: 12px 0 0 12px;
+        }
+
+        .insight-box h4 {
+            color: var(--accent-magenta);
+            margin-bottom: 15px;
+        }
+
+        .insight-box ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .insight-box li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+        }
+
+        .insight-box li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-cyan);
+        }
+
+        /* Priority Badge */
+        .priority {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+        }
+
+        .priority-p0 {
+            background: rgba(255, 69, 58, 0.2);
+            color: var(--accent-red);
+        }
+
+        .priority-p1 {
+            background: rgba(255, 159, 10, 0.2);
+            color: var(--accent-orange);
+        }
+
+        .priority-p2 {
+            background: rgba(191, 90, 242, 0.2);
+            color: var(--accent-purple);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-pattern"></div>
+    
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Next Capability Strategy</h1>
+            <div class="subtitle">Strategic Framework for Imagen AI's One-Stop-Shop Vision</div>
+            <div class="meta">
+                From Editing Tool → Photographer Business Platform<br>
+                December 5, 2025
+            </div>
+        </header>
+
+        <!-- Question Context -->
+        <div class="question-card">
+            <h2>The Strategic Question</h2>
+            <p>Imagen currently solves editing and culling. As we pursue becoming photographers' one-stop-shop, which capability should we develop next? This document provides a comprehensive framework for <strong>considerations</strong>, <strong>research methodology</strong>, and <strong>hypothesis testing</strong>.</p>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Part 1: Considerations -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">PART 1</span>
+                <h2 class="section-title">Considerations for Next Capability</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>Strategic Evaluation Framework</h3>
+                <p>When evaluating potential next capabilities, I would consider these six key dimensions:</p>
+
+                <div class="framework-grid">
+                    <div class="framework-card">
+                        <div class="icon">🔗</div>
+                        <h4>1. Workflow Adjacency</h4>
+                        <p>How naturally does this capability connect to our current offering?</p>
+                        <ul>
+                            <li>Does it come immediately before or after editing?</li>
+                            <li>Can users flow seamlessly between features?</li>
+                            <li>Does it leverage existing user behavior?</li>
+                            <li>Can we use data from editing to enhance it?</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-card">
+                        <div class="icon">😤</div>
+                        <h4>2. Pain Point Severity</h4>
+                        <p>How much does this problem hurt photographers?</p>
+                        <ul>
+                            <li>Pain level score (1-10)</li>
+                            <li>Frequency of occurrence</li>
+                            <li>Time/money currently wasted</li>
+                            <li>Emotional burden on users</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-card">
+                        <div class="icon">💰</div>
+                        <h4>3. Revenue Impact</h4>
+                        <p>How does this capability affect our business model?</p>
+                        <ul>
+                            <li>New revenue streams (transaction fees, upsells)</li>
+                            <li>Retention improvement potential</li>
+                            <li>LTV increase potential</li>
+                            <li>Willingness to pay signals</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-card">
+                        <div class="icon">🏰</div>
+                        <h4>4. Competitive Moat</h4>
+                        <p>How does this strengthen our defensibility?</p>
+                        <ul>
+                            <li>Switching cost creation</li>
+                            <li>Data advantage potential</li>
+                            <li>Network effects possible?</li>
+                            <li>Integration lock-in strength</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-card">
+                        <div class="icon">⚡</div>
+                        <h4>5. Execution Feasibility</h4>
+                        <p>Can we actually build and ship this well?</p>
+                        <ul>
+                            <li>Technical complexity</li>
+                            <li>Time to market</li>
+                            <li>Partnership requirements</li>
+                            <li>Regulatory considerations</li>
+                        </ul>
+                    </div>
+
+                    <div class="framework-card">
+                        <div class="icon">🎯</div>
+                        <h4>6. Strategic Fit</h4>
+                        <p>Does this align with our vision and capabilities?</p>
+                        <ul>
+                            <li>Alignment with "one-stop-shop" vision</li>
+                            <li>Leverage of existing AI expertise</li>
+                            <li>Brand consistency</li>
+                            <li>Customer expectations</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Candidate Capabilities Analysis</h3>
+                <p>Based on our research of 1,526+ reviews and workflow analysis, here are the primary candidates:</p>
+
+                <div class="opportunity-grid">
+                    <div class="opportunity-card recommended">
+                        <h4>Gallery Delivery & Client Portal</h4>
+                        <div class="pain-level">Pain Level: 7/10 | Frequency: Every delivery</div>
+                        <p>Seamless gallery delivery with engagement tracking, client portals, and automated follow-ups.</p>
+                        <div class="metrics">
+                            <span class="metric">95%+ use third-party tools</span>
+                            <span class="metric">Natural workflow extension</span>
+                            <span class="metric">High retention impact</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card recommended">
+                        <h4>Integrated Payment Processing</h4>
+                        <div class="pain-level">Pain Level: 8/10 | Frequency: Every job</div>
+                        <p>Invoice generation, payment collection, automated reminders, and gallery access control.</p>
+                        <div class="metrics">
+                            <span class="metric">85%+ need payment tools</span>
+                            <span class="metric">High switching cost</span>
+                            <span class="metric">Revenue share opportunity</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <h4>Review & Testimonial Collection</h4>
+                        <div class="pain-level">Pain Level: 5/10 | Frequency: Ongoing</div>
+                        <p>Automated review requests, multi-platform integration, and testimonial showcase.</p>
+                        <div class="metrics">
+                            <span class="metric">30% actively collect</span>
+                            <span class="metric">Low effort to build</span>
+                            <span class="metric">Marketing value</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <h4>Product Upsell Engine</h4>
+                        <div class="pain-level">Pain Level: 7/10 | Frequency: Every job</div>
+                        <p>In-gallery shopping, album design, print lab integration, and automated upsell campaigns.</p>
+                        <div class="metrics">
+                            <span class="metric">40% sell products</span>
+                            <span class="metric">20-40% revenue increase</span>
+                            <span class="metric">Commission revenue</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <h4>Social Media Automation</h4>
+                        <div class="pain-level">Pain Level: 7/10 | Frequency: Weekly</div>
+                        <p>Auto-generate posts, content calendar, smart scheduling, and performance analytics.</p>
+                        <div class="metrics">
+                            <span class="metric">80% post on social</span>
+                            <span class="metric">AI content generation</span>
+                            <span class="metric">Marketing value</span>
+                        </div>
+                    </div>
+
+                    <div class="opportunity-card">
+                        <h4>Booking & CRM System</h4>
+                        <div class="pain-level">Pain Level: 8/10 | Frequency: Every lead</div>
+                        <p>Lead management, online booking, contracts, questionnaires, and client portal.</p>
+                        <div class="metrics">
+                            <span class="metric">High complexity</span>
+                            <span class="metric">Maximum switching cost</span>
+                            <span class="metric">Full platform play</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Prioritization Matrix</h3>
+
+                <div class="decision-matrix">
+                    <div class="matrix-quadrant high-high">
+                        <h4>🔥 High Impact + High Feasibility (Do First)</h4>
+                        <ul>
+                            <li><strong>Gallery Delivery Hub</strong> — Natural workflow extension, medium complexity</li>
+                            <li><strong>Payment Processing</strong> — High pain, partner-enabled (Stripe)</li>
+                            <li><strong>Review Collection</strong> — Low effort, high marketing value</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-quadrant high-low">
+                        <h4>⚡ High Impact + Lower Feasibility (Plan For)</h4>
+                        <ul>
+                            <li><strong>Product Upsell Engine</strong> — High revenue, needs lab partnerships</li>
+                            <li><strong>Booking & CRM</strong> — Maximum switching cost, high complexity</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-quadrant low-high">
+                        <h4>✨ Medium Impact + High Feasibility (Quick Wins)</h4>
+                        <ul>
+                            <li><strong>Social Media Automation</strong> — AI-powered, marketing value</li>
+                            <li><strong>Client Communication Hub</strong> — Unified inbox, templates</li>
+                        </ul>
+                    </div>
+
+                    <div class="matrix-quadrant low-low">
+                        <h4>📋 Lower Priority (Defer)</h4>
+                        <ul>
+                            <li><strong>Website Builder</strong> — Crowded market, lower differentiation</li>
+                            <li><strong>Business Intelligence</strong> — Needs full workflow data first</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight">
+                <h4>💡 My Recommendation: Gallery Delivery + Payment Processing</h4>
+                <p>Based on the framework analysis, I would recommend starting with <strong>Gallery Delivery Hub</strong> bundled with <strong>Integrated Payment Processing</strong>. This combination:</p>
+                <ul style="margin-top: 15px; color: var(--text-secondary);">
+                    <li style="margin-bottom: 8px;">• Naturally extends the current workflow (edit → deliver → get paid)</li>
+                    <li style="margin-bottom: 8px;">• Addresses high-pain problems (7-8/10 severity)</li>
+                    <li style="margin-bottom: 8px;">• Creates strong switching costs (payment data, client relationships)</li>
+                    <li style="margin-bottom: 8px;">• Opens new revenue streams (payment processing fees)</li>
+                    <li style="margin-bottom: 8px;">• Keeps users in ecosystem after editing (currently 98% leave)</li>
+                </ul>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Part 2: Research Methodology -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">PART 2</span>
+                <h2 class="section-title">Research Methodology</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>Research Philosophy</h3>
+                <p>I would use a <strong>triangulated research approach</strong> combining quantitative data, qualitative insights, and behavioral signals. The goal is to validate both the <em>problem</em> (do photographers actually struggle with this?) and the <em>solution</em> (would our specific approach solve it?).</p>
+
+                <div class="callout">
+                    <h4>Key Principle: Latent Needs vs. Stated Needs</h4>
+                    <p>Users don't request gallery/payment features because they've already solved these problems with other tools. This is a <strong>latent need</strong>—they don't know they want it until they see it integrated. Our research must uncover these hidden opportunities, not just respond to feature requests.</p>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Research Phases</h3>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 1: Discovery Research</div>
+                        <div class="phase-duration">Weeks 1-3</div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Understand the current state, validate pain points, and identify opportunities.</p>
+                    
+                    <div class="methods">
+                        <span class="method">📊 Internal Data Mining</span>
+                        <span class="method">🎤 User Interviews (n=15-20)</span>
+                        <span class="method">📝 Survey Research (n=500)</span>
+                        <span class="method">🔍 Competitive Analysis</span>
+                    </div>
+
+                    <h5 style="color: var(--accent-cyan); margin-bottom: 10px; font-size: 0.85rem;">Key Outputs:</h5>
+                    <ul class="outputs">
+                        <li>Current tool stack mapping (what tools do users use post-editing?)</li>
+                        <li>Pain point severity ranking with evidence</li>
+                        <li>Workflow friction points identified</li>
+                        <li>Competitive feature gap analysis</li>
+                        <li>User segment differences (wedding vs. portrait vs. commercial)</li>
+                    </ul>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 2: Concept Validation</div>
+                        <div class="phase-duration">Weeks 4-5</div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Test specific solution concepts before building.</p>
+                    
+                    <div class="methods">
+                        <span class="method">🎨 Concept Testing</span>
+                        <span class="method">🚪 Fake Door Tests</span>
+                        <span class="method">💰 Pricing Research</span>
+                        <span class="method">📋 Preference Testing</span>
+                    </div>
+
+                    <h5 style="color: var(--accent-cyan); margin-bottom: 10px; font-size: 0.85rem;">Key Outputs:</h5>
+                    <ul class="outputs">
+                        <li>Concept preference ranking</li>
+                        <li>Willingness to pay data (Van Westendorp)</li>
+                        <li>Feature prioritization from users</li>
+                        <li>Fake door conversion rates</li>
+                        <li>Go/no-go decision framework</li>
+                    </ul>
+                </div>
+
+                <div class="phase-card">
+                    <div class="phase-header">
+                        <div class="phase-title">Phase 3: Solution Validation</div>
+                        <div class="phase-duration">Weeks 6-8</div>
+                    </div>
+                    <p style="color: var(--text-secondary); margin-bottom: 20px;">Test the actual solution with real users before full launch.</p>
+                    
+                    <div class="methods">
+                        <span class="method">🧪 Prototype Testing</span>
+                        <span class="method">👥 Beta Program</span>
+                        <span class="method">📈 Usage Analytics</span>
+                        <span class="method">🔄 Iteration Cycles</span>
+                    </div>
+
+                    <h5 style="color: var(--accent-cyan); margin-bottom: 10px; font-size: 0.85rem;">Key Outputs:</h5>
+                    <ul class="outputs">
+                        <li>Usability issues identified and fixed</li>
+                        <li>Activation rate benchmarks</li>
+                        <li>User satisfaction scores</li>
+                        <li>Retention impact indicators</li>
+                        <li>Launch readiness assessment</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Research Methods Deep Dive</h3>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Method</th>
+                                <th>Purpose</th>
+                                <th>Sample Size</th>
+                                <th>Key Questions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>User Interviews</strong></td>
+                                <td>Deep understanding of workflow, pain, and context</td>
+                                <td>15-20 users across segments</td>
+                                <td>Walk me through your last delivery. What tools did you use after Imagen?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quantitative Survey</strong></td>
+                                <td>Validate pain points at scale, prioritize features</td>
+                                <td>500+ responses</td>
+                                <td>Rank these problems by how much they affect your business (1-10)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tool Stack Survey</strong></td>
+                                <td>Map current solutions, identify integration opportunities</td>
+                                <td>500+ responses</td>
+                                <td>Which tools do you use for gallery delivery, payment, reviews?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fake Door Test</strong></td>
+                                <td>Measure actual interest before building</td>
+                                <td>10,000+ impressions</td>
+                                <td>Click-through rate on "Coming Soon: Gallery Delivery" banner</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Van Westendorp Pricing</strong></td>
+                                <td>Determine willingness to pay for new features</td>
+                                <td>200+ responses</td>
+                                <td>At what price would this be too expensive? A bargain?</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Prototype Testing</strong></td>
+                                <td>Validate usability and value before launch</td>
+                                <td>50 beta users</td>
+                                <td>Task completion rate, satisfaction score, likelihood to use</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Win/Loss Analysis</strong></td>
+                                <td>Understand competitive dynamics</td>
+                                <td>20 churned users</td>
+                                <td>Why did you switch to Aftershoot/other? What would bring you back?</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>User Interview Guide (Sample)</h3>
+
+                <div class="code-block">
+                    <pre>
+INTERVIEW GUIDE: POST-EDITING WORKFLOW RESEARCH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+OPENING (5 min)
+├── Tell me about your photography business
+├── How long have you been using Imagen AI?
+└── What's your typical volume (shoots/month)?
+
+CURRENT WORKFLOW (15 min)
+├── Walk me through what happens after you finish editing in Imagen
+│   ├── [Probe] How do you deliver galleries to clients?
+│   ├── [Probe] How do you collect payment?
+│   └── [Probe] How do you get reviews/testimonials?
+├── What tools do you use for each of these?
+├── How much time do you spend on post-delivery tasks?
+└── What's the most frustrating part of this process?
+
+PAIN POINTS (10 min)
+├── If you could wave a magic wand and fix one thing, what would it be?
+├── Tell me about a time when [delivery/payment/reviews] went wrong
+├── How does this affect your business? Your life?
+└── What have you tried to solve this?
+
+SOLUTION EXPLORATION (10 min)
+├── If Imagen AI offered gallery delivery, how would that fit your workflow?
+├── What features would be most important?
+├── What would make you switch from your current tools?
+└── What concerns would you have?
+
+WRAP-UP (5 min)
+├── Anything else about your workflow we haven't discussed?
+├── Would you be interested in beta testing new features?
+└── Can we follow up with a survey?
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</pre>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Segmentation Strategy</h3>
+                <p>Different photographer segments have different needs. Research should stratify by:</p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Segment</th>
+                                <th>Volume</th>
+                                <th>Primary Pain</th>
+                                <th>Tool Sophistication</th>
+                                <th>Research Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Wedding Photographers</strong></td>
+                                <td>20-50 weddings/year</td>
+                                <td>Delivery speed, payment collection</td>
+                                <td>High (use multiple tools)</td>
+                                <td>🔥 Highest</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Portrait/Family</strong></td>
+                                <td>100-300 sessions/year</td>
+                                <td>Volume management, upsells</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Event Photographers</strong></td>
+                                <td>50-150 events/year</td>
+                                <td>Fast turnaround, bulk delivery</td>
+                                <td>Medium-High</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Real Estate</strong></td>
+                                <td>200-500 shoots/year</td>
+                                <td>Same-day delivery, B2B invoicing</td>
+                                <td>Low-Medium</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Commercial/Studio</strong></td>
+                                <td>Varies widely</td>
+                                <td>Client collaboration, revisions</td>
+                                <td>High</td>
+                                <td>Medium</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Part 3: Hypothesis Testing -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">PART 3</span>
+                <h2 class="section-title">Hypothesis Testing Framework</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>Core Hypotheses to Test</h3>
+                <p>Before building, we need to validate these key assumptions:</p>
+
+                <div class="hypothesis-card">
+                    <div class="hypothesis-statement">
+                        <strong>Hypothesis 1:</strong> "Photographers will adopt gallery delivery features if integrated into Imagen AI, even though they already use other tools like Pixieset or ShootProof."
+                    </div>
+                    <div class="test-details">
+                        <div class="test-detail">
+                            <h5>Test Method</h5>
+                            <p>Fake door test + user interviews</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Success Metric</h5>
+                            <p>>15% click-through on "Coming Soon" banner</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Sample Size</h5>
+                            <p>10,000 banner impressions</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Timeline</h5>
+                            <p>1 week</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hypothesis-card">
+                    <div class="hypothesis-statement">
+                        <strong>Hypothesis 2:</strong> "Photographers are willing to pay for integrated payment processing (transaction fee or subscription) because it saves time and reduces friction."
+                    </div>
+                    <div class="test-details">
+                        <div class="test-detail">
+                            <h5>Test Method</h5>
+                            <p>Van Westendorp pricing research</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Success Metric</h5>
+                            <p>Acceptable price range includes 2.5% + $0.30/transaction</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Sample Size</h5>
+                            <p>200+ survey responses</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Timeline</h5>
+                            <p>2 weeks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hypothesis-card">
+                    <div class="hypothesis-statement">
+                        <strong>Hypothesis 3:</strong> "The workflow integration (edit → deliver → get paid in one platform) creates enough value that users will switch from their current tools."
+                    </div>
+                    <div class="test-details">
+                        <div class="test-detail">
+                            <h5>Test Method</h5>
+                            <p>Prototype testing with beta users</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Success Metric</h5>
+                            <p>>60% of beta users complete full workflow</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Sample Size</h5>
+                            <p>50 beta users</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Timeline</h5>
+                            <p>4 weeks</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="hypothesis-card">
+                    <div class="hypothesis-statement">
+                        <strong>Hypothesis 4:</strong> "Adding post-delivery features will increase user retention by creating additional switching costs and value."
+                    </div>
+                    <div class="test-details">
+                        <div class="test-detail">
+                            <h5>Test Method</h5>
+                            <p>Cohort analysis of beta users vs. control</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Success Metric</h5>
+                            <p>>20% improvement in 90-day retention</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Sample Size</h5>
+                            <p>200 users (100 beta, 100 control)</p>
+                        </div>
+                        <div class="test-detail">
+                            <h5>Timeline</h5>
+                            <p>3 months post-launch</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Experiment Designs</h3>
+
+                <h4>Experiment 1: Fake Door Test</h4>
+                <div class="insight-box">
+                    <h4>Setup</h4>
+                    <ul>
+                        <li>Add banner in Imagen AI dashboard: "Coming Soon: Deliver galleries & get paid—all in Imagen"</li>
+                        <li>Track click-through rate to waitlist signup page</li>
+                        <li>Capture email + short survey (what tools do you currently use?)</li>
+                        <li>A/B test different value propositions</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Variant</th>
+                                <th>Message</th>
+                                <th>Hypothesis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A (Control)</td>
+                                <td>"Coming Soon: Gallery Delivery"</td>
+                                <td>Baseline interest</td>
+                            </tr>
+                            <tr>
+                                <td>B (Time Savings)</td>
+                                <td>"Deliver galleries in 1 click—no more switching tools"</td>
+                                <td>Time savings resonates</td>
+                            </tr>
+                            <tr>
+                                <td>C (Payment Focus)</td>
+                                <td>"Get paid faster with integrated invoicing"</td>
+                                <td>Payment pain is primary</td>
+                            </tr>
+                            <tr>
+                                <td>D (All-in-One)</td>
+                                <td>"Edit → Deliver → Get Paid—all in Imagen"</td>
+                                <td>Integration is the value</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin-top: 40px;">Experiment 2: Prototype Usability Test</h4>
+                <div class="insight-box">
+                    <h4>Setup</h4>
+                    <ul>
+                        <li>Build clickable prototype of gallery delivery + payment flow</li>
+                        <li>Recruit 15-20 users for moderated testing sessions</li>
+                        <li>Assign tasks: "Deliver this gallery to your client and send an invoice"</li>
+                        <li>Measure task completion, time, errors, satisfaction</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Target</th>
+                                <th>Measurement Method</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Task Completion Rate</td>
+                                <td>>90%</td>
+                                <td>Observation + screen recording</td>
+                            </tr>
+                            <tr>
+                                <td>Time to Complete</td>
+                                <td><5 minutes</td>
+                                <td>Timer from task start to finish</td>
+                            </tr>
+                            <tr>
+                                <td>Error Rate</td>
+                                <td><2 errors per task</td>
+                                <td>Count of mistakes/backtracking</td>
+                            </tr>
+                            <tr>
+                                <td>System Usability Scale (SUS)</td>
+                                <td>>80</td>
+                                <td>Post-task survey</td>
+                            </tr>
+                            <tr>
+                                <td>Likelihood to Use</td>
+                                <td>>8/10</td>
+                                <td>"How likely would you use this?" (1-10)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="margin-top: 40px;">Experiment 3: Beta Program</h4>
+                <div class="insight-box">
+                    <h4>Setup</h4>
+                    <ul>
+                        <li>Recruit 50 power users for 4-week beta program</li>
+                        <li>Provide full access to gallery delivery + payment features</li>
+                        <li>Track usage metrics, gather weekly feedback</li>
+                        <li>Compare retention and engagement to control group</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Success Metric</th>
+                                <th>Target</th>
+                                <th>Measurement</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Feature Activation</td>
+                                <td>>70% use within first week</td>
+                                <td>Product analytics</td>
+                            </tr>
+                            <tr>
+                                <td>Galleries Delivered</td>
+                                <td>>3 galleries per user</td>
+                                <td>Product analytics</td>
+                            </tr>
+                            <tr>
+                                <td>Payment Processing</td>
+                                <td>>50% process at least 1 payment</td>
+                                <td>Payment system data</td>
+                            </tr>
+                            <tr>
+                                <td>Weekly Active Usage</td>
+                                <td>>60% WAU</td>
+                                <td>Product analytics</td>
+                            </tr>
+                            <tr>
+                                <td>NPS</td>
+                                <td>>50</td>
+                                <td>Weekly survey</td>
+                            </tr>
+                            <tr>
+                                <td>Qualitative Feedback</td>
+                                <td>Positive sentiment >80%</td>
+                                <td>Interview + survey analysis</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Decision Framework</h3>
+                <p>Based on test results, here's how we would decide to proceed:</p>
+
+                <div class="code-block">
+                    <pre>
+DECISION TREE: GO / NO-GO / ITERATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FAKE DOOR TEST RESULTS
+├── >15% CTR → ✅ Strong signal, proceed to prototype
+├── 8-15% CTR → ⚠️ Moderate signal, refine value prop and retest
+└── <8% CTR → ❌ Weak signal, reconsider approach or pivot
+
+PROTOTYPE TEST RESULTS
+├── SUS >80, Completion >90% → ✅ Proceed to beta
+├── SUS 68-80, Completion 80-90% → ⚠️ Iterate on design, retest
+└── SUS <68, Completion <80% → ❌ Major redesign needed
+
+BETA PROGRAM RESULTS
+├── Activation >70%, NPS >50 → ✅ FULL LAUNCH
+├── Activation 50-70%, NPS 30-50 → ⚠️ Limited launch, continue iteration
+└── Activation <50%, NPS <30 → ❌ Do not launch, reassess strategy
+
+RETENTION IMPACT (3 months post-launch)
+├── >20% retention improvement → ✅ Double down, expand features
+├── 10-20% improvement → ⚠️ On track, continue monitoring
+└── <10% improvement → ❌ Reassess value proposition
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━</pre>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Research Timeline</h3>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h4>Week 1-2: Discovery Kickoff</h4>
+                        <p>Launch user survey, begin user interviews, set up fake door test, analyze internal data</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Week 3: Synthesis & Insights</h4>
+                        <p>Analyze survey results, complete interviews, synthesize findings, identify key insights</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Week 4: Concept Development</h4>
+                        <p>Create solution concepts, run pricing research, prepare prototypes</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Week 5-6: Prototype Testing</h4>
+                        <p>Conduct usability tests, iterate on designs, finalize MVP scope</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Week 7-10: Beta Program</h4>
+                        <p>Recruit beta users, launch beta, gather feedback, iterate</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h4>Week 11-12: Launch Decision</h4>
+                        <p>Analyze beta results, make go/no-go decision, prepare for launch</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Summary -->
+        <section class="section">
+            <div class="section-header">
+                <span class="section-number">SUMMARY</span>
+                <h2 class="section-title">Putting It All Together</h2>
+            </div>
+
+            <div class="subsection">
+                <h3>The Recommendation</h3>
+
+                <div class="highlight">
+                    <h4>🎯 Next Capability: Gallery Delivery + Payment Processing</h4>
+                    <p style="margin-bottom: 20px;">Based on our analysis of 1,526+ reviews, workflow mapping, and strategic considerations, I recommend building an integrated <strong>Gallery Delivery Hub with Payment Processing</strong> as the next capability.</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px;">
+                        <div>
+                            <h5 style="color: var(--accent-cyan); font-size: 0.85rem; margin-bottom: 8px;">WHY THIS?</h5>
+                            <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
+                                <li>Natural workflow extension</li>
+                                <li>High pain (7-8/10)</li>
+                                <li>95%+ use third-party tools</li>
+                                <li>Creates switching costs</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: var(--accent-cyan); font-size: 0.85rem; margin-bottom: 8px;">EXPECTED IMPACT</h5>
+                            <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
+                                <li>+15-20% retention</li>
+                                <li>New revenue stream</li>
+                                <li>+40% time in product</li>
+                                <li>Stronger competitive moat</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: var(--accent-cyan); font-size: 0.85rem; margin-bottom: 8px;">RESEARCH APPROACH</h5>
+                            <ul style="color: var(--text-secondary); font-size: 0.9rem; padding-left: 20px;">
+                                <li>Fake door test (1 week)</li>
+                                <li>User interviews (n=20)</li>
+                                <li>Prototype testing (2 weeks)</li>
+                                <li>Beta program (4 weeks)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Key Success Metrics</h3>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metric</th>
+                                <th>Current</th>
+                                <th>Target (6 months)</th>
+                                <th>How to Measure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Time in product post-edit</strong></td>
+                                <td>~0 minutes</td>
+                                <td>15+ minutes</td>
+                                <td>Session analytics</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Feature adoption rate</strong></td>
+                                <td>N/A</td>
+                                <td>70%+ of active users</td>
+                                <td>Feature usage tracking</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Galleries delivered via Imagen</strong></td>
+                                <td>0</td>
+                                <td>50%+ of user galleries</td>
+                                <td>Delivery analytics</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Payment processing volume</strong></td>
+                                <td>$0</td>
+                                <td>$X GMV/month</td>
+                                <td>Payment system data</td>
+                            </tr>
+                            <tr>
+                                <td><strong>90-day retention</strong></td>
+                                <td>X%</td>
+                                <td>X + 20%</td>
+                                <td>Cohort analysis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>NPS</strong></td>
+                                <td>+78</td>
+                                <td>+85</td>
+                                <td>User surveys</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="subsection">
+                <h3>Risk Mitigation</h3>
+
+                <div class="framework-grid">
+                    <div class="framework-card">
+                        <h4>Risk: Users won't switch from existing tools</h4>
+                        <p><strong>Mitigation:</strong> Focus on seamless integration value. Make the "edit → deliver" flow so smooth that switching is the path of least resistance. Offer migration tools from Pixieset/ShootProof.</p>
+                    </div>
+                    <div class="framework-card">
+                        <h4>Risk: Payment processing is complex</h4>
+                        <p><strong>Mitigation:</strong> Partner with Stripe Connect rather than building from scratch. Leverage their compliance, fraud prevention, and global coverage.</p>
+                    </div>
+                    <div class="framework-card">
+                        <h4>Risk: Feature bloat dilutes core value</h4>
+                        <p><strong>Mitigation:</strong> Keep editing/culling excellence as the foundation. New features are optional add-ons, not replacements. Maintain support quality.</p>
+                    </div>
+                    <div class="framework-card">
+                        <h4>Risk: Competitive response</h4>
+                        <p><strong>Mitigation:</strong> Move fast (6-month timeline). Our advantage is the integrated workflow—competitors would need to build editing AI to match.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 40px 0; color: var(--text-muted); font-family: 'Space Mono', monospace; font-size: 0.875rem;">
+            <p><em>Strategic Framework Document</em></p>
+            <p><em>Based on analysis of 1,526+ user reviews and workflow research</em></p>
+            <p><em>December 5, 2025</em></p>
+        </footer>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,1883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI | Market & Competitive Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #08090a;
+            --bg-card: #0f1012;
+            --bg-elevated: #161719;
+            --bg-hover: #1c1d20;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --accent-violet: #8b5cf6;
+            --border-color: rgba(255,255,255,0.06);
+            --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+            --gradient-emerald: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            --gradient-rose: linear-gradient(135deg, #f43f5e 0%, #f59e0b 100%);
+            --gradient-violet: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .hero-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            background: 
+                radial-gradient(ellipse 100% 100% at 0% 0%, rgba(59,130,246,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 80% 80% at 100% 100%, rgba(6,182,212,0.08) 0%, transparent 50%),
+                radial-gradient(ellipse 60% 60% at 50% 50%, rgba(139,92,246,0.05) 0%, transparent 50%);
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 100px 60px 80px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .badge-row {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border-color);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-blue { color: var(--accent-blue); }
+        .badge-emerald { color: var(--accent-emerald); }
+        .badge-amber { color: var(--accent-amber); }
+
+        .badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .badge-blue .badge-dot { background: var(--accent-blue); }
+        .badge-emerald .badge-dot { background: var(--accent-emerald); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(42px, 7vw, 84px);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+
+        .gradient-text {
+            background: var(--gradient-blue);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 700px;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(8,9,10,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 0 60px;
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 4px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding: 12px 0;
+        }
+
+        .nav-inner::-webkit-scrollbar { display: none; }
+
+        .nav-btn {
+            padding: 10px 20px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 8px;
+            color: var(--text-muted);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-elevated);
+        }
+
+        .nav-btn.active {
+            background: var(--text-primary);
+            color: var(--bg-dark);
+            border-color: var(--text-primary);
+        }
+
+        /* Main Content */
+        main {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+
+        section {
+            margin-bottom: 80px;
+            display: none;
+        }
+
+        section.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        h4 {
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-intro {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 800px;
+            margin-bottom: 48px;
+            line-height: 1.7;
+        }
+
+        /* Stats Grid */
+        .stats-hero {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 60px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+        }
+
+        .stat-card.blue::before { background: var(--gradient-blue); }
+        .stat-card.emerald::before { background: var(--gradient-emerald); }
+        .stat-card.amber::before { background: var(--gradient-rose); }
+        .stat-card.violet::before { background: var(--gradient-violet); }
+
+        .stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.02em;
+        }
+
+        .stat-card.blue .stat-value { color: var(--accent-blue); }
+        .stat-card.emerald .stat-value { color: var(--accent-emerald); }
+        .stat-card.amber .stat-value { color: var(--accent-amber); }
+        .stat-card.violet .stat-value { color: var(--accent-violet); }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .stat-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 12px;
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .stat-change.up {
+            background: rgba(16,185,129,0.1);
+            color: var(--accent-emerald);
+        }
+
+        /* Market Size Visualization */
+        .market-viz {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .market-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 40px;
+            height: 300px;
+            padding: 40px 0;
+        }
+
+        .market-bar-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .market-bar {
+            width: 100%;
+            max-width: 120px;
+            border-radius: 12px 12px 0 0;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding-top: 16px;
+            transition: all 0.5s ease;
+        }
+
+        .market-bar-2024 {
+            height: 80px;
+            background: linear-gradient(180deg, var(--accent-blue) 0%, rgba(59,130,246,0.3) 100%);
+        }
+
+        .market-bar-2032 {
+            height: 260px;
+            background: linear-gradient(180deg, var(--accent-emerald) 0%, rgba(16,185,129,0.3) 100%);
+        }
+
+        .market-bar-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .market-bar-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .market-growth-arrow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 0 20px;
+        }
+
+        .growth-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            background: var(--gradient-emerald);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .growth-label {
+            font-size: 12px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Competitor Cards */
+        .competitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .competitor-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .competitor-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-4px);
+        }
+
+        .competitor-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .competitor-logo {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .competitor-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .competitor-type {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .threat-level {
+            margin-left: auto;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .threat-high { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+        .threat-medium { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+        .threat-low { background: rgba(16,185,129,0.15); color: var(--accent-emerald); }
+
+        .competitor-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .feature-tag {
+            padding: 6px 12px;
+            background: var(--bg-elevated);
+            border-radius: 6px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Positioning Map */
+        .positioning-map {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 48px;
+            margin-bottom: 40px;
+            position: relative;
+            height: 500px;
+        }
+
+        .map-grid {
+            position: absolute;
+            top: 48px;
+            left: 48px;
+            right: 48px;
+            bottom: 48px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 2px;
+        }
+
+        .map-quadrant {
+            background: var(--bg-elevated);
+            border-radius: 8px;
+            opacity: 0.3;
+        }
+
+        .map-axis-x, .map-axis-y {
+            position: absolute;
+            background: var(--border-color);
+        }
+
+        .map-axis-x {
+            left: 48px;
+            right: 48px;
+            top: 50%;
+            height: 2px;
+        }
+
+        .map-axis-y {
+            top: 48px;
+            bottom: 48px;
+            left: 50%;
+            width: 2px;
+        }
+
+        .map-label {
+            position: absolute;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+        }
+
+        .map-label.top { top: 20px; left: 50%; transform: translateX(-50%); }
+        .map-label.bottom { bottom: 20px; left: 50%; transform: translateX(-50%); }
+        .map-label.left { left: 20px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+        .map-label.right { right: 20px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+        .map-point {
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            z-index: 10;
+        }
+
+        .map-point:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+
+        .map-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+        }
+
+        .map-point-name {
+            font-size: 12px;
+            font-weight: 600;
+            white-space: nowrap;
+            padding: 4px 12px;
+            background: var(--bg-dark);
+            border-radius: 100px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Trend Cards */
+        .trends-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .trend-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trend-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-family: 'Syne', sans-serif;
+            font-size: 48px;
+            font-weight: 800;
+            color: var(--bg-elevated);
+            line-height: 1;
+        }
+
+        .trend-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+
+        .trend-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .trend-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .trend-impact {
+            display: flex;
+            gap: 8px;
+        }
+
+        .impact-tag {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .impact-threat { background: rgba(244,63,94,0.1); color: var(--accent-rose); }
+        .impact-opportunity { background: rgba(16,185,129,0.1); color: var(--accent-emerald); }
+
+        /* Sentiment Analysis */
+        .sentiment-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .sentiment-bar-container {
+            margin: 32px 0;
+        }
+
+        .sentiment-bar {
+            display: flex;
+            height: 48px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .sentiment-segment {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sentiment-segment:hover {
+            filter: brightness(1.1);
+        }
+
+        .sentiment-positive { background: var(--accent-emerald); }
+        .sentiment-neutral { background: var(--text-muted); }
+        .sentiment-negative { background: var(--accent-rose); }
+
+        .sentiment-legend {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 4px;
+        }
+
+        /* Review Themes */
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .theme-card {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        .theme-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .theme-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .theme-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .theme-list {
+            list-style: none;
+        }
+
+        .theme-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .theme-list li:last-child {
+            border-bottom: none;
+        }
+
+        .theme-frequency {
+            padding: 4px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .freq-high { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+        .freq-medium { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+        .freq-low { background: rgba(107,114,128,0.15); color: var(--text-muted); }
+
+        /* SWOT Grid */
+        .swot-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .swot-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .swot-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .swot-strengths::before { background: var(--accent-emerald); }
+        .swot-weaknesses::before { background: var(--accent-rose); }
+        .swot-opportunities::before { background: var(--accent-blue); }
+        .swot-threats::before { background: var(--accent-amber); }
+
+        .swot-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .swot-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .swot-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .swot-list {
+            list-style: none;
+        }
+
+        .swot-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .swot-list li:last-child {
+            border-bottom: none;
+        }
+
+        .swot-list li::before {
+            content: '→';
+            color: var(--text-muted);
+            flex-shrink: 0;
+        }
+
+        /* Data Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background: var(--bg-elevated);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+
+        .data-table th:first-child { border-radius: 8px 0 0 0; }
+        .data-table th:last-child { border-radius: 0 8px 0 0; }
+
+        .data-table td {
+            font-size: 14px;
+        }
+
+        .data-table tr:hover td {
+            background: var(--bg-elevated);
+        }
+
+        .check-icon { color: var(--accent-emerald); }
+        .cross-icon { color: var(--accent-rose); }
+
+        /* Quote Cards */
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .quote-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px;
+            position: relative;
+        }
+
+        .quote-mark {
+            position: absolute;
+            top: 16px;
+            left: 24px;
+            font-family: 'Syne', sans-serif;
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1;
+            opacity: 0.1;
+        }
+
+        .quote-text {
+            font-size: 15px;
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.7;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .quote-role {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            border-top: 1px solid var(--border-color);
+            padding: 40px 60px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .footer-sources {
+            margin-top: 16px;
+            font-size: 12px;
+            color: var(--text-muted);
+            opacity: 0.6;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            header, main, nav, footer {
+                padding-left: 32px;
+                padding-right: 32px;
+            }
+
+            .stats-hero {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .swot-grid, .themes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .market-bars {
+                flex-direction: column;
+                height: auto;
+                align-items: center;
+            }
+
+            .market-bar {
+                width: 100%;
+                max-width: none;
+                height: 80px !important;
+                border-radius: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header, main, nav, footer {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+
+            .stats-hero {
+                grid-template-columns: 1fr;
+            }
+
+            .positioning-map {
+                height: 400px;
+            }
+
+            .badge-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-bg"></div>
+    <div class="noise-overlay"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="badge-row">
+                <span class="badge badge-blue">
+                    <span class="badge-dot"></span>
+                    Market Intelligence
+                </span>
+                <span class="badge badge-emerald">
+                    <span class="badge-dot"></span>
+                    Competitive Analysis
+                </span>
+                <span class="badge badge-amber">December 2024</span>
+            </div>
+            <h1>Market & Competitive<br><span class="gradient-text">Intelligence</span></h1>
+            <p class="subtitle">Comprehensive analysis of the AI image editing market landscape, industry trends, competitive positioning, user sentiment, and strategic opportunities for Imagen AI.</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="nav-inner">
+            <button class="nav-btn active" data-section="overview">Market Overview</button>
+            <button class="nav-btn" data-section="landscape">Competitive Landscape</button>
+            <button class="nav-btn" data-section="trends">Industry Trends</button>
+            <button class="nav-btn" data-section="sentiment">Sentiment Analysis</button>
+            <button class="nav-btn" data-section="swot">SWOT Analysis</button>
+            <button class="nav-btn" data-section="strategy">Strategic Insights</button>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Market Overview Section -->
+        <section id="overview" class="active">
+            <h2>Market Overview</h2>
+            <p class="section-intro">The AI image editing market is experiencing explosive growth, driven by rising demand for visual content, time pressure on creators, and advancing AI capabilities. Imagen AI is well-positioned in this rapidly expanding market.</p>
+
+            <!-- Key Stats -->
+            <div class="stats-hero">
+                <div class="stat-card blue">
+                    <div class="stat-value">$7.77B</div>
+                    <div class="stat-label">2024 Market Size</div>
+                    <div class="stat-change up">↑ Global AI Image Editor</div>
+                </div>
+                <div class="stat-card emerald">
+                    <div class="stat-value">$66.65B</div>
+                    <div class="stat-label">2032 Projected</div>
+                    <div class="stat-change up">↑ 8.6x Growth</div>
+                </div>
+                <div class="stat-card amber">
+                    <div class="stat-value">30.92%</div>
+                    <div class="stat-label">CAGR</div>
+                    <div class="stat-change up">↑ Compound Growth</div>
+                </div>
+                <div class="stat-card violet">
+                    <div class="stat-value">$2.03B</div>
+                    <div class="stat-label">US Market 2024</div>
+                    <div class="stat-change up">↑ 26% of Global</div>
+                </div>
+            </div>
+
+            <!-- Market Size Visualization -->
+            <div class="market-viz">
+                <h3>Market Growth Trajectory</h3>
+                <div class="market-bars">
+                    <div class="market-bar-group">
+                        <div class="market-bar market-bar-2024">
+                            <span class="market-bar-value">$7.77B</span>
+                        </div>
+                        <span class="market-bar-label">2024</span>
+                    </div>
+                    <div class="market-growth-arrow">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color: var(--accent-emerald);">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                        <div class="growth-value">+758%</div>
+                        <div class="growth-label">Growth</div>
+                    </div>
+                    <div class="market-bar-group">
+                        <div class="market-bar market-bar-2032">
+                            <span class="market-bar-value">$66.65B</span>
+                        </div>
+                        <span class="market-bar-label">2032</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Drivers -->
+            <h3>Key Market Drivers</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #3b82f6, #06b6d4);">📈</div>
+                        <div>
+                            <div class="competitor-name">Visual Content Demand</div>
+                            <div class="competitor-type">Primary Driver</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Rising demand across media, advertising, e-commerce, and entertainment sectors for high-quality visual content at scale.</p>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #f59e0b, #f43f5e);">⏱️</div>
+                        <div>
+                            <div class="competitor-name">Time Pressure</div>
+                            <div class="competitor-type">Workflow Driver</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Photographers face increasing pressure to deliver faster turnarounds while maintaining quality and consistency.</p>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #10b981, #06b6d4);">💰</div>
+                        <div>
+                            <div class="competitor-name">Labor Cost Reduction</div>
+                            <div class="competitor-type">Economic Driver</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">AI automation reduces manual editing hours, lowering operational costs and enabling scalability.</p>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #8b5cf6, #3b82f6);">🤖</div>
+                        <div>
+                            <div class="competitor-name">AI Advancement</div>
+                            <div class="competitor-type">Technology Driver</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary);">Rapid advancement in AI/ML capabilities enabling sophisticated, personalized editing at unprecedented speed.</p>
+                </div>
+            </div>
+
+            <!-- Market Segments Table -->
+            <h3 style="margin-top: 48px;">Key Market Segments</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>Description</th>
+                        <th>Growth Drivers</th>
+                        <th>Imagen AI Fit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Professional Photography</strong></td>
+                        <td>Wedding, portrait, event, commercial</td>
+                        <td>High volume, time pressure, style consistency</td>
+                        <td><span class="check-icon">✓ Primary Target</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>E-commerce</strong></td>
+                        <td>Product photography</td>
+                        <td>Scale, consistency, speed</td>
+                        <td><span class="check-icon">✓ Expansion Target</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Real Estate</strong></td>
+                        <td>Property photography</td>
+                        <td>Volume, quick turnaround</td>
+                        <td><span class="check-icon">✓ Active Market</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Media & Advertising</strong></td>
+                        <td>Editorial, marketing content</td>
+                        <td>Quality, efficiency, brand consistency</td>
+                        <td><span style="color: var(--accent-amber);">◐ Opportunity</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Social Media</strong></td>
+                        <td>Content creators, influencers</td>
+                        <td>Speed, filters, effects</td>
+                        <td><span style="color: var(--text-muted);">○ Adjacent</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Competitive Landscape Section -->
+        <section id="landscape">
+            <h2>Competitive Landscape</h2>
+            <p class="section-intro">Imagen AI operates in a competitive market with direct AI editing competitors, indirect general editing tools, and alternative solutions. Understanding this landscape is critical for strategic positioning.</p>
+
+            <!-- Positioning Map -->
+            <div class="positioning-map">
+                <h3 style="margin-bottom: 24px;">Competitive Positioning Map</h3>
+                <div class="map-grid">
+                    <div class="map-quadrant"></div>
+                    <div class="map-quadrant"></div>
+                    <div class="map-quadrant"></div>
+                    <div class="map-quadrant"></div>
+                </div>
+                <div class="map-axis-x"></div>
+                <div class="map-axis-y"></div>
+                <div class="map-label top">High Personalization</div>
+                <div class="map-label bottom">Low Personalization</div>
+                <div class="map-label left">Batch / Workflow Focus</div>
+                <div class="map-label right">Single Image Focus</div>
+
+                <!-- Competitor Points -->
+                <div class="map-point" style="top: 22%; left: 28%;">
+                    <div class="map-dot" style="background: var(--gradient-blue);">IA</div>
+                    <span class="map-point-name">Imagen AI</span>
+                </div>
+                <div class="map-point" style="top: 35%; left: 42%;">
+                    <div class="map-dot" style="background: linear-gradient(135deg, #f43f5e, #f59e0b);">AS</div>
+                    <span class="map-point-name">Aftershoot</span>
+                </div>
+                <div class="map-point" style="top: 28%; left: 68%;">
+                    <div class="map-dot" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">IT</div>
+                    <span class="map-point-name">Impossible Things</span>
+                </div>
+                <div class="map-point" style="top: 55%; left: 25%;">
+                    <div class="map-dot" style="background: linear-gradient(135deg, #6b7280, #9ca3af);">NP</div>
+                    <span class="map-point-name">Neurapix</span>
+                </div>
+                <div class="map-point" style="top: 65%; left: 72%;">
+                    <div class="map-dot" style="background: linear-gradient(135deg, #f59e0b, #eab308);">LN</div>
+                    <span class="map-point-name">Luminar Neo</span>
+                </div>
+                <div class="map-point" style="top: 75%; left: 55%;">
+                    <div class="map-dot" style="background: linear-gradient(135deg, #ef4444, #dc2626);">AL</div>
+                    <span class="map-point-name">Adobe LR</span>
+                </div>
+            </div>
+
+            <!-- Direct Competitors -->
+            <h3>Direct Competitors</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #f43f5e, #f59e0b);">AS</div>
+                        <div>
+                            <div class="competitor-name">Aftershoot</div>
+                            <div class="competitor-type">AI Culling + Editing</div>
+                        </div>
+                        <span class="threat-level threat-high">High Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Desktop-based solution with local processing. Flat monthly subscription pricing appeals to budget-conscious users.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Local Processing</span>
+                        <span class="feature-tag">Flat Rate</span>
+                        <span class="feature-tag">Capture One</span>
+                        <span class="feature-tag">Face Recognition</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #8b5cf6, #a855f7);">IT</div>
+                        <div>
+                            <div class="competitor-name">Impossible Things</div>
+                            <div class="competitor-type">AI Editing</div>
+                        </div>
+                        <span class="threat-level threat-low">Low Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Lightroom plugin focused on high-quality AI edits. Positions on quality over speed.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Quality Focus</span>
+                        <span class="feature-tag">Style Learning</span>
+                        <span class="feature-tag">LR Plugin</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #6b7280, #9ca3af);">NP</div>
+                        <div>
+                            <div class="competitor-name">Neurapix</div>
+                            <div class="competitor-type">AI Editing</div>
+                        </div>
+                        <span class="threat-level threat-low">Low Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Personalized profiles with batch editing. Smaller market presence and less mature AI.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Personal Profiles</span>
+                        <span class="feature-tag">Batch Edit</span>
+                        <span class="feature-tag">Quick Learning</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #10b981, #06b6d4);">FP</div>
+                        <div>
+                            <div class="competitor-name">FilterPixel</div>
+                            <div class="competitor-type">Culling + Editing</div>
+                        </div>
+                        <span class="threat-level threat-low">Low Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">AI-powered selection and editing focused on workflow automation.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Culling Focus</span>
+                        <span class="feature-tag">Workflow</span>
+                        <span class="feature-tag">Automation</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indirect Competitors -->
+            <h3 style="margin-top: 48px;">Indirect Competitors & Alternatives</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #ef4444, #dc2626);">A</div>
+                        <div>
+                            <div class="competitor-name">Adobe Lightroom</div>
+                            <div class="competitor-type">Industry Standard</div>
+                        </div>
+                        <span class="threat-level threat-high">High Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Industry standard with growing AI features (Firefly, Denoise, Masking). Long-term existential threat if they add style learning.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Incumbent</span>
+                        <span class="feature-tag">AI Denoise</span>
+                        <span class="feature-tag">Firefly</span>
+                        <span class="feature-tag">Millions of Users</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #f59e0b, #eab308);">LN</div>
+                        <div>
+                            <div class="competitor-name">Luminar Neo</div>
+                            <div class="competitor-type">Desktop AI Editor</div>
+                        </div>
+                        <span class="threat-level threat-medium">Medium</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">One-time purchase with Sky AI, portrait enhancement. More creative-focused than workflow-focused.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Sky AI</span>
+                        <span class="feature-tag">Portrait AI</span>
+                        <span class="feature-tag">One-time Purchase</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #3b82f6, #1d4ed8);">TP</div>
+                        <div>
+                            <div class="competitor-name">Topaz Photo AI</div>
+                            <div class="competitor-type">Enhancement Specialist</div>
+                        </div>
+                        <span class="threat-level threat-low">Low Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Best-in-class noise reduction, sharpening, upscaling. Complementary tool, not replacement.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Denoise</span>
+                        <span class="feature-tag">Sharpen</span>
+                        <span class="feature-tag">Upscale</span>
+                    </div>
+                </div>
+                <div class="competitor-card">
+                    <div class="competitor-header">
+                        <div class="competitor-logo" style="background: linear-gradient(135deg, #6b7280, #4b5563);">📋</div>
+                        <div>
+                            <div class="competitor-name">Presets & LUTs</div>
+                            <div class="competitor-type">Traditional Alternative</div>
+                        </div>
+                        <span class="threat-level threat-low">Low Threat</span>
+                    </div>
+                    <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">One-time purchase, low cost. But generic, same settings for all photos. No learning capability.</p>
+                    <div class="competitor-features">
+                        <span class="feature-tag">Low Cost</span>
+                        <span class="feature-tag">One-time</span>
+                        <span class="feature-tag">Generic</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Comparison -->
+            <h3 style="margin-top: 48px;">Feature Comparison Matrix</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Imagen AI</th>
+                        <th>Aftershoot</th>
+                        <th>Impossible Things</th>
+                        <th>Adobe LR</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>AI Editing</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span style="color: var(--accent-amber);">◐</span></td>
+                    </tr>
+                    <tr>
+                        <td>AI Culling</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Personal AI Profiles</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Talent AI Profiles</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Processing</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Local Processing</td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Capture One Support</td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td>N/A</td>
+                    </tr>
+                    <tr>
+                        <td>Cloud Storage</td>
+                        <td><span class="check-icon">✓</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="check-icon">✓</span></td>
+                    </tr>
+                    <tr>
+                        <td>Video Editing</td>
+                        <td><span class="check-icon">✓ New</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                        <td><span class="cross-icon">✗</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Industry Trends Section -->
+        <section id="trends">
+            <h2>Industry Trends</h2>
+            <p class="section-intro">Five major trends are shaping the AI photo editing market. Understanding these trends and their implications is critical for strategic planning and competitive positioning.</p>
+
+            <div class="trends-grid">
+                <div class="trend-card">
+                    <div class="trend-number">01</div>
+                    <div class="trend-icon" style="background: rgba(59,130,246,0.15); color: var(--accent-blue);">🤖</div>
+                    <div class="trend-title">AI Integration in Creative Tools</div>
+                    <div class="trend-desc">Adobe and other major players are rapidly integrating AI capabilities (Firefly, generative AI) into their tools, potentially commoditizing basic AI editing features.</div>
+                    <div class="trend-impact">
+                        <span class="impact-tag impact-threat">⚠️ Adobe Threat</span>
+                        <span class="impact-tag impact-opportunity">✓ Specialization Moat</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-number">02</div>
+                    <div class="trend-icon" style="background: rgba(16,185,129,0.15); color: var(--accent-emerald);">⚡</div>
+                    <div class="trend-title">Workflow Automation</div>
+                    <div class="trend-desc">Photographers seeking end-to-end automation, not just individual tools. Complete workflow solutions (cull → edit → deliver) are becoming the expectation.</div>
+                    <div class="trend-impact">
+                        <span class="impact-tag impact-opportunity">✓ Complete Solution</span>
+                        <span class="impact-tag impact-opportunity">✓ Expand Coverage</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-number">03</div>
+                    <div class="trend-icon" style="background: rgba(245,158,11,0.15); color: var(--accent-amber);">📱</div>
+                    <div class="trend-title">Mobile & On-the-Go Editing</div>
+                    <div class="trend-desc">Growing demand for mobile editing capabilities. Photographers want to preview and approve edits from anywhere, not just at their desktop.</div>
+                    <div class="trend-impact">
+                        <span class="impact-tag impact-threat">⚠️ Desktop Gap</span>
+                        <span class="impact-tag impact-opportunity">✓ Mobile App Opp</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-number">04</div>
+                    <div class="trend-icon" style="background: rgba(139,92,246,0.15); color: var(--accent-violet);">🔒</div>
+                    <div class="trend-title">Privacy & Local Processing</div>
+                    <div class="trend-desc">Some users prefer local processing for privacy and speed. Competitors like Aftershoot are capitalizing on this with desktop-based solutions.</div>
+                    <div class="trend-impact">
+                        <span class="impact-tag impact-threat">⚠️ Cloud Concern</span>
+                        <span class="impact-tag impact-opportunity">✓ Hybrid Option</span>
+                    </div>
+                </div>
+                <div class="trend-card">
+                    <div class="trend-number">05</div>
+                    <div class="trend-icon" style="background: rgba(244,63,94,0.15); color: var(--accent-rose);">🎯</div>
+                    <div class="trend-title">Vertical Specialization</div>
+                    <div class="trend-desc">Specialized solutions for specific photography niches (real estate, school portraits, sports) are gaining traction over generic tools.</div>
+                    <div class="trend-impact">
+                        <span class="impact-tag impact-opportunity">✓ Already Expanding</span>
+                        <span class="impact-tag impact-opportunity">✓ Niche Profiles</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sentiment Analysis Section -->
+        <section id="sentiment">
+            <h2>User Sentiment Analysis</h2>
+            <p class="section-intro">Analysis of 1,500+ reviews from Trustpilot, SaaSworthy, Software Advice, Reddit, and photographer communities reveals overwhelmingly positive sentiment with specific areas for improvement.</p>
+
+            <!-- Sentiment Overview -->
+            <div class="sentiment-container">
+                <h3>Overall Sentiment Distribution</h3>
+                <div class="sentiment-bar-container">
+                    <div class="sentiment-bar">
+                        <div class="sentiment-segment sentiment-positive" style="width: 85%;">85% Positive</div>
+                        <div class="sentiment-segment sentiment-neutral" style="width: 8%;"></div>
+                        <div class="sentiment-segment sentiment-negative" style="width: 7%;"></div>
+                    </div>
+                    <div class="sentiment-legend">
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: var(--accent-emerald);"></div>
+                            <span>Positive (85%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: var(--text-muted);"></div>
+                            <span>Neutral (8%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-dot" style="background: var(--accent-rose);"></div>
+                            <span>Negative (7%)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating Stats -->
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 32px;">
+                    <div style="text-align: center; padding: 20px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--accent-amber);">4.7</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Average Rating</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--accent-blue);">91%</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">5-Star Trustpilot</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--text-primary);">1,500+</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Total Reviews</div>
+                    </div>
+                    <div style="text-align: center; padding: 20px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--accent-emerald);">92%</div>
+                        <div style="font-size: 12px; color: var(--text-muted);">Recommend</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Theme Analysis -->
+            <div class="themes-grid">
+                <div class="theme-card" style="border-left: 3px solid var(--accent-emerald);">
+                    <div class="theme-header">
+                        <div class="theme-icon" style="background: rgba(16,185,129,0.15); color: var(--accent-emerald);">💚</div>
+                        <div class="theme-title">Top Delighters</div>
+                    </div>
+                    <ul class="theme-list">
+                        <li>
+                            <span>Time Savings (96% reduction)</span>
+                            <span class="theme-frequency freq-high">85%</span>
+                        </li>
+                        <li>
+                            <span>Style Accuracy (90% perfect)</span>
+                            <span class="theme-frequency freq-high">75%</span>
+                        </li>
+                        <li>
+                            <span>Customer Support</span>
+                            <span class="theme-frequency freq-medium">60%</span>
+                        </li>
+                        <li>
+                            <span>Lightroom Integration</span>
+                            <span class="theme-frequency freq-medium">50%</span>
+                        </li>
+                        <li>
+                            <span>Business Growth Impact</span>
+                            <span class="theme-frequency freq-medium">40%</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="theme-card" style="border-left: 3px solid var(--accent-rose);">
+                    <div class="theme-header">
+                        <div class="theme-icon" style="background: rgba(244,63,94,0.15); color: var(--accent-rose);">⚠️</div>
+                        <div class="theme-title">Pain Points</div>
+                    </div>
+                    <ul class="theme-list">
+                        <li>
+                            <span>Mixed Lighting Handling</span>
+                            <span class="theme-frequency freq-medium">25%</span>
+                        </li>
+                        <li>
+                            <span>Pricing Transparency</span>
+                            <span class="theme-frequency freq-medium">20%</span>
+                        </li>
+                        <li>
+                            <span>Initial Learning Curve</span>
+                            <span class="theme-frequency freq-medium">20%</span>
+                        </li>
+                        <li>
+                            <span>10% Need Adjustments</span>
+                            <span class="theme-frequency freq-medium">15%</span>
+                        </li>
+                        <li>
+                            <span>No Capture One Support</span>
+                            <span class="theme-frequency freq-low">10%</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- User Quotes -->
+            <h3 style="margin-top: 48px;">User Testimonials</h3>
+            <div class="quotes-grid">
+                <div class="quote-card">
+                    <div class="quote-mark">"</div>
+                    <p class="quote-text">Imagen AI has elevated me to SuperHero status with my clients. Instead of taking 5-7 business days, I can get images back by the next day.</p>
+                    <div class="quote-author">Shellee Fisher</div>
+                    <div class="quote-role">Professional Photographer</div>
+                </div>
+                <div class="quote-card">
+                    <div class="quote-mark">"</div>
+                    <p class="quote-text">After using Imagen AI on over 100,000 images over two years, nearly 90% of the images required no adjustment.</p>
+                    <div class="quote-author">Zach Nichols</div>
+                    <div class="quote-role">Wedding Photographer</div>
+                </div>
+                <div class="quote-card">
+                    <div class="quote-mark">"</div>
+                    <p class="quote-text">Full wedding galleries, which typically took around 16 hours to edit, have been reduced to about 2 hours with Imagen AI.</p>
+                    <div class="quote-author">Formed From Light</div>
+                    <div class="quote-role">Wedding Photography Studio</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SWOT Section -->
+        <section id="swot">
+            <h2>SWOT Analysis</h2>
+            <p class="section-intro">Strategic assessment of Imagen AI's competitive position, identifying internal strengths and weaknesses, as well as external opportunities and threats.</p>
+
+            <div class="swot-grid">
+                <div class="swot-card swot-strengths">
+                    <div class="swot-header">
+                        <div class="swot-icon" style="background: rgba(16,185,129,0.15); color: var(--accent-emerald);">💪</div>
+                        <div class="swot-title" style="color: var(--accent-emerald);">Strengths</div>
+                    </div>
+                    <ul class="swot-list">
+                        <li>Personalized AI technology that learns individual styles</li>
+                        <li>Complete workflow solution (cull, edit, store)</li>
+                        <li>Profitable business with strong funding ($34M)</li>
+                        <li>Seamless Adobe Lightroom integration</li>
+                        <li>Unique Talent AI Profiles marketplace</li>
+                        <li>Strong customer base (tens of thousands)</li>
+                        <li>Cloud speed (0.5s per image)</li>
+                        <li>Video editing capabilities (new)</li>
+                    </ul>
+                </div>
+                <div class="swot-card swot-weaknesses">
+                    <div class="swot-header">
+                        <div class="swot-icon" style="background: rgba(244,63,94,0.15); color: var(--accent-rose);">⚠️</div>
+                        <div class="swot-title" style="color: var(--accent-rose);">Weaknesses</div>
+                    </div>
+                    <ul class="swot-list">
+                        <li>Cloud-dependent (requires internet connection)</li>
+                        <li>Per-image pricing unpredictable for some users</li>
+                        <li>No Capture One support</li>
+                        <li>Mixed lighting handling limitations</li>
+                        <li>2-3 day onboarding wait time</li>
+                        <li>Requires 3-5K sample photos for training</li>
+                        <li>Focused niche limits addressable market</li>
+                    </ul>
+                </div>
+                <div class="swot-card swot-opportunities">
+                    <div class="swot-header">
+                        <div class="swot-icon" style="background: rgba(59,130,246,0.15); color: var(--accent-blue);">🚀</div>
+                        <div class="swot-title" style="color: var(--accent-blue);">Opportunities</div>
+                    </div>
+                    <ul class="swot-list">
+                        <li>Rapidly growing market ($66B by 2032)</li>
+                        <li>Vertical expansion (real estate, school portraits)</li>
+                        <li>Video editing expansion</li>
+                        <li>M&A to expand capabilities</li>
+                        <li>International market expansion</li>
+                        <li>Enterprise/business tier offerings</li>
+                        <li>Capture One integration</li>
+                        <li>Mobile companion app</li>
+                    </ul>
+                </div>
+                <div class="swot-card swot-threats">
+                    <div class="swot-header">
+                        <div class="swot-icon" style="background: rgba(245,158,11,0.15); color: var(--accent-amber);">⚡</div>
+                        <div class="swot-title" style="color: var(--accent-amber);">Threats</div>
+                    </div>
+                    <ul class="swot-list">
+                        <li>Adobe integrating similar AI features</li>
+                        <li>Competitors offering local processing options</li>
+                        <li>Price competition from new entrants</li>
+                        <li>Economic downturn affecting photographer spending</li>
+                        <li>AI commoditization reducing differentiation</li>
+                        <li>Privacy concerns about cloud processing</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Strategic Insights Section -->
+        <section id="strategy">
+            <h2>Strategic Insights</h2>
+            <p class="section-intro">Key strategic recommendations based on market analysis, competitive positioning, and user sentiment to strengthen Imagen AI's market position.</p>
+
+            <!-- Company Profile -->
+            <div class="market-viz" style="margin-bottom: 40px;">
+                <h3>Imagen AI Company Profile</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 24px;">
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Founded</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700;">2020</div>
+                    </div>
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Total Funding</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-emerald);">$34M</div>
+                    </div>
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">ARR</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-blue);">$10M+</div>
+                    </div>
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Photos/Year</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700;">150M+</div>
+                    </div>
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Community</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700;">19K+</div>
+                    </div>
+                    <div style="padding: 24px; background: var(--bg-elevated); border-radius: 12px;">
+                        <div style="font-size: 12px; color: var(--text-muted); margin-bottom: 8px;">Status</div>
+                        <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: var(--accent-emerald);">Profitable</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Strategic Recommendations -->
+            <h3>Strategic Recommendations</h3>
+            <div class="competitor-grid">
+                <div class="competitor-card" style="border-left: 3px solid var(--accent-emerald);">
+                    <h4 style="color: var(--accent-emerald); margin-bottom: 16px;">Defend Core Strengths</h4>
+                    <ul style="list-style: none; font-size: 14px; color: var(--text-secondary);">
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Deepen personalization — Continue advancing AI learning capabilities</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Expand Talent Profiles — Grow marketplace of professional styles</li>
+                        <li style="padding: 8px 0;">→ Strengthen Adobe partnership — Ensure seamless integration remains best-in-class</li>
+                    </ul>
+                </div>
+                <div class="competitor-card" style="border-left: 3px solid var(--accent-rose);">
+                    <h4 style="color: var(--accent-rose); margin-bottom: 16px;">Address Weaknesses</h4>
+                    <ul style="list-style: none; font-size: 14px; color: var(--text-secondary);">
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Capture One integration — Expand addressable market by 20-30%</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Pricing transparency — Add pricing calculator to reduce surprise</li>
+                        <li style="padding: 8px 0;">→ Mixed lighting improvement — Enhance algorithm for complex scenarios</li>
+                    </ul>
+                </div>
+                <div class="competitor-card" style="border-left: 3px solid var(--accent-blue);">
+                    <h4 style="color: var(--accent-blue); margin-bottom: 16px;">Capitalize on Opportunities</h4>
+                    <ul style="list-style: none; font-size: 14px; color: var(--text-secondary);">
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Vertical expansion — Develop specialized features for real estate, school portraits</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Video editing — Expand video capabilities (already in progress)</li>
+                        <li style="padding: 8px 0;">→ Enterprise tier — Target photography studios and agencies</li>
+                    </ul>
+                </div>
+                <div class="competitor-card" style="border-left: 3px solid var(--accent-amber);">
+                    <h4 style="color: var(--accent-amber); margin-bottom: 16px;">Mitigate Threats</h4>
+                    <ul style="list-style: none; font-size: 14px; color: var(--text-secondary);">
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Innovation velocity — Stay ahead of Adobe's AI features</li>
+                        <li style="padding: 8px 0; border-bottom: 1px solid var(--border-color);">→ Customer lock-in — Build switching costs through profile investment</li>
+                        <li style="padding: 8px 0;">→ Community building — Create strong user community and ecosystem</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Key Metrics to Monitor -->
+            <h3 style="margin-top: 48px;">Key Metrics to Monitor</h3>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Metric</th>
+                        <th>Why It Matters</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Market</strong></td>
+                        <td>AI image editing market growth</td>
+                        <td>Validates market opportunity</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Market</strong></td>
+                        <td>Adobe AI feature releases</td>
+                        <td>Primary competitive threat indicator</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Competitive</strong></td>
+                        <td>Aftershoot pricing changes</td>
+                        <td>Direct competitor pricing pressure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Competitive</strong></td>
+                        <td>Feature parity analysis</td>
+                        <td>Differentiation maintenance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Company</strong></td>
+                        <td>Customer churn rate</td>
+                        <td>Product-market fit indicator</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Company</strong></td>
+                        <td>Net Promoter Score (NPS)</td>
+                        <td>Customer satisfaction and advocacy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Company</strong></td>
+                        <td>Photos processed per user</td>
+                        <td>Engagement and value delivery</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p class="footer-text">Imagen AI Market & Competitive Intelligence Report • December 2024</p>
+            <p class="footer-sources">Sources: GlobeNewswire, TechCrunch, BusinessWire, Trustpilot, SaaSworthy, G2, Reddit, Photographer Communities</p>
+        </div>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        const navButtons = document.querySelectorAll('.nav-btn');
+        const sections = document.querySelectorAll('section');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const targetSection = btn.dataset.section;
+                
+                navButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                sections.forEach(s => s.classList.remove('active'));
+                document.getElementById(targetSection).classList.add('active');
+                
+                document.querySelector('main').scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Subtle parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth - 0.5;
+            const y = e.clientY / window.innerHeight - 0.5;
+            
+            document.querySelector('.hero-bg').style.transform = 
+                `translate(${x * 30}px, ${y * 30}px)`;
+        });
+    </script>
+</body>
+</html>
+

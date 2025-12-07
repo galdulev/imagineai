@@ -1,0 +1,291 @@
+IMAGEN AI - GALLERY DELIVERY COMPETITIVE ANALYSIS
+FigJam Import Format
+
+===== SECTION: MARKET LANDSCAPE =====
+
+Market Size (2024):
+- Photo Gallery Software: $500M+ | Growth: 12% CAGR
+- Photography CRM: $300M+ | Growth: 15% CAGR
+- Photography E-commerce: $800M+ | Growth: 18% CAGR
+- Photography Business Platform: $1.5B+ | Growth: 14% CAGR
+
+===== SECTION: COMPETITIVE CATEGORIES =====
+
+Gallery Delivery:
+- Players: Pixieset, ShootProof, Pic-Time, CloudSpot, Zenfolio
+- Relationship: Direct expansion opportunity
+
+CRM/Booking:
+- Players: Honeybook, Dubsado, 17hats, Studio Ninja
+- Relationship: Adjacent opportunity
+
+Payment Processing:
+- Players: Stripe, Square, PayPal
+- Relationship: Integration opportunity
+
+All-in-One:
+- Players: ShootProof, Pixieset Pro, Sprout Studio
+- Relationship: Direct competition if Imagen expands
+
+===== COMPETITOR: PIXIESET =====
+
+Founded: 2013 | HQ: Vancouver, Canada
+Users: 100,000+ photographers
+Pricing: $0-25/month
+Position: Market leader in gallery delivery
+
+STRENGTHS:
+✅ Beautiful, modern interface (⭐⭐⭐⭐⭐)
+✅ Easy to use (⭐⭐⭐⭐⭐)
+✅ Strong free tier
+✅ Print integration (⭐⭐⭐⭐)
+✅ Mobile app (⭐⭐⭐⭐)
+
+WEAKNESSES:
+❌ No editing integration
+❌ Basic CRM (⭐⭐)
+❌ Limited automation
+❌ No payment reminders
+❌ No AI features
+
+User Quote: "Pixieset is beautiful but it's just one piece of my workflow"
+
+Threat Level: HIGH (if Imagen expands)
+Defensibility: MEDIUM (beautiful but not integrated)
+
+===== COMPETITOR: SHOOTPROOF =====
+
+Founded: 2010 | HQ: Atlanta, Georgia
+Users: 80,000+ photographers
+Pricing: $10-35/month
+Position: Strong #2 in gallery delivery
+
+STRENGTHS:
+✅ More complete solution (gallery + contracts + payments)
+✅ Strong print sales (⭐⭐⭐⭐⭐)
+✅ Integrated payments (⭐⭐⭐⭐)
+✅ Better automation (⭐⭐⭐)
+
+WEAKNESSES:
+❌ Dated interface
+❌ Steeper learning curve
+❌ No editing integration
+❌ Per-photo pricing (unpredictable)
+
+User Quote: "ShootProof does more but it's not as pretty as Pixieset"
+
+Threat Level: HIGH (more complete solution)
+Defensibility: MEDIUM (more features but less elegant)
+
+===== COMPETITOR: PIC-TIME =====
+
+Founded: 2016 | HQ: Israel
+Users: 50,000+ photographers
+Pricing: $15-40/month
+Position: Fast-growing challenger
+
+STRENGTHS:
+✅ AI-powered features (auto-select highlights) (⭐⭐⭐⭐)
+✅ Automated slideshows (⭐⭐⭐⭐⭐)
+✅ Advanced analytics (⭐⭐⭐⭐)
+✅ Modern tech stack
+✅ Strong automation (⭐⭐⭐⭐)
+
+WEAKNESSES:
+❌ Newer player (less established)
+❌ No editing integration
+❌ Limited CRM
+❌ Pricing can add up
+
+User Quote: "Pic-Time's automation is amazing. I get notified when clients view"
+
+Threat Level: HIGH (innovation leader)
+Defensibility: MEDIUM (AI features are replicable)
+
+===== COMPETITOR: HONEYBOOK =====
+
+Founded: 2013 | HQ: San Francisco
+Users: 100,000+ creative professionals
+Pricing: $19-79/month
+Position: Leader in creative business management
+
+STRENGTHS:
+✅ Beautiful interface (⭐⭐⭐⭐⭐)
+✅ Complete CRM (⭐⭐⭐⭐⭐)
+✅ Strong automation (⭐⭐⭐⭐)
+✅ Payment integration (⭐⭐⭐⭐⭐)
+✅ Contracts & proposals (⭐⭐⭐⭐⭐)
+
+WEAKNESSES:
+❌ No gallery delivery
+❌ No editing integration
+❌ No print sales
+❌ Generic creative focus (not photographer-specific)
+
+User Quote: "I love Honeybook but I still need Pixieset for galleries"
+
+Threat Level: MEDIUM (different category)
+Partnership Potential: HIGH
+
+===== COMPETITOR: SPROUT STUDIO =====
+
+Founded: 2014 | HQ: Canada
+Pricing: $34-58/month
+Position: Most complete all-in-one
+
+STRENGTHS:
+✅ Most complete solution (CRM + gallery + contracts + booking)
+✅ Photography-specific (⭐⭐⭐⭐)
+✅ Single subscription
+✅ Good automation (⭐⭐⭐)
+
+WEAKNESSES:
+❌ Jack of all trades, master of none
+❌ No editing integration
+❌ No AI features
+❌ Less beautiful galleries than Pixieset
+
+User Quote: "Sprout does everything but nothing exceptionally"
+
+Threat Level: MEDIUM (direct competition)
+Defensibility: MEDIUM (complete but not excellent)
+
+===== SECTION: FEATURE GAP MATRIX =====
+
+AI Editing:
+- Pixieset: ❌ | ShootProof: ❌ | Pic-Time: ❌ | Honeybook: ❌ | Sprout: ❌
+- Imagen AI: ✅ | Opportunity: ✅
+
+Gallery Delivery:
+- Pixieset: ✅ | ShootProof: ✅ | Pic-Time: ✅ | Honeybook: ❌ | Sprout: ✅
+- Imagen AI: ❌ | Opportunity: 🎯
+
+Payment Processing:
+- Pixieset: ⚠️ | ShootProof: ✅ | Pic-Time: ⚠️ | Honeybook: ✅ | Sprout: ✅
+- Imagen AI: ❌ | Opportunity: 🎯
+
+CRM:
+- Pixieset: ⚠️ | ShootProof: ⚠️ | Pic-Time: ⚠️ | Honeybook: ✅ | Sprout: ✅
+- Imagen AI: ❌ | Opportunity: 🎯
+
+Print Sales:
+- Pixieset: ✅ | ShootProof: ✅ | Pic-Time: ✅ | Honeybook: ❌ | Sprout: ✅
+- Imagen AI: ❌ | Opportunity: 🎯
+
+Automation:
+- Pixieset: ⚠️ | ShootProof: ⚠️ | Pic-Time: ✅ | Honeybook: ✅ | Sprout: ✅
+- Imagen AI: ❌ | Opportunity: 🎯
+
+===== SECTION: THE INTEGRATION GAP =====
+
+CURRENT STATE (Photographer Tool Stack):
+- EDITING: Imagen AI ($X/month)
+- DELIVERY: Pixieset ($15/month)
+- PAYMENT: Stripe (2.9% + 30¢)
+- CRM: Honeybook ($39/month)
+TOTAL: 4 tools, 4 logins, 4 subscriptions, NO integration
+
+IMAGEN AI OPPORTUNITY:
+- ONE PLATFORM: Edit → Deliver → Payment → Engage → Upsell
+- ONE LOGIN
+- ONE SUBSCRIPTION
+- SEAMLESS DATA FLOW
+- AUTOMATED HANDOFFS
+
+===== SECTION: PRICING LANDSCAPE =====
+
+Pixieset: Tiered | Entry: $10/month | Full: $25/month | Fees: 15% commission
+ShootProof: Per-photo | Entry: $10/month | Full: $35/month | Fees: 15% commission
+Pic-Time: Per-photo | Entry: $15/month | Full: $40/month | Fees: 10% commission
+Honeybook: Tiered | Entry: $19/month | Full: $79/month | Fees: 2.9% + 25¢
+Sprout Studio: Tiered | Entry: $34/month | Full: $58/month | Fees: 10% commission
+Imagen AI: Per-image | Entry: $0.05/image | Full: Variable | Fees: N/A
+
+===== SECTION: USER SWITCHING ANALYSIS =====
+
+WHY SWITCH TO IMAGEN AI:
+✅ Workflow integration (⭐⭐⭐⭐⭐) | "I wish one tool did it all"
+✅ AI advantages (⭐⭐⭐⭐⭐) | "No one else has AI editing"
+✅ Time savings (⭐⭐⭐⭐) | "Seamless workflow saves hours"
+✅ Cost consolidation (⭐⭐⭐⭐) | "Fewer subscriptions"
+✅ Trust in Imagen (⭐⭐⭐⭐) | "Already love their editing"
+
+WHY STAY WITH COMPETITORS:
+⚠️ Switching cost (⭐⭐⭐⭐) | Need migration tools
+⚠️ Feature depth (⭐⭐⭐) | Phased rollout needed
+⚠️ Existing galleries (⭐⭐⭐) | Gallery import required
+⚠️ Client familiarity (⭐⭐) | Similar experience needed
+⚠️ Price sensitivity (⭐⭐) | Competitive pricing required
+
+===== SECTION: COMPETITIVE POSITIONING =====
+
+Recommended Position: "The only platform where photos go from camera to client without leaving the app"
+
+Tagline: "Edit. Deliver. Get Paid. All in One."
+
+Key Differentiator: AI-powered editing integrated with delivery
+
+Target Emotion: Relief from tool fragmentation
+
+Proof Point: "Save 5 hours per wedding with seamless workflow"
+
+===== SECTION: STRATEGIC RECOMMENDATIONS =====
+
+DEFEND CORE STRENGTHS:
+- Deepen style learning (P0)
+- Expand Talent Profiles (P1)
+- Strengthen community (P1)
+- Adobe partnership (P0)
+
+ADDRESS WEAKNESSES:
+- Develop Capture One plugin (P1)
+- Add pricing calculator (P1)
+- Improve mixed lighting algorithm (P2)
+- Reduce onboarding wait time (P2)
+
+CAPITALIZE ON OPPORTUNITIES:
+- Develop studio/agency tier (P1)
+- Accelerate video expansion (P1)
+- Create niche profiles (P2)
+- Develop mobile app (P3)
+
+MITIGATE THREATS:
+- Innovate faster than Adobe (P0)
+- Continuous AI improvement (P0)
+- Emphasize value over cost (P1)
+- Build switching costs (P1)
+
+===== SECTION: COMPETITIVE THREAT SUMMARY =====
+
+Pixieset: Threat Level: HIGH | Advantage: Beautiful galleries | Counter: Integration
+ShootProof: Threat Level: HIGH | Advantage: Complete features | Counter: Modern UX
+Pic-Time: Threat Level: HIGH | Advantage: AI features | Counter: Style learning
+Honeybook: Threat Level: MEDIUM | Advantage: Strong CRM | Counter: Gallery integration
+Sprout Studio: Threat Level: MEDIUM | Advantage: All-in-one | Counter: AI + editing
+Adobe Lightroom: Threat Level: MEDIUM-HIGH | Advantage: Incumbent | Counter: Specialization
+
+===== SECTION: KEY INSIGHTS =====
+
+INSIGHT 1: Fragmented Market
+- No clear all-in-one winner
+- Integration gap exists
+- User frustration with tool fatigue
+
+INSIGHT 2: Imagen's Unique Position
+- Only platform with AI editing
+- 2-3 year head start on style learning
+- 19K+ photographer community
+- 4.8/5 rating, +78 NPS
+
+INSIGHT 3: Competitive Advantages
+- AI editing moat
+- Style learning emotional connection
+- Existing user base to upsell
+- Trust and satisfaction
+
+INSIGHT 4: Risks to Monitor
+- Adobe could add gallery to Lightroom
+- Pic-Time already adding AI features
+- Execution complexity is high
+- Market is price-sensitive
+

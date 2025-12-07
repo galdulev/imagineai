@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI Thematic Analysis - UX Research Report</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .quote-box {
+            border-left: 4px solid #667eea;
+            background: linear-gradient(to right, rgba(102, 126, 234, 0.05), transparent);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+        }
+        
+        .emoji-large {
+            font-size: 2.5rem;
+        }
+        
+        .progress-bar {
+            transition: width 1s ease-out;
+        }
+        
+        .code-tag {
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            background: #f3f4f6;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            color: #6366f1;
+        }
+        
+        .frequency-high { color: #ef4444; }
+        .frequency-medium { color: #f59e0b; }
+        .frequency-low { color: #10b981; }
+        
+        .nav-sticky {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #667eea, transparent);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl font-bold mb-4">Imagen AI Thematic Analysis</h1>
+                <p class="text-xl opacity-90 mb-6">UX Research Report: Systematic Coding of 1,500+ User Reviews</p>
+                <div class="flex justify-center gap-8 text-sm">
+                    <div class="bg-white bg-opacity-20 rounded-lg px-6 py-3">
+                        <div class="font-bold text-2xl">1,500+</div>
+                        <div class="opacity-80">Reviews Analyzed</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg px-6 py-3">
+                        <div class="font-bold text-2xl">129</div>
+                        <div class="opacity-80">Coded Items</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg px-6 py-3">
+                        <div class="font-bold text-2xl">6</div>
+                        <div class="opacity-80">Categories</div>
+                    </div>
+                    <div class="bg-white bg-opacity-20 rounded-lg px-6 py-3">
+                        <div class="font-bold text-2xl">85%</div>
+                        <div class="opacity-80">Positive Sentiment</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

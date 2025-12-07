@@ -1,0 +1,1908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI | Next Capability Research Plan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-canvas: #1a1a2e;
+            --bg-dark: #16213e;
+            --grid-color: rgba(255, 255, 255, 0.03);
+            --grid-dot: rgba(255, 255, 255, 0.08);
+            
+            /* Sticky note colors */
+            --yellow: #fef3c7;
+            --yellow-dark: #f59e0b;
+            --pink: #fce7f3;
+            --pink-dark: #ec4899;
+            --blue: #dbeafe;
+            --blue-dark: #3b82f6;
+            --green: #d1fae5;
+            --green-dark: #10b981;
+            --purple: #ede9fe;
+            --purple-dark: #8b5cf6;
+            --orange: #ffedd5;
+            --orange-dark: #f97316;
+            --teal: #ccfbf1;
+            --teal-dark: #14b8a6;
+            --rose: #ffe4e6;
+            --rose-dark: #f43f5e;
+            
+            /* Text */
+            --text-dark: #1e293b;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            
+            /* Accents */
+            --accent-primary: #6366f1;
+            --accent-secondary: #a855f7;
+            --connector-color: #475569;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-canvas);
+            min-height: 100vh;
+            overflow-x: auto;
+            color: var(--text-light);
+        }
+
+        /* Miro-style dot grid background */
+        .canvas {
+            min-height: 100vh;
+            min-width: 100vw;
+            background-image: 
+                radial-gradient(circle, var(--grid-dot) 1px, transparent 1px);
+            background-size: 24px 24px;
+            padding: 40px;
+            position: relative;
+        }
+
+        /* Header */
+        .board-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 20px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        .board-title {
+            flex: 1;
+        }
+
+        .board-title h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .board-title p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .board-meta {
+            display: flex;
+            gap: 24px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .board-meta span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        /* Main board layout */
+        .board-container {
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        /* Section frames - Miro style */
+        .frame {
+            background: rgba(255, 255, 255, 0.02);
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 32px;
+            position: relative;
+        }
+
+        .frame-label {
+            position: absolute;
+            top: -14px;
+            left: 32px;
+            background: var(--bg-canvas);
+            padding: 4px 16px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-muted);
+            border-radius: 4px;
+        }
+
+        .frame-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .frame-title .number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .frame-subtitle {
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-bottom: 32px;
+            max-width: 800px;
+        }
+
+        /* Sticky notes */
+        .sticky-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .sticky {
+            padding: 24px;
+            border-radius: 4px;
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.12),
+                0 4px 12px rgba(0, 0, 0, 0.08),
+                4px 4px 0 rgba(0, 0, 0, 0.05);
+            transform: rotate(var(--rotation, 0deg));
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            color: var(--text-dark);
+        }
+
+        .sticky:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 
+                0 4px 12px rgba(0, 0, 0, 0.15),
+                0 8px 24px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .sticky.yellow { background: var(--yellow); }
+        .sticky.pink { background: var(--pink); }
+        .sticky.blue { background: var(--blue); }
+        .sticky.green { background: var(--green); }
+        .sticky.purple { background: var(--purple); }
+        .sticky.orange { background: var(--orange); }
+        .sticky.teal { background: var(--teal); }
+        .sticky.rose { background: var(--rose); }
+
+        .sticky-title {
+            font-family: 'Caveat', cursive;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        .sticky-content {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.85;
+        }
+
+        .sticky-content ul {
+            margin-left: 16px;
+            margin-top: 8px;
+        }
+
+        .sticky-content li {
+            margin-bottom: 6px;
+        }
+
+        .sticky-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.08);
+        }
+
+        /* Large cards */
+        .card-large {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 32px;
+            color: var(--text-light);
+        }
+
+        .card-large h3 {
+            font-size: 1.25rem;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-large h3 .icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* Flow diagram */
+        .flow-container {
+            display: flex;
+            align-items: stretch;
+            gap: 16px;
+            overflow-x: auto;
+            padding: 20px 0;
+        }
+
+        .flow-step {
+            flex: 1;
+            min-width: 200px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            text-align: center;
+        }
+
+        .flow-step::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--text-muted);
+        }
+
+        .flow-step:last-child::after {
+            display: none;
+        }
+
+        .flow-step .step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin: 0 auto 12px;
+        }
+
+        .flow-step h4 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+        }
+
+        .flow-step p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .flow-step.active {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: var(--accent-primary);
+        }
+
+        .flow-step.active .step-number {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+        }
+
+        /* Opportunity tree */
+        .tree-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            padding: 40px 0;
+        }
+
+        .tree-level {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .tree-node {
+            padding: 20px 28px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            min-width: 180px;
+            max-width: 240px;
+        }
+
+        .tree-node.outcome {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .tree-node.opportunity {
+            background: var(--yellow);
+            color: var(--text-dark);
+            font-size: 0.9rem;
+        }
+
+        .tree-node.solution {
+            background: var(--blue);
+            color: var(--text-dark);
+            font-size: 0.85rem;
+        }
+
+        .tree-connector {
+            width: 2px;
+            height: 32px;
+            background: var(--connector-color);
+            margin: 0 auto;
+        }
+
+        .tree-branch {
+            display: flex;
+            align-items: flex-start;
+            gap: 24px;
+        }
+
+        .tree-branch::before {
+            content: '';
+            position: absolute;
+            top: -16px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 100px);
+            height: 2px;
+            background: var(--connector-color);
+        }
+
+        /* Matrix table */
+        .matrix-container {
+            overflow-x: auto;
+        }
+
+        .matrix {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 4px;
+            font-size: 0.9rem;
+        }
+
+        .matrix th {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            border-radius: 8px;
+        }
+
+        .matrix td {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .matrix tr:hover td {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .priority-high {
+            color: #f43f5e;
+            font-weight: 600;
+        }
+
+        .priority-medium {
+            color: #f59e0b;
+            font-weight: 600;
+        }
+
+        .priority-low {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        /* Experiment cards */
+        .experiment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .experiment-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experiment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+        }
+
+        .experiment-card.fast::before { background: var(--green-dark); }
+        .experiment-card.medium::before { background: var(--yellow-dark); }
+        .experiment-card.slow::before { background: var(--orange-dark); }
+
+        .experiment-card .speed-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .experiment-card.fast .speed-badge {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green-dark);
+        }
+
+        .experiment-card.medium .speed-badge {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--yellow-dark);
+        }
+
+        .experiment-card.slow .speed-badge {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--orange-dark);
+        }
+
+        .experiment-card h4 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            padding-right: 80px;
+        }
+
+        .experiment-card p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            gap: 0;
+            margin-top: 24px;
+        }
+
+        .timeline-block {
+            flex: 1;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            position: relative;
+        }
+
+        .timeline-block:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .timeline-block:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        .timeline-block h4 {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            color: var(--accent-primary);
+        }
+
+        .timeline-block .weeks {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .timeline-block ul {
+            font-size: 0.8rem;
+            margin-left: 16px;
+            color: var(--text-muted);
+        }
+
+        .timeline-block li {
+            margin-bottom: 4px;
+        }
+
+        /* Handwritten annotations */
+        .annotation {
+            font-family: 'Caveat', cursive;
+            color: var(--accent-secondary);
+            font-size: 1.3rem;
+            position: absolute;
+            transform: rotate(-3deg);
+        }
+
+        /* Decision box */
+        .decision-box {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+            border: 2px solid var(--accent-primary);
+            border-radius: 16px;
+            padding: 32px;
+            margin-top: 32px;
+        }
+
+        .decision-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .decision-criteria {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .criteria-card {
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .criteria-card.green {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        .criteria-card.yellow {
+            background: rgba(245, 158, 11, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .criteria-card.red {
+            background: rgba(244, 63, 94, 0.15);
+            border: 1px solid rgba(244, 63, 94, 0.3);
+        }
+
+        .criteria-card h4 {
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+
+        .criteria-card.green h4 { color: var(--green-dark); }
+        .criteria-card.yellow h4 { color: var(--yellow-dark); }
+        .criteria-card.red h4 { color: var(--rose-dark); }
+
+        .criteria-card ul {
+            font-size: 0.8rem;
+            text-align: left;
+            margin-left: 16px;
+            color: var(--text-muted);
+        }
+
+        .criteria-card li {
+            margin-bottom: 6px;
+        }
+
+        /* Key questions */
+        .questions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .question-card {
+            display: flex;
+            gap: 16px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .question-number {
+            width: 32px;
+            height: 32px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .question-text {
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .canvas {
+                padding: 20px;
+            }
+
+            .board-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .board-meta {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .sticky-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .flow-container {
+                flex-direction: column;
+            }
+
+            .flow-step::after {
+                content: '↓';
+                right: auto;
+                left: 50%;
+                top: auto;
+                bottom: -24px;
+                transform: translateX(-50%);
+            }
+
+            .decision-criteria {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                flex-direction: column;
+            }
+
+            .timeline-block {
+                border-radius: 12px !important;
+            }
+        }
+
+        /* Zoom controls - Miro style */
+        .zoom-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+            background: rgba(22, 33, 62, 0.95);
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Hidden Drawer Styles */
+        .drawer-toggle {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 0 12px 12px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 2px 0 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .drawer-toggle:hover {
+            width: 48px;
+            box-shadow: 2px 0 20px rgba(99, 102, 241, 0.5);
+        }
+
+        .drawer-toggle.hidden {
+            transform: translateY(-50%) translateX(-100%);
+            opacity: 0;
+        }
+
+        .drawer-toggle svg {
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .drawer-toggle:hover svg {
+            transform: translateX(4px);
+        }
+
+        .drawer {
+            position: fixed;
+            left: -420px;
+            top: 0;
+            width: 420px;
+            height: 100vh;
+            background: var(--bg-dark);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .drawer.open {
+            left: 0;
+        }
+
+        .drawer-header {
+            padding: 24px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1));
+        }
+
+        .drawer-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        .drawer-close {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-light);
+            border-radius: 8px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+            line-height: 1;
+        }
+
+        .drawer-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .drawer-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+        }
+
+        .drawer-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .drawer-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .drawer-content::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .drawer-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .drawer-section {
+            margin-bottom: 32px;
+        }
+
+        .drawer-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(99, 102, 241, 0.3);
+        }
+
+        .problem-list {
+            list-style: none;
+            counter-reset: problem-counter;
+            padding-left: 0;
+        }
+
+        .problem-list li {
+            position: relative;
+            padding: 8px 0 8px 32px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            counter-increment: problem-counter;
+        }
+
+        .problem-list li:before {
+            content: counter(problem-counter);
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            background: rgba(99, 102, 241, 0.2);
+            color: var(--accent-primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .problem-list li strong {
+            color: var(--text-light);
+        }
+
+        .drawer-highlight {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.1));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 32px;
+        }
+
+        .drawer-highlight h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--green-dark);
+            margin-bottom: 16px;
+            border: none;
+            padding: 0;
+        }
+
+        .highlight-item {
+            margin-bottom: 16px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
+        .highlight-item strong {
+            display: block;
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        .highlight-item p {
+            font-size: 13px;
+            color: var(--green-dark);
+            margin: 0;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .time-saved {
+            margin-top: 16px;
+            padding: 16px;
+            background: rgba(16, 185, 129, 0.2);
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .time-saved strong {
+            font-size: 15px;
+            color: var(--text-light);
+        }
+
+        /* Print styles */
+        @media print {
+            .zoom-controls { display: none; }
+            .drawer-toggle { display: none; }
+            .drawer { display: none; }
+            .canvas { background: white; }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .drawer {
+                width: 100%;
+                left: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="canvas">
+        <!-- Header -->
+        <header class="board-header">
+            <div class="logo">IM</div>
+            <div class="board-title">
+                <h1>Next Capability Research Plan</h1>
+                <p>Strategic Product Discovery for Imagen AI's One-Stop-Shop Vision</p>
+            </div>
+            <div class="board-meta">
+                <span>📋 Research Methodology</span>
+                <span>⏱️ 8-12 Week Plan</span>
+                <span>🎯 Capability Expansion</span>
+            </div>
+        </header>
+
+        <div class="board-container">
+
+            <!-- FRAME 1: Context & Challenge -->
+            <section class="frame">
+                <span class="frame-label">Starting Point</span>
+                <h2 class="frame-title">
+                    <span class="number">0</span>
+                    The Strategic Challenge
+                </h2>
+                <p class="frame-subtitle">
+                    Imagen currently solves editing and culling. To become photographers' one-stop-shop, 
+                    we need to identify which capability to develop next—using evidence, not assumptions.
+                </p>
+
+                <div class="sticky-grid">
+                    <div class="sticky yellow" style="--rotation: -1deg;">
+                        <span class="sticky-tag">Current State</span>
+                        <div class="sticky-title">What We Have Today</div>
+                        <div class="sticky-content">
+                            <ul>
+                                <li>AI-powered photo editing</li>
+                                <li>Intelligent culling (best photo selection)</li>
+                                <li>Established photographer user base</li>
+                                <li>Proven AI/ML capabilities</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="sticky pink" style="--rotation: 1.5deg;">
+                        <span class="sticky-tag">Vision</span>
+                        <div class="sticky-title">Where We Want to Go</div>
+                        <div class="sticky-content">
+                            Become the photographer's one-stop-shop—the single platform they rely on for their entire workflow, from shoot to delivery.
+                        </div>
+                    </div>
+
+                    <div class="sticky blue" style="--rotation: -0.5deg;">
+                        <span class="sticky-tag">The Question</span>
+                        <div class="sticky-title">What Capability Next?</div>
+                        <div class="sticky-content">
+                            <strong>Not:</strong> "What feature should we build?"<br><br>
+                            <strong>But:</strong> "What are the most important unsolved problems for our photographers?"
+                        </div>
+                    </div>
+
+                    <div class="sticky green" style="--rotation: 0.8deg;">
+                        <span class="sticky-tag">Principle</span>
+                        <div class="sticky-title">Discovery Before Delivery</div>
+                        <div class="sticky-content">
+                            The goal isn't to find the right answer—it's to reduce the risk of building the wrong thing through systematic discovery.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FRAME 2: Considerations -->
+            <section class="frame">
+                <span class="frame-label">Question 1</span>
+                <h2 class="frame-title">
+                    <span class="number">1</span>
+                    Considerations for the Next Capability
+                </h2>
+                <p class="frame-subtitle">
+                    Before exploring solutions, I need to establish clear evaluation criteria. 
+                    These considerations will guide my research and help prioritize opportunities.
+                </p>
+
+                <!-- Workflow Spectrum -->
+                <div class="card-large" style="margin-bottom: 32px;">
+                    <h3><span class="icon">🔄</span> The Photographer Workflow Spectrum</h3>
+                    <div class="flow-container">
+                        <div class="flow-step">
+                            <div class="step-number">1</div>
+                            <h4>Book</h4>
+                            <p>Contracts, scheduling, client communication</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">2</div>
+                            <h4>Shoot</h4>
+                            <p>Capture images on location</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">3</div>
+                            <h4>Import</h4>
+                            <p>Transfer, backup, organize</p>
+                        </div>
+                        <div class="flow-step active">
+                            <div class="step-number">4</div>
+                            <h4>Cull</h4>
+                            <p>Select best images ✓</p>
+                        </div>
+                        <div class="flow-step active">
+                            <div class="step-number">5</div>
+                            <h4>Edit</h4>
+                            <p>Color, style, retouch ✓</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">6</div>
+                            <h4>Deliver</h4>
+                            <p>Gallery, proofing, downloads</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">7</div>
+                            <h4>Archive</h4>
+                            <p>Backup, search, organize</p>
+                        </div>
+                        <div class="flow-step">
+                            <div class="step-number">8</div>
+                            <h4>Market</h4>
+                            <p>Portfolio, social, SEO</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Evaluation Criteria -->
+                <h3 style="margin-bottom: 20px; font-size: 1.1rem;">📊 Evaluation Criteria Matrix</h3>
+                <div class="matrix-container">
+                    <table class="matrix">
+                        <thead>
+                            <tr>
+                                <th>Consideration</th>
+                                <th>Key Questions</th>
+                                <th>Why It Matters</th>
+                                <th>How to Measure</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Workflow Adjacency</strong></td>
+                                <td>How close is this to our current editing/culling workflow?</td>
+                                <td>Adjacent capabilities have lower adoption friction</td>
+                                <td>User journey mapping, workflow analysis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pain Intensity</strong></td>
+                                <td>Is this a "hair on fire" problem or "nice to have"?</td>
+                                <td>High-pain problems drive adoption and willingness to pay</td>
+                                <td>Customer interviews, pain scoring (1-10)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Frequency of Use</strong></td>
+                                <td>How often would photographers use this? Daily? Per shoot?</td>
+                                <td>Higher frequency = more engagement = higher retention</td>
+                                <td>Usage pattern analysis, diary studies</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Willingness to Pay</strong></td>
+                                <td>Would photographers pay extra, or expect it bundled?</td>
+                                <td>Determines revenue model and expansion potential</td>
+                                <td>Van Westendorp pricing, conjoint analysis</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Competitive Moat</strong></td>
+                                <td>Can we build defensible AI advantages here?</td>
+                                <td>Commoditized features don't drive differentiation</td>
+                                <td>Competitive analysis, technical assessment</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Technical Feasibility</strong></td>
+                                <td>Does our existing AI/ML infrastructure extend here?</td>
+                                <td>Leveraging existing capabilities = faster time to market</td>
+                                <td>Engineering assessment, proof of concept</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Retention Impact</strong></td>
+                                <td>Will this increase stickiness and reduce churn?</td>
+                                <td>Retention drives LTV more than acquisition</td>
+                                <td>Churn analysis, cohort modeling</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Critical Questions -->
+                <h3 style="margin: 32px 0 16px; font-size: 1.1rem;">🎯 Critical Questions Before Committing</h3>
+                <div class="questions-grid">
+                    <div class="question-card">
+                        <div class="question-number">1</div>
+                        <div class="question-text">"What evidence do we have that photographers actually want this?" — Not opinions or surveys. <em>Behavioral evidence.</em></div>
+                    </div>
+                    <div class="question-card">
+                        <div class="question-number">2</div>
+                        <div class="question-text">"Why will Imagen win here vs. existing solutions?" — "We'll be integrated" is not enough. What's the 10x improvement?</div>
+                    </div>
+                    <div class="question-card">
+                        <div class="question-number">3</div>
+                        <div class="question-text">"What's the riskiest assumption, and how have we tested it?" — If we can't name it, we haven't thought hard enough.</div>
+                    </div>
+                    <div class="question-card">
+                        <div class="question-number">4</div>
+                        <div class="question-text">"What will we do if this doesn't work?" — We need kill criteria and a pivot plan before we start.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FRAME 3: Research Methodology -->
+            <section class="frame">
+                <span class="frame-label">Question 2</span>
+                <h2 class="frame-title">
+                    <span class="number">2</span>
+                    How I Would Perform the Research
+                </h2>
+                <p class="frame-subtitle">
+                    A systematic discovery process that combines quantitative data mining, qualitative user research, 
+                    and competitive intelligence to identify and prioritize opportunities.
+                </p>
+
+                <!-- Phase 1 -->
+                <div class="card-large" style="margin-bottom: 24px;">
+                    <h3><span class="icon">🔍</span> Phase 1: Discovery Research (Weeks 1-3)</h3>
+                    
+                    <div class="sticky-grid" style="margin-top: 20px;">
+                        <div class="sticky yellow" style="--rotation: -0.5deg;">
+                            <div class="sticky-title">Internal Data Mining</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li>Feature usage analytics: What do users do before/after Imagen?</li>
+                                    <li>Churn analysis: Why do users leave? What's missing?</li>
+                                    <li>Support ticket themes: What do users ask for?</li>
+                                    <li>NPS verbatims: Thematic analysis of feedback</li>
+                                    <li>Integration patterns: What other tools are connected?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky pink" style="--rotation: 1deg;">
+                            <div class="sticky-title">Story-Based Interviews</div>
+                            <div class="sticky-content">
+                                <strong>15-20 interviews focused on stories, not opinions:</strong>
+                                <ul>
+                                    <li>"Tell me about the last wedding you shot..."</li>
+                                    <li>"What happened next?"</li>
+                                    <li>"What was hard about that?"</li>
+                                    <li>"What did you try before that?"</li>
+                                </ul>
+                                <p style="margin-top: 8px;"><em>Goal: Collect specific stories, not generalizations</em></p>
+                            </div>
+                        </div>
+
+                        <div class="sticky blue" style="--rotation: -1.2deg;">
+                            <div class="sticky-title">Competitive Intelligence</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li>Feature matrix vs. competitors (Pixieset, ShootProof, Pic-Time, Aftershoot)</li>
+                                    <li>Pricing & bundling analysis</li>
+                                    <li>Review mining: G2, Capterra, FB groups</li>
+                                    <li>Acquisition signals: What's being bought?</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky green" style="--rotation: 0.7deg;">
+                            <div class="sticky-title">Community Listening</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li>Facebook: Rising Tide Society, Photography Business groups</li>
+                                    <li>Reddit: r/WeddingPhotography, r/photography</li>
+                                    <li>YouTube comments on workflow videos</li>
+                                </ul>
+                                <p style="margin-top: 8px;"><strong>Look for:</strong> "I wish..." statements, tool recommendations, pricing sensitivity</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phase 2 -->
+                <div class="card-large" style="margin-bottom: 24px;">
+                    <h3><span class="icon">🎯</span> Phase 2: Opportunity Prioritization (Weeks 4-5)</h3>
+                    
+                    <h4 style="margin: 20px 0 16px; font-size: 1rem;">Building the Opportunity Solution Tree</h4>
+                    
+                    <div class="tree-container">
+                        <div class="tree-level">
+                            <div class="tree-node outcome">
+                                🎯 OUTCOME<br>
+                                <span style="font-size: 0.85rem; opacity: 0.9;">Increase LTV by 40%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tree-connector"></div>
+                        
+                        <div class="tree-level" style="position: relative;">
+                            <div class="tree-node opportunity">
+                                💡 OPPORTUNITY<br>
+                                <span style="font-size: 0.8rem;">"I waste hours on gallery delivery"</span>
+                            </div>
+                            <div class="tree-node opportunity">
+                                💡 OPPORTUNITY<br>
+                                <span style="font-size: 0.8rem;">"Clients ghost me after delivery"</span>
+                            </div>
+                            <div class="tree-node opportunity">
+                                💡 OPPORTUNITY<br>
+                                <span style="font-size: 0.8rem;">"I never know what to post"</span>
+                            </div>
+                        </div>
+                        
+                        <div class="tree-connector"></div>
+                        
+                        <div class="tree-level">
+                            <div class="tree-node solution">
+                                🔧 Smart galleries
+                            </div>
+                            <div class="tree-node solution">
+                                🔧 Auto-proofing
+                            </div>
+                            <div class="tree-node solution">
+                                🔧 Payment reminders
+                            </div>
+                            <div class="tree-node solution">
+                                🔧 Integrated invoicing
+                            </div>
+                            <div class="tree-node solution">
+                                🔧 AI content suggestions
+                            </div>
+                            <div class="tree-node solution">
+                                🔧 Auto-scheduling
+                            </div>
+                        </div>
+                    </div>
+
+                    <p style="text-align: center; color: var(--text-muted); font-size: 0.9rem; margin-top: 16px;">
+                        <strong>Key insight:</strong> Opportunities are customer needs, not solutions. Keep the tree at the opportunity level until prioritized.
+                    </p>
+                </div>
+
+                <!-- Phase 3 -->
+                <div class="card-large">
+                    <h3><span class="icon">📋</span> Phase 3: Assumption Mapping (Week 5)</h3>
+                    
+                    <p style="margin-bottom: 20px; color: var(--text-muted);">For each top opportunity, map the riskiest assumptions across four dimensions:</p>
+                    
+                    <div class="sticky-grid">
+                        <div class="sticky purple" style="--rotation: 0.5deg;">
+                            <div class="sticky-title">Desirability Assumptions</div>
+                            <div class="sticky-content">
+                                <em>Will they want it?</em>
+                                <ul>
+                                    <li>Photographers want this in same tool as editing</li>
+                                    <li>Current solutions are painful enough to switch</li>
+                                    <li>Photographers will pay incrementally</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky orange" style="--rotation: -0.8deg;">
+                            <div class="sticky-title">Viability Assumptions</div>
+                            <div class="sticky-content">
+                                <em>Will it work for business?</em>
+                                <ul>
+                                    <li>We can price competitively</li>
+                                    <li>Unit economics work at scale</li>
+                                    <li>This increases retention, not just acquisition</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky teal" style="--rotation: 1.2deg;">
+                            <div class="sticky-title">Feasibility Assumptions</div>
+                            <div class="sticky-content">
+                                <em>Can we build it?</em>
+                                <ul>
+                                    <li>We have the technical capabilities</li>
+                                    <li>Infrastructure can handle the load</li>
+                                    <li>We can ship in reasonable timeframe</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky rose" style="--rotation: -0.3deg;">
+                            <div class="sticky-title">Usability Assumptions</div>
+                            <div class="sticky-content">
+                                <em>Can they use it?</em>
+                                <ul>
+                                    <li>Photographers can set up without training</li>
+                                    <li>Clients can navigate easily</li>
+                                    <li>Flow feels seamless with existing features</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FRAME 4: Testing Hypotheses -->
+            <section class="frame">
+                <span class="frame-label">Question 3</span>
+                <h2 class="frame-title">
+                    <span class="number">3</span>
+                    How I Would Test the Hypotheses
+                </h2>
+                <p class="frame-subtitle">
+                    The goal is to run the smallest experiment that gives us the evidence we need to move forward with confidence.
+                    Start with the fastest, cheapest tests before investing in building.
+                </p>
+
+                <!-- Experiment Menu -->
+                <h3 style="margin-bottom: 20px; font-size: 1.1rem;">🧪 Experiment Menu (Fastest → Slowest)</h3>
+                
+                <div class="experiment-grid">
+                    <div class="experiment-card fast">
+                        <span class="speed-badge">Hours</span>
+                        <h4>One-Question Survey</h4>
+                        <p>"How painful is gallery delivery on a scale of 1-10?"<br>Send to 500 users, get signal in 24 hours.</p>
+                    </div>
+
+                    <div class="experiment-card fast">
+                        <span class="speed-badge">Hours</span>
+                        <h4>Data Mining</h4>
+                        <p>What % of users have Pixieset/ShootProof integrations? Check our own analytics for behavioral signals.</p>
+                    </div>
+
+                    <div class="experiment-card fast">
+                        <span class="speed-badge">Days</span>
+                        <h4>Customer Interviews</h4>
+                        <p>"Tell me about the last time you delivered a gallery..." 5-10 interviews can reveal clear patterns.</p>
+                    </div>
+
+                    <div class="experiment-card medium">
+                        <span class="speed-badge">Days</span>
+                        <h4>Unmoderated Usability Test</h4>
+                        <p>Show prototype, watch them try to use it. UsabilityHub, Maze, or similar tools.</p>
+                    </div>
+
+                    <div class="experiment-card medium">
+                        <span class="speed-badge">1-2 Weeks</span>
+                        <h4>Smoke Test / Fake Door</h4>
+                        <p>"Coming Soon: Imagen Galleries" → measure clicks and waitlist signups. Real behavioral data, not opinions.</p>
+                    </div>
+
+                    <div class="experiment-card medium">
+                        <span class="speed-badge">2-4 Weeks</span>
+                        <h4>Wizard of Oz</h4>
+                        <p>Manually deliver the experience to 10 users. Understand the real workflow before building anything.</p>
+                    </div>
+
+                    <div class="experiment-card slow">
+                        <span class="speed-badge">4-8 Weeks</span>
+                        <h4>Concierge MVP</h4>
+                        <p>Build minimal UI with heavy manual backend. Validate value before investing in automation.</p>
+                    </div>
+
+                    <div class="experiment-card slow">
+                        <span class="speed-badge">2-4 Weeks</span>
+                        <h4>Clickable Prototype</h4>
+                        <p>High-fidelity prototype for usability testing. Test usability assumptions before feasibility.</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Framework -->
+                <h3 style="margin: 40px 0 20px; font-size: 1.1rem;">📈 Success Metrics Framework</h3>
+                
+                <div class="matrix-container">
+                    <table class="matrix">
+                        <thead>
+                            <tr>
+                                <th>Metric Type</th>
+                                <th>What We Measure</th>
+                                <th>Success Threshold</th>
+                                <th>Kill Threshold</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Interest</strong></td>
+                                <td>Fake door click-through rate</td>
+                                <td class="priority-low">&gt; 15% CTR</td>
+                                <td class="priority-high">&lt; 5% CTR</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Activation</strong></td>
+                                <td>% who complete first key action</td>
+                                <td class="priority-low">&gt; 60%</td>
+                                <td class="priority-high">&lt; 30%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Engagement</strong></td>
+                                <td>Weekly active usage rate</td>
+                                <td class="priority-low">&gt; 40%</td>
+                                <td class="priority-high">&lt; 15%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Retention</strong></td>
+                                <td>30-day retention in beta</td>
+                                <td class="priority-low">&gt; 70%</td>
+                                <td class="priority-high">&lt; 40%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Satisfaction</strong></td>
+                                <td>NPS score</td>
+                                <td class="priority-low">&gt; 50</td>
+                                <td class="priority-high">&lt; 20</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Willingness to Pay</strong></td>
+                                <td>Conversion to paid (if separate)</td>
+                                <td class="priority-low">&gt; X%</td>
+                                <td class="priority-high">&lt; Y%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Decision Framework -->
+                <div class="decision-box">
+                    <h3>🚦 Go / No-Go Decision Framework</h3>
+                    <div class="decision-criteria">
+                        <div class="criteria-card green">
+                            <h4>🟢 GREEN LIGHT</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 12px;">Build & Scale</p>
+                            <ul>
+                                <li>Fake door CTR &gt; 15%</li>
+                                <li>NPS in beta &gt; 50</li>
+                                <li>30-day retention &gt; 70%</li>
+                                <li>Clear willingness to pay</li>
+                                <li>Technical feasibility validated</li>
+                            </ul>
+                        </div>
+                        <div class="criteria-card yellow">
+                            <h4>🟡 YELLOW LIGHT</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 12px;">Iterate & Retest</p>
+                            <ul>
+                                <li>Mixed signals across metrics</li>
+                                <li>Strong interest but execution issues</li>
+                                <li>Usability problems identified</li>
+                                <li>Pricing model unclear</li>
+                                <li>→ Refine concept and re-test</li>
+                            </ul>
+                        </div>
+                        <div class="criteria-card red">
+                            <h4>🔴 RED LIGHT</h4>
+                            <p style="font-size: 0.85rem; margin-bottom: 12px;">Kill or Pivot</p>
+                            <ul>
+                                <li>Low interest in fake door tests</li>
+                                <li>Poor retention in beta</li>
+                                <li>No willingness to pay</li>
+                                <li>Technical blockers</li>
+                                <li>→ Move to next opportunity</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FRAME 5: Timeline -->
+            <section class="frame">
+                <span class="frame-label">Execution</span>
+                <h2 class="frame-title">
+                    <span class="number">4</span>
+                    Research Timeline & Cadence
+                </h2>
+                <p class="frame-subtitle">
+                    This isn't a one-time project—it's establishing a continuous discovery habit. 
+                    Every week, we should be interviewing customers and testing assumptions.
+                </p>
+
+                <div class="timeline">
+                    <div class="timeline-block">
+                        <h4>Discovery</h4>
+                        <div class="weeks">Weeks 1-3</div>
+                        <ul>
+                            <li>Internal data analysis</li>
+                            <li>15-20 user interviews</li>
+                            <li>Competitive analysis</li>
+                            <li>Community listening</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-block">
+                        <h4>Prioritization</h4>
+                        <div class="weeks">Weeks 4-5</div>
+                        <ul>
+                            <li>Synthesis & scoring</li>
+                            <li>Opportunity tree building</li>
+                            <li>Assumption mapping</li>
+                            <li>Stakeholder alignment</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-block">
+                        <h4>Rapid Testing</h4>
+                        <div class="weeks">Weeks 6-8</div>
+                        <ul>
+                            <li>Fake door tests</li>
+                            <li>Landing page experiments</li>
+                            <li>WTP research</li>
+                            <li>Wizard of Oz (if needed)</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-block">
+                        <h4>Validation</h4>
+                        <div class="weeks">Weeks 9-12</div>
+                        <ul>
+                            <li>Concierge MVP build</li>
+                            <li>Beta user recruitment</li>
+                            <li>Metrics collection</li>
+                            <li>Go/No-Go decision</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Weekly Rhythm -->
+                <div class="card-large" style="margin-top: 32px;">
+                    <h3><span class="icon">🔄</span> Ongoing Weekly Discovery Rhythm</h3>
+                    
+                    <div class="sticky-grid" style="margin-top: 20px;">
+                        <div class="sticky yellow" style="--rotation: -0.7deg;">
+                            <div class="sticky-title">Every Week</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li>Conduct at least 1 customer interview</li>
+                                    <li>Synthesize learnings into opportunity space</li>
+                                    <li>Run at least 1 small experiment</li>
+                                    <li>Update assumptions based on evidence</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky blue" style="--rotation: 0.5deg;">
+                            <div class="sticky-title">Who's Involved</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li><strong>PM:</strong> Owns the process</li>
+                                    <li><strong>Designer:</strong> Leads usability tests</li>
+                                    <li><strong>Engineer:</strong> Advises on feasibility</li>
+                                    <li><em>Ideally the whole trio attends interviews together</em></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="sticky green" style="--rotation: -0.3deg;">
+                            <div class="sticky-title">Living Artifacts</div>
+                            <div class="sticky-content">
+                                <ul>
+                                    <li>Interview snapshots (1-pager per interview)</li>
+                                    <li>Opportunity Solution Tree</li>
+                                    <li>Assumption map (updated weekly)</li>
+                                    <li>Experiment tracker</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FRAME 6: Key Principles -->
+            <section class="frame" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.05), rgba(168, 85, 247, 0.05));">
+                <span class="frame-label">Guiding Principles</span>
+                <h2 class="frame-title">
+                    <span class="number">★</span>
+                    Research Principles
+                </h2>
+                <p class="frame-subtitle">
+                    These principles guide every decision in the discovery process.
+                </p>
+
+                <div class="sticky-grid">
+                    <div class="sticky purple" style="--rotation: 1deg;">
+                        <div class="sticky-title">1. Problem First, Solution Second</div>
+                        <div class="sticky-content">
+                            Avoid solutioning before deeply understanding user pain. The capability emerges from the research—it's not the starting point.
+                        </div>
+                    </div>
+
+                    <div class="sticky orange" style="--rotation: -1.5deg;">
+                        <div class="sticky-title">2. Triangulate Data Sources</div>
+                        <div class="sticky-content">
+                            No single data point should drive decisions. Combine quantitative analytics, qualitative interviews, and behavioral experiments.
+                        </div>
+                    </div>
+
+                    <div class="sticky teal" style="--rotation: 0.8deg;">
+                        <div class="sticky-title">3. Test Cheap Before Building Expensive</div>
+                        <div class="sticky-content">
+                            Fake doors and painted doors before engineering. The goal is to fail fast and learn cheap.
+                        </div>
+                    </div>
+
+                    <div class="sticky pink" style="--rotation: -0.5deg;">
+                        <div class="sticky-title">4. Segment the Research</div>
+                        <div class="sticky-content">
+                            Wedding photographers ≠ Portrait photographers ≠ Commercial photographers. Each segment has different needs and workflows.
+                        </div>
+                    </div>
+
+                    <div class="sticky yellow" style="--rotation: 1.2deg;">
+                        <div class="sticky-title">5. Measure Behavior, Not Just Opinions</div>
+                        <div class="sticky-content">
+                            What users do > What users say. Behavioral evidence trumps stated preferences every time.
+                        </div>
+                    </div>
+
+                    <div class="sticky blue" style="--rotation: -0.8deg;">
+                        <div class="sticky-title">6. Set Kill Criteria Upfront</div>
+                        <div class="sticky-content">
+                            Define what failure looks like before we're emotionally invested. Know when to pivot or kill an idea.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Line -->
+                <div style="margin-top: 40px; padding: 32px; background: rgba(255, 255, 255, 0.03); border-radius: 16px; text-align: center;">
+                    <h3 style="font-size: 1.5rem; margin-bottom: 16px;">The Bottom Line</h3>
+                    <p style="font-size: 1.1rem; color: var(--text-muted); max-width: 800px; margin: 0 auto; line-height: 1.7;">
+                        The methodology isn't about finding the right answer in a research project. It's about building an 
+                        <strong style="color: var(--text-light);">ongoing capability to continuously discover and validate opportunities</strong>—so that 
+                        "what should we build next?" becomes a question we can answer with confidence, every quarter, forever.
+                    </p>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Zoom Controls -->
+        <div class="zoom-controls">
+            <button class="zoom-btn" title="Zoom Out">−</button>
+            <button class="zoom-btn" title="Zoom In">+</button>
+            <button class="zoom-btn" title="Fit to Screen">⊡</button>
+        </div>
+    </div>
+
+    <!-- Hidden Drawer for Event Photographer Problems -->
+    <div class="drawer-toggle" id="drawerToggle" title="Event Photographer Problems">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6"/>
+        </svg>
+    </div>
+
+    <div class="drawer" id="drawer">
+        <div class="drawer-header">
+            <h2>50 Event Photographer Problems</h2>
+            <button class="drawer-close" id="drawerClose">×</button>
+        </div>
+        <div class="drawer-content">
+            <div class="drawer-section">
+                <h3>Pre-Event Phase</h3>
+                <ol class="problem-list">
+                    <li>Slow Response to Inquiries</li>
+                    <li>Quote Complexity</li>
+                    <li>Contract Management</li>
+                    <li>Deposit Collection Delays</li>
+                    <li>Event Details Gathering</li>
+                    <li>Multiple Communication Channels</li>
+                    <li>Calendar Double-Booking Risk</li>
+                    <li>Equipment Prep Checklist</li>
+                </ol>
+            </div>
+
+            <div class="drawer-section">
+                <h3>Event Day Phase</h3>
+                <ol class="problem-list" start="9">
+                    <li>Shot List Management</li>
+                    <li>Mixed Lighting Challenges</li>
+                    <li>Storage Card Management</li>
+                    <li>Battery Life Anxiety</li>
+                    <li>Crowd Navigation</li>
+                    <li>Timeline Pressure</li>
+                    <li>Equipment Failure Risk</li>
+                    <li>Client Expectations Management</li>
+                    <li>Weather Contingencies</li>
+                    <li>Backup Urgency</li>
+                </ol>
+            </div>
+
+            <div class="drawer-section">
+                <h3>Post-Production Phase</h3>
+                <ol class="problem-list" start="19">
+                    <li>Import Time (15-20 min)</li>
+                    <li>Storage Space Crunch</li>
+                    <li><strong>Culling Decision Fatigue (1.5-3 hrs)</strong></li>
+                    <li>Duplicate Image Sorting</li>
+                    <li>Blurry Image Detection</li>
+                    <li>Expression Selection</li>
+                    <li><strong>Editing Time Investment (10-15 hrs)</strong></li>
+                    <li>Lighting Consistency</li>
+                    <li>Color Correction Complexity</li>
+                    <li>Batch Editing Limitations</li>
+                    <li>Skin Tone Accuracy</li>
+                    <li>White Balance Issues</li>
+                    <li>Exposure Variation</li>
+                    <li>Style Consistency</li>
+                    <li>Fine-Tuning Bottleneck</li>
+                    <li>Export Wait Time</li>
+                    <li>File Naming Convention</li>
+                </ol>
+            </div>
+
+            <div class="drawer-section">
+                <h3>Client Delivery Phase</h3>
+                <ol class="problem-list" start="36">
+                    <li>Gallery Upload Time</li>
+                    <li>Platform Limitations</li>
+                    <li>Gallery Organization</li>
+                    <li>Watermarking Decisions</li>
+                    <li>Download Link Management</li>
+                    <li><strong>Turnaround Pressure (same-day delivery)</strong></li>
+                    <li>Client Communication</li>
+                </ol>
+            </div>
+
+            <div class="drawer-section">
+                <h3>Optional Products Phase</h3>
+                <ol class="problem-list" start="43">
+                    <li>Print Order Coordination</li>
+                    <li>Product Fulfillment</li>
+                    <li>Highlight Reel Creation</li>
+                    <li>Marketing Material Requests</li>
+                </ol>
+            </div>
+
+            <div class="drawer-section">
+                <h3>Archive & Business Phase</h3>
+                <ol class="problem-list" start="47">
+                    <li>Long-Term Storage Strategy</li>
+                    <li>Backup Redundancy</li>
+                    <li>File Retrieval</li>
+                    <li>Revenue Scaling Limitation</li>
+                </ol>
+            </div>
+
+            <div class="drawer-highlight">
+                <h3>🎯 Top 3 Problems Imagen AI Solves</h3>
+                <div class="highlight-item">
+                    <strong>1. Culling Bottleneck</strong>
+                    <p>1.5-3 hrs → 20 min (87% reduction)</p>
+                </div>
+                <div class="highlight-item">
+                    <strong>2. Editing Time Investment</strong>
+                    <p>10-15 hrs → 5-8 min (98% reduction)</p>
+                </div>
+                <div class="highlight-item">
+                    <strong>3. Turnaround Pressure</strong>
+                    <p>Enables same-day delivery</p>
+                </div>
+                <div class="time-saved">
+                    <strong>Total Time Saved: ~20 hours per event</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add subtle random rotations to sticky notes
+        document.querySelectorAll('.sticky').forEach(sticky => {
+            if (!sticky.style.getPropertyValue('--rotation')) {
+                const rotation = (Math.random() - 0.5) * 3;
+                sticky.style.setProperty('--rotation', `${rotation}deg`);
+            }
+        });
+
+        // Simple zoom functionality
+        let currentZoom = 1;
+        const canvas = document.querySelector('.canvas');
+        const zoomBtns = document.querySelectorAll('.zoom-btn');
+
+        zoomBtns[0].addEventListener('click', () => {
+            currentZoom = Math.max(0.5, currentZoom - 0.1);
+            canvas.style.transform = `scale(${currentZoom})`;
+            canvas.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[1].addEventListener('click', () => {
+            currentZoom = Math.min(1.5, currentZoom + 0.1);
+            canvas.style.transform = `scale(${currentZoom})`;
+            canvas.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[2].addEventListener('click', () => {
+            currentZoom = 1;
+            canvas.style.transform = 'scale(1)';
+        });
+
+        // Drawer functionality
+        const drawer = document.getElementById('drawer');
+        const drawerToggle = document.getElementById('drawerToggle');
+        const drawerClose = document.getElementById('drawerClose');
+
+        drawerToggle.addEventListener('click', () => {
+            drawer.classList.add('open');
+            drawerToggle.classList.add('hidden');
+        });
+
+        drawerClose.addEventListener('click', () => {
+            drawer.classList.remove('open');
+            drawerToggle.classList.remove('hidden');
+        });
+
+        // Close drawer when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!drawer.contains(e.target) && !drawerToggle.contains(e.target) && drawer.classList.contains('open')) {
+                drawer.classList.remove('open');
+                drawerToggle.classList.remove('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
+

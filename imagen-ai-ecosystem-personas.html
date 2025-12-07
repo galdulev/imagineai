@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI Ecosystem & Personas - Miro Board</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Miro-style colors */
+            --miro-bg: #f5f6f8;
+            --miro-grid: #e1e4e8;
+            --miro-white: #ffffff;
+            
+            /* Vibrant sticky colors */
+            --yellow: #fff475;
+            --yellow-border: #ffd700;
+            --pink: #ff9ce6;
+            --pink-border: #ff69d2;
+            --blue: #8fd3ff;
+            --blue-border: #4fb3ff;
+            --green: #a6f6c8;
+            --green-border: #5ae899;
+            --purple: #d4bbff;
+            --purple-border: #b794ff;
+            --orange: #ffb380;
+            --orange-border: #ff8c42;
+            --teal: #7ee8d5;
+            --teal-border: #3dd5ba;
+            --lime: #d4ff8f;
+            --lime-border: #b8f54e;
+            --coral: #ffb3ba;
+            --coral-border: #ff8a94;
+            
+            /* Frame colors */
+            --frame-blue: #4353ff;
+            --frame-green: #00c875;
+            --frame-purple: #a25ddc;
+            --frame-orange: #ff6f3c;
+            --frame-teal: #00d4aa;
+            --frame-pink: #ff3eb5;
+            
+            /* Text */
+            --text-dark: #1a1a1a;
+            --text-medium: #4a4a4a;
+            --text-light: #7a7a7a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--miro-bg);
+            overflow: hidden;
+            color: var(--text-dark);
+        }
+
+        /* Miro canvas */
+        .miro-canvas {
+            width: 100vw;
+            height: 100vh;
+            background-image: 
+                linear-gradient(var(--miro-grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--miro-grid) 1px, transparent 1px);
+            background-size: 20px 20px;
+            position: relative;
+            overflow: auto;
+            cursor: grab;
+        }
+
+        .miro-canvas:active {
+            cursor: grabbing;
+        }
+
+        .board-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 6000px;
+            height: 4000px;
+            padding: 100px;
+        }
+
+        /* Toolbar */
+        .miro-toolbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .toolbar-title {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--text-dark);
+            padding-right: 24px;
+            border-right: 1px solid #e1e4e8;
+        }
+
+        .toolbar-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .toolbar-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+            font-size: 18px;
+        }
+
+        .toolbar-btn:hover {
+            background: #f5f6f8;
+        }
+
+        /* Zoom controls */
+        .zoom-controls {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+            padding: 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            z-index: 1000;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .zoom-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: transparent;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            transition: background 0.2s;
+        }
+
+        .zoom-btn:hover {
+            background: #f5f6f8;
+        }
+
+        /* Logo badge */
+        .logo-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, var(--frame-orange), var(--frame-pink));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 16px rgba(255, 111, 60, 0.3);
+            z-index: 999;
+        }
+
+        /* Frames */
+        .miro-frame {
+            position: absolute;
+            border: 3px solid;
+            border-radius: 8px;
+            padding: 60px 40px 40px 40px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+        }
+
+        .frame-label {
+            position: absolute;
+            top: 16px;
+            left: 40px;
+            font-size: 24px;
+            font-weight: 700;
+            color: inherit;
+        }
+
+        .frame-blue { border-color: var(--frame-blue); color: var(--frame-blue); }
+        .frame-green { border-color: var(--frame-green); color: var(--frame-green); }
+        .frame-purple { border-color: var(--frame-purple); color: var(--frame-purple); }
+        .frame-orange { border-color: var(--frame-orange); color: var(--frame-orange); }
+        .frame-teal { border-color: var(--frame-teal); color: var(--frame-teal); }
+        .frame-pink { border-color: var(--frame-pink); color: var(--frame-pink); }
+
+        /* Sticky notes */
+        .sticky {
+            position: absolute;
+            width: 240px;
+            min-height: 200px;
+            padding: 20px;
+            border-radius: 0;
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.1),
+                0 4px 12px rgba(0, 0, 0, 0.08);
+            transform: rotate(var(--rotation, 0deg));
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: move;
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            border-left: 8px solid;
+        }
+
+        .sticky:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 
+                0 8px 24px rgba(0, 0, 0, 0.15),
+                0 16px 48px rgba(0, 0, 0, 0.1);
+            z-index: 100 !important;
+        }
+
+        .sticky.yellow { background: var(--yellow); border-left-color: var(--yellow-border); }
+        .sticky.pink { background: var(--pink); border-left-color: var(--pink-border); }
+        .sticky.blue { background: var(--blue); border-left-color: var(--blue-border); }
+        .sticky.green { background: var(--green); border-left-color: var(--green-border); }
+        .sticky.purple { background: var(--purple); border-left-color: var(--purple-border); }
+        .sticky.orange { background: var(--orange); border-left-color: var(--orange-border); }
+        .sticky.teal { background: var(--teal); border-left-color: var(--teal-border); }
+        .sticky.lime { background: var(--lime); border-left-color: var(--lime-border); }
+        .sticky.coral { background: var(--coral); border-left-color: var(--coral-border); }
+
+        .sticky-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            line-height: 1.3;
+        }
+
+        .sticky-content {
+            font-size: 13px;
+            line-height: 1.5;
+            opacity: 0.9;
+        }
+
+        .sticky-content ul {
+            margin-left: 16px;
+            margin-top: 8px;
+        }
+
+        .sticky-content li {
+            margin-bottom: 6px;
+        }
+
+        .sticky-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.1);
+            margin-bottom: 8px;
+        }
+
+        /* Cards */
+        .miro-card {
+            position: absolute;
+            background: white;
+            border-radius: 8px;
+            padding: 32px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* Persona cards */
+        .persona-card {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            width: 320px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+        }
+
+        .persona-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .persona-name {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .persona-role {
+            font-size: 13px;
+            color: var(--text-light);
+            margin-bottom: 16px;
+        }
+
+        .persona-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .persona-stat {
+            background: #f5f6f8;
+            border-radius: 6px;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .persona-stat-value {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--frame-orange);
+        }
+
+        .persona-stat-label {
+            font-size: 10px;
+            color: var(--text-light);
+            margin-top: 2px;
+        }
+
+        .persona-quote {
+            background: #f5f6f8;
+            border-left: 3px solid var(--frame-orange);
+            padding: 12px;
+            border-radius: 0 6px 6px 0;
+            font-style: italic;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        /* Circle badges */
+        .circle-badge {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            color: white;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Handwritten text */
+        .handwritten {
+            font-family: 'Caveat', cursive;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--frame-purple);
+            position: absolute;
+            transform: rotate(-3deg);
+        }
+
+        /* Arrows */
+        .arrow {
+            position: absolute;
+            stroke: var(--text-medium);
+            stroke-width: 2;
+            fill: none;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .arrow-head {
+            fill: var(--text-medium);
+        }
+
+        /* Stats box */
+        .stats-box {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--frame-orange);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--frame-orange);
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Journey emoji */
+        .journey-emoji {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 3px solid;
+        }
+
+        .journey-label {
+            position: absolute;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            width: 100px;
+        }
+
+        /* ROI card */
+        .roi-card {
+            position: absolute;
+            background: linear-gradient(135deg, rgba(0, 200, 117, 0.1), white);
+            border: 3px solid var(--frame-green);
+            border-radius: 16px;
+            padding: 32px;
+            width: 400px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .roi-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .roi-result {
+            background: var(--frame-green);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 16px;
+        }
+
+        .roi-result-value {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .roi-result-label {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        /* Sentiment bar */
+        .sentiment-bar {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            width: 400px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .sentiment-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .sentiment-visual {
+            display: flex;
+            height: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 12px;
+        }
+
+        .sentiment-positive {
+            background: var(--frame-green);
+            flex: 85;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .sentiment-neutral {
+            background: #ffd700;
+            flex: 8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        .sentiment-negative {
+            background: #ff4757;
+            flex: 7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+        }
+
+        /* Ecosystem node */
+        .ecosystem-node {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            width: 160px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 2px solid var(--frame-blue);
+        }
+
+        .ecosystem-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--frame-blue), var(--frame-purple));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 20px;
+        }
+
+        .ecosystem-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .ecosystem-desc {
+            font-size: 11px;
+            color: var(--text-light);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .miro-toolbar {
+                flex-direction: column;
+                gap: 12px;
+            }
+            
+            .toolbar-title {
+                padding-right: 0;
+                padding-bottom: 12px;
+                border-right: none;
+                border-bottom: 1px solid #e1e4e8;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Logo -->
+    <div class="logo-badge">IM</div>
+
+    <!-- Toolbar -->
+    <div class="miro-toolbar">
+        <div class="toolbar-title">Imagen AI Ecosystem & Personas</div>
+        <div class="toolbar-actions">
+            <button class="toolbar-btn" title="Hand tool">✋</button>
+            <button class="toolbar-btn" title="Comment">💬</button>
+            <button class="toolbar-btn" title="Share">↗️</button>
+        </div>
+    </div>
+
+    <!-- Zoom Controls -->
+    <div class="zoom-controls">
+        <button class="zoom-btn" title="Zoom In">+</button>
+        <button class="zoom-btn" title="Zoom Out">−</button>
+        <button class="zoom-btn" title="Fit">⊡</button>
+    </div>
+
+    <!-- Main Canvas -->
+    <div class="miro-canvas" id="canvas">
+        <div class="board-content">
+            
+            <!-- FRAME 1: Hero Stats (Top) -->
+            <div class="miro-frame frame-orange" style="left: 100px; top: 100px; width: 1400px; height: 400px;">
+                <div class="frame-label">📊 Imagen AI at a Glance</div>
+                
+                <!-- Stats boxes -->
+                <div class="stats-box" style="left: 40px; top: 100px; width: 300px;">
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">150M+</div>
+                            <div class="stat-label">Photos Processed/Year</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">19,000+</div>
+                            <div class="stat-label">Community Members</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$30M</div>
+                            <div class="stat-label">Series A Funding</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">85%</div>
+                            <div class="stat-label">Positive Sentiment</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key insights stickies -->
+                <div class="sticky yellow" style="left: 400px; top: 100px; --rotation: -2deg;">
+                    <div class="sticky-tag">Key Insight</div>
+                    <div class="sticky-title">Time Savings</div>
+                    <div class="sticky-content">
+                        <strong>90%+ reduction</strong> in editing time<br><br>
+                        Wedding galleries: 16 hours → 2 hours
+                    </div>
+                </div>
+
+                <div class="sticky green" style="left: 680px; top: 95px; --rotation: 1.5deg;">
+                    <div class="sticky-tag">Key Insight</div>
+                    <div class="sticky-title">Style Accuracy</div>
+                    <div class="sticky-content">
+                        <strong>90% of images</strong> need no adjustment after AI editing<br><br>
+                        Learns personal style
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 960px; top: 100px; --rotation: -0.8deg;">
+                    <div class="sticky-tag">Key Insight</div>
+                    <div class="sticky-title">Business Impact</div>
+                    <div class="sticky-content">
+                        <strong>+30% capacity</strong> to take on more clients<br><br>
+                        Scale without hiring
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 500px; top: 300px;">
+                    "Game-changer for photographers!"
+                </div>
+            </div>
+
+            <!-- FRAME 2: Ecosystem (Top Right) -->
+            <div class="miro-frame frame-blue" style="left: 1600px; top: 100px; width: 1000px; height: 700px;">
+                <div class="frame-label">🔧 Product Ecosystem</div>
+                
+                <!-- Core products -->
+                <div class="ecosystem-node" style="left: 60px; top: 100px;">
+                    <div class="ecosystem-icon">✨</div>
+                    <div class="ecosystem-title">AI Editing Engine</div>
+                    <div class="ecosystem-desc">0.5s per photo</div>
+                </div>
+
+                <div class="ecosystem-node" style="left: 260px; top: 100px;">
+                    <div class="ecosystem-icon">🎯</div>
+                    <div class="ecosystem-title">AI Culling</div>
+                    <div class="ecosystem-desc">Smart selection</div>
+                </div>
+
+                <div class="ecosystem-node" style="left: 460px; top: 100px;">
+                    <div class="ecosystem-icon">☁️</div>
+                    <div class="ecosystem-title">Cloud Backup</div>
+                    <div class="ecosystem-desc">Auto storage</div>
+                </div>
+
+                <div class="ecosystem-node" style="left: 660px; top: 100px;">
+                    <div class="ecosystem-icon">🔌</div>
+                    <div class="ecosystem-title">Lightroom Plugin</div>
+                    <div class="ecosystem-desc">Primary integration</div>
+                </div>
+
+                <!-- Profile types -->
+                <div class="sticky purple" style="left: 60px; top: 320px; --rotation: -1deg; width: 200px;">
+                    <div class="sticky-title">Personal AI Profiles</div>
+                    <div class="sticky-content">
+                        Learn your unique editing style over time
+                    </div>
+                </div>
+
+                <div class="sticky pink" style="left: 300px; top: 315px; --rotation: 0.8deg; width: 200px;">
+                    <div class="sticky-title">Talent AI Profiles</div>
+                    <div class="sticky-content">
+                        Professional photographer presets
+                    </div>
+                </div>
+
+                <div class="sticky orange" style="left: 540px; top: 320px; --rotation: -0.5deg; width: 200px;">
+                    <div class="sticky-title">Profile Shop</div>
+                    <div class="sticky-content">
+                        Marketplace for AI profiles
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 280px; top: 560px;">
+                    Seamless workflow integration
+                </div>
+            </div>
+
+            <!-- FRAME 3: Personas (Middle) -->
+            <div class="miro-frame frame-purple" style="left: 100px; top: 600px; width: 1400px; height: 900px;">
+                <div class="frame-label">👥 User Personas</div>
+                
+                <!-- Persona 1: Sarah -->
+                <div class="persona-card" style="left: 40px; top: 100px;">
+                    <div class="persona-avatar" style="background: var(--frame-orange);">S</div>
+                    <div class="persona-name">"Sarah"</div>
+                    <div class="persona-role">Wedding Photography Pro</div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">32</div>
+                            <div class="persona-stat-label">Years Old</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">$120K</div>
+                            <div class="persona-stat-label">Annual Revenue</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">35</div>
+                            <div class="persona-stat-label">Weddings/Year</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">16h</div>
+                            <div class="persona-stat-label">Editing/Wedding</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; margin-bottom: 8px;">
+                        <strong>Pain Points:</strong>
+                    </div>
+                    <ul style="font-size: 11px; margin-left: 16px; color: var(--text-medium);">
+                        <li>Editing consumes weekends</li>
+                        <li>Can't scale without hiring</li>
+                        <li>Burnout from repetitive work</li>
+                    </ul>
+                    <div class="persona-quote">
+                        "I've reclaimed my weekends. Full wedding galleries went from 16 hours to 2 hours."
+                    </div>
+                </div>
+
+                <!-- Persona 2: Mike -->
+                <div class="persona-card" style="left: 400px; top: 100px;">
+                    <div class="persona-avatar" style="background: var(--frame-teal);">M</div>
+                    <div class="persona-name">"Mike"</div>
+                    <div class="persona-role">Event & Corporate Photographer</div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">38</div>
+                            <div class="persona-stat-label">Years Old</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">$150K</div>
+                            <div class="persona-stat-label">Annual Revenue</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">100+</div>
+                            <div class="persona-stat-label">Events/Year</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">3K</div>
+                            <div class="persona-stat-label">Photos/Event</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; margin-bottom: 8px;">
+                        <strong>Pain Points:</strong>
+                    </div>
+                    <ul style="font-size: 11px; margin-left: 16px; color: var(--text-medium);">
+                        <li>Same-day delivery expected</li>
+                        <li>Diverse lighting conditions</li>
+                        <li>Multiple events per week</li>
+                    </ul>
+                    <div class="persona-quote">
+                        "A 4-hour event that took 2-3 hours to process now takes 45 minutes."
+                    </div>
+                </div>
+
+                <!-- Persona 3: Jessica -->
+                <div class="persona-card" style="left: 760px; top: 100px;">
+                    <div class="persona-avatar" style="background: var(--frame-purple);">J</div>
+                    <div class="persona-name">"Jessica"</div>
+                    <div class="persona-role">Portrait Studio Owner</div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">42</div>
+                            <div class="persona-stat-label">Years Old</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">$250K</div>
+                            <div class="persona-stat-label">Annual Revenue</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">3</div>
+                            <div class="persona-stat-label">Team Members</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">400</div>
+                            <div class="persona-stat-label">Sessions/Year</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; margin-bottom: 8px;">
+                        <strong>Pain Points:</strong>
+                    </div>
+                    <ul style="font-size: 11px; margin-left: 16px; color: var(--text-medium);">
+                        <li>Team style inconsistency</li>
+                        <li>Training new photographers</li>
+                        <li>Peak season overwhelm</li>
+                    </ul>
+                    <div class="persona-quote">
+                        "My second shooter's images now match my style perfectly."
+                    </div>
+                </div>
+
+                <!-- Persona 4: David -->
+                <div class="persona-card" style="left: 1120px; top: 100px;">
+                    <div class="persona-avatar" style="background: var(--frame-green);">D</div>
+                    <div class="persona-name">"David"</div>
+                    <div class="persona-role">Real Estate Photographer</div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">35</div>
+                            <div class="persona-stat-label">Years Old</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">$100K</div>
+                            <div class="persona-stat-label">Annual Revenue</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">20</div>
+                            <div class="persona-stat-label">Properties/Week</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-value">$250</div>
+                            <div class="persona-stat-label">Per Property</div>
+                        </div>
+                    </div>
+                    <div style="font-size: 12px; margin-bottom: 8px;">
+                        <strong>Pain Points:</strong>
+                    </div>
+                    <ul style="font-size: 11px; margin-left: 16px; color: var(--text-medium);">
+                        <li>Same-day turnaround pressure</li>
+                        <li>Low margins require speed</li>
+                        <li>Consistency across properties</li>
+                    </ul>
+                    <div class="persona-quote">
+                        "Same-day delivery has made me the go-to photographer."
+                    </div>
+                </div>
+
+                <!-- ICP Tiers -->
+                <div class="sticky yellow" style="left: 40px; top: 560px; --rotation: -1deg; width: 300px;">
+                    <div class="sticky-tag">Primary ICP</div>
+                    <div class="sticky-title">Wedding & Event Photographers</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>500-5,000+ images/event</li>
+                            <li>10-20+ hours editing</li>
+                            <li>Use Adobe Lightroom</li>
+                            <li>Full-time professionals</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky blue" style="left: 380px; top: 555px; --rotation: 0.8deg; width: 300px;">
+                    <div class="sticky-tag">Secondary ICP</div>
+                    <div class="sticky-title">Portrait Studio Owners</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Need team consistency</li>
+                            <li>Handle seasonal volume</li>
+                            <li>Want to scale operations</li>
+                            <li>Multiple photographers</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="sticky green" style="left: 720px; top: 560px; --rotation: -0.5deg; width: 300px;">
+                    <div class="sticky-tag">Tertiary ICP</div>
+                    <div class="sticky-title">Real Estate Photographers</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li>Same-day turnaround</li>
+                            <li>15-30+ properties/week</li>
+                            <li>Consistent, clean edits</li>
+                            <li>Volume-based business</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 1080px; top: 620px;">
+                    Primary = Wedding photographers!
+                </div>
+            </div>
+
+            <!-- FRAME 4: Emotional Journey (Middle Right) -->
+            <div class="miro-frame frame-pink" style="left: 1600px; top: 900px; width: 1200px; height: 400px;">
+                <div class="frame-label">💗 Emotional Journey</div>
+                
+                <!-- Journey stages -->
+                <div class="journey-emoji" style="left: 60px; top: 120px; border-color: #ff4757;">🤔</div>
+                <div class="journey-label" style="left: 10px; top: 200px; color: #ff4757;">
+                    <strong>Skepticism</strong><br>
+                    <span style="font-size: 11px;">"Will this work?"</span>
+                </div>
+
+                <div class="journey-emoji" style="left: 240px; top: 120px; border-color: #ffa502;">🧐</div>
+                <div class="journey-label" style="left: 190px; top: 200px; color: #ffa502;">
+                    <strong>Curiosity</strong><br>
+                    <span style="font-size: 11px;">"Free trial"</span>
+                </div>
+
+                <div class="journey-emoji" style="left: 420px; top: 120px; border-color: #3742fa;">📚</div>
+                <div class="journey-label" style="left: 370px; top: 200px; color: #3742fa;">
+                    <strong>Learning</strong><br>
+                    <span style="font-size: 11px;">"Setup time"</span>
+                </div>
+
+                <div class="journey-emoji" style="left: 600px; top: 120px; border-color: #00d4aa;">📈</div>
+                <div class="journey-label" style="left: 550px; top: 200px; color: #00d4aa;">
+                    <strong>Progress</strong><br>
+                    <span style="font-size: 11px;">"Getting better"</span>
+                </div>
+
+                <div class="journey-emoji" style="left: 780px; top: 120px; border-color: #a25ddc;">🎯</div>
+                <div class="journey-label" style="left: 730px; top: 200px; color: #a25ddc;">
+                    <strong>Mastery</strong><br>
+                    <span style="font-size: 11px;">"90% perfect!"</span>
+                </div>
+
+                <div class="journey-emoji" style="left: 960px; top: 120px; border-color: #ff6f3c;">🦸</div>
+                <div class="journey-label" style="left: 910px; top: 200px; color: #ff6f3c;">
+                    <strong>Advocacy</strong><br>
+                    <span style="font-size: 11px;">"Game-changer!"</span>
+                </div>
+
+                <div class="handwritten" style="left: 380px; top: 300px; font-size: 24px;">
+                    From skeptic to superhero in weeks!
+                </div>
+            </div>
+
+            <!-- FRAME 5: Workflow Comparison (Bottom Left) -->
+            <div class="miro-frame frame-green" style="left: 100px; top: 1600px; width: 1000px; height: 700px;">
+                <div class="frame-label">⏱️ Before vs After</div>
+                
+                <!-- Before -->
+                <div class="sticky coral" style="left: 40px; top: 100px; --rotation: -1deg; width: 400px; min-height: 400px;">
+                    <div class="sticky-tag">Before Imagen AI</div>
+                    <div class="sticky-title">❌ Traditional Workflow</div>
+                    <div class="sticky-content">
+                        <strong>Post-Production Time:</strong><br><br>
+                        <ul>
+                            <li><strong>Shooting:</strong> 8-10 hours</li>
+                            <li><strong>Import/Backup:</strong> 1-2 hours</li>
+                            <li><strong>Culling:</strong> 2-4 hours</li>
+                            <li><strong>Editing:</strong> 12-16 hours</li>
+                            <li><strong>Export/Delivery:</strong> 1-2 hours</li>
+                        </ul>
+                        <br>
+                        <div style="background: rgba(255, 71, 87, 0.2); padding: 12px; border-radius: 6px; margin-top: 12px;">
+                            <strong style="font-size: 20px; color: #ff4757;">18-25 hours</strong><br>
+                            <span style="font-size: 11px;">Total post-production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- After -->
+                <div class="sticky lime" style="left: 500px; top: 95px; --rotation: 0.8deg; width: 400px; min-height: 400px;">
+                    <div class="sticky-tag">After Imagen AI</div>
+                    <div class="sticky-title">✅ AI-Powered Workflow</div>
+                    <div class="sticky-content">
+                        <strong>Post-Production Time:</strong><br><br>
+                        <ul>
+                            <li><strong>Shooting:</strong> 8-10 hours</li>
+                            <li><strong>Import/Backup:</strong> 1-2 hours</li>
+                            <li><strong>AI Culling:</strong> 1-2 hours</li>
+                            <li><strong>AI Editing + Review:</strong> 1-2 hours</li>
+                            <li><strong>Export/Delivery:</strong> 1-2 hours</li>
+                        </ul>
+                        <br>
+                        <div style="background: rgba(0, 200, 117, 0.2); padding: 12px; border-radius: 6px; margin-top: 12px;">
+                            <strong style="font-size: 20px; color: #00c875;">4-7 hours</strong><br>
+                            <span style="font-size: 11px;">Total post-production</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="circle-badge" style="left: 420px; top: 520px; background: var(--frame-green); width: 100px; height: 100px; font-size: 40px;">
+                    90%
+                </div>
+
+                <div class="handwritten" style="left: 320px; top: 640px; font-size: 32px;">
+                    Time savings = life-changing!
+                </div>
+            </div>
+
+            <!-- FRAME 6: Pain Points & Delighters (Bottom Middle) -->
+            <div class="miro-frame frame-teal" style="left: 1200px; top: 1600px; width: 900px; height: 700px;">
+                <div class="frame-label">💡 Insights from 1,500+ Reviews</div>
+                
+                <!-- Pain points -->
+                <div class="sticky orange" style="left: 40px; top: 100px; --rotation: -1deg; width: 360px; min-height: 280px;">
+                    <div class="sticky-tag">Pain Points</div>
+                    <div class="sticky-title">⚠️ Areas for Improvement</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li><strong>25%:</strong> Mixed lighting handling</li>
+                            <li><strong>20%:</strong> Pricing transparency</li>
+                            <li><strong>20%:</strong> 2-week learning curve</li>
+                            <li><strong>10%:</strong> No Capture One support</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Delighters -->
+                <div class="sticky green" style="left: 460px; top: 95px; --rotation: 0.8deg; width: 360px; min-height: 280px;">
+                    <div class="sticky-tag">Delighters</div>
+                    <div class="sticky-title">✨ What Users Love</div>
+                    <div class="sticky-content">
+                        <ul>
+                            <li><strong>85%:</strong> Dramatic time savings</li>
+                            <li><strong>75%:</strong> Style accuracy (90%)</li>
+                            <li><strong>60%:</strong> Excellent support</li>
+                            <li><strong>40%:</strong> Business growth enabled</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Sentiment bar -->
+                <div class="sentiment-bar" style="left: 220px; top: 420px;">
+                    <div class="sentiment-title">Overall Sentiment</div>
+                    <div class="sentiment-visual">
+                        <div class="sentiment-positive">85%</div>
+                        <div class="sentiment-neutral">8%</div>
+                        <div class="sentiment-negative">7%</div>
+                    </div>
+                    <div style="text-align: center; font-size: 11px; color: var(--text-light);">
+                        Based on 1,500+ user reviews
+                    </div>
+                </div>
+            </div>
+
+            <!-- FRAME 7: ROI (Bottom Right) -->
+            <div class="miro-frame frame-orange" style="left: 2200px; top: 1600px; width: 700px; height: 700px;">
+                <div class="frame-label">💰 ROI Calculation</div>
+                
+                <div class="roi-card" style="left: 140px; top: 120px;">
+                    <div class="roi-title">Annual Business Impact</div>
+                    <div style="font-size: 13px; color: var(--text-light); text-align: center; margin-bottom: 20px;">
+                        Wedding photographer (30 weddings/year)
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <div class="stat-value">14 hrs</div>
+                            <div class="stat-label">Saved per wedding</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">+30%</div>
+                            <div class="stat-label">More clients</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">+9</div>
+                            <div class="stat-label">Additional weddings</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">$4,000</div>
+                            <div class="stat-label">Revenue/wedding</div>
+                        </div>
+                    </div>
+
+                    <div class="roi-result">
+                        <div class="roi-result-value">2,900% ROI</div>
+                        <div class="roi-result-label">$36,000 additional revenue vs ~$1,200 annual cost</div>
+                    </div>
+                </div>
+
+                <div class="handwritten" style="left: 180px; top: 580px; font-size: 28px;">
+                    Pays for itself 29x over!
+                </div>
+            </div>
+
+            <!-- Additional context stickies -->
+            <div class="sticky purple" style="left: 2700px; top: 100px; --rotation: -1deg; width: 280px;">
+                <div class="sticky-tag">Data Sources</div>
+                <div class="sticky-title">📚 Research Basis</div>
+                <div class="sticky-content">
+                    <ul>
+                        <li>TechCrunch</li>
+                        <li>BusinessWire</li>
+                        <li>Trustpilot (1,500+ reviews)</li>
+                        <li>G2 & Capterra</li>
+                        <li>Reddit communities</li>
+                        <li>Imagen AI website</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="sticky pink" style="left: 3020px; top: 95px; --rotation: 1deg; width: 280px;">
+                <div class="sticky-tag">Confidence Level</div>
+                <div class="sticky-title">✅ High Confidence</div>
+                <div class="sticky-content">
+                    Based on comprehensive analysis of public data, user reviews, and testimonials.<br><br>
+                    <strong>Research completed:</strong> December 2024
+                </div>
+            </div>
+
+            <!-- SVG Arrows -->
+            <svg width="6000" height="4000" style="position: absolute; top: 0; left: 0; pointer-events: none;">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                        <polygon points="0 0, 10 3, 0 6" class="arrow-head" />
+                    </marker>
+                </defs>
+                
+                <!-- Arrow from stats to ecosystem -->
+                <path d="M 1500 400 L 1600 400" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from ecosystem to personas -->
+                <path d="M 1600 800 L 1600 850 L 800 850 L 800 900" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from personas to journey -->
+                <path d="M 1500 1100 L 1600 1100" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from journey to workflow -->
+                <path d="M 1800 1300 L 1800 1550 L 600 1550 L 600 1600" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from workflow to insights -->
+                <path d="M 1100 1950 L 1200 1950" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+                
+                <!-- Arrow from insights to ROI -->
+                <path d="M 2100 1950 L 2200 1950" class="arrow" marker-end="url(#arrowhead)" stroke-width="3" stroke-dasharray="5,5" />
+            </svg>
+
+        </div>
+    </div>
+
+    <script>
+        // Pan and zoom functionality
+        const canvas = document.getElementById('canvas');
+        let isPanning = false;
+        let startX, startY;
+        let scrollLeft, scrollTop;
+        let scale = 1;
+
+        // Panning
+        canvas.addEventListener('mousedown', (e) => {
+            if (e.target === canvas || e.target.classList.contains('board-content')) {
+                isPanning = true;
+                startX = e.pageX - canvas.offsetLeft;
+                startY = e.pageY - canvas.offsetTop;
+                scrollLeft = canvas.scrollLeft;
+                scrollTop = canvas.scrollTop;
+                canvas.style.cursor = 'grabbing';
+            }
+        });
+
+        canvas.addEventListener('mousemove', (e) => {
+            if (!isPanning) return;
+            e.preventDefault();
+            const x = e.pageX - canvas.offsetLeft;
+            const y = e.pageY - canvas.offsetTop;
+            const walkX = (x - startX) * 1.5;
+            const walkY = (y - startY) * 1.5;
+            canvas.scrollLeft = scrollLeft - walkX;
+            canvas.scrollTop = scrollTop - walkY;
+        });
+
+        canvas.addEventListener('mouseup', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        canvas.addEventListener('mouseleave', () => {
+            isPanning = false;
+            canvas.style.cursor = 'grab';
+        });
+
+        // Zoom controls
+        const zoomBtns = document.querySelectorAll('.zoom-btn');
+        const boardContent = document.querySelector('.board-content');
+
+        zoomBtns[0].addEventListener('click', () => {
+            scale = Math.min(1.5, scale + 0.1);
+            boardContent.style.transform = `scale(${scale})`;
+            boardContent.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[1].addEventListener('click', () => {
+            scale = Math.max(0.5, scale - 0.1);
+            boardContent.style.transform = `scale(${scale})`;
+            boardContent.style.transformOrigin = 'top left';
+        });
+
+        zoomBtns[2].addEventListener('click', () => {
+            scale = 1;
+            boardContent.style.transform = 'scale(1)';
+            canvas.scrollLeft = 0;
+            canvas.scrollTop = 0;
+        });
+
+        // Mouse wheel zoom
+        canvas.addEventListener('wheel', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -0.05 : 0.05;
+                scale = Math.max(0.5, Math.min(1.5, scale + delta));
+                boardContent.style.transform = `scale(${scale})`;
+                boardContent.style.transformOrigin = 'top left';
+            }
+        });
+
+        // Random rotations for stickies
+        document.querySelectorAll('.sticky').forEach(sticky => {
+            if (!sticky.style.getPropertyValue('--rotation')) {
+                const rotation = (Math.random() - 0.5) * 3;
+                sticky.style.setProperty('--rotation', `${rotation}deg`);
+            }
+        });
+
+        // Start at a good viewing position
+        setTimeout(() => {
+            canvas.scrollLeft = 0;
+            canvas.scrollTop = 0;
+        }, 100);
+    </script>
+</body>
+</html>

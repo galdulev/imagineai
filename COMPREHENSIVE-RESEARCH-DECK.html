@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI - Comprehensive Strategic Research Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a25;
+            --bg-hover: #222230;
+            
+            --accent-primary: #f97316;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-info: #3b82f6;
+            --accent-pink: #ec4899;
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.4);
+            
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            
+            --gradient-primary: linear-gradient(135deg, #f97316, #ec4899);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-muted);
+            z-index: 10;
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        h1 .gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .badge-success {
+            color: var(--accent-success);
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .badge-gap {
+            color: var(--accent-warning);
+            border-color: rgba(234, 179, 8, 0.3);
+        }
+
+        .badge-active {
+            color: var(--accent-info);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .workflow-visual {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 48px 0;
+            padding: 40px;
+            background: var(--bg-surface);
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            flex-wrap: wrap;
+            gap: 24px;
+        }
+
+        .workflow-stage {
+            flex: 1;
+            min-width: 120px;
+            text-align: center;
+            padding: 24px 16px;
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .workflow-stage.solved {
+            border-color: rgba(34, 197, 94, 0.3);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .workflow-stage.gap {
+            border-color: rgba(234, 179, 8, 0.3);
+            background: rgba(234, 179, 8, 0.05);
+        }
+
+        .workflow-stage.active {
+            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(59, 130, 246, 0.05);
+        }
+
+        .workflow-stage.selected {
+            border: 2px solid var(--accent-primary);
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.3);
+        }
+
+        .stage-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .stage-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .stage-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .stage-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-solved {
+            background: rgba(34, 197, 94, 0.2);
+            color: var(--accent-success);
+        }
+
+        .status-gap {
+            background: rgba(234, 179, 8, 0.2);
+            color: var(--accent-warning);
+        }
+
+        .status-active {
+            background: rgba(59, 130, 246, 0.2);
+            color: var(--accent-info);
+        }
+
+        .quote {
+            font-size: 20px;
+            font-style: italic;
+            color: var(--text-secondary);
+            padding: 32px;
+            background: var(--bg-surface);
+            border-left: 4px solid var(--accent-primary);
+            border-radius: 12px;
+            margin: 32px 0;
+        }
+
+        .metric-box {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .metric-value {
+            font-size: 64px;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+        }
+
+        .metric-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .insight-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+        }
+
+        .insight-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--accent-primary);
+        }
+
+        .insight-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 32px 0;
+            background: var(--bg-surface);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .comparison-table th {
+            background: var(--bg-elevated);
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .nav-dots {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--border);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .nav-dot.active {
+            background: var(--accent-primary);
+            transform: scale(1.3);
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 40px 24px;
+            }
+
+            h1 {
+                font-size: 48px;
+            }
+
+            h2 {
+                font-size: 36px;
+            }
+
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .workflow-visual {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <section class="slide">
+        <div class="slide-number">01</div>
+        <div class="slide-content">
+            <div class="badge">Strategic Research | CPO Perspective</div>
+            <h1>
+                Imagen AI:<br>
+                <span class="gradient">From Tool to Operating System</span>
+            </h1>
+            <p class="subtitle">Comprehensive Strategic Research Document<br>Delivery Stage Opportunity & North Star Metric</p>
+            <p style="color: var(--text-muted); margin-top: 48px; font-size: 14px;">December 2024</p>
+        </div>
+    </section>
+
+    <!-- Slide 2: Executive Summary -->
+    <section class="slide">
+        <div class="slide-number">02</div>
+        <div class="slide-content">
+            <h2>Executive Summary</h2>
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Key Finding</div>
+                    <div class="card-desc">
+                        After photographers finish editing—the part they love—they must exit Imagen to export and upload photos to competitors (Pixieset, ShootProof) for client delivery. This breaks the workflow and creates friction.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Selected Next Capability</div>
+                    <div class="card-desc">
+                        <strong>Deliver Stage (Gallery & Payment)</strong> has been selected to remove the "Export & Upload" friction, allowing photographers to complete their workflow within Imagen.
+                    </div>
+                </div>
+            </div>
+            <div class="quote" style="margin-top: 48px;">
+                "After I finish editing—the part I love—I'm thrown into exporting photos, uploading them to another platform, building galleries manually... This is where I burn out."
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 3: The Complete Workflow -->
+    <section class="slide">
+        <div class="slide-number">03</div>
+        <div class="slide-content">
+            <h2>The Complete Photographer Workflow</h2>
+            <p class="subtitle">8 Stages | Current Coverage: 36% (Cull + Edit)</p>
+            
+            <div class="workflow-visual">
+                <div class="workflow-stage gap">
+                    <div class="stage-icon">📋</div>
+                    <div class="stage-name">Lead</div>
+                    <div class="stage-desc">Inquiry & Quote</div>
+                    <span class="stage-status status-gap">GAP</span>
+                </div>
+                <div class="workflow-stage gap">
+                    <div class="stage-icon">📝</div>
+                    <div class="stage-name">Book</div>
+                    <div class="stage-desc">Contract & Deposit</div>
+                    <span class="stage-status status-gap">GAP</span>
+                </div>
+                <div class="workflow-stage active">
+                    <div class="stage-icon">📷</div>
+                    <div class="stage-name">Shoot</div>
+                    <div class="stage-desc">Capture Images</div>
+                    <span class="stage-status status-active">ACTIVE</span>
+                </div>
+                <div class="workflow-stage solved">
+                    <div class="stage-icon">🔍</div>
+                    <div class="stage-name">Cull</div>
+                    <div class="stage-desc">AI Selection</div>
+                    <span class="stage-status status-solved">SOLVED</span>
+                </div>
+                <div class="workflow-stage solved">
+                    <div class="stage-icon">✨</div>
+                    <div class="stage-name">Edit</div>
+                    <div class="stage-desc">AI Editing</div>
+                    <span class="stage-status status-solved">SOLVED</span>
+                </div>
+                <div class="workflow-stage gap selected">
+                    <div class="stage-icon">📦</div>
+                    <div class="stage-name">Deliver</div>
+                    <div class="stage-desc">Gallery & Payment</div>
+                    <span class="stage-status status-gap">SELECTED</span>
+                </div>
+                <div class="workflow-stage gap">
+                    <div class="stage-icon">📚</div>
+                    <div class="stage-name">Upsell</div>
+                    <div class="stage-desc">Albums & Prints</div>
+                    <span class="stage-status status-gap">GAP</span>
+                </div>
+                <div class="workflow-stage gap">
+                    <div class="stage-icon">💝</div>
+                    <div class="stage-name">Retain</div>
+                    <div class="stage-desc">Reviews & Referrals</div>
+                    <span class="stage-status status-gap">GAP</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 4: Strategic Business Goal -->
+    <section class="slide">
+        <div class="slide-number">04</div>
+        <div class="slide-content">
+            <h2>Strategic Business Goal</h2>
+            <p class="subtitle">From "Tool" → "Operating System"</p>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Current State</div>
+                    <div class="card-desc">
+                        Imagen AI is a powerful tool for specific tasks (culling & editing). Currently owns the middle of the workflow (Cull + Edit).
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Target State</div>
+                    <div class="card-desc">
+                        Imagen AI becomes the operating system for photographers' entire workflow. To become a "one-stop-shop," we must own the end of the workflow.
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px; background: rgba(249, 115, 22, 0.1); border-color: var(--accent-primary);">
+                <div class="card-title" style="color: var(--accent-primary);">Selected Next Capability: Integrated Client Delivery</div>
+                <div class="card-desc" style="margin-top: 16px;">
+                    <strong>Context:</strong> After Imagen edits photos, photographers must export and upload to competitors (Pixieset, ShootProof) to deliver to clients.<br><br>
+                    <strong>Opportunity:</strong> By building Delivery, we remove the "Export & Upload" friction, directly fulfilling the mission of saving time.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 5: North Star Metric -->
+    <section class="slide">
+        <div class="slide-number">05</div>
+        <div class="slide-content">
+            <h2>The North Star Metric</h2>
+            <p class="subtitle">Weekly Completed Workflows (WCW)</p>
+            
+            <div class="metric-box" style="margin-top: 48px;">
+                <div class="metric-value">WCW</div>
+                <div class="metric-label">Weekly Completed Workflows</div>
+            </div>
+
+            <div class="card" style="margin-top: 48px;">
+                <div class="card-title">Definition</div>
+                <div class="card-desc">
+                    A unique project (Session/Wedding) that is processed in Imagen (Edited) AND successfully published/delivered to an end-client via Imagen's gallery within the last 7 days.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 6: Why WCW is Superior -->
+    <section class="slide">
+        <div class="slide-number">06</div>
+        <div class="slide-content">
+            <h2>Why WCW is Superior</h2>
+            <p class="subtitle">Analytical Reasoning from Product Interviews</p>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <div class="insight-title">1. Alignment with Mission</div>
+                    <div class="insight-text">
+                        "Photos Edited" is a vanity metric. If a user edits 1,000 photos but then spends 2 hours exporting and uploading to Pixieset, we've failed the mission of "giving time back." WCW measures true workflow completion.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">2. Measures True Value</div>
+                    <div class="insight-text">
+                        Revenue alone doesn't capture workflow completion. WCW measures end-to-end value delivery—the moment when photographer AND client both benefit.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">3. Predicts Retention</div>
+                    <div class="insight-text">
+                        Users who complete workflows are 3x more likely to use additional features and stay with Imagen. WCW is a leading indicator of product-market fit.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">4. Actionable & Measurable</div>
+                    <div class="insight-text">
+                        Clear binary outcome (yes/no per project). Product teams can directly impact this metric. Enables A/B testing and clear goal-setting.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 7: Market & Competitors -->
+    <section class="slide">
+        <div class="slide-number">07</div>
+        <div class="slide-content">
+            <h2>Market & Competitor Landscape</h2>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Workflow Stage</th>
+                        <th>Aftershoot</th>
+                        <th>Imagen AI</th>
+                        <th>Pic-Time/Pixieset</th>
+                        <th>Studio Ninja</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Pre-Wedding</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Shoot Day</strong></td>
+                        <td>⚠️ (Offline culling)</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Production</strong></td>
+                        <td>✅ (Cull + Edit)</td>
+                        <td>✅ (Cull + Edit)</td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Delivery</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>✅</td>
+                        <td>❌</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Post-Delivery</strong></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                        <td>⚠️ (Basic)</td>
+                        <td>⚠️ (CRM)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="grid-2" style="margin-top: 32px;">
+                <div class="card">
+                    <div class="card-title">Aftershoot vs. Imagen</div>
+                    <div class="card-desc">
+                        <strong>Aftershoot:</strong> Offline-first, deep culling, flat-rate pricing<br>
+                        <strong>Imagen:</strong> Cloud-based, style learning, Lightroom sync, convenience<br>
+                        <strong>Gap:</strong> Neither owns delivery phase
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Strategic Gap</div>
+                    <div class="card-desc">
+                        No competitor owns end-to-end workflow. Delivery phase is fragmented and painful. Mobile-first clients, desktop-first tools.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 8: User Segmentation -->
+    <section class="slide">
+        <div class="slide-number">08</div>
+        <div class="slide-content">
+            <h2>User Segmentation</h2>
+            <p class="subtitle">Focus: Professional Photographers → Wedding Photographers</p>
+            
+            <div class="grid-3" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Wedding Photographers</div>
+                    <div class="card-desc">
+                        <strong>40-50% of user base</strong><br>
+                        25-40 weddings/year<br>
+                        $3,000-$6,000 per wedding<br>
+                        Highest workflow complexity<br>
+                        Highest LTV per client
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Event Photographers</div>
+                    <div class="card-desc">
+                        <strong>20-25% of user base</strong><br>
+                        80-120 events/year<br>
+                        $500-$3,000 per event<br>
+                        Speed-focused
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Portrait Studios</div>
+                    <div class="card-desc">
+                        <strong>15-20% of user base</strong><br>
+                        300-500 sessions/year<br>
+                        $200-$800 per session<br>
+                        Consistency-focused
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 9: The Delivery Gap Problem -->
+    <section class="slide">
+        <div class="slide-number">09</div>
+        <div class="slide-content">
+            <h2>The Delivery Gap Problem</h2>
+            
+            <div class="card" style="margin-top: 48px; background: rgba(234, 179, 8, 0.1); border-color: var(--accent-warning);">
+                <div class="card-title" style="color: var(--accent-warning);">Current Workflow Break</div>
+                <div class="card-desc" style="margin-top: 16px;">
+                    After editing (Stage 5) ✅, photographers must:<br><br>
+                    1. Export photos (30-60 min)<br>
+                    2. Upload to Pic-Time/Pixieset/ShootProof (30-60 min)<br>
+                    3. Customize gallery (15-30 min)<br>
+                    4. Send link to client (5-10 min)<br><br>
+                    <strong>Total: 1-2 hours outside Imagen</strong>
+                </div>
+            </div>
+
+            <div class="quote" style="margin-top: 32px;">
+                "After I finish editing—the part I love—I'm thrown into exporting photos, uploading them to another platform, building galleries manually, organizing thousands of photos into folders, dealing with guests who constantly request 'photos of me'..."
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10: Key Problems -->
+    <section class="slide">
+        <div class="slide-number">10</div>
+        <div class="slide-content">
+            <h2>Key Problems in Delivery Phase</h2>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">1. Manual Gallery Building</div>
+                    <div class="card-desc">
+                        "Segmenting each step in the galleries and albums manually is a nightmare."<br><br>
+                        <strong>Time Impact:</strong> 30-60 min per wedding
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">2. Client Communication Overload</div>
+                    <div class="card-desc">
+                        "Clients and guests immediately start bombarding me with requests."<br><br>
+                        <strong>Time Impact:</strong> 1-2 hours per wedding
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">3. Mobile Viewing Gap</div>
+                    <div class="card-desc">
+                        "Everyone wants the photos on their phone"<br><br>
+                        <strong>Insight:</strong> 80%+ web visits from desktop, but clients view on mobile. Photographers use mobile for communication & Instagram.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">4. Revenue Leakage</div>
+                    <div class="card-desc">
+                        "I don't know how to upsell stuff after, it's embarrassing"<br><br>
+                        <strong>Impact:</strong> 20-40% of potential revenue left on table
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 10.5: Mobile Jobs-to-Be-Done -->
+    <section class="slide">
+        <div class="slide-number">10.5</div>
+        <div class="slide-content">
+            <h2>Mobile Jobs-to-Be-Done</h2>
+            <p class="subtitle">34 Mobile Jobs Identified Across Workflow</p>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Pre-Wedding (8 jobs)</div>
+                    <div class="card-desc">
+                        • Communicate with clients on WhatsApp<br>
+                        • Get paid / collect payments<br>
+                        • Put wedding date on calendar<br>
+                        • Impress the lead I get<br>
+                        • Respond to inquiries quickly<br>
+                        • Send contracts for signature<br>
+                        • Track payment status<br>
+                        • Manage client questionnaires
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Delivery & Communication (4 jobs)</div>
+                    <div class="card-desc">
+                        • Send gallery link in WhatsApp<br>
+                        • Communicate with client during wedding day<br>
+                        • Notify client when gallery is ready<br>
+                        • Track client engagement with gallery
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Marketing & Social Media (6 jobs)</div>
+                    <div class="card-desc">
+                        • Post to Instagram (photos)<br>
+                        • Post Instagram Reels<br>
+                        • Get more clients through social media<br>
+                        • Share behind-the-scenes content<br>
+                        • Tag clients in posts<br>
+                        • Schedule social media posts
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Business Management (6 jobs)</div>
+                    <div class="card-desc">
+                        • Track payments and invoices<br>
+                        • Follow up with leads<br>
+                        • Request reviews from clients<br>
+                        • Update portfolio on the go<br>
+                        • Manage multiple client projects<br>
+                        • Access client history and notes
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 11: Insights from Research -->
+    <section class="slide">
+        <div class="slide-number">11</div>
+        <div class="slide-content">
+            <h2>Insights from Research</h2>
+            <p class="subtitle">5 "Big Truths" About Wedding Photographers</p>
+            
+            <div class="insight-grid">
+                <div class="insight-card">
+                    <div class="insight-title">1. The Editing High Ends Abruptly</div>
+                    <div class="insight-text">
+                        Photographers love the creative part (editing with Imagen), then they're thrown into the worst part: manual gallery building, client requests, marketing. This is where burnout happens.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">2. Clients Live on Mobile, Tools Don't</div>
+                    <div class="insight-text">
+                        80%+ of gallery views happen on mobile (client behavior), but current gallery platforms are desktop-first. Photographers need tools that serve mobile-first clients.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">3. Revenue Leakage is Embarrassing</div>
+                    <div class="insight-text">
+                        Photographers want to upsell (albums, prints, products) but feel awkward asking directly. They need automatic, built-in monetization that doesn't feel salesy.
+                    </div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">4. Marketing is a Burden</div>
+                    <div class="insight-text">
+                        Photographers are creatives, not marketers. They spend equal or more time on marketing than shooting. They need automated marketing that leverages their work.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12: Opportunity Mapping -->
+    <section class="slide">
+        <div class="slide-number">12</div>
+        <div class="slide-content">
+            <h2>Opportunity Mapping</h2>
+            <p class="subtitle">Why Deliver Stage Was Selected</p>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Time Consuming</div>
+                    <div class="card-desc">
+                        ⭐⭐⭐⭐⭐<br>
+                        Manual gallery building: 30-60 min<br>
+                        Client communication: 1-2 hrs<br>
+                        <strong>Total: 3-5 hours per wedding saved</strong>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Impact</div>
+                    <div class="card-desc">
+                        ⭐⭐⭐⭐⭐<br>
+                        Removes "Export & Upload" friction<br>
+                        Completes workflow within Imagen<br>
+                        Directly fulfills mission ("time back")
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Leverages Strengths</div>
+                    <div class="card-desc">
+                        ⭐⭐⭐⭐⭐<br>
+                        AI for automatic segmentation<br>
+                        Cloud infrastructure<br>
+                        Existing brand trust
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Ecosystem Investment</div>
+                    <div class="card-desc">
+                        ⭐⭐⭐⭐⭐<br>
+                        Client data (faces, preferences)<br>
+                        Payment processing (revenue lock-in)<br>
+                        Gallery hosting (switching cost)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 13: Strategic Hypothesis -->
+    <section class="slide">
+        <div class="slide-number">13</div>
+        <div class="slide-content">
+            <h2>Strategic Hypothesis</h2>
+            
+            <div class="card" style="margin-top: 48px; background: rgba(34, 197, 94, 0.1); border-color: var(--accent-success);">
+                <div class="card-title" style="color: var(--accent-success);">The Solution</div>
+                <div class="card-desc" style="margin-top: 16px;">
+                    A mobile-first AI gallery that automatically segments weddings, recognizes faces for self-service, presents beautifully on mobile (where 80%+ of clients view), protects photographer brand, and includes built-in automatic monetization.
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px;">
+                <div class="card-title">Four Solutions</div>
+                <div class="card-desc">
+                    <strong>1. Automatic Story-Based Segmentation</strong> - AI organizes into ceremony, reception, portraits, etc.<br><br>
+                    <strong>2. Face Recognition for Self-Service</strong> - Guests find "photos of me" without photographer help<br><br>
+                    <strong>3. Mobile-First Beautiful Presentation</strong> - Optimized for mobile viewing (where clients actually are)<br><br>
+                    <strong>4. Built-In Automatic Monetization</strong> - Prints, downloads, albums, tips (no awkward sales)
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px; background: rgba(249, 115, 22, 0.1); border-color: var(--accent-primary);">
+                <div class="card-title" style="color: var(--accent-primary);">Strategic Value</div>
+                <div class="card-desc" style="margin-top: 16px;">
+                    • Upsell motion for cloud storage<br>
+                    • Deep ecosystem integration (workflow completion)<br>
+                    • Viral loop: 400 guests exposed to photographer brand per wedding<br>
+                    • Revenue expansion opportunity (prints, albums, payment processing)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 14: Success Metrics -->
+    <section class="slide">
+        <div class="slide-number">14</div>
+        <div class="slide-content">
+            <h2>Success Metrics</h2>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="metric-box">
+                    <div class="metric-value">WCW</div>
+                    <div class="metric-label">North Star Metric</div>
+                    <div style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
+                        6-Month: 40% of edited projects<br>
+                        12-Month: 70% of edited projects
+                    </div>
+                </div>
+                <div class="metric-box">
+                    <div class="metric-value">60%+</div>
+                    <div class="metric-label">Share of Workflow</div>
+                    <div style="margin-top: 24px; font-size: 14px; color: var(--text-secondary);">
+                        Current: 36% (Cull + Edit)<br>
+                        Target: 60%+ (Add Deliver)
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top: 32px;">
+                <div class="card">
+                    <div class="card-title">Time Saved</div>
+                    <div class="card-desc">
+                        +1-2 hrs per wedding<br>
+                        (Removing export/upload friction)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">Workflow Completion</div>
+                    <div class="card-desc">
+                        Current: 0%<br>
+                        Target: 70%<br>
+                        (Edit → Deliver in Imagen)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">LTV Increase</div>
+                    <div class="card-desc">
+                        Target: +40%<br>
+                        (Gallery subscriptions, payment processing, retention)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 15: Conclusion -->
+    <section class="slide">
+        <div class="slide-number">15</div>
+        <div class="slide-content">
+            <h2>Conclusion</h2>
+            
+            <div class="card" style="margin-top: 48px;">
+                <div class="card-title">The Opportunity</div>
+                <div class="card-desc">
+                    The Deliver stage (Gallery & Payment) is the selected next capability. 66% of workflow happens outside Imagen. After photographers finish editing, they must exit to export and upload photos to competitors. This breaks the workflow and creates friction.
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px;">
+                <div class="card-title">The Solution</div>
+                <div class="card-desc">
+                    A mobile-first AI gallery that automatically segments weddings, recognizes faces for self-service, presents beautifully on mobile (where 80%+ of clients view), protects photographer brand, and includes built-in automatic monetization. This turns the worst part of their job into the easiest.
+                </div>
+            </div>
+
+            <div class="card" style="margin-top: 32px; background: rgba(249, 115, 22, 0.1); border-color: var(--accent-primary);">
+                <div class="card-title" style="color: var(--accent-primary);">Strategic Value</div>
+                <div class="card-desc" style="margin-top: 16px;">
+                    • Upsell motion for cloud storage<br>
+                    • Deep ecosystem integration (workflow completion)<br>
+                    • Viral loop: 400 guests exposed to photographer brand per wedding<br>
+                    • Revenue expansion opportunity<br>
+                    • Measured by <strong>Weekly Completed Workflows (WCW)</strong>—our North Star Metric
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Simple scroll-based navigation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function updateSlideNumber() {
+            const scrollPosition = window.scrollY + window.innerHeight / 2;
+            slides.forEach((slide, index) => {
+                const slideTop = slide.offsetTop;
+                const slideBottom = slideTop + slide.offsetHeight;
+                if (scrollPosition >= slideTop && scrollPosition < slideBottom) {
+                    currentSlide = index;
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateSlideNumber);
+        updateSlideNumber();
+    </script>
+
+</body>
+</html>
+

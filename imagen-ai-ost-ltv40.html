@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI | Opportunity Solution Tree</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --canvas: #0c0c0f;
+            --surface-1: #13131a;
+            --surface-2: #1a1a24;
+            --surface-3: #22222e;
+            --surface-4: #2a2a38;
+            
+            --white: #ffffff;
+            --gray-100: #f4f4f5;
+            --gray-200: #e4e4e7;
+            --gray-300: #d4d4d8;
+            --gray-400: #a1a1aa;
+            --gray-500: #71717a;
+            --gray-600: #52525b;
+            
+            --outcome: #a855f7;
+            --outcome-glow: rgba(168, 85, 247, 0.3);
+            --opportunity: #06b6d4;
+            --opportunity-glow: rgba(6, 182, 212, 0.2);
+            --solution: #22c55e;
+            --solution-glow: rgba(34, 197, 94, 0.2);
+            --experiment: #f59e0b;
+            --experiment-glow: rgba(245, 158, 11, 0.2);
+            
+            --line-color: rgba(255, 255, 255, 0.1);
+            --line-highlight: rgba(168, 85, 247, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--canvas);
+            color: var(--gray-200);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            padding: 48px 48px 32px;
+            border-bottom: 1px solid var(--line-color);
+            background: linear-gradient(180deg, rgba(168, 85, 247, 0.05) 0%, transparent 100%);
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-4);
+            border-radius: 100px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--outcome);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--outcome);
+            border-radius: 50%;
+        }
+
+        .header h1 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 42px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 16px;
+            color: var(--gray-400);
+            max-width: 600px;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            gap: 32px;
+            padding: 20px 48px;
+            background: var(--surface-1);
+            border-bottom: 1px solid var(--line-color);
+            overflow-x: auto;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--gray-400);
+            white-space: nowrap;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
+        .legend-dot.outcome { background: var(--outcome); }
+        .legend-dot.opportunity { background: var(--opportunity); }
+        .legend-dot.solution { background: var(--solution); }
+        .legend-dot.experiment { background: var(--experiment); }
+
+        /* Tree Container */
+        .tree-wrapper {
+            padding: 60px 24px;
+            overflow-x: auto;
+        }
+
+        .tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: fit-content;
+        }
+
+        /* Outcome Node */
+        .outcome-node {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .outcome-card {
+            background: var(--surface-2);
+            border: 2px solid var(--outcome);
+            border-radius: 16px;
+            padding: 32px 48px;
+            text-align: center;
+            box-shadow: 0 0 60px var(--outcome-glow);
+            max-width: 500px;
+        }
+
+        .outcome-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--outcome);
+            margin-bottom: 12px;
+        }
+
+        .outcome-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 8px;
+        }
+
+        .outcome-metric {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 48px;
+            font-weight: 600;
+            color: var(--outcome);
+            margin: 16px 0;
+        }
+
+        .outcome-desc {
+            font-size: 14px;
+            color: var(--gray-400);
+        }
+
+        /* Vertical Connector */
+        .connector-vertical {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(180deg, var(--outcome) 0%, var(--opportunity) 100%);
+            margin: 0 auto;
+        }
+
+        .connector-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--opportunity);
+            border-radius: 50%;
+            margin: 0 auto 40px;
+            box-shadow: 0 0 20px var(--opportunity-glow);
+        }
+
+        /* Opportunity Level */
+        .opportunity-level {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .level-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .level-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--opportunity);
+            margin-bottom: 8px;
+        }
+
+        .level-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--white);
+        }
+
+        /* Horizontal Branch Container */
+        .branch-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Opportunity Branch */
+        .opportunity-branch {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 340px;
+            flex-shrink: 0;
+        }
+
+        /* Opportunity Card */
+        .opportunity-card {
+            background: var(--surface-2);
+            border: 1px solid var(--opportunity);
+            border-left: 4px solid var(--opportunity);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .opportunity-card:hover {
+            background: var(--surface-3);
+            box-shadow: 0 0 30px var(--opportunity-glow);
+        }
+
+        .opp-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .opp-icon {
+            width: 36px;
+            height: 36px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .opp-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.3;
+        }
+
+        .opp-problem {
+            font-size: 12px;
+            color: var(--gray-500);
+            font-style: italic;
+            padding-left: 48px;
+        }
+
+        .opp-tag {
+            display: inline-block;
+            padding: 3px 8px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            color: var(--opportunity);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 48px;
+            margin-top: 8px;
+        }
+
+        /* Solution Connector */
+        .solution-connector {
+            width: 2px;
+            height: 20px;
+            background: var(--solution);
+            margin-bottom: 12px;
+        }
+
+        /* Solutions Container */
+        .solutions-container {
+            width: 100%;
+        }
+
+        .solutions-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--solution);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .solutions-label::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--solution);
+            border-radius: 50%;
+        }
+
+        /* Solution Card */
+        .solution-card {
+            background: var(--surface-1);
+            border: 1px solid var(--surface-4);
+            border-left: 3px solid var(--solution);
+            border-radius: 8px;
+            padding: 14px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            border-color: var(--solution);
+            background: rgba(34, 197, 94, 0.05);
+        }
+
+        .solution-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .solution-title {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-200);
+        }
+
+        .solution-moat {
+            flex-shrink: 0;
+            padding: 2px 8px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 4px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            font-weight: 600;
+            color: var(--solution);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        .solution-desc {
+            font-size: 11px;
+            color: var(--gray-500);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        /* Experiments */
+        .experiments {
+            border-top: 1px dashed var(--surface-4);
+            padding-top: 10px;
+        }
+
+        .exp-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--experiment);
+            margin-bottom: 6px;
+        }
+
+        .exp-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 6px;
+            font-size: 10px;
+            color: var(--gray-500);
+            padding: 3px 0;
+        }
+
+        .exp-item::before {
+            content: '→';
+            color: var(--experiment);
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        /* Moat Reference */
+        .moat-section {
+            max-width: 1400px;
+            margin: 60px auto 0;
+            padding: 32px;
+            background: var(--surface-1);
+            border: 1px solid var(--surface-3);
+            border-radius: 16px;
+        }
+
+        .moat-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .moat-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--white);
+            margin-bottom: 6px;
+        }
+
+        .moat-subtitle {
+            font-size: 13px;
+            color: var(--gray-500);
+        }
+
+        .moat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .moat-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-4);
+            border-radius: 10px;
+        }
+
+        .moat-icon {
+            font-size: 20px;
+        }
+
+        .moat-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gray-200);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px;
+            border-top: 1px solid var(--line-color);
+            margin-top: 60px;
+        }
+
+        .footer p {
+            font-size: 13px;
+            color: var(--gray-600);
+        }
+
+        /* Phase Separator */
+        .phase-separator {
+            width: 100%;
+            text-align: center;
+            margin: 48px 0 32px;
+            position: relative;
+        }
+
+        .phase-separator::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--surface-4);
+        }
+
+        .phase-label {
+            position: relative;
+            display: inline-block;
+            padding: 8px 20px;
+            background: var(--surface-2);
+            border: 1px solid var(--surface-4);
+            border-radius: 100px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--gray-400);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header {
+                padding: 32px 20px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .legend {
+                padding: 16px 20px;
+                gap: 20px;
+            }
+
+            .branch-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .opportunity-branch {
+                width: 100%;
+                max-width: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <div class="badge">Teresa Torres Framework</div>
+            <h1>Opportunity Solution Tree</h1>
+            <p>Mapping photographer pain points to solutions that leverage Imagen AI's unique competitive moats to increase LTV by 40%.</p>
+        </div>
+    </header>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-dot outcome"></div>
+            <span>Desired Outcome</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot opportunity"></div>
+            <span>Opportunity (Problem)</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot solution"></div>
+            <span>Solution</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-dot experiment"></div>
+            <span>Experiment</span>
+        </div>
+    </div>
+
+    <div class="tree-wrapper">
+        <div class="tree">
+            <!-- OUTCOME -->
+            <div class="outcome-node">
+                <div class="outcome-card">
+                    <div class="outcome-label">Desired Outcome</div>
+                    <div class="outcome-title">Increase Customer Lifetime Value</div>
+                    <div class="outcome-metric">+40%</div>
+                    <p class="outcome-desc">Drive retention and expand usage by solving critical photographer workflow problems</p>
+                </div>
+            </div>
+
+            <div class="connector-vertical"></div>
+            <div class="connector-dot"></div>
+
+            <!-- OPPORTUNITIES LEVEL -->
+            <div class="opportunity-level">
+                <div class="level-header">
+                    <div class="level-label">Opportunities</div>
+                    <div class="level-title">Photographer Problems by Workflow Phase</div>
+                </div>
+
+                <!-- PHASE: EDITING -->
+                <div class="phase-separator">
+                    <span class="phase-label">🔴 Phase: Editing (15-25 hrs → 5 min)</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 1: Massive Time Investment -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">⏰</div>
+                                <div class="opp-title">Massive Editing Time Investment</div>
+                            </div>
+                            <p class="opp-problem">"Manual editing of 500-800 images takes 15-25+ hours per wedding"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Time Savings Dashboard</div>
+                                    <span class="solution-moat">☁️ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Show cumulative hours saved with running total and comparison to manual editing time.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Monthly "You saved X hours" email vs control</div>
+                                    <div class="exp-item">In-app dashboard with hours reclaimed metric</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Batch Processing Confidence</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Show predicted accuracy % before processing based on lighting and image type.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Display confidence scores, measure trust increase</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 2: Style Inconsistency -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🎨</div>
+                                <div class="opp-title">Style Inconsistency Across Images</div>
+                            </div>
+                            <p class="opp-problem">"Maintaining the same look across hundreds of images over hours of editing"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Consistency Score</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">After each batch, show consistency score comparing output to established profile.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Prototype with 50 power users, measure NPS change</div>
+                                    <div class="exp-item">Compare churn rate with/without score visibility</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Cross-Session Style Memory</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Remember edits across related shoots (same venue, same couple's engagement + wedding).</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Link shoots by client, measure satisfaction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 3: Creative Burnout -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🔥</div>
+                                <div class="opp-title">Creative Burnout</div>
+                            </div>
+                            <p class="opp-problem">"Endless editing leads to loss of creative passion and artistic vision"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Creative Time Reclaimed</div>
+                                    <span class="solution-moat">⚡ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Show hours reclaimed for creative work, family, or booking new clients.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">"You could book X more weddings" calculator</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Exploration Mode</div>
+                                    <span class="solution-moat">⭐ Talent Profiles</span>
+                                </div>
+                                <p class="solution-desc">Experiment with Talent AI profiles on sample images to reignite creativity.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Free "style playground" for existing users</div>
+                                    <div class="exp-item">Track exploration → Talent profile purchases</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 4: Outsourcing Frustrations -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">😤</div>
+                                <div class="opp-title">Outsourcing Frustrations</div>
+                            </div>
+                            <p class="opp-problem">"I've tried interns, outsourcing—they don't match my style"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">"Better Than Outsourcing" Proof</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Side-by-side comparison of Imagen AI accuracy vs typical outsourced editor.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Blind test case study with 10 photographers</div>
+                                    <div class="exp-item">Testimonials from switchers</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: CULLING -->
+                <div class="phase-separator">
+                    <span class="phase-label">🟠 Phase: Culling (2-4 hrs → 30 min)</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 5: Decision Fatigue -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🧠</div>
+                                <div class="opp-title">Decision Fatigue</div>
+                            </div>
+                            <p class="opp-problem">"Reviewing 2,000-5,000 images to select 500-800 keepers is mentally exhausting"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Personalized Culling AI</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Learn what each photographer considers a "keeper" beyond technical quality.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Train on past selections, measure acceptance rate</div>
+                                    <div class="exp-item">Survey culling satisfaction before/after</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Smart Moment Grouping</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Auto-group similar shots (e.g., "first kiss attempts") and recommend best one.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Prototype grouping UI, measure time-to-cull</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 6: Duplicate Identification -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🔄</div>
+                                <div class="opp-title">Duplicate Identification</div>
+                            </div>
+                            <p class="opp-problem">"Manually finding and eliminating near-identical shots"</p>
+                            <span class="opp-tag">Medium Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Intelligent Duplicate Stacking</div>
+                                    <span class="solution-moat">⚡ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Instantly group duplicates and auto-select sharpest/best-exposed version.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Compare accuracy to Aftershoot</div>
+                                    <div class="exp-item">Measure user override rate</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 7: Culling Bottleneck -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">⏳</div>
+                                <div class="opp-title">Culling is #1 Bottleneck</div>
+                            </div>
+                            <p class="opp-problem">"Culling has been a constant bottleneck for me"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">One-Click Cull + Edit</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Combined culling and editing in single automated workflow.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Measure end-to-end time vs separate steps</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: BACKUP & STORAGE -->
+                <div class="phase-separator">
+                    <span class="phase-label">🟡 Phase: Backup & Storage</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 8: Data Loss Anxiety -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">😰</div>
+                                <div class="opp-title">Data Loss Anxiety</div>
+                            </div>
+                            <p class="opp-problem">"Fear of losing irreplaceable images before backup is complete"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Automatic Cloud Backup</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Images automatically backed up to cloud during upload, with verification.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Add backup status indicator, measure anxiety reduction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 9: Storage Costs -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">💰</div>
+                                <div class="opp-title">Storage Cost Scaling</div>
+                            </div>
+                            <p class="opp-problem">"Long-term storage of RAW files becomes expensive over years"</p>
+                            <span class="opp-tag">Medium Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Smart Archive Tiers</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Auto-move older shoots to cold storage with instant retrieval when needed.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Compare storage costs to competitors</div>
+                                    <div class="exp-item">Survey willingness to pay for archive</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: DELIVERY -->
+                <div class="phase-separator">
+                    <span class="phase-label">🟢 Phase: Gallery & Delivery</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 10: Platform Fragmentation -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🔗</div>
+                                <div class="opp-title">Platform Fragmentation</div>
+                            </div>
+                            <p class="opp-problem">"Managing multiple gallery platforms (Pic-Time, Pixieset, ShootProof)"</p>
+                            <span class="opp-tag">Medium Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Gallery Platform Integrations</div>
+                                    <span class="solution-moat">☁️ Complete Workflow</span>
+                                </div>
+                                <p class="solution-desc">Direct export to Pic-Time, Pixieset with style-matched cover suggestions.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Partner with Pic-Time for beta integration</div>
+                                    <div class="exp-item">Measure if integration users have lower churn</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 11: Turnaround Pressure -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">⚡</div>
+                                <div class="opp-title">Turnaround Pressure</div>
+                            </div>
+                            <p class="opp-problem">"Clients expect faster delivery times than manual workflows allow"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Same-Day Delivery Enablement</div>
+                                    <span class="solution-moat">⚡ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Marketing around "deliver edited photos within 24 hours" capability.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Case studies of photographers with fast turnaround</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: BUSINESS GROWTH -->
+                <div class="phase-separator">
+                    <span class="phase-label">🔵 Phase: Business & Growth</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 12: Scalability Ceiling -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">📈</div>
+                                <div class="opp-title">Scalability Ceiling</div>
+                            </div>
+                            <p class="opp-problem">"Can't take on more clients because post-production is the bottleneck"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Capacity Calculator</div>
+                                    <span class="solution-moat">⚡ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Show exactly how many more weddings they could book with time savings.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">"You could book X more weddings" dashboard</div>
+                                    <div class="exp-item">Survey users who expanded business after Imagen</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Team/Studio Profiles</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Share master style profile across associate photographers for brand consistency.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Beta with 10 studios, measure adoption</div>
+                                    <div class="exp-item">Track if team accounts have higher LTV</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 13: Work-Life Imbalance -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">⚖️</div>
+                                <div class="opp-title">Work-Life Imbalance</div>
+                            </div>
+                            <p class="opp-problem">"Editing nights and weekends destroys personal time"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">"Weekend Reclaimed" Stories</div>
+                                    <span class="solution-moat">👥 Community</span>
+                                </div>
+                                <p class="solution-desc">Community stories of photographers who got their weekends back.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Video testimonials of life impact</div>
+                                    <div class="exp-item">Before/after weekly hours comparison</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 14: Revenue Limitation -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">💵</div>
+                                <div class="opp-title">Revenue Limitation</div>
+                            </div>
+                            <p class="opp-problem">"Time spent editing is time not spent shooting (revenue-generating activity)"</p>
+                            <span class="opp-tag">Critical Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">ROI Dashboard</div>
+                                    <span class="solution-moat">⚡ Cloud Speed</span>
+                                </div>
+                                <p class="solution-desc">Calculate dollar value of time saved based on photographer's hourly rate.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Ask hourly rate at onboarding, show ROI monthly</div>
+                                    <div class="exp-item">Correlate ROI visibility with renewal rates</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: LEARNING & ONBOARDING -->
+                <div class="phase-separator">
+                    <span class="phase-label">🟣 Phase: Learning & Onboarding</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 15: Learning Curve -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">📚</div>
+                                <div class="opp-title">Learning Curve for New Photographers</div>
+                            </div>
+                            <p class="opp-problem">"May not suit photographers without established editing style"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Mentorship Program</div>
+                                    <span class="solution-moat">⭐ Talent Profiles</span>
+                                </div>
+                                <p class="solution-desc">Start with Talent AI profile and gradually blend in own edits to develop style.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">"Starter pack" with 3 Talent profiles for new users</div>
+                                    <div class="exp-item">Track progression from Talent to Personal profile</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 16: Onboarding Wait -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">⏳</div>
+                                <div class="opp-title">Onboarding Wait Time Anxiety</div>
+                            </div>
+                            <p class="opp-problem">"2-3 day wait for AI profile training creates uncertainty"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Training Progress Updates</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Real-time updates: "Analyzing color preferences... Learning exposure style..."</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Progress emails during training</div>
+                                    <div class="exp-item">Compare activation rates with/without updates</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Instant Start with Talent Profile</div>
+                                    <span class="solution-moat">⭐ Talent Profiles</span>
+                                </div>
+                                <p class="solution-desc">Process images with Talent profile while Personal profile trains.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Offer Talent profile during wait, track conversion</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Opportunity 17: Mixed Lighting -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">💡</div>
+                                <div class="opp-title">Mixed Lighting Limitations</div>
+                            </div>
+                            <p class="opp-problem">"AI struggles with complex mixed lighting scenarios"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Lighting-Specific Sub-Profiles</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Train separate style preferences for different lighting conditions.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Auto-detect lighting type, apply sub-profile</div>
+                                    <div class="exp-item">Measure adjustment rate reduction</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: VIDEO -->
+                <div class="phase-separator">
+                    <span class="phase-label">🎬 Phase: Video Editing (New)</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 18: Video Gap -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🎬</div>
+                                <div class="opp-title">Photo-Video Style Mismatch</div>
+                            </div>
+                            <p class="opp-problem">"Photographers offering video but editing is separate workflow with different look"</p>
+                            <span class="opp-tag">High Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style-Matched Video Grading</div>
+                                    <span class="solution-moat">🎬 Video Editing</span>
+                                </div>
+                                <p class="solution-desc">Apply same Personal AI profile to video clips for perfect photo-video match.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Beta with hybrid photo/video shooters</div>
+                                    <div class="exp-item">Measure upsell rate from photo to photo+video</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">One-Click Video LUT from Photo Profile</div>
+                                    <span class="solution-moat">🎯 AI Style Learning</span>
+                                </div>
+                                <p class="solution-desc">Auto-generate video color grades from existing photo AI profile.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Export LUT from profile, test with 20 users</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PHASE: COMMUNITY -->
+                <div class="phase-separator">
+                    <span class="phase-label">👥 Phase: Community & Engagement</span>
+                </div>
+
+                <div class="branch-container">
+                    <!-- Opportunity 19: Isolation -->
+                    <div class="opportunity-branch">
+                        <div class="opportunity-card">
+                            <div class="opp-header">
+                                <div class="opp-icon">🏝️</div>
+                                <div class="opp-title">Isolation in Business</div>
+                            </div>
+                            <p class="opp-problem">"Solo photographers lack community and peer learning"</p>
+                            <span class="opp-tag">Medium Pain</span>
+                        </div>
+                        <div class="solution-connector"></div>
+                        <div class="solutions-container">
+                            <div class="solutions-label">Solutions</div>
+                            
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Style Challenges</div>
+                                    <span class="solution-moat">👥 Community</span>
+                                </div>
+                                <p class="solution-desc">Monthly challenges where photographers share before/after with Talent profiles.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Launch first challenge, measure participation</div>
+                                    <div class="exp-item">Track if participants have higher engagement</div>
+                                </div>
+                            </div>
+
+                            <div class="solution-card">
+                                <div class="solution-header">
+                                    <div class="solution-title">Talent Profile Creator Program</div>
+                                    <span class="solution-moat">⭐ Talent Profiles</span>
+                                </div>
+                                <p class="solution-desc">Invite top users to become creators, earning revenue share.</p>
+                                <div class="experiments">
+                                    <div class="exp-label">Experiments</div>
+                                    <div class="exp-item">Recruit 10 creators, measure their churn vs average</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MOAT REFERENCE -->
+            <div class="moat-section">
+                <div class="moat-header">
+                    <div class="moat-title">🛡️ Imagen AI Competitive Moats</div>
+                    <p class="moat-subtitle">All solutions leverage these unique advantages</p>
+                </div>
+                <div class="moat-grid">
+                    <div class="moat-item">
+                        <span class="moat-icon">🎯</span>
+                        <span class="moat-name">AI Style Learning</span>
+                    </div>
+                    <div class="moat-item">
+                        <span class="moat-icon">⭐</span>
+                        <span class="moat-name">Talent Profiles Marketplace</span>
+                    </div>
+                    <div class="moat-item">
+                        <span class="moat-icon">☁️</span>
+                        <span class="moat-name">Complete Workflow</span>
+                    </div>
+                    <div class="moat-item">
+                        <span class="moat-icon">⚡</span>
+                        <span class="moat-name">Cloud Speed (0.5s/image)</span>
+                    </div>
+                    <div class="moat-item">
+                        <span class="moat-icon">🎬</span>
+                        <span class="moat-name">Video Editing (First Mover)</span>
+                    </div>
+                    <div class="moat-item">
+                        <span class="moat-icon">👥</span>
+                        <span class="moat-name">19K+ Community</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Imagen AI • Opportunity Solution Tree • December 2024</p>
+        <p style="margin-top: 8px; font-size: 12px;">Framework: Teresa Torres Continuous Discovery Habits</p>
+    </footer>
+</body>
+</html>
+

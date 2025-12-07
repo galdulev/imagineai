@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen AI - Strategy Deck</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #0a0a0f;
+            --bg-surface: #12121a;
+            --bg-elevated: #1a1a25;
+            --bg-hover: #222230;
+            
+            --accent-primary: #f97316;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #22c55e;
+            --accent-warning: #eab308;
+            --accent-info: #3b82f6;
+            --accent-pink: #ec4899;
+            
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --text-muted: rgba(255, 255, 255, 0.4);
+            
+            --border: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(255, 255, 255, 0.15);
+            
+            --gradient-primary: linear-gradient(135deg, #f97316, #ec4899);
+            --gradient-secondary: linear-gradient(135deg, #8b5cf6, #3b82f6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            padding: 80px 60px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(139, 92, 246, 0.08) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .slide-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide-number {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            color: var(--text-muted);
+            z-index: 10;
+        }
+
+        .research-link {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--accent-info);
+            text-decoration: none;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+
+        .research-link:hover {
+            border-color: var(--accent-info);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        h1 {
+            font-size: 72px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        h1 .gradient {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            font-size: 24px;
+            color: var(--text-secondary);
+            margin-bottom: 48px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-top: 48px;
+        }
+
+        .card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+            transition: all 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            transform: translateY(-4px);
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .card-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+        }
+
+        .stat-value {
+            font-size: 64px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .persona-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 32px;
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .persona-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .persona-name {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .persona-role {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        .persona-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .persona-stat {
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+        }
+
+        .persona-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 4px;
+        }
+
+        .persona-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 32px;
+            font-size: 14px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .comparison-table th {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .comparison-table td {
+            font-size: 14px;
+        }
+
+        .highlight {
+            background: rgba(249, 115, 22, 0.1);
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .workflow-timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .workflow-timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border);
+        }
+
+        .workflow-step {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 32px;
+        }
+
+        .workflow-step::before {
+            content: '';
+            position: absolute;
+            left: -5px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            background: var(--accent-primary);
+            border-radius: 50%;
+            border: 3px solid var(--bg-deep);
+        }
+
+        .workflow-step-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .workflow-step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .imagen-coverage {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(249, 115, 22, 0.2);
+            border: 1px solid rgba(249, 115, 22, 0.4);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-primary);
+            margin-left: 12px;
+        }
+
+        .problem-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+        }
+
+        .problem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 12px;
+        }
+
+        .problem-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .problem-priority {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .priority-high {
+            background: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+        }
+
+        .priority-medium {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+        }
+
+        .priority-low {
+            background: rgba(34, 197, 94, 0.2);
+            color: #22c55e;
+        }
+
+        .problem-metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .metric {
+            text-align: center;
+            padding: 12px;
+            background: var(--bg-elevated);
+            border-radius: 8px;
+        }
+
+        .metric-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .metric-value {
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .mobile-gap {
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 48px;
+        }
+
+        .mobile-gap-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .mobile-gap-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-gap-list li {
+            padding: 12px 0;
+            font-size: 16px;
+            color: var(--text-secondary);
+            padding-left: 32px;
+            position: relative;
+        }
+
+        .mobile-gap-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+            font-weight: 700;
+        }
+
+        .quote {
+            background: var(--bg-surface);
+            border-left: 4px solid var(--accent-primary);
+            padding: 20px 24px;
+            border-radius: 12px;
+            margin: 16px 0;
+            font-style: italic;
+            color: var(--text-secondary);
+        }
+
+        .data-point {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(34, 197, 94, 0.1);
+            border: 1px solid rgba(34, 197, 94, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-success);
+            margin: 4px;
+        }
+
+        @media (max-width: 1024px) {
+            .grid-2, .grid-3, .grid-4 {
+                grid-template-columns: 1fr;
+            }
+            
+            h1 {
+                font-size: 48px;
+            }
+            
+            h2 {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Title -->
+    <div class="slide">
+        <div class="slide-number">1</div>
+        <div class="slide-content">
+            <div class="badge">Strategy Deck</div>
+            <h1>Imagen AI</h1>
+            <p class="subtitle">From Tool to Operating System</p>
+            <p style="color: var(--text-muted); margin-top: 24px;">Based on comprehensive research: 1,526+ reviews, 52 photographer problems, opportunity solution trees, and internal data mining</p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Vision, Mission, Promise -->
+    <div class="slide">
+        <div class="slide-number">2</div>
+        <div class="slide-content">
+            <h2>Vision, Mission & Promise</h2>
+            
+            <div class="grid-3" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Vision</div>
+                    <div class="card-desc">
+                        We envision a world where technology handles the tedious, so photographers can focus on the timeless.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Mission</div>
+                    <div class="card-desc">
+                        To give photographers their time back — by building a product that works the way they do, thinks the way they think, and protects what makes their art uniquely theirs.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Promise</div>
+                    <div class="card-desc">
+                        "Letting you focus on what you Love" — Beautiful photos without hours of tedious logistics, editing, culling.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Business Goal -->
+    <div class="slide">
+        <div class="slide-number">3</div>
+        <div class="slide-content">
+            <div class="badge">Part 1: The Business Goal</div>
+            <h2>From <span class="gradient">"Tool"</span> to <span class="gradient">"Operating System"</span></h2>
+            
+            <div class="highlight" style="margin-top: 48px;">
+                <h3 style="margin-bottom: 16px;">The Shift</h3>
+                <p style="font-size: 18px; color: var(--text-secondary); margin-bottom: 16px;">
+                    Based on our mission ("photographers one-stop-shop") and promise ("Focus on what you love"), our business goal is not just to sell more edits.
+                </p>
+                <p style="font-size: 24px; font-weight: 700; color: var(--accent-primary);">
+                    It is to maximize <strong>Share of Workflow</strong>.
+                </p>
+            </div>
+
+            <div style="margin-top: 32px; padding: 24px; background: var(--bg-surface); border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="font-size: 20px; margin-bottom: 16px;">Current State</h3>
+                <p style="color: var(--text-secondary);">
+                    <span class="data-point">36% workflow coverage</span> (Culling & Editing) | 
+                    <span class="data-point">95%+ users leave after editing</span> | 
+                    <span class="data-point">3-5 external tools</span> per photographer
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Market Context -->
+    <div class="slide">
+        <div class="slide-number">4</div>
+        <div class="slide-content">
+            <h2>Market Context</h2>
+            
+            <div class="grid-4" style="margin-top: 48px;">
+                <div class="stat-card">
+                    <div class="stat-value">150M+</div>
+                    <div class="stat-label">Photos/Year</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">19K+</div>
+                    <div class="stat-label">Community</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">$30M</div>
+                    <div class="stat-label">Series A</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value">4.77/5</div>
+                    <div class="stat-label">Rating</div>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px; padding: 24px; background: var(--bg-surface); border-radius: 12px;">
+                <p style="color: var(--text-secondary); font-size: 16px;">
+                    <strong>Market Size:</strong> AI Image Editor Market valued at <strong>$7.77B (2024)</strong>, projected to reach <strong>$66.65B by 2032</strong> (30.92% CAGR)
+                </p>
+                <a href="imagen-ai-market-intelligence.html" class="research-link">View Market Intelligence →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: User Segmentation -->
+    <div class="slide">
+        <div class="slide-number">5</div>
+        <div class="slide-content">
+            <h2>User Segmentation</h2>
+            
+            <table class="comparison-table" style="margin-top: 32px;">
+                <thead>
+                    <tr>
+                        <th>Segment</th>
+                        <th>Current %</th>
+                        <th>Growth Potential</th>
+                        <th>Revenue Potential</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Professional Photographers</strong></td>
+                        <td>~85%</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>Hobby Photographers</td>
+                        <td>~10%</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>B2B/Enterprise</td>
+                        <td>~3%</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>End Consumers</td>
+                        <td>~2%</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                        <td>Low</td>
+                    </tr>
+                    <tr>
+                        <td>Studios/Teams</td>
+                        <td>~5%</td>
+                        <td>Medium</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <a href="imagen-ai-icp-analysis.html" class="research-link">View ICP Analysis →</a>
+        </div>
+    </div>
+
+    <!-- Slide 6: Why Professional Photographers -->
+    <div class="slide">
+        <div class="slide-number">6</div>
+        <div class="slide-content">
+            <h2>Why Focus on <span class="gradient">Professional Photographers</span>?</h2>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">💰 Revenue Potential</div>
+                    <div class="card-desc">
+                        <span class="data-point">$75K-$300K annual revenue</span> per photographer. Higher LTV, process more images, willing to pay premium for tools that save time and increase capacity.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">📈 Growth Potential</div>
+                    <div class="card-desc">
+                        Actively seeking solutions, established businesses, can scale usage as they grow. <span class="data-point">30-50% increase in client capacity</span> reported by users.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🎯 Product-Market Fit</div>
+                    <div class="card-desc">
+                        <span class="data-point">40-50% wedding photographers</span>, <span class="data-point">20-25% event photographers</span>. Our current product already serves this segment best.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">🔄 Retention & Advocacy</div>
+                    <div class="card-desc">
+                        <span class="data-point">4.77/5 rating</span> across 1,526 reviews. Professionals become power users, provide feedback, strongest advocates in photography community.
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote" style="margin-top: 32px;">
+                "Imagen has changed my life. I've reclaimed my weekends and can take on 30% more clients." — Wedding Photographer
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Personas Overview -->
+    <div class="slide">
+        <div class="slide-number">7</div>
+        <div class="slide-content">
+            <h2>Imagen AI Personas</h2>
+            <p class="subtitle">Four distinct professional photographer personas</p>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="persona-avatar">S</div>
+                        <div>
+                            <div class="persona-name">Sarah</div>
+                            <div class="persona-role">Wedding Photography Pro</div>
+                        </div>
+                    </div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Weddings/Year</div>
+                            <div class="persona-stat-value">25-40</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Revenue</div>
+                            <div class="persona-stat-value">$75K-$150K</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Images/Event</div>
+                            <div class="persona-stat-value">2,000-5,000</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Market Share</div>
+                            <div class="persona-stat-value">40-50%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="persona-avatar">M</div>
+                        <div>
+                            <div class="persona-name">Mike</div>
+                            <div class="persona-role">Event & Corporate Photographer</div>
+                        </div>
+                    </div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Events/Year</div>
+                            <div class="persona-stat-value">80-120</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Revenue</div>
+                            <div class="persona-stat-value">$100K-$200K</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Images/Event</div>
+                            <div class="persona-stat-value">1,000-3,000</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Market Share</div>
+                            <div class="persona-stat-value">20-25%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="persona-avatar">J</div>
+                        <div>
+                            <div class="persona-name">Jessica</div>
+                            <div class="persona-role">Portrait Studio Owner</div>
+                        </div>
+                    </div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Sessions/Year</div>
+                            <div class="persona-stat-value">300-500</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Revenue</div>
+                            <div class="persona-stat-value">$150K-$300K</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Images/Session</div>
+                            <div class="persona-stat-value">150-500</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Market Share</div>
+                            <div class="persona-stat-value">15-20%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="persona-card">
+                    <div class="persona-header">
+                        <div class="persona-avatar">D</div>
+                        <div>
+                            <div class="persona-name">David</div>
+                            <div class="persona-role">Real Estate Photographer</div>
+                        </div>
+                    </div>
+                    <div class="persona-stats">
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Properties/Week</div>
+                            <div class="persona-stat-value">15-25</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Revenue</div>
+                            <div class="persona-stat-value">$80K-$150K</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Images/Property</div>
+                            <div class="persona-stat-value">30-80</div>
+                        </div>
+                        <div class="persona-stat">
+                            <div class="persona-stat-label">Market Share</div>
+                            <div class="persona-stat-value">5-10%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="imagen-ai-ecosystem-personas.html" class="research-link">View Detailed Personas →</a>
+        </div>
+    </div>
+
+    <!-- Slide 8: Persona Comparison -->
+    <div class="slide">
+        <div class="slide-number">8</div>
+        <div class="slide-content">
+            <h2>Persona Comparison</h2>
+            <p class="subtitle">Product Manager Analysis</p>
+            
+            <table class="comparison-table" style="margin-top: 32px;">
+                <thead>
+                    <tr>
+                        <th>Persona</th>
+                        <th>Volume</th>
+                        <th>Pain Level</th>
+                        <th>Willingness to Pay</th>
+                        <th>Retention</th>
+                        <th>Advocacy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sarah (Wedding)</strong></td>
+                        <td>500-5,000 images/event</td>
+                        <td>9/10</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>High</td>
+                    </tr>
+                    <tr>
+                        <td>Mike (Event)</td>
+                        <td>1,000-3,000 images/event</td>
+                        <td>8/10</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>Jessica (Portrait)</td>
+                        <td>150-500 images/session</td>
+                        <td>7/10</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                    </tr>
+                    <tr>
+                        <td>David (Real Estate)</td>
+                        <td>30-80 images/property</td>
+                        <td>6/10</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Low</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="highlight" style="margin-top: 32px;">
+                <h3 style="font-size: 20px; margin-bottom: 12px;">Why Wedding Photographers Win:</h3>
+                <ul style="color: var(--text-secondary); padding-left: 24px;">
+                    <li>Highest pain point (9/10) - "I spend more time editing than with my family"</li>
+                    <li>Highest volume (2,000-5,000 images) = maximum value from AI</li>
+                    <li>Highest willingness to pay ($3K-$6K per wedding = can afford premium tools)</li>
+                    <li>Strongest advocacy (40-50% of user base, highly connected in communities)</li>
+                    <li>Complex workflow = more opportunities to expand Share of Workflow</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Why Wedding Photographers -->
+    <div class="slide">
+        <div class="slide-number">9</div>
+        <div class="slide-content">
+            <h2>Why Focus on <span class="gradient">Wedding Photographers</span>?</h2>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">1. Highest Pain Point</div>
+                    <div class="card-desc">
+                        <span class="data-point">12-16 hours editing per wedding</span>, <span class="data-point">18-25 hours total post-production</span>. This is life-consuming pain. 85% of reviews mention time savings as primary benefit.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">2. Highest Volume</div>
+                    <div class="card-desc">
+                        <span class="data-point">2,000-5,000 images per wedding</span> means maximum value from our AI. More images = more time saved = higher perceived value.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">3. Highest Willingness to Pay</div>
+                    <div class="card-desc">
+                        <span class="data-point">$3,000-$6,000 per wedding</span> means they can afford premium tools. They understand ROI: "I can take 30% more weddings" = <span class="data-point">$36K+ additional revenue</span>.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">4. Strongest Advocacy</div>
+                    <div class="card-desc">
+                        Wedding photographers are highly connected in communities (Facebook groups, forums). <span class="data-point">"Changed my life"</span> testimonials drive viral growth.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">5. Largest Market Share</div>
+                    <div class="card-desc">
+                        <span class="data-point">40-50% of our current user base</span>. Focusing here means optimizing for our largest, most engaged segment.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">6. Complex Workflow = More Opportunities</div>
+                    <div class="card-desc">
+                        Pre-wedding, wedding day, post-production, delivery, albums, prints. More touchpoints = more opportunities to expand Share of Workflow.
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote" style="margin-top: 32px;">
+                "Full wedding galleries, which typically took around 16 hours to edit, have been reduced to about 2 hours with Imagen AI." — Trustpilot Review
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Current State -->
+    <div class="slide">
+        <div class="slide-number">10</div>
+        <div class="slide-content">
+            <h2>Current State: What We Have Today</h2>
+            
+            <div class="grid-3" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">✅ AI-Powered Photo Editing</div>
+                    <div class="card-desc">
+                        Personal AI Profiles that learn your style. <span class="data-point">0.5 seconds per photo</span>. <span class="data-point">90% accuracy</span>. <span class="data-point">85% of reviews</span> mention time savings.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">✅ Cull</div>
+                    <div class="card-desc">
+                        AI-powered culling that selects best photos. <span class="data-point">2-4 hrs → 30 min</span>. <span class="data-point">45% of reviews</span> mention culling.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">✅ Cloud</div>
+                    <div class="card-desc">
+                        Automatic cloud backup and storage during editing process.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">✅ Video (New)</div>
+                    <div class="card-desc">
+                        Recently launched video editing capabilities.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">✅ Established User Base</div>
+                    <div class="card-desc">
+                        <span class="data-point">19,000+ community members</span>. <span class="data-point">150+ million photos</span> processed annually. <span class="data-point">4.77/5 rating</span> across 1,526 reviews.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">✅ Profile Presets</div>
+                    <div class="card-desc">
+                        Talent AI Profiles from famous photographers. Profile Shop marketplace.
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 32px; padding: 24px; background: var(--bg-surface); border-radius: 12px; border: 1px solid var(--border);">
+                <h3 style="font-size: 20px; margin-bottom: 12px;">Key Metrics</h3>
+                <p style="color: var(--text-secondary);">
+                    <span class="data-point">98% positive reviews</span> (4-5 stars) | 
+                    <span class="data-point">4.9/5 customer support</span> (highest rated feature) | 
+                    <span class="data-point">60-75% time reduction</span> per shoot
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Vision -->
+    <div class="slide">
+        <div class="slide-number">11</div>
+        <div class="slide-content">
+            <h2>Vision: Where We Want to Go</h2>
+            
+            <div class="highlight" style="margin-top: 48px;">
+                <h3 style="margin-bottom: 16px; font-size: 32px;">Become the Photographer One-Stop Shop</h3>
+                <p style="font-size: 20px; color: var(--text-secondary);">
+                    The single platform for their entire workflow, from shoot to deliver.
+                </p>
+            </div>
+            
+            <div style="margin-top: 48px; padding: 32px; background: var(--bg-surface); border-radius: 20px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 24px;">Current Coverage</h3>
+                <div style="font-size: 18px; margin-bottom: 16px;">
+                    Currently, Imagen owns the <strong style="color: var(--accent-primary);">middle of the workflow</strong> (Culling & Editing) which is <strong style="color: var(--accent-primary);">36% of the workflow</strong>.
+                </div>
+                <div style="font-size: 18px; margin-bottom: 24px;">
+                    To become a "one-stop-shop," we must own more.
+                </div>
+                <div style="padding: 20px; background: var(--bg-elevated); border-radius: 12px; margin-top: 16px;">
+                    <p style="color: var(--text-secondary); font-size: 14px; margin-bottom: 12px;"><strong>Evidence:</strong></p>
+                    <ul style="color: var(--text-secondary); padding-left: 24px; font-size: 14px;">
+                        <li><span class="data-point">95%+ of users</span> leave Imagen ecosystem immediately after editing</li>
+                        <li><span class="data-point">3-5 external tools</span> used per photographer for post-delivery workflow</li>
+                        <li><span class="data-point">30% of workflow time</span> happens outside Imagen (delivery, payment, client management)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <a href="imagen-ai-one-stop-shop-ost.html" class="research-link">View One-Stop-Shop Opportunity Tree →</a>
+        </div>
+    </div>
+
+    <!-- Slide 12: User Journey Map -->
+    <div class="slide">
+        <div class="slide-number">12</div>
+        <div class="slide-content">
+            <h2>User Journey Map</h2>
+            <p class="subtitle">Understanding user touchpoints with Imagen AI</p>
+            
+            <div class="workflow-timeline" style="margin-top: 48px;">
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Discovery & Awareness</div>
+                    <div class="workflow-step-desc">Word of mouth, social media, YouTube reviews, photography forums</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Onboarding & Setup</div>
+                    <div class="workflow-step-desc">Website visit, free trial signup, download Lightroom plugin</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Profile Training</div>
+                    <div class="workflow-step-desc">Upload 2,500-5,000 sample images, 24-48 hour AI training period</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Active Workflow</div>
+                    <div class="workflow-step-desc">Import → AI Cull → AI Edit → Fine-tune → Export</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Client Delivery</div>
+                    <div class="workflow-step-desc">Upload to gallery platform, customize, send to client <span style="color: var(--accent-warning);">(EXITS IMAGEN)</span></div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Retention & Growth</div>
+                    <div class="workflow-step-desc">Profile refinement, explore Talent Profiles, community engagement</div>
+                </div>
+            </div>
+
+            <a href="imagen-ai-user-journey-map.html" class="research-link">View Complete User Journey Map →</a>
+        </div>
+    </div>
+
+    <!-- Slide 13: Wedding Photographer Workflow -->
+    <div class="slide">
+        <div class="slide-number">13</div>
+        <div class="slide-content">
+            <h2>Wedding Photographer Workflow</h2>
+            
+            <div class="workflow-timeline" style="margin-top: 48px;">
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Pre-Wedding (1-2 hrs)</div>
+                    <div class="workflow-step-desc">Booking & contract, client consultation</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Wedding Day (8-12 hrs)</div>
+                    <div class="workflow-step-desc">Shoot 2,000-5,000 images, backup</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Import (15-30 min)</div>
+                    <div class="workflow-step-desc">Import RAW files into Lightroom</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Cull (2-4 hrs → 30 min)</div>
+                    <div class="workflow-step-desc">AI selects best photos <span class="imagen-coverage">IMAGEN COVERS</span></div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Edit (12-16 hrs → 5-10 min)</div>
+                    <div class="workflow-step-desc">AI applies editing style <span class="imagen-coverage">IMAGEN COVERS</span></div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Fine-Tune (1-2 hrs)</div>
+                    <div class="workflow-step-desc">Manual adjustments on ~10% of images</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Export (30-60 min)</div>
+                    <div class="workflow-step-desc">Export final JPEGs</div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Delivery (1-2 hrs)</div>
+                    <div class="workflow-step-desc">Upload to gallery, customize, send to client <span style="color: var(--accent-warning);">(EXITS IMAGEN)</span></div>
+                </div>
+                
+                <div class="workflow-step">
+                    <div class="workflow-step-title">Products & Sales (4.5-9 hrs)</div>
+                    <div class="workflow-step-desc">Album design, print orders, revisions <span style="color: var(--accent-warning);">(EXITS IMAGEN)</span></div>
+                </div>
+            </div>
+
+            <a href="wedding-photographer-workflow.html" class="research-link">View Complete Wedding Workflow →</a>
+        </div>
+    </div>
+
+    <!-- Slide 14: Where Imagen Covers -->
+    <div class="slide">
+        <div class="slide-number">14</div>
+        <div class="slide-content">
+            <h2>Where Imagen AI Covers</h2>
+            
+            <div style="margin-top: 48px; padding: 40px; background: var(--bg-surface); border-radius: 20px; border: 1px solid var(--border);">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+                    <div>
+                        <h3 style="margin-bottom: 24px; color: var(--accent-success);">✅ Currently Covered (36%)</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-success);">✓</span>
+                                AI Culling <span class="data-point">2-4 hrs → 30 min</span> (75% reduction)
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-success);">✓</span>
+                                AI Editing <span class="data-point">12-16 hrs → 5-10 min</span> (90% reduction)
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-success);">✓</span>
+                                Cloud Backup
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 style="margin-bottom: 24px; color: var(--accent-warning);">⚠️ Not Covered (64%)</h3>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-warning);">○</span>
+                                Booking & Contracts <span class="data-point">2-4 hrs</span>
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-warning);">○</span>
+                                Gallery Delivery <span class="data-point">1-2 hrs</span> (95%+ use external)
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-warning);">○</span>
+                                Payment Collection <span class="data-point">1-2 hrs</span> (85%+ use external)
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-warning);">○</span>
+                                Album Design <span class="data-point">3-6 hrs</span> (95% offer albums)
+                            </li>
+                            <li style="padding: 12px 0; font-size: 18px; padding-left: 32px; position: relative;">
+                                <span style="position: absolute; left: 0; color: var(--accent-warning);">○</span>
+                                Client Communication <span class="data-point">2-3 hrs</span> (90%+ use external)
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <a href="imagen-ai-internal-data-mining-analysis.html" class="research-link">View Internal Data Mining Analysis →</a>
+        </div>
+    </div>
+
+    <!-- Slide 15: Wedding Photographer Problems -->
+    <div class="slide">
+        <div class="slide-number">15</div>
+        <div class="slide-content">
+            <h2>Wedding Photographer Problems</h2>
+            <p class="subtitle">Mapped to workflow stages - Based on 52 problems analysis</p>
+            
+            <div style="margin-top: 32px;">
+                <div class="problem-card">
+                    <div class="problem-header">
+                        <div class="problem-title">Editing Time Consuming Life</div>
+                        <div class="problem-priority priority-high">HIGH - SOLVED</div>
+                    </div>
+                    <div style="color: var(--text-secondary); margin-bottom: 16px;">"I spend more time editing than with my family" - <span class="data-point">85% of reviews</span> mention this</div>
+                    <div class="problem-metrics">
+                        <div class="metric">
+                            <div class="metric-label">Pain</div>
+                            <div class="metric-value">9/10</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Frequency</div>
+                            <div class="metric-value">Every shoot</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Time Impact</div>
+                            <div class="metric-value">12-16 hrs</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Status</div>
+                            <div class="metric-value" style="color: var(--accent-success);">✅ Solved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-header">
+                        <div class="problem-title">Album Design Time Sink</div>
+                        <div class="problem-priority priority-high">HIGH - UNSOLVED</div>
+                    </div>
+                    <div style="color: var(--text-secondary); margin-bottom: 16px;"><span class="data-point">3-6 hours per album</span> for manual layout and revision cycles. <span class="data-point">95% of wedding photographers</span> offer albums.</div>
+                    <div class="problem-metrics">
+                        <div class="metric">
+                            <div class="metric-label">Pain</div>
+                            <div class="metric-value">8/10</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Frequency</div>
+                            <div class="metric-value">Per wedding</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Time Impact</div>
+                            <div class="metric-value">3-6 hrs</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Status</div>
+                            <div class="metric-value" style="color: var(--accent-warning);">⚠️ Unsolved</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="problem-card">
+                    <div class="problem-header">
+                        <div class="problem-title">Payment Chasing</div>
+                        <div class="problem-priority priority-high">HIGH - UNSOLVED</div>
+                    </div>
+                    <div style="color: var(--text-secondary); margin-bottom: 16px;">Awkward follow-ups, manual invoicing, delayed payments. Cash flow stress. <span class="data-point">85%+ use external tools</span>.</div>
+                    <div class="problem-metrics">
+                        <div class="metric">
+                            <div class="metric-label">Pain</div>
+                            <div class="metric-value">8/10</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Frequency</div>
+                            <div class="metric-value">Every job</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Time Impact</div>
+                            <div class="metric-value">1-2 hrs</div>
+                        </div>
+                        <div class="metric">
+                            <div class="metric-label">Status</div>
+                            <div class="metric-value" style="color: var(--accent-warning);">⚠️ Unsolved</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <a href="photographer-problems-52.html" class="research-link">View All 52 Photographer Problems →</a>
+        </div>
+    </div>
+
+    <!-- Slide 16: Problem Prioritization -->
+    <div class="slide">
+        <div class="slide-number">16</div>
+        <div class="slide-content">
+            <h2>Problem Prioritization</h2>
+            <p class="subtitle">Based on opportunity, impact, pain, frequency, time, Share of Workflow, retention, brand differentiation, and revenue</p>
+            
+            <table class="comparison-table" style="margin-top: 32px; font-size: 12px;">
+                <thead>
+                    <tr>
+                        <th>Problem</th>
+                        <th>Pain</th>
+                        <th>Frequency</th>
+                        <th>Time Impact</th>
+                        <th>Share of Workflow</th>
+                        <th>Retention</th>
+                        <th>Revenue</th>
+                        <th>Priority</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Gallery Delivery Platform</strong></td>
+                        <td>7/10</td>
+                        <td>Every job</td>
+                        <td>1-2 hrs</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGHEST</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Payment Integration</strong></td>
+                        <td>8/10</td>
+                        <td>Every job</td>
+                        <td>1-2 hrs</td>
+                        <td>High</td>
+                        <td>Very High</td>
+                        <td>High</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGHEST</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Album Design Tools</strong></td>
+                        <td>8/10</td>
+                        <td>Per wedding</td>
+                        <td>3-6 hrs</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client Communication Hub</strong></td>
+                        <td>7/10</td>
+                        <td>Ongoing</td>
+                        <td>2-3 hrs</td>
+                        <td>High</td>
+                        <td>High</td>
+                        <td>Medium</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Booking & CRM</strong></td>
+                        <td>8/10</td>
+                        <td>Every lead</td>
+                        <td>2-4 hrs</td>
+                        <td>Very High</td>
+                        <td>Very High</td>
+                        <td>High</td>
+                        <td><span style="color: var(--accent-primary);">🔥 HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Social Media Automation</strong></td>
+                        <td>7/10</td>
+                        <td>Weekly</td>
+                        <td>2-4 hrs</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td>Medium</td>
+                        <td><span style="color: var(--accent-warning);">MEDIUM</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 32px; padding: 24px; background: var(--bg-surface); border-radius: 12px;">
+                <h3 style="font-size: 18px; margin-bottom: 12px;">Key Insights from Research:</h3>
+                <ul style="color: var(--text-secondary); padding-left: 24px; font-size: 14px;">
+                    <li><span class="data-point">95%+ of users</span> leave Imagen ecosystem immediately after editing</li>
+                    <li><span class="data-point">66% of workflow problems</span> remain unsolved (34 problems out of 52)</li>
+                    <li><span class="data-point">Post-delivery workflow</span> represents 30% of photographer's time but happens outside Imagen</li>
+                </ul>
+            </div>
+
+            <a href="imagen-ai-opportunity-solution-tree.html" class="research-link">View Opportunity Solution Tree →</a>
+        </div>
+    </div>
+
+    <!-- Slide 17: Mobile Experience Gap -->
+    <div class="slide">
+        <div class="slide-number">17</div>
+        <div class="slide-content">
+            <h2>Mobile Experience Gap</h2>
+            <p class="subtitle">What problem or inefficiency are they facing without a mobile experience?</p>
+            
+            <div class="mobile-gap">
+                <div class="mobile-gap-title">Key Inefficiencies Without Mobile:</div>
+                <ul class="mobile-gap-list">
+                    <li><strong>No Real-Time Upload During Events:</strong> Photographers can't upload photos during the wedding/event for immediate backup or preview. Must wait until they're back at their computer. <span class="data-point">Event photographers</span> face 24-48 hour delivery expectations.</li>
+                    
+                    <li><strong>Can't Review Edits on the Go:</strong> After AI processing, photographers can't review edits while traveling or between shoots. They're tied to their desktop. <span class="data-point">2-3 hours</span> of travel time wasted per event.</li>
+                    
+                    <li><strong>Client Communication Delays:</strong> Can't respond to client messages, share previews, or check gallery status while away from computer. Creates communication gaps. <span class="data-point">90%+ use external tools</span> for client communication.</li>
+                    
+                    <li><strong>No On-Site Culling:</strong> Can't start culling process immediately after shoot while still on location. Wasted time during travel. <span class="data-point">30-60 min</span> of travel time could be productive.</li>
+                    
+                    <li><strong>Gallery Management Inefficiency:</strong> Can't manage client galleries, check delivery status, or handle client requests while mobile. Everything requires desktop access. <span class="data-point">1-2 hours</span> per job for gallery management.</li>
+                    
+                    <li><strong>Payment Collection Delays:</strong> Can't send invoices, check payment status, or follow up on payments while mobile. Delays cash flow. <span class="data-point">85%+ use external</span> payment tools.</li>
+                    
+                    <li><strong>Social Media Opportunity Loss:</strong> Can't quickly share behind-the-scenes content or previews to social media during events. Miss marketing moments. <span class="data-point">80% post to social</span> but manually.</li>
+                    
+                    <li><strong>Workflow Fragmentation:</strong> Forces photographers to be at their desk for every step. No flexibility for modern, mobile-first work style. <span class="data-point">3-5 external tools</span> required for mobile access.</li>
+                </ul>
+            </div>
+
+            <a href="imagen-mobile-companion-analysis.html" class="research-link">View Mobile Companion Analysis →</a>
+        </div>
+    </div>
+
+    <!-- Slide 18: Summary -->
+    <div class="slide">
+        <div class="slide-number">18</div>
+        <div class="slide-content">
+            <h2>Summary</h2>
+            
+            <div class="grid-2" style="margin-top: 48px;">
+                <div class="card">
+                    <div class="card-title">Current State</div>
+                    <div class="card-desc">
+                        We own <span class="data-point">36% of the workflow</span> (Culling & Editing). We've solved the most painful problems, but photographers still use <span class="data-point">5-7 other tools</span> for the rest of their workflow. <span class="data-point">95%+ leave</span> after editing.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Vision</div>
+                    <div class="card-desc">
+                        Become the photographer one-stop-shop. Own the entire workflow from booking to delivery, maximizing <span class="data-point">Share of Workflow</span> and <span class="data-point">LTV (+40% target)</span>.
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Focus</div>
+                    <div class="card-desc">
+                        Professional photographers, specifically <span class="data-point">wedding photographers</span>. Highest pain (9/10), highest volume (2K-5K images), highest willingness to pay ($3K-$6K per wedding), strongest advocacy (40-50% of user base).
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">Next Steps</div>
+                    <div class="card-desc">
+                        Prioritize <span class="data-point">gallery delivery</span>, <span class="data-point">payment integration</span>, and <span class="data-point">album design tools</span> to extend workflow coverage and increase retention.
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 48px; padding: 32px; background: var(--bg-surface); border-radius: 20px; border: 1px solid var(--border);">
+                <h3 style="margin-bottom: 24px;">Research Resources</h3>
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+                    <a href="imagen-ai-user-journey-map.html" class="research-link">User Journey Map</a>
+                    <a href="wedding-photographer-workflow.html" class="research-link">Wedding Workflow</a>
+                    <a href="photographer-problems-52.html" class="research-link">52 Problems Analysis</a>
+                    <a href="imagen-ai-ecosystem-personas.html" class="research-link">Ecosystem Personas</a>
+                    <a href="imagen-ai-opportunity-solution-tree.html" class="research-link">Opportunity Solution Tree</a>
+                    <a href="imagen-ai-internal-data-mining-analysis.html" class="research-link">Data Mining Analysis</a>
+                    <a href="imagen-mobile-companion-analysis.html" class="research-link">Mobile Companion</a>
+                    <a href="imagen-ai-ltv-opportunity-tree.html" class="research-link">LTV Opportunity Tree</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple scroll-based navigation
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        
+        function showSlide(n) {
+            slides.forEach(slide => {
+                slide.style.display = 'none';
+            });
+            
+            if (n >= slides.length) currentSlide = 0;
+            if (n < 0) currentSlide = slides.length - 1;
+            
+            slides[currentSlide].style.display = 'flex';
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+                currentSlide++;
+                showSlide(currentSlide);
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        });
+        
+        // Show first slide
+        showSlide(0);
+    </script>
+
+</body>
+</html>

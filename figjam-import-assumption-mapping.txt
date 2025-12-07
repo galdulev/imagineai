@@ -1,0 +1,481 @@
+IMAGEN AI - ASSUMPTION MAPPING & RISK ASSESSMENT
+FigJam Import Format
+
+===== SECTION: FRAMEWORK OVERVIEW =====
+
+FOUR DIMENSIONS:
+1. DESIRABILITY → Will they want it?
+2. VIABILITY → Will it work for the business?
+3. FEASIBILITY → Can we build it?
+4. USABILITY → Can they use it?
+
+RISK SCORING:
+🔴 9-10: CRITICAL | Must validate before any investment
+🟠 7-8: HIGH | Should validate before major investment
+🟡 5-6: MEDIUM | Validate during development
+🟢 3-4: LOW | Monitor but don't prioritize
+⚪ 1-2: MINIMAL | Assume true, validate post-launch
+
+===== DIMENSION 1: DESIRABILITY ASSUMPTIONS =====
+
+D1: Photographers want gallery delivery integrated with editing
+Risk: 🟠 7/10 - HIGH
+Evidence For: "Wish one tool did it all"
+Evidence Against: No explicit requests; users solved with Pixieset
+Why Risky: Latent need—users don't ask for what they don't know
+Test: Fake door test + user interviews
+Success: >15% CTR, 8/10 express strong interest
+Timeline: 1-2 weeks
+Priority: P1
+
+D2: Pain with current delivery is high enough to switch
+Risk: 🟠 8/10 - HIGH
+Evidence For: 40% of stories mention delivery frustration
+Evidence Against: Users invested in Pixieset/ShootProof
+Why Risky: Switching costs are real; "good enough" is enemy
+Test: Pain scoring survey (1-10) + switching intent
+Success: >7/10 pain score, >50% switching intent
+Timeline: 1 week
+Priority: P0
+
+D3: Photographers will pay for integrated delivery
+Risk: 🔴 9/10 - CRITICAL
+Evidence For: Users pay $10-25/month for Pixieset
+Evidence Against: Price sensitivity in 20% of reviews
+Why Risky: Pricing is #1 concern in negative reviews
+Test: Van Westendorp pricing research
+Success: Acceptable price overlaps with target
+Timeline: 2-3 weeks
+Priority: P0
+
+D4: Payment-gated galleries acceptable to photographers
+Risk: 🟡 6/10 - MEDIUM
+Evidence For: "I wish payment just happened"
+Evidence Against: Some may feel too aggressive
+Why Risky: Cultural/relationship concerns with clients
+Test: Concept testing with 20 photographers
+Success: >70% acceptable, <10% strong objection
+Timeline: 1 week
+Priority: P1
+
+D5: Clients will accept payment-gated galleries
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Common in e-commerce
+Evidence Against: Some expect photos without payment
+Why Risky: Photographer-client relationship is sacred
+Test: Client experience testing via beta
+Success: <5% complaints, no photographer churn
+Timeline: During beta
+Priority: P2
+
+===== DIMENSION 2: VIABILITY ASSUMPTIONS =====
+
+V1: Transaction fees provide meaningful revenue
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Industry standard; Stripe Connect proven
+Evidence Against: Margins may be thin; volume required
+Why Risky: Revenue model depends on payment volume
+Test: Financial modeling + beta usage data
+Success: $X revenue per active user per month
+Timeline: During beta
+Priority: P2
+
+V2: Delivery features increase retention
+Risk: 🟠 7/10 - HIGH
+Evidence For: More features = higher switching cost
+Evidence Against: Could dilute focus; users prefer specialized
+Why Risky: Core to LTV+40% goal
+Test: Beta cohort retention analysis
+Success: >15% improvement in 90-day retention
+Timeline: 3 months post-launch
+Priority: P1
+
+V3: Can compete with established gallery platforms
+Risk: 🟠 7/10 - HIGH
+Evidence For: Integration advantage; AI differentiation
+Evidence Against: Pixieset has 10+ years refinement
+Why Risky: "Good enough" may not be good enough
+Test: Competitive UX testing
+Success: Comparable or better satisfaction vs Pixiset
+Timeline: 2-3 weeks
+Priority: P1
+
+V4: Unit economics work at scale
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Cloud costs predictable; CDN commodity
+Evidence Against: Storage costs for high-volume users
+Why Risky: Could erode margins if not managed
+Test: Cost modeling + beta usage analysis
+Success: Positive unit economics at average usage
+Timeline: During beta
+Priority: P2
+
+V5: Market timing is right
+Risk: 🟡 4/10 - LOW
+Evidence For: Tool fatigue real; consolidation trend
+Evidence Against: Photographers may resist change
+Why Risky: Market readiness affects adoption speed
+Test: Market research + beta adoption rate
+Success: >50% beta adoption within 30 days
+Timeline: During beta
+Priority: P3
+
+===== DIMENSION 3: FEASIBILITY ASSUMPTIONS =====
+
+F1: Can build gallery hosting infrastructure
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Already handle large image volumes
+Evidence Against: Different use case (delivery vs processing)
+Why Risky: Performance and reliability are table stakes
+Test: Technical proof of concept
+Success: <2s page load, 99.9% uptime in POC
+Timeline: 2-3 weeks
+Priority: P1
+
+F2: Can integrate Stripe Connect successfully
+Risk: 🟡 4/10 - LOW
+Evidence For: Well-documented API; many implementations
+Evidence Against: Compliance requirements (KYC, etc.)
+Why Risky: Payment is critical path; delays costly
+Test: Technical spike + Stripe partnership
+Success: POC payment flow working
+Timeline: 2 weeks
+Priority: P2
+
+F3: Can ship MVP in 3 months
+Risk: 🟠 6/10 - MEDIUM
+Evidence For: Focused scope; experienced team
+Evidence Against: New domain; unknown unknowns
+Why Risky: Delays affect competitive position
+Test: Detailed sprint planning + risk buffer
+Success: Ship within 3 months ± 2 weeks
+Timeline: Ongoing
+Priority: P1
+
+F4: Existing infrastructure can handle load
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Already handle 150M+ photos/year
+Evidence Against: Different access patterns (burst vs batch)
+Why Risky: Performance issues damage trust
+Test: Load testing + architecture review
+Success: Handle 10x expected peak load
+Timeline: 2 weeks
+Priority: P1
+
+F5: Can maintain editing quality while expanding
+Risk: 🟡 4/10 - LOW
+Evidence For: Separate feature; different team focus
+Evidence Against: Resource competition; attention dilution
+Why Risky: Core product is the moat
+Test: Quality monitoring + user feedback
+Success: No degradation in editing NPS
+Timeline: Ongoing
+Priority: P3
+
+===== DIMENSION 4: USABILITY ASSUMPTIONS =====
+
+U1: Photographers can set up galleries without training
+Risk: 🟠 7/10 - HIGH
+Evidence For: Users already use Pixieset; familiar patterns
+Evidence Against: Learning curve in 15% of reviews
+Why Risky: Onboarding friction kills adoption
+Test: Unmoderated usability testing
+Success: >80% complete first gallery without help
+Timeline: 2 weeks
+Priority: P1
+
+U2: Workflow integration feels seamless
+Risk: 🟠 8/10 - HIGH
+Evidence For: Integration is our differentiator
+Evidence Against: New feature may feel disconnected
+Why Risky: Seamlessness is the value proposition
+Test: Workflow testing with 20 users
+Success: >90% describe as "seamless" or "natural"
+Timeline: 2 weeks
+Priority: P0
+
+U3: Clients can navigate galleries easily
+Risk: 🟡 6/10 - MEDIUM
+Evidence For: Standard e-commerce patterns
+Evidence Against: Clients vary in tech savviness
+Why Risky: Client frustration reflects on photographer
+Test: Client-side usability testing
+Success: >95% task completion rate
+Timeline: 2 weeks
+Priority: P1
+
+U4: Migration from existing galleries is manageable
+Risk: 🟡 6/10 - MEDIUM
+Evidence For: Can start fresh; gradual migration
+Evidence Against: Years of galleries, client links
+Why Risky: Migration friction prevents switching
+Test: Migration pathway testing
+Success: <2 hours to migrate typical user
+Timeline: During beta
+Priority: P2
+
+U5: Mobile experience is sufficient
+Risk: 🟡 5/10 - MEDIUM
+Evidence For: Mobile-first design is standard
+Evidence Against: High-res images on mobile challenging
+Why Risky: 60%+ of gallery views are mobile
+Test: Mobile usability testing
+Success: >4.5/5 mobile experience rating
+Timeline: 2 weeks
+Priority: P2
+
+===== SECTION: RISK HEAT MAP =====
+
+CRITICAL ZONE (High Likelihood + High Impact):
+🔴 D2: Pain high enough to switch | Risk: 8/10
+🔴 D3: Will pay for delivery | Risk: 9/10
+🔴 U2: Seamless workflow | Risk: 8/10
+
+HIGH RISK ZONE:
+🟠 D1: Want integrated delivery | Risk: 7/10
+🟠 V2: Delivery increases retention | Risk: 7/10
+🟠 V3: Can compete with Pixieset | Risk: 7/10
+🟠 U1: Setup without training | Risk: 7/10
+🟠 F3: Can ship in 3 months | Risk: 6/10
+
+MEDIUM RISK ZONE:
+🟡 D4: Payment-gated acceptable | Risk: 6/10
+🟡 U3: Client navigation easy | Risk: 6/10
+🟡 U4: Migration manageable | Risk: 6/10
+🟡 V1: Transaction fees meaningful | Risk: 5/10
+🟡 F1: Can build gallery hosting | Risk: 5/10
+🟡 F4: Infrastructure scales | Risk: 5/10
+🟡 U5: Mobile sufficient | Risk: 5/10
+
+LOW RISK ZONE:
+🟢 V5: Market timing right | Risk: 4/10
+🟢 F2: Can integrate Stripe | Risk: 4/10
+🟢 F5: Maintain editing quality | Risk: 4/10
+
+===== SECTION: TOP 10 RISKIEST ASSUMPTIONS =====
+
+RANK 1: D3 - Will pay for delivery
+Risk: 🔴 9/10 | Dimension: Desirability | Priority: P0 - IMMEDIATE
+
+RANK 2: D2 - Pain high enough to switch
+Risk: 🟠 8/10 | Dimension: Desirability | Priority: P0 - IMMEDIATE
+
+RANK 3: U2 - Seamless workflow
+Risk: 🟠 8/10 | Dimension: Usability | Priority: P0 - IMMEDIATE
+
+RANK 4: D1 - Want integrated delivery
+Risk: 🟠 7/10 | Dimension: Desirability | Priority: P1
+
+RANK 5: V2 - Delivery increases retention
+Risk: 🟠 7/10 | Dimension: Viability | Priority: P1
+
+RANK 6: V3 - Can compete with Pixieset
+Risk: 🟠 7/10 | Dimension: Viability | Priority: P1
+
+RANK 7: U1 - Setup without training
+Risk: 🟠 7/10 | Dimension: Usability | Priority: P1
+
+RANK 8: F3 - Can ship in 3 months
+Risk: 🟠 6/10 | Dimension: Feasibility | Priority: P1
+
+RANK 9: D4 - Payment-gated acceptable
+Risk: 🟡 6/10 | Dimension: Desirability | Priority: P2
+
+RANK 10: U3 - Client navigation easy
+Risk: 🟡 6/10 | Dimension: Usability | Priority: P2
+
+===== SECTION: TESTING PLAN =====
+
+PHASE 1: Pre-Investment Validation (Weeks 1-3)
+Goal: Validate critical assumptions before committing
+
+Test 1: Fake Door Test
+- Assumption: D1, D2
+- Method: "Coming Soon" landing page
+- Timeline: Week 1
+- Owner: PM
+
+Test 2: Pricing Research
+- Assumption: D3
+- Method: Van Westendorp survey
+- Timeline: Week 1-2
+- Owner: PM
+
+Test 3: Pain Scoring Survey
+- Assumption: D2
+- Method: 1-question survey to 500 users
+- Timeline: Week 1
+- Owner: PM
+
+Test 4: User Interviews
+- Assumption: D1, D2, D4
+- Method: 10 story-based interviews
+- Timeline: Week 2-3
+- Owner: UXR
+
+Test 5: Technical Spike
+- Assumption: F1, F2
+- Method: POC for gallery + Stripe
+- Timeline: Week 2-3
+- Owner: Engineering
+
+PHASE 2: Design Validation (Weeks 4-6)
+Goal: Validate usability before building
+
+Test 6: Prototype Testing
+- Assumption: U1, U2
+- Method: Clickable prototype with 20 users
+- Timeline: Week 4-5
+- Owner: Design
+
+Test 7: Workflow Testing
+- Assumption: U2
+- Method: End-to-end flow testing
+- Timeline: Week 5-6
+- Owner: UXR
+
+Test 8: Competitive UX Testing
+- Assumption: V3
+- Method: Compare to Pixieset
+- Timeline: Week 5
+- Owner: UXR
+
+Test 9: Client Experience Testing
+- Assumption: U3
+- Method: Client-side prototype testing
+- Timeline: Week 6
+- Owner: UXR
+
+PHASE 3: Beta Validation (Weeks 7-12)
+Goal: Validate viability and retention
+
+Test 10: Beta Launch
+- Assumption: All
+- Method: 50 power users
+- Timeline: Week 7-12
+- Owner: PM
+
+Test 11: Retention Analysis
+- Assumption: V2
+- Method: Cohort comparison
+- Timeline: Week 10-12
+- Owner: Analytics
+
+Test 12: Revenue Tracking
+- Assumption: V1
+- Method: Payment volume monitoring
+- Timeline: Week 8-12
+- Owner: Analytics
+
+Test 13: NPS Tracking
+- Assumption: V2, U2
+- Method: Weekly NPS survey
+- Timeline: Week 8-12
+- Owner: PM
+
+===== SECTION: GO/NO-GO DECISION FRAMEWORK =====
+
+DECISION POINT 1: After Pre-Investment (Week 3)
+
+GO CRITERIA:
+✅ Fake Door CTR >15%
+✅ Pain Score >7/10
+✅ Pricing Fit: Clear overlap
+✅ Interview Enthusiasm: 8/10 strong interest
+✅ Technical POC: Works
+
+PIVOT CRITERIA:
+⚠️ Fake Door CTR 10-15%
+⚠️ Pain Score 5-7/10
+⚠️ Pricing Fit: Narrow overlap
+⚠️ Interview Enthusiasm: 5/10 interest
+⚠️ Technical POC: Works with issues
+
+KILL CRITERIA:
+❌ Fake Door CTR <10%
+❌ Pain Score <5/10
+❌ Pricing Fit: No overlap
+❌ Interview Enthusiasm: <5/10 interest
+❌ Technical POC: Fails
+
+DECISION POINT 2: After Design Validation (Week 6)
+
+GO CRITERIA:
+✅ Usability Score >80% task completion
+✅ Workflow Seamlessness >90% "seamless"
+✅ Competitive Comparison: Equal or better
+✅ Client Experience >95% completion
+
+PIVOT CRITERIA:
+⚠️ Usability Score 60-80%
+⚠️ Workflow Seamlessness 70-90%
+⚠️ Competitive Comparison: Slightly worse
+⚠️ Client Experience 85-95%
+
+KILL CRITERIA:
+❌ Usability Score <60%
+❌ Workflow Seamlessness <70%
+❌ Competitive Comparison: Much worse
+❌ Client Experience <85%
+
+DECISION POINT 3: After Beta (Week 12)
+
+GO CRITERIA:
+✅ Beta Adoption >60% of beta users
+✅ Retention Impact >15% improvement
+✅ NPS Impact +5 points
+✅ Revenue Per User: On target
+
+PIVOT CRITERIA:
+⚠️ Beta Adoption 40-60%
+⚠️ Retention Impact 5-15%
+⚠️ NPS Impact 0-5 points
+⚠️ Revenue Per User: 50-100% of target
+
+KILL CRITERIA:
+❌ Beta Adoption <40%
+❌ Retention Impact <5%
+❌ NPS Impact: Negative
+❌ Revenue Per User: <50% of target
+
+===== SECTION: RISK MITIGATION STRATEGIES =====
+
+FOR D3: Willingness to Pay
+Strategy 1: Bundle with subscription (basic free)
+Strategy 2: Transaction fee only (no subscription increase)
+Strategy 3: Freemium model (free tier drives adoption)
+Strategy 4: Competitive pricing (match or beat Pixieset)
+
+FOR D2: Pain High Enough to Switch
+Strategy 1: Migration tools (make switching easy)
+Strategy 2: Parallel use (allow both during transition)
+Strategy 3: Incentives (free months for switchers)
+Strategy 4: Superior integration (workflow so good can't resist)
+
+FOR U2: Seamless Workflow
+Strategy 1: Extensive UX testing (test early, often)
+Strategy 2: Photographer co-design (involve users)
+Strategy 3: Gradual rollout (beta → soft → full)
+Strategy 4: Rapid iteration (fix issues quickly)
+
+===== SECTION: KEY TAKEAWAYS =====
+
+WHAT WE KNOW:
+✅ Editing pain is solved (1,526 reviews)
+✅ Post-delivery is fragmented (story analysis)
+✅ Integration is valued (interviews)
+✅ Technical feasibility likely (team assessment)
+
+WHAT WE DON'T KNOW (Must Validate):
+❓ Will they pay? (Critical unknown)
+❓ Will they switch? (High-risk assumption)
+❓ Is our UX good enough? (Must test vs Pixieset)
+❓ Will it increase retention? (Can only validate in beta)
+
+RECOMMENDED NEXT STEPS:
+Week 1: Launch fake door test + pricing survey
+Week 2: Conduct 10 user interviews
+Week 3: Complete technical POC + go/no-go decision
+Week 4-6: Design sprint + usability testing
+Week 7-12: Beta launch + validation
+
