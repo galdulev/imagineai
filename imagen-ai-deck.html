@@ -186,6 +186,144 @@
             }
         }
 
+        /* Apple-style Business Goal with Tooltip */
+        .business-goal-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin: 80px 0;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .business-goal-main {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            margin-bottom: 0;
+            flex-wrap: wrap;
+        }
+
+        .business-goal-text {
+            font-size: 56px;
+            font-weight: 500;
+            letter-spacing: -0.03em;
+            color: #ffffff;
+            line-height: 1.15;
+            margin: 0;
+            display: inline;
+        }
+
+        .tooltip-wrapper {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            vertical-align: middle;
+            margin-left: 8px;
+            line-height: 0;
+        }
+
+        .tooltip-icon {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.35);
+            transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            display: inline-block;
+            vertical-align: middle;
+            flex-shrink: 0;
+        }
+
+        .tooltip-wrapper:hover .tooltip-icon {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .tooltip-content {
+            position: absolute;
+            bottom: calc(100% + 20px);
+            left: 50%;
+            transform: translateX(-50%) translateY(10px) scale(0.95);
+            width: 520px;
+            max-width: calc(100vw - 80px);
+            background: rgba(18, 18, 18, 0.98);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 0.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 20px;
+            padding: 28px 32px;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: all 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.05) inset;
+            z-index: 1000;
+        }
+
+        .tooltip-content::before {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid rgba(18, 18, 18, 0.98);
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        .tooltip-wrapper:hover .tooltip-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        .tooltip-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 14px;
+            letter-spacing: -0.01em;
+            opacity: 0.95;
+        }
+
+        .tooltip-text {
+            font-size: 14px;
+            line-height: 1.65;
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 18px;
+            font-weight: 400;
+        }
+
+        .tooltip-reason {
+            font-size: 13px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.55);
+            padding-top: 16px;
+            border-top: 0.5px solid rgba(255, 255, 255, 0.08);
+            font-weight: 400;
+        }
+
+        @media (max-width: 768px) {
+            .business-goal-text {
+                font-size: 36px;
+            }
+            .business-goal-wrapper {
+                margin: 60px 0;
+            }
+            .tooltip-content {
+                width: calc(100vw - 40px);
+                padding: 24px;
+            }
+        }
+
         .big-number {
             font-size: 200px;
             font-weight: 900;
@@ -1752,10 +1890,23 @@
     <!-- Slide 8.1: The Metric -->
     <section class="slide" style="display: none;">
         <div class="slide-content">
-            <h2>Business Goal</h2>
-            <div class="subtitle">Expand workflow ownership from 2 → 3 stages within 6 months</div>
-            <div style="font-size: 24px; color: rgba(255, 255, 255, 0.8); margin-top: 30px; font-weight: 400;">
-                <strong>Precise Definition:</strong> Increase the % of photographers who complete end-to-end workflow (From shoot to deliver) within Imagen from 0% to 25% within 6 months
+            <h2 style="font-size: 48px; margin-bottom: 100px; font-weight: 400; letter-spacing: -0.02em; color: rgba(255, 255, 255, 0.6);">Business Goal</h2>
+            <div class="business-goal-wrapper">
+                <div class="business-goal-main">
+                    <span class="business-goal-text">Expand workflow ownership from 2 → 3 stages within 6 months</span>
+                    <div class="tooltip-wrapper">
+                        <svg class="tooltip-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                        </svg>
+                        <div class="tooltip-content">
+                            <div class="tooltip-title">Precise Definition</div>
+                            <div class="tooltip-text">Increase the % of photographers who complete imagen's new end-to-end workflow (From shoot to deliver) from 0% to 15% within 6 months.</div>
+                            <div class="tooltip-reason">Why 15%? Because benchmark for a feature adoption in SaaS is 20-30%, and we aim for users to use all Imagen AI capabilities not just one feature (meaning we push for cull, editing, cloud/backup and one more step adoption).</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -3040,7 +3191,47 @@
         </div>
     </section>
 
-    <!-- Slide 12.11: Mobile vs Desktop Insights -->
+    <!-- Slide 12.11: Mobile web app: The Hidden Competitive Advantage -->
+    <section class="slide" style="display: none;">
+        <div class="slide-content">
+            <h2 style="font-size: 64px; margin-bottom: 20px;">Mobile web app: The Hidden Competitive Advantage</h2>
+            
+            <div style="margin-top: 60px; text-align: left; max-width: 1400px; margin-left: auto; margin-right: auto;">
+                <!-- The Reality -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
+                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Reality</div>
+                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
+                        90% of photography work is desktop/shooting. 89% of mobile jobs are marketing/client communication. <strong style="color: var(--accent);">90% of gallery views are on mobile.</strong>
+                    </div>
+                </div>
+
+                <!-- The Opportunity -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
+                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Opportunity</div>
+                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
+                        Help photographers deliver a better experience for their clients. Current tools (Pixieset, Pic-Time) are desktop-era, <strong style="color: var(--warning);">painfully viewed on phones.</strong>
+                    </div>
+                </div>
+
+                <!-- The Win -->
+                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
+                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Win</div>
+                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
+                        Mobile-first delivery = higher client satisfaction, more shares (viral marketing), better referrals (<strong style="color: var(--success);">85.9% rely on referrals</strong>), reduced support requests.
+                    </div>
+                </div>
+
+                <!-- The Strategic Insight -->
+                <div style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); border: 2px solid rgba(14, 165, 233, 0.3); border-radius: 24px; padding: 48px; text-align: center;">
+                    <div style="font-size: 32px; font-weight: 700; color: #ffffff; line-height: 1.4;">
+                        Mobile web app isn't a feature - <span style="color: var(--accent);">it's a competitive moat.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Slide 12.12: Mobile vs Desktop Insights -->
     <section class="slide" style="display: none;">
         <div class="slide-content">
             <h2 style="font-size: 64px; margin-bottom: 20px;">Mobile vs Desktop Insights</h2>
@@ -3111,46 +3302,6 @@
                         <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">Medium</div>
                         <div style="font-size: 18px; color: rgba(255, 255, 255, 0.7); text-align: center; padding: 16px 0;">Medium</div>
                         <div style="font-size: 18px; font-weight: 600; color: rgba(255, 214, 10, 0.9); text-align: center; padding: 16px 0;">P2</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Slide 12.12: Mobile web app: The Hidden Competitive Advantage -->
-    <section class="slide" style="display: none;">
-        <div class="slide-content">
-            <h2 style="font-size: 64px; margin-bottom: 20px;">Mobile web app: The Hidden Competitive Advantage</h2>
-            
-            <div style="margin-top: 60px; text-align: left; max-width: 1400px; margin-left: auto; margin-right: auto;">
-                <!-- The Reality -->
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
-                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Reality</div>
-                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
-                        90% of photography work is desktop/shooting. 89% of mobile jobs are marketing/client communication. <strong style="color: var(--accent);">90% of gallery views are on mobile.</strong>
-                    </div>
-                </div>
-
-                <!-- The Opportunity -->
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
-                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Opportunity</div>
-                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
-                        Help photographers deliver a better experience for their clients. Current tools (Pixieset, Pic-Time) are desktop-era, <strong style="color: var(--warning);">painfully viewed on phones.</strong>
-                    </div>
-                </div>
-
-                <!-- The Win -->
-                <div style="background: rgba(255, 255, 255, 0.05); border: 2px solid rgba(255, 255, 255, 0.15); border-radius: 24px; padding: 40px; margin-bottom: 32px;">
-                    <div style="font-size: 18px; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px;">The Win</div>
-                    <div style="font-size: 24px; color: rgba(255, 255, 255, 0.95); line-height: 1.6;">
-                        Mobile-first delivery = higher client satisfaction, more shares (viral marketing), better referrals (<strong style="color: var(--success);">85.9% rely on referrals</strong>), reduced support requests.
-                    </div>
-                </div>
-
-                <!-- The Strategic Insight -->
-                <div style="background: linear-gradient(135deg, rgba(14, 165, 233, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%); border: 2px solid rgba(14, 165, 233, 0.3); border-radius: 24px; padding: 48px; text-align: center;">
-                    <div style="font-size: 32px; font-weight: 700; color: #ffffff; line-height: 1.4;">
-                        Mobile web app isn't a feature - <span style="color: var(--accent);">it's a competitive moat.</span>
                     </div>
                 </div>
             </div>
